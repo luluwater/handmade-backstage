@@ -2,6 +2,7 @@
     --bg-color: #eee6de;
     --main-color: #e65947;
     --line-color: #ddb9a2;
+    --main-word-color: #3F3F3F;
     --header-hieght: 100px;
 }
 main{
@@ -46,12 +47,19 @@ a{
 }
 .nav-title h3{
     font-weight: bolder;
+    font-size: 26px;
+}
+.main-nav li{
+    color:var(--main-word-color);
 }
 .nav-link{
     padding: .5rem;
     font-size: 20px;
 }
+
 .hover:hover{
     background: var(--main-color);
+    color:#fff;
+    
      
 }
