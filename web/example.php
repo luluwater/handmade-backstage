@@ -16,7 +16,10 @@
     require("./main-menu.html");
     ?>
     <main>
-        <h1>test</h1>
+      <?php 
+      require("./status-bar.html");
+      ?>
     </main>
+
   </body>
 </html>

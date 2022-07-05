@@ -5,6 +5,8 @@
     --main-word-color: #3F3F3F;
     --header-hieght: 100px;
 }
+
+
 main{
     padding: 150px 100px 100px 300px;
 }
@@ -16,7 +18,8 @@ main{
     object-fit: cover;    
 }
 a{
-    text-decoration: none;    
+    text-decoration: none;   
+    color: #fff;
 }
 .header{
     background: var(--bg-color);
@@ -64,6 +67,24 @@ a{
 .hover:hover{
     background: var(--main-color);
     color:#fff;
+ 
+}
+
+.title{
+    font-size: 24px;
+    color: var(--line-color);
+    margin-bottom: 20px;
+}
+
+.status-bar{
+    width: 100%;
+    background:var(--bg-color);
+    height: 100px;
     
-     
+}
+
+.status-button{
+    background:var(--line-color);
+    height: 60px;
+    width: 150px;
 }
