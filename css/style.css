@@ -6,8 +6,7 @@
     --header-hieght: 100px;
 }
 main{
-    padding-top: 100px;
-    padding-left: 256px;
+    padding: 150px 100px 100px 300px;
 }
 .text-main-color{
     color: var(--main-color);
