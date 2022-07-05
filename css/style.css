@@ -25,8 +25,13 @@ a{
     z-index: 1;
     border-bottom: 1px solid var(--line-color);
 }
-.logo{
-    font-size: 50px;    
+.header h3{
+    letter-spacing: 5px;
+}
+.logo img{
+    position: relative;
+    height: 100px;
+    right: 15px;
 }
 .btn-main-color{
     background: var(--main-color);
