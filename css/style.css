@@ -3,10 +3,11 @@
     --main-color: #e65947;
     --line-color: #ddb9a2;
     --main-word-color: #3F3F3F;
+    --thead-color: #d6624f;
     --header-hieght: 100px;
 }
 main{
-    padding: 150px 100px 100px 300px;
+    padding: 130px 100px 0 300px;
 }
 .text-main-color{
     color: var(--main-color);
@@ -35,6 +36,21 @@ a{
     padding: .5rem 1rem;
     
 }
+.btn-bg-color{
+    background: var(--line-color);
+    font-weight: bolder;
+    color: white;    
+}
+.count-bg{
+    background: var(--bg-color);
+    padding: 0px 5px;
+}
+.table-head{
+    background: var(--bg-color);
+}
+.table{
+    height: 550px;
+}
 .sidebar{
     width: 256px;
     height: 100vh;
@@ -55,7 +71,6 @@ a{
     padding: .5rem;
     font-size: 20px;
 }
-
 .hover:hover{
     background: var(--main-color);
     color:#fff;
