@@ -1,0 +1,57 @@
+:root{
+    --bg-color: #eee6de;
+    --main-color: #e65947;
+    --line-color: #ddb9a2;
+    --header-hieght: 100px;
+}
+main{
+    padding-top: 100px;
+    padding-left: 256px;
+}
+.text-main-color{
+    color: var(--main-color);
+    font-weight: bolder;
+}
+.object-cover{
+    object-fit: cover;    
+}
+a{
+    text-decoration: none;    
+}
+.header{
+    background: var(--bg-color);
+    height: var(--header-hieght);
+    width: 100vw;
+    z-index: 1;
+    border-bottom: 1px solid var(--line-color);
+}
+.logo{
+    font-size: 50px;    
+}
+.btn-main-color{
+    background: var(--main-color);
+    font-weight: bolder;
+    color: white;
+    padding: .5rem 1rem;
+    
+}
+.sidebar{
+    width: 256px;
+    height: 100vh;
+    background: var(--bg-color);
+    padding-top: var(--header-hieght);
+}
+.nav-title:not(:last-child){
+    border-bottom: 1px solid var(--line-color);
+}
+.nav-title h3{
+    font-weight: bolder;
+}
+.nav-link{
+    padding: .5rem;
+    font-size: 20px;
+}
+.hover:hover{
+    background: var(--main-color);
+     
+}
