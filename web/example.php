@@ -15,33 +15,7 @@
     <?php
     require("./main-menu.html");
     ?>
-    <main>
-      <?php 
-      require("./status-bar.html");
-      ?>
-
-    <div class="d-flex mt-5">
-
-      <div class="container d-flex align-items-center justify-content-between w-50 ms-0">
-        <select name="" class="select" >
-          <option value="keyword">關鍵字</option>
-          <option value="date">日期</option>
-          <option value="category">分類</option>
-        </select>
-        <div class="input-group w-50">
-          <span class="input-group-text" id="basic-addon1">@</span>
-          <input type="text" class="form-control  " placeholder="Search..." aria-label="Username" aria-describedby="search blog">
-        </div>
-        <a href="" class="btn btn-info">搜尋</a>
-      </div>
-
-      <div class="d-flex"> 
-        <div>發表新文章</div>
-        <div>顯示??筆數</div>
-      </div>
-  </div>
-
-
+  <h1>test</h1>
 
     </main>
 
