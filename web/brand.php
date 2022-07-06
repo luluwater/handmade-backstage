@@ -33,6 +33,12 @@
         padding:5px 20px ;
         color:white;
       }
+      .footer{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+
+      }
     </style>
   </head>
   <body>
@@ -73,8 +79,110 @@
              <div class="text-end my-4">
               <a href="" class="text-dark m-2"><i class="fa-solid fa-trash m-2"></i>刪除產品</a>
               <a href="" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增產品</a>
-              
             </div>
+
+
+        <div class="row gy-4">
+            <div class="col-md-4">
+                <div>
+                    <input type="checkbox" value="1" name="Product_1"><br>
+                    <figure class="ratio ratio-4x3 mb-2">
+                       <img class="object-cover" src="../imagesTest/spiderman.jpg" alt="">
+                    </figure>
+                  <div class="text-info">Marvel Comics</div>
+                     <h2 class="mb-2 h4">Spider-Man</h2>
+                     <div class="text-end text-danger">$500</div>
+                  <div class="py-2">
+                      <div class="d-grid">
+                         <button class="btn btn-info btn-cart" data-id="1">加到購物車</button>
+                     </div>
+                </div>
+            </div>
+        </div>
+            <div class="col-md-4">
+            <div>
+                <input type="checkbox" value="1" name="Product_1"><br>
+                <figure class="ratio ratio-4x3 mb-2">
+                    <img class="object-cover" src="../imagesTest/superman.png" alt="">
+                </figure>
+                <div class="text-info">DC Comics</div>
+                <h2 class="mb-2 h4">Superman</h2>
+                <div class="text-end text-danger">$1000</div>
+                <div class="py-2">
+                    <div class="d-grid">
+                        <button class="btn btn-info btn-cart" data-id="2">加到購物車</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="col-md-4">
+            <div>
+                <input type="checkbox" value="1" name="Product_1"><br>
+                <figure class="ratio ratio-4x3 mb-2">
+                    <img class="object-cover" src="../imagesTest/wonderwoman.webp" alt="">
+                </figure>
+                <div class="text-info">DC Comics</div>
+                <h2 class="mb-2 h4">Wonder Woman</h2>
+                <div class="text-end text-danger">$3000</div>
+                <div class="py-2">
+                    <div class="d-grid">
+                        <button class="btn btn-info btn-cart" data-id="3">加到購物車</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="col-md-4">
+            <div>
+                <input type="checkbox" value="1" name="Product_1"><br>
+                <figure class="ratio ratio-4x3 mb-2">
+                    <img class="object-cover" src="../imagesTest/ironman.png" alt="">
+                </figure>
+                <div class="text-info">Marvel Comics</div>
+                <h2 class="mb-2 h4">Iron Man</h2>
+                <div class="text-end text-danger">$10000</div>
+                <div class="py-2">
+                    <div class="d-grid">
+                        <button class="btn btn-info btn-cart" data-id="4">加到購物車</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="col-md-4">
+            <div>
+                <input type="checkbox" value="1" name="Product_1"><br>
+                <figure class="ratio ratio-4x3 mb-2">
+                    <img class="object-cover" src="../imagesTest/batman.webp" alt="">
+                </figure>
+                <div class="text-info">DC Comics</div>
+                <h2 class="mb-2 h4">Batman</h2>
+                <div class="text-end text-danger">$10000</div>
+                <div class="py-2">
+                    <div class="d-grid">
+                        <button class="btn btn-info btn-cart" data-id="5">加到購物車</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="col-md-4">
+            <div>
+                <input type="checkbox" value="1" name="Product_1"><br>
+                <figure class="ratio ratio-4x3 mb-2">
+                <img class="object-cover" src="../imagesTest/blackwidow.jpg" alt="">
+                </figure>
+                <div class="text-info">Marvel Comics</div>
+                <h2 class="mb-2 h4">Black Widow</h2>
+                <div class="text-end text-danger">$1100</div>
+                <div class="py-2">
+                    <div class="d-grid">
+                        <button class="btn btn-info btn-cart" data-id="6">加到購物車</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <?php require("./mod/page-number.php") ?>
+            </div>
+          
+         
     </main>
  
 </html>
