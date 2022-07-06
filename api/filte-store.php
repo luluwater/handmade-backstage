@@ -1,6 +1,6 @@
 <?php
 require("../db-connect.php");
-$category_id=$_GET["category_id"];
+$category_id=$_POST["category_id"];
 
 $stmt=$db_host->prepare("SELECT store.id,store.category_id,store.name FROM store WHERE store.category_id = ?");
 

@@ -56,15 +56,19 @@ $db_host = NULL;
                 </div>
                 <div class="my-3 row align-items-center">
                     <label class="col-1" for="product_name">名稱</label>
-                    <input class="col form-control" type="text" name="product_name" placeholder="請輸入商品名稱">
+                    <input class="col form-control" type="text" name="product_name" placeholder="請輸入商品名稱" required>
                 </div>
                 <div class="my-3 row align-items-center">
                     <label class="col-1" for="intro">簡介</label>
-                    <textarea class="form-control col" name="intro" cols="30" rows="10" style="resize:none" placeholder="請輸入商品介紹"></textarea>                   
+                    <textarea class="form-control col" name="intro" cols="30" rows="10" style="resize:none" placeholder="請輸入商品介紹" required></textarea>                   
                 </div>
                 <div class="my-3 row align-items-center">
                     <label class="col-1" for="price">價格</label>
-                    <input class="col form-control" type="number" name="price" placeholder="請輸入商品價格">
+                    <input class="col form-control" type="number" name="price" placeholder="請輸入商品價格" required>
+                </div>                
+                <div class="my-3 row align-items-center">
+                    <label class="col-1" for="amount">數量</label>
+                    <input class="col form-control" type="number" name="amount" placeholder="請輸入商品數量" required>
                 </div>                
                 <div class="my-3 row justify-content-between">
                     <div class="col-5 d-flex align-items-center">
@@ -99,12 +103,12 @@ $db_host = NULL;
                     </div>
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="hour">課程時常</label>
-                        <input class="col form-control" type="number" name="hour" placeholder="請輸入課程時常">
+                        <input class="col form-control" type="number" name="hour" placeholder="請輸入課程時常" required>
                     </div>
                 </div>
                 <div class="my-3 row align-items-center">
                     <label class="col-1" for="notice">注意事項</label>
-                    <textarea class="form-control col" name="notice" cols="30" rows="10" style="resize:none" placeholder="請輸入商品注意事項"></textarea>
+                    <textarea class="form-control col" name="notice" cols="30" rows="10" style="resize:none" placeholder="請輸入商品注意事項" required></textarea>
                 </div>
                 <div class="my-5 d-flex justify-content-end">
                     <a href="" class="ms-3 btn btn-bg-color">取消</a>
@@ -153,7 +157,7 @@ $db_host = NULL;
                 store.removeChild(store[i]);
             }
             $.ajax({
-            	method: "GET",  //or GET
+            	method: "POST",  //or GET
             	url:  "../api/filte-store.php",
             	dataType: "json",
             	data: { category_id: categoryValue } //如果需要
