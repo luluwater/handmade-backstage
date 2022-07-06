@@ -25,11 +25,26 @@
         </div>
       </div>
        <div class="mb-3 row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+        <select class="form-select" aria-label="Default select example">
+                <option value="1" selected>選擇</option>
+                <option value="2">類別</option>
+                <option value="3">品牌</option>
+                
+            </select>
         <div class="col-sm-10">
-          <input type="password" class="form-control" id="inputPassword">
+        <select class="form-select" aria-label="Default select example">
+                <option value="1" selected>選擇</option>
+                <option value="2">類別</option>
+                <option value="3">品牌</option>
+                
+            </select>
         </div>
       </div>
+      <div class="d-flex">
+        <h6 class="me-4">品牌簡介</h6>
+      <textarea name="" id="" cols="100" rows="10"></textarea>
+      </div>
+      
        <div class="mb-3 row">
           <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
         <div class="col-sm-10">
