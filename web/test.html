@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+
+
+</head>
+<body>
+    
+
+
+    <div id="editor" class="editor"></div>
+
+    <script  type="module" src="./test.js"></script>
+    <script>
+
+   import ImageInsert from '@ckeditor/ckeditor5-image/src/imageinsert';
+
+
+    ClassicEditor
+                .create( document.querySelector( '#editor' ),{
+                    
+                    plugins: [ImageInsert ],
+                    toolbar: {
+                    items: [
+                        'heading', '|',
+                        'fontfamily', 'fontsize', '|',
+                        'alignment', '|',
+                        'fontColor', 'fontBackgroundColor', '|',
+                        'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                        'link', '|',
+                        'outdent', 'indent', '|',
+                        'bulletedList', 'numberedList', 'todoList', '|',
+                        'code', 'codeBlock', '|',
+                        'insertTable', '|',
+                        'uploadImage', 'blockQuote', '|',
+                        'undo', 'redo',
+                            'imageStyle:block',
+                            'imageStyle:side',
+                            '|',
+                            'toggleImageCaption',
+                            'imageTextAlternative',
+                            '|',
+                            'linkImage'
+                        ],
+            shouldNotGroupWhenFull: true
+        }
+            
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+</body>
+</html>

@@ -25,7 +25,7 @@
 
         <div class="d-flex mt-4">
 
-        <div class="fs-6 container d-flex align-items-center justify-content-between w-50 ms-0">
+        <div class="fs-6 container d-flex align-items-center justify-content-between w-50 ms-0 gap-5">
             
             <select name="" class="select" >
                 <option selected="selected" value="keyword">關鍵字</option>
@@ -33,7 +33,7 @@
                 <option value="category">分類</option>
             </select>
             
-            <form  class="input-group w-50"  action="">
+            <form  class="input-group"  action="">
                 <span class="input-group-text bg-white" id="basic-addon1">
                     <i class="fas fa-search"></i>
                 </span>
@@ -74,7 +74,7 @@
       </div>
 
 
-      <table class="table mt-4 mb-0 text-center">
+      <table class="table h-0 mt-4 mb-0 text-center">
               <thead class="table-head">
                 <tr>
                   <td class="col-1 text-start">日期</td>
