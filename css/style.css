@@ -76,15 +76,46 @@ a{
     margin-bottom: 20px;
 }
 
+
 .status-bar{
     width: 100%;
     background:var(--bg-color);
     height: 100px;
-    
 }
+
 
 .status-button{
     background:var(--line-color);
-    height: 60px;
     width: 150px;
 }
+
+.status-a{
+    padding: 12px;
+    display: block;
+}
+
+
+.status-button :hover{
+    background:var(--main-color);
+    color: #fff;
+}
+
+.select{
+    width: 120px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.blog-search-input{
+    width: 150px;
+}
+
+
+
+
+
+
+
+
+
+
