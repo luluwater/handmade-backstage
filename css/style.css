@@ -39,7 +39,7 @@ a{
     background: var(--main-color);
     font-weight: bolder;
     color: white;
-    padding: .5rem 1rem;
+    /* padding: .5rem 1rem; */
     
 }
 .btn-bg-color{
@@ -91,6 +91,13 @@ a{
 .hover:hover{
     background: var(--main-color);
     color:#fff;
-    
-     
+}
+.previewImage{
+    width: 200px;
+    height: 200px;
+    background: url("../img/previewImage.jpg");
+    display: block;    
+}
+.previewImage:hover{
+    cursor: pointer;
 }
