@@ -192,7 +192,7 @@
                 </div>
             </div>
             <div class="footer">
-                <?php require("./mod/page-number.php") ?>
+                <?php require("./mod/pagination.php") ?>
             </div>
           
          
