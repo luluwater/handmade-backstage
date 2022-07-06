@@ -27,7 +27,11 @@
          margin-top:40px;
           padding:5px 20px ;
           color:white;
+          border:1px solid var(--bg-color);
          
+      }
+      .side:active{
+           background: #000;
       }
       .count-bg{
         margin-bottom:20px;
