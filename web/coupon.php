@@ -3,7 +3,7 @@ require("../db-connect.php");
 
 
 //每頁顯示的資料
-$sql = "SELECT * FROM discount";
+$sql = "SELECT * FROM coupon";
 $result= $db_host->prepare($sql);
 $result->execute();
 $rows = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -14,7 +14,7 @@ $rows = $result->fetchAll(PDO::FETCH_ASSOC);
 <html lang="tw-zh">
 
 <head>
-    <title>一般折扣-手手</title>
+    <title>優惠券-手手</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -64,12 +64,13 @@ $rows = $result->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <?php require("./mod/search-bar-sale.php") ?>
             <div class="text-end my-4">
-              <a href="" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
+              <a href="" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增優惠券</a>
             </div>
             <table class="table">
               <thead class="table-head">
                 <tr class="text-center">
-                  <td class="col-3">活動名稱</td>
+                  <td class="col-2">折扣碼</td>
+                  <td class="col-3">優惠券名稱</td>
                   <td class="col-1">折數</td>
                   <td class="col-3">活動期間</td>
                   <td class="col-2">狀態</td>
@@ -79,12 +80,13 @@ $rows = $result->fetchAll(PDO::FETCH_ASSOC);
               <tbody>
               <?php foreach ($rows as $row): ?>
                   <tr class="text-center">
+                    <td><?=$row["discount_code"]?></td>
                     <td><?=$row["name"]?></td>
-                    <td><?=$row["product_discount"]?></td>
+                    <td><?=$row["coupon_discount"]?></td>
                     <td><?=$row["start_date"]?> - <?=$row["end_date"]?></td>
                     <td><?=$row["state"]?></td>
                     <td>
-                        <a href="discount-edit.php?id=<?=$row["id"]?>" name="edit">編輯</a> <br>
+                        <a href="coupon-edit.php?id=<?=$row["id"]?>" name="edit">編輯</a> <br>
                         <a href="" name="delete">刪除</a>
                     </td>
                   </tr>
