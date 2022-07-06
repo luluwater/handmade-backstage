@@ -16,7 +16,7 @@
         color:var(--line-color);
         margin-top:5px;
         font-size:24px;
-        
+        .
       }
       .delAndAdd{
         padding-top:60px;
