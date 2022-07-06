@@ -8,6 +8,8 @@
     --page-number-color: #3f3f3f;
     --title-color: #d7baa5;
 }
+
+
 main{
     padding: 130px 100px 0 300px;
 }
@@ -22,7 +24,8 @@ main .title{
     object-fit: cover;    
 }
 a{
-    text-decoration: none;    
+    text-decoration: none;   
+    color: #fff;
 }
 .header{
     background: var(--bg-color);
@@ -95,6 +98,63 @@ a{
 .hover:hover{
     background: var(--main-color);
     color:#fff;
-    
-     
+ 
 }
+
+.title{
+    font-size: 24px;
+    color: var(--line-color);
+    margin-bottom: 10px;
+}
+
+
+.status-bar{
+    width: 100%;
+    background:var(--bg-color);
+    height: 72px;
+}
+
+
+.status-button{
+    background:var(--line-color);
+    width: 150px;
+}
+
+.status-a{
+    padding: 6px;
+    display: block;
+}
+
+
+.status-button :hover{
+    background:var(--main-color);
+    color: #fff;
+}
+
+.select{
+    width: 120px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.select-category{
+    width: 600px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.blog-search-input{
+    width: 150px;
+}
+
+.td-height{
+    height: 16px;
+}
+
+
+
+
+
+
+
+
