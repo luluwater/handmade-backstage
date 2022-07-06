@@ -25,6 +25,13 @@
         color:var(--line-color);
         margin-top:-20px;
         font-size:36px;
+        
+      }
+      .side{
+        background:var(--bg-color); 
+        border-radius:10%;
+          padding:5px 20px ;
+          color:white;
       }
       .btn-search{
         background: var( --line-color);
@@ -49,7 +56,7 @@
       <i class="fa-solid fa-bars-filter"></i>
           <div class="container-fluid">
             <div class="d-flex justify-content-between">
-                <p class="title">課程管理</p>
+                <h1 class="title">課程管理</h1>
                 <p>顯示 
                   <select class="count-bg text-center" aria-label="Default select example">
                     <option value="1" selected>6</option>
@@ -61,26 +68,30 @@
                   筆數
                 </p>
             </div>
-    <div class="row align-items-center input-group pt-4 mb-3">
-         <div class="text-center col-1">
-            
-         
-         </div>
-         <div class="col-auto">
-             <span class="input-group-text" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-            </svg></span>
-               <input type="text" class=" form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
-            </div>
-          <div class="col-3">
-             <button type="submit" class="btn-search  ">搜尋</button>
-        </div>
-    </div>
-             <div class="text-end my-4">
-              <a href="" class="text-dark m-2"><i class="fa-solid fa-trash m-2"></i>刪除產品</a>
-              <a href="" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增產品</a>
+             <div class="d-flex justify-content-between  ">
+                <div class="me-4">
+                    <span class=" input-group-text" id="basic-addon1"><svg 
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="50" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg></span>
+                </div>
+                
+                     <input type="text" class=" form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+                
+                 <div class="ms-4">
+                    <button type="submit" class="btn-search  ">搜尋</button> 
+                 </div>
             </div>
 
+             <div class="d-flex justify-content-between my-4">
+                <h2 class="side ">管理分類</h2>
+                <div class="mt-2">
+                     <a href="" class=" text-dark m-2"><i class="fa-solid fa-trash m-2"></i>刪除產品</a>
+                      <a href="" class="  text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增產品</a>
+                </div>
+                     
+            
+            </div>
 
         <div class="row gy-4">
             <div class="col-md-4">
