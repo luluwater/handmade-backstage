@@ -160,12 +160,13 @@ $db_host = NULL;
             	})
             	.done(function( response ) {
                 	console.log(response);
-                    for(let store of response.stores){
+                    for(let row of response.stores){
                         html=document.createElement("option");
-                        html.textContent=store.name;
-                        html.setAttribute("value",store.id);
+                        html.textContent=row.name;
+                        html.setAttribute("value",row.id);
+                        console.log(html);
+                        store.prepend(html);
                     }                    
-                    store.prepend(html);
             	}).fail(function( jqXHR, textStatus ) {
                 	console.log( "Request failed: " + textStatus );
             	});
