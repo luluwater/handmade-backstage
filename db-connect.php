@@ -2,7 +2,7 @@
 $serverName="localhost";
 $username="admin";
 $password="12345";
-$dbname="handmade";
+$dbname="hand_db";
 
 
 try{

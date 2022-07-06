@@ -5,6 +5,7 @@
     --main-word-color: #3F3F3F;
     --thead-color: #d6624f;
     --header-hieght: 100px;
+    --page-number-color: #3f3f3f;
 }
 main{
     padding: 130px 100px 0 300px;
@@ -44,12 +45,23 @@ a{
 .count-bg{
     background: var(--bg-color);
     padding: 0px 5px;
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;    
+}
+.page-link{
+    border:none;
+    color:var(--page-number-color);
+}
+.page-link.active{
+    background: transparent;
+    color:var(--main-color);
 }
 .table-head{
     background: var(--bg-color);
 }
 .table{
-    height: 550px;
+    min-height: 550px;
 }
 .sidebar{
     width: 256px;
