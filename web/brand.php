@@ -23,8 +23,8 @@
      }
       .title{
         color:var(--line-color);
-        margin-top:-20px;
-        font-size:36px;
+        margin-top:-5px;
+        font-size:24px;
         
       }
       .delAndAdd{
@@ -37,6 +37,9 @@
           padding:5px 20px ;
           color:white;
          
+      }
+      .count-bg{
+        margin-bottom:20px;
       }
       .btn-search{
         background: var( --line-color);
@@ -58,37 +61,19 @@
     require("./main-menu.html");
     ?>
      <main>
-      <i class="fa-solid fa-bars-filter"></i>
-          <div class="container-fluid">
-            <div class="d-flex justify-content-between">
-                <h1 class="title">課程管理</h1>
+             <div class="container-fluid">
+            <div class="d-flex justify-content-between mb-3">
+                <p class="title">課程管理</p>
                 <p>顯示 
                   <select class="count-bg text-center" aria-label="Default select example">
-                    <option value="1" selected>6</option>
-                    <option value="2">12</option>
-                    <option value="3">18</option>
-                    <option value="4">24</option>
-                    <option value="5">30</option>
+                    <option value="1" selected>5</option>
+                    <option value="2">10</option>
                   </select> 
                   筆數
                 </p>
             </div>
-             <div class=" mt-3 d-flex justify-content-between  ">
-                <div class="me-4">
-                    <span class=" input-group-text" id="basic-addon1"><svg 
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="50" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                  </svg></span>
-                </div>
-                     <input type="text"
-                      class=" form-control" 
-                      placeholder="Search" 
-                      aria-label="Search"
-                       aria-describedby="basic-addon1">
-                 <div class="ms-4">
-                    <button type="submit" class="btn-search  ">搜尋</button> 
-                 </div>
-            </div>
+            <?php require("./mod/search-bar.php") ?>
+           
 
              <div class=" d-flex justify-content-between my-4">
                 <h2 class="side ">管理分類</h2>
@@ -192,7 +177,7 @@
                 </div>
             </div>
             <div class="footer">
-                <?php require("./mod/pagination.php") ?>
+                <?php require("./mod/search-category.php") ?>
             </div>
           
          
