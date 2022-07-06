@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"  integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <head><link rel="stylesheet" href="../css/style.css"></head>
     <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
- 
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
   </head>
   <body>
     <?php
@@ -71,30 +71,121 @@
 
             <h5  class="mb-3">文章編輯</h5>
 
-            <form action="">
-                <!-- <textarea id="editor" style="height:160px" name="editor" class="editor"> 123</textarea> -->
-                <div class="input-field">
-                    <label for="title">輸入標題</label>
-                    <input type="text" name="article-title" id="title">
-                </div>
-
-                <textarea name="article-content" id="article-editor" cols="30" rows="10"></textarea>
-                
-                <div class="mt-4 d-flex justify-content-end gap-3">
-                    <button class="btn btn-bg-color">預覽</button>
-                    <input type="submit" value="儲存文章" name="submitData" class="btn btn-main-color"></input>
-                </div>
-            </form>
-
+            <div id="editor">This is the initial editor content.</div>
 
         </div>
 
     </main>
-
-    <script src="./ckeditor/ckeditor.js"></script>
-  
     <script>
-      CKEDITOR.replace("article-editor")
+        ClassicEditor.create(document.getElementById("editor"), {
+                toolbar: {
+                    items: [
+                        'exportPDF','exportWord', '|',
+                        'findAndReplace', 'selectAll', '|',
+                        'heading', '|',
+                        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                        'bulletedList', 'numberedList', 'todoList', '|',
+                        'outdent', 'indent', '|',
+                        'undo', 'redo',
+                        '-',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                        'alignment', '|',
+                        'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+                        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                        'textPartLanguage', '|',
+                        'sourceEditing',
+                        'imageStyle:block',
+                        'imageStyle:side',
+                        '|',
+                        'toggleImageCaption',
+                        'imageTextAlternative',
+                        '|',
+                        'linkImage'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                list: {
+                    properties: {
+                        styles: true,
+                        startIndex: true,
+                        reversed: true
+                    }
+                },
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                    ]
+                },
+                placeholder: 'Welcome to CKEditor 5!',
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Arial, Helvetica, sans-serif',
+                        'Courier New, Courier, monospace',
+                        'Georgia, serif',
+                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                        'Tahoma, Geneva, sans-serif',
+                        'Times New Roman, Times, serif',
+                        'Trebuchet MS, Helvetica, sans-serif',
+                        'Verdana, Geneva, sans-serif'
+                    ],
+                    supportAllValues: true
+                },
+                fontSize: {
+                    options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                    supportAllValues: true
+                },
+                htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
+                },
+                htmlEmbed: {
+                    showPreviews: true
+                },
+            
+                link: {
+                    decorators: {
+                        addTargetToExternalLinks: true,
+                        defaultProtocol: 'https://',
+                        toggleDownloadable: {
+                            mode: 'manual',
+                            label: 'Downloadable',
+                            attributes: {
+                                download: 'file'
+                            }
+                        }
+                    }
+                },
+                mention: {
+                    feeds: [
+                        {
+                            marker: '@',
+                            feed: [
+                                '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                '@sugar', '@sweet', '@topping', '@wafer'
+                            ],
+                            minimumCharacters: 1
+                        }
+                    ]
+                },
+        
+              
+            });
+        </script>
     </script>
   </body>
 </html>
