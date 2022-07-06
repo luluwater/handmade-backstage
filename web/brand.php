@@ -11,16 +11,7 @@
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/style.css">
-
-
     <style>
-      :root{
-        --bg-color: #eee6de;
-        --main-color: #e65947;
-        --line-color: #ddb9a2;
-        --main-word-color:#3F3F3F;
-        --header-height: 100px;
-     }
       .title{
         color:var(--line-color);
         margin-top:5px;
@@ -76,7 +67,7 @@
            
 
              <div class=" d-flex justify-content-between my-4">
-                <h2 class="side ">管理分類</h2>
+                <button class="side btn-bg-color ">管理分類</button>
                 <div class="delAndAdd ">
                      <a href="" class=" text-dark m-4"><i class="fa-solid fa-trash m-2"></i>刪除產品</a>
                       <a href="" class="  text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增產品</a>
