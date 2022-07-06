@@ -11,7 +11,7 @@
         <div class="col-6">
             <input class="form-control" type="search" name="search" id="">
         </div>
-        <div class="col-1">
+        <div class="col-4">
             <a href="" class="btn btn-bg-color">搜索</a>
         </div>
     </div>

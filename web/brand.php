@@ -23,7 +23,7 @@
      }
       .title{
         color:var(--line-color);
-        margin-top:-5px;
+        margin-top:5px;
         font-size:24px;
         
       }
@@ -72,7 +72,7 @@
                   筆數
                 </p>
             </div>
-            <?php require("./mod/search-bar.php") ?>
+            <?php require("./mod/search-category.php") ?>
            
 
              <div class=" d-flex justify-content-between my-4">
@@ -177,7 +177,7 @@
                 </div>
             </div>
             <div class="footer">
-                <?php require("./mod/search-category.php") ?>
+                <?php require("./mod/pagination.php") ?>
             </div>
           
          
