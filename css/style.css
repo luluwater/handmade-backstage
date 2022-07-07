@@ -136,7 +136,7 @@ a{
 .select-category{
     width: 600px;
     height: 35px;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .blog-search-input{
@@ -211,4 +211,9 @@ a{
 
 .editor{
     height: 250px;
+}
+
+.trHover:hover{
+    background:#eee;
+    cursor: pointer;
 }

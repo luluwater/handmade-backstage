@@ -1,7 +1,8 @@
 <?php
-$content=isset($_POST["content"]);
+
+$content=$_POST["content"];
 
 
-echo $content;
+echo "content:"$content;
 
 ?>

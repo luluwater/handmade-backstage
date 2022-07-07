@@ -1,3 +1,26 @@
+<?php
+
+require_once("../db-connect.php");
+
+$stmt=$db_host->prepare("SELECT * FROM blog");
+
+try {
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  
+
+} catch (PDOException $e) {
+    echo "預處理陳述式執行失敗！ <br/>";
+    echo "Error: " . $e->getMessage() . "<br/>";
+    $db_host = NULL;
+    exit;
+}
+
+$db_host = NULL;
+
+
+?>
+
 
 <!doctype html>
 <html lang="en">
@@ -12,6 +35,7 @@
     <head><link rel="stylesheet" href="../css/style.css"></head>
 
     <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
   </head>
   <body>
@@ -26,42 +50,42 @@
         <div class="d-flex mt-4">
 
         <div class="fs-6 container d-flex align-items-center justify-content-between w-50 ms-0 gap-5">
-            
-            <select name="" class="select" >
-                <option selected="selected" value="keyword">關鍵字</option>
-                <option  value="date">日期</option>
-                <option value="category">分類</option>
+
+            <select name="" class="select" id="select-1" onChange="changeOption()">
+                <option selected="selected" value="keyword" id="keyword">關鍵字</option>
+                <option  value="date" id="date">日期</option>
+                <option value="category" id="category">分類</option>
             </select>
             
-            <form  class="input-group"  action="">
-                <span class="input-group-text bg-white" id="basic-addon1">
+            <form  class="input-group"  action="filter-blog.php">
+                <span class="input-group-text bg-white"  id="searchIcon">
                     <i class="fas fa-search"></i>
                 </span>
                 <input 
                     type="text"
-                    type="<?php
-                    /**
-                    * 拿到上面 option 的 value 後用 switch 改變顯示方式。
-                    * 
-                    */
-                     ?>" 
-                    class="form-control fs-6  " placeholder="Search..." aria-label="Username" aria-describedby="search blog">
-                    <a href="" type="submit" class="fs-6 btn btn-bg-color">搜索</a>
-                    <!-- <select name="category" class="select-category" id="category" >
-                        <option selected="selected" value="category">請選擇分類</option>
+                    class="form-control fs-6" id="textInput" placeholder="Search..." aria-label="search with text input field" aria-describedby="search blog">
+
+                <input 
+                    type="date"
+                    class="form-control fs-6 d-none" id="dateInput" placeholder="Search..." aria-label="search with date input field" aria-describedby="search blog">
+             
+                    <select name="category" class="select-category rounded d-none" id="allCategory" >
+                        <option selected="selected" value="category" >請選擇分類</option>
                         <option value="metalwork">金工</option>
                         <option value="pottery">陶藝</option>
                         <option value="floral">花藝</option>
                         <option value="leather">皮革</option>
                         <option value="tufting">簇絨</option>
-                  </select> -->
+                  </select>
+
+                  <a href="" type="submit" class="fs-6 btn btn-bg-color" id="submitButton">搜索</a>
             </form>
         </div>
 
         <div class="d-flex align-items-start w-25 justify-content-between"> 
             <div class="d-flex align-items-end">
-                <a href="" class="btn btn-secondary btn-sm ">+</a>
-                <span class="fs-6 ms-3">發表新文章</span>
+                <a href="add-blog.php" class="btn btn-secondary btn-sm ">+
+                <span class="fs-6 ms-3">發表新文章</span></a>
             </div>
              <div class="fs-6" >顯示 
                 <select class="count-bg text-center" aria-label="Default select example">
@@ -87,53 +111,18 @@
                 </tr>
               </thead>
               <tbody>
-                  <tr class="border-bottom">
-                    <td class="text-start pb-2">2022/07/06</td>
-                    <td class="text-start td-height">一次就上手！小紅書上最火「Tufting手作地毯」台灣也玩得到，做完立即讓你帶回家</td>
-                    <td>金工</td>
+                  <?php foreach( $rows as $row) :?>
+                  <tr class="trHover border-bottom">
+                    <td class="text-start pb-2"><?=$row["create_time"]?></td>
+                    <td class="text-start td-height"><?=$row["title"]?></td>
+                    <td><?=$row["category_id"]?></td>
                     <td><i class="fas fa-eye"></i></td>
                     <td>55</td>
                     <td>24</td>
                     <td class="text-end"><i class="fas fa-pen"></i></td>
                   </tr>
-                  <tr class="border-bottom">
-                    <td class="text-start pb-2">2022/07/06</td>
-                    <td class="text-start td-height">一次就上手！小紅書上最火「Tufting手作地毯」台灣也玩得到，做完立即讓你帶回家</td>
-                    <td>金工</td>
-                    <td><i class="fas fa-eye"></i></td>
-                    <td>55</td>
-                    <td>24</td>
-                    <td class="text-end"><i class="fas fa-pen"></i></td>
-                  </tr>
-                  <tr class="border-bottom">
-                    <td class="text-start pb-2">2022/07/06</td>
-                    <td class="text-start td-height">一次就上手！小紅書上最火「Tufting手作地毯」台灣也玩得到，做完立即讓你帶回家</td>
-                    <td>金工</td>
-                    <td><i class="fas fa-eye"></i></td>
-                    <td>55</td>
-                    <td>24</td>
-                    <td class="text-end"><i class="fas fa-pen"></i></td>
-                  </tr>
-                  <tr class="border-bottom">
-                    <td class="text-start pb-2">2022/07/06</td>
-                    <td class="text-start td-height">一次就上手！小紅書上最火「Tufting手作地毯」台灣也玩得到，做完立即讓你帶回家</td>
-                    <td>金工</td>
-                    <td><i class="fas fa-eye"></i></td>
-                    <td>55</td>
-                    <td>24</td>
-                    <td class="text-end"><i class="fas fa-pen"></i></td>
-                  </tr>
-                  <tr class="border-bottom">
-                    <td class="text-start pb-2">2022/07/06</td>
-                    <td class="text-start td-height">一次就上手！小紅書上最火「Tufting手作地毯」台灣也玩得到，做完立即讓你帶回家</td>
-                    <td>金工</td>
-                    <td><i class="fas fa-eye"></i></td>
-                    <td>55</td>
-                    <td>24</td>
-                    <td class="text-end"><i class="fas fa-pen"></i></td>
-                  </tr>
+                <?php endforeach; ?>
         
-                
               </tbody>
     </table>
 
@@ -143,6 +132,43 @@
 
     </main>
 
+
+    <script>
+
+            function changeOption() {
+                let select1 = document.getElementById('select-1');
+                let option1 = select1.options[select1.selectedIndex].value;
+
+                switch (option1) {
+                  case "keyword":
+                    console.log(option1)
+                    document.getElementById("searchIcon").classList.remove('d-none');
+                    document.getElementById("textInput").classList.remove('d-none');
+                    document.getElementById("submitButton").classList.remove('d-none');
+                    document.getElementById("dateInput").classList.add('d-none');
+                    document.getElementById("allCategory").classList.add('d-none');
+                    break;
+                  case "date":
+                    document.getElementById("searchIcon").classList.add('d-none');
+                    document.getElementById("textInput").classList.add('d-none');
+                    document.getElementById("dateInput").classList.remove('d-none');
+                    document.getElementById("allCategory").classList.add('d-none');
+                    document.getElementById("submitButton").classList.add('d-none');
+                    break;
+                  case "category":
+                    document.getElementById("searchIcon").classList.add('d-none');
+                    document.getElementById("textInput").classList.add('d-none');
+                    document.getElementById("dateInput").classList.add('d-none');
+                    document.getElementById("allCategory").classList.remove('d-none');
+                    document.getElementById("submitButton").classList.add('d-none');
+                    break;
+
+                  default:
+                    break;
+                }        
+        }
+
+    </script>
 
   </body>
 </html>

@@ -14,7 +14,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-
     </head>
 
   <body>
@@ -76,7 +75,7 @@
             <form action="preview-blog.php" method="post">
                 <h5  class="mb-3">文章編輯</h5>
 
-                <div id="editor" name="content">This is the initial editor content.</div>
+                <teatarea id="editor" name="content"></teatarea>
                 <div class="d-flex gap-3 mt-3 justify-content-end">
                     <button type="submit" class="btn btn-bg-color">預覽文章</button>
                     <button type="submit" class="btn btn-main-color">儲存文章</button>
