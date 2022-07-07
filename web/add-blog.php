@@ -10,8 +10,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"  integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <head><link rel="stylesheet" href="../css/style.css"></head>
     <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
-  </head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+
+    </head>
+
   <body>
     <?php
     require("./main-menu.html");
@@ -68,124 +73,45 @@
                 </div>
             </div>
 
+            <form action="preview-blog.php" method="post">
+                <h5  class="mb-3">文章編輯</h5>
 
-            <h5  class="mb-3">文章編輯</h5>
-
-            <div id="editor">This is the initial editor content.</div>
-
+                <div id="editor" name="content">This is the initial editor content.</div>
+                <div class="d-flex gap-3 mt-3 justify-content-end">
+                    <button type="submit" class="btn btn-bg-color">預覽文章</button>
+                    <button type="submit" class="btn btn-main-color">儲存文章</button>
+                </div>
+            </form>
         </div>
 
     </main>
-    <script>
-        ClassicEditor.create(document.getElementById("editor"), {
-                toolbar: {
-                    items: [
-                        'exportPDF','exportWord', '|',
-                        'findAndReplace', 'selectAll', '|',
-                        'heading', '|',
-                        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
-                        'bulletedList', 'numberedList', 'todoList', '|',
-                        'outdent', 'indent', '|',
-                        'undo', 'redo',
-                        '-',
-                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
-                        'alignment', '|',
-                        'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
-                        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
-                        'textPartLanguage', '|',
-                        'sourceEditing',
-                        'imageStyle:block',
-                        'imageStyle:side',
-                        '|',
-                        'toggleImageCaption',
-                        'imageTextAlternative',
-                        '|',
-                        'linkImage'
-                    ],
-                    shouldNotGroupWhenFull: true
-                },
-                list: {
-                    properties: {
-                        styles: true,
-                        startIndex: true,
-                        reversed: true
-                    }
-                },
-                heading: {
-                    options: [
-                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-                        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-                        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-                        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
-                    ]
-                },
-                placeholder: 'Welcome to CKEditor 5!',
-                fontFamily: {
-                    options: [
-                        'default',
-                        'Arial, Helvetica, sans-serif',
-                        'Courier New, Courier, monospace',
-                        'Georgia, serif',
-                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                        'Tahoma, Geneva, sans-serif',
-                        'Times New Roman, Times, serif',
-                        'Trebuchet MS, Helvetica, sans-serif',
-                        'Verdana, Geneva, sans-serif'
-                    ],
-                    supportAllValues: true
-                },
-                fontSize: {
-                    options: [ 10, 12, 14, 'default', 18, 20, 22 ],
-                    supportAllValues: true
-                },
-                htmlSupport: {
-                    allow: [
-                        {
-                            name: /.*/,
-                            attributes: true,
-                            classes: true,
-                            styles: true
-                        }
-                    ]
-                },
-                htmlEmbed: {
-                    showPreviews: true
-                },
-            
-                link: {
-                    decorators: {
-                        addTargetToExternalLinks: true,
-                        defaultProtocol: 'https://',
-                        toggleDownloadable: {
-                            mode: 'manual',
-                            label: 'Downloadable',
-                            attributes: {
-                                download: 'file'
-                            }
-                        }
-                    }
-                },
-                mention: {
-                    feeds: [
-                        {
-                            marker: '@',
-                            feed: [
-                                '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
-                                '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
-                                '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
-                                '@sugar', '@sweet', '@topping', '@wafer'
-                            ],
-                            minimumCharacters: 1
-                        }
-                    ]
-                },
-        
-              
-            });
-        </script>
-    </script>
+    
+
+
+
+    <script src="https://unpkg.com/ckeditor5/build/ckeditor5-dll.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-editor-classic/build/editor-classic.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-essentials/build/essentials.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-adapter-ckfinder/build/adapter-ckfinder.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-autoformat/build/autoformat.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-basic-styles/build/basic-styles.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-block-quote/build/block-quote.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-ckfinder/build/ckfinder.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-easy-image/build/easy-image.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-heading/build/heading.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-image/build/image.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-indent/build/indent.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-link/build/link.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-list/build/list.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-media-embed/build/media-embed.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-paste-from-office/build/paste-from-office.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-table/build/table.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-cloud-services/build/cloud-services.js"></script>
+    <script src="https://unpkg.com/@ckeditor/ckeditor5-html-embed/build/html-embed.js"></script>
+    <script src="./helper/editor.js"></script>
+
   </body>
 </html>
+
+
+
