@@ -1,3 +1,14 @@
+<?php
+require_once("../db-connect.php");
+
+$stmt=$db_host->prepare("SELECT course.id,name,amount,price,sold_amount,state FROM course");
+$stmt->execute();    
+$rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
+
+
+
+
+?>
 <!doctype html>
 <html lang="tw-zh">
 
@@ -51,17 +62,19 @@
                 </tr>
               </thead>
               <tbody>
+                <?php foreach($rows as $row): ?>                  
                   <tr>
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td><?=$row["id"]?></td>
+                    <td><?=$row["name"]?></td>
+                    <td><?=$row["amount"]?></td>
+                    <td><?=$row["price"]?></td>
+                    <td><?=$row["sold_amount"]?></td>
+                    <td><?=$row["state"]?></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><a href="view-course.php?course=<?=$row["id"]?>"><i class="fa-solid fa-pen"></i></a></td>
                   </tr>
+                  <?php endforeach; ?>
               </tbody>
             </table>
             <?php require("./mod/page-number.php") ?>

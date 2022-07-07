@@ -86,7 +86,7 @@
 
 
 
-    // $db_host = NULL;
+    $db_host = NULL;
 
-    header("location: view-product.php?$type=$id");
+    header("location: view-$type.php?$type=$id");
 ?>

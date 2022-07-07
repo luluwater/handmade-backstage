@@ -1,15 +1,15 @@
 <?php
 require_once("../db-connect.php");
 
-$product_id=$_GET["product"]??0;
+$course_id=$_GET["course"]??0;
 
 
-$stmt=$db_host->prepare("SELECT product.*,category.*,store.name AS store_name FROM product JOIN category ON product.category_id = category.id JOIN store ON product.store_id = store.id WHERE product.id = ?");
-$stmtImg=$db_host->prepare("SELECT * FROM product_img WHERE product_img.product_id = ?");
+$stmt=$db_host->prepare("SELECT course.*,category.*,store.name AS store_name FROM course JOIN category ON course.category_id = category.id JOIN store ON course.store_id = store.id WHERE course.id = ?");
+$stmtImg=$db_host->prepare("SELECT * FROM course_img WHERE course_img.course_id = ?");
 try{    
-    $stmt->execute([$product_id]);    
+    $stmt->execute([$course_id]);    
     $row=$stmt->fetch();
-    $stmtImg->execute([$product_id]);    
+    $stmtImg->execute([$course_id]);    
     $rowsImg=$stmtImg->fetchAll(PDO::FETCH_ASSOC);
     // print_r($row);   
 }catch (PDOException $e){
@@ -38,7 +38,7 @@ try{
   <?php    require("./main-menu.html");    ?>
   <main>
     <?php
-    if(!isset($_GET["product"]) || $row == null){
+    if(!isset($_GET["course"]) || $row == null){
         echo "查無此商品";
         exit;
     }
@@ -49,7 +49,7 @@ try{
         <?php foreach($rowsImg as $img): ?>
         <div class="col-auto">
           <input class="d-none upload_image" type="file" name="product_img1" accept="image/*" required readonly>
-          <img src="../img/product/product<?= $row["category_en_name"].'_'.$product_id.'/'.$img["img_name"] ?>"
+          <img src="../img/course/course_<?= $row["category_en_name"].'_'.$course_id.'/'.$img["img_name"] ?>"
           class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
         </div>
         <?php endforeach; ?>
@@ -94,8 +94,20 @@ try{
         <div class="col-5 d-flex gy-3  align-items-center">
           <label class="col-2 me-2" for="type">商品類型</label>
           <select id="type" class="form-select col" aria-label="Default select example" name="type" disabled>
-            <option value="product">實體商品</option>
+            <option value="course">體驗課程</option>
           </select>
+        </div>
+      </div>
+      <div id="course">
+        <div class="my-3 row align-items-center">
+          <label class="col-1" for="datetime">課程日程</label>
+          <input class="col form-control" type="datetime-local" name="datetime" readonly value="<?= $row["course_date"]
+            ?>">
+        </div>
+        <div class="my-3 row align-items-center">
+          <label class="col-1" for="hour">課程時常</label>
+          <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常" required
+            readonly value="<?= $row["course_time"] ?>">
         </div>
       </div>
       <div class="my-3 row align-items-center">
