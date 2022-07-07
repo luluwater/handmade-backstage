@@ -1,30 +1,26 @@
 <?php
 
-if(!isset($_POST["id"])){
-    echo "沒有參數";
-    exit;
-}
-
 require("../db-connect.php");
 
 $data=[
-    ':id'=>$_POST["id"],
     ':name'=>$_POST["name"],
     ':content'=>$_POST["content"],
-    ':product_discount'=>$_POST["product_discount"],
+    ':coupon_discount'=>$_POST["coupon_discount"],
+    ':amount'=>$_POST["amount"],
+    ':discount_code'=>$_POST["discount_code"],
     ':start_date'=>$_POST["start_date"],
     ':end_date'=>$_POST["end_date"],
 ];
 
-$sql = "UPDATE discount SET 
-name=:name, content=:content, product_discount=:product_discount,
-start_date=:start_date, end_date=:end_date
-WHERE id=:id";
+$sql="INSERT INTO coupon
+(name, content, coupon_discount, amount, discount_code, start_date, end_date, state)
+VALUES(:name, :content, :coupon_discount, :amount, :discount_code, :start_date, :end_date, 1)";
+
 $stmt = $db_host->prepare($sql);
 
 try {
     $stmt->execute($data);
-    // echo "成功";
+    echo "成功";
     
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -32,6 +28,7 @@ try {
     $db_host = NULL;
     exit;
 }
+$id = $db_host->lastInsertId();
+// header("location: coupon.php");
 
-header("location: discount.php");
 ?>

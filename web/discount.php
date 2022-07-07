@@ -3,7 +3,7 @@ require("../db-connect.php");
 
 
 //每頁顯示的資料
-$sql = "SELECT * FROM discount";
+$sql = "SELECT * FROM discount WHERE state!=0";
 $result= $db_host->prepare($sql);
 $result->execute();
 $rows = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -47,7 +47,7 @@ $rows = $result->fetchAll(PDO::FETCH_ASSOC);
     <main>
       <div class="mb-4">
         <?php 
-        require("./mod/status-bar-sale.php");
+        require("./mod/status-bar-discount.php");
         ?>
       </div>
         
@@ -64,7 +64,7 @@ $rows = $result->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <?php require("./mod/search-bar-sale.php") ?>
             <div class="text-end my-4">
-              <a href="" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
+              <a href="discount-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
             </div>
             <table class="table">
               <thead class="table-head">
@@ -85,7 +85,7 @@ $rows = $result->fetchAll(PDO::FETCH_ASSOC);
                     <td><?=$row["state"]?></td>
                     <td>
                         <a href="discount-edit.php?id=<?=$row["id"]?>" name="edit">編輯</a> <br>
-                        <a href="" name="delete">刪除</a>
+                        <a href="discount-doDelete.php?id=<?=$row["id"]?>" name="delete">刪除</a>
                     </td>
                   </tr>
               <?php endforeach; ?>

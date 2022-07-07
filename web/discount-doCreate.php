@@ -1,14 +1,8 @@
 <?php
 
-if(!isset($_POST["id"])){
-    echo "沒有參數";
-    exit;
-}
-
 require("../db-connect.php");
 
 $data=[
-    ':id'=>$_POST["id"],
     ':name'=>$_POST["name"],
     ':content'=>$_POST["content"],
     ':product_discount'=>$_POST["product_discount"],
@@ -16,11 +10,12 @@ $data=[
     ':end_date'=>$_POST["end_date"],
 ];
 
-$sql = "UPDATE discount SET 
-name=:name, content=:content, product_discount=:product_discount,
-start_date=:start_date, end_date=:end_date
-WHERE id=:id";
+$sql = "INSERT INTO discount 
+(name, content, product_discount, start_date, end_date, state)
+VALUES(:name, :content, :product_discount, :start_date, :end_date, 1)";
+
 $stmt = $db_host->prepare($sql);
+
 
 try {
     $stmt->execute($data);
@@ -32,6 +27,7 @@ try {
     $db_host = NULL;
     exit;
 }
+$id = $db_host->lastInsertId();
 
 header("location: discount.php");
 ?>

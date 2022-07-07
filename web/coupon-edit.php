@@ -78,17 +78,17 @@ $discountCount=$result->rowCount();
                         name="content"><?=$row["content"]?></textarea></li>
                         <li>折數</li>
                         <li><input type="text" class="form-control my-3" style="width: 1200px;" 
-                        name="product_discount" value="<?=$row["coupon_discount"]?>"></li>
+                        name="coupon_discount" value="<?=$row["coupon_discount"]?>"></li>
                         <div class="d-flex">
                             <div class="pe-4">
                                 <li class="pt-4">發放張數</li>
                                 <li><input type="text" class="form-control my-3" style="width: 500px;" 
-                                name="product_discount" value="<?=$row["amount"]?>"></li>
+                                name="amount" value="<?=$row["amount"]?>"></li>
                             </div>
                             <div class="ps-4">
                                 <li class="pt-4">折扣碼</li>
                                 <li><input type="text" class="form-control my-3" style="width: 500px;" 
-                                name="product_discount" value="<?=$row["discount_code"]?>"></li>
+                                name="discount_code" value="<?=$row["discount_code"]?>"></li>
                             </div>
                         </div>
                         <li>活動期間</li>

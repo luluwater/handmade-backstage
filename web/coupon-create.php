@@ -2,7 +2,7 @@
 
 require("../db-connect.php");
 
-$sql = "SELECT * FROM discount";
+$sql = "SELECT * FROM coupon";
 
 $result= $db_host->prepare($sql);
 $result->execute();
@@ -14,7 +14,7 @@ $discountCount=$result->rowCount();
 <!doctype html>
 <html lang="en">
   <head>
-    <title>一般折扣-新增-手手</title>
+    <title>優惠券-新增-手手</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -57,20 +57,29 @@ $discountCount=$result->rowCount();
         <?php if($discountCount > 0):?>
         <div class="container-fluid">
             <div class="d-flex justify-content-between">
-                <p class="title">新增一般折扣</p>
+                <p class="title">新增優惠券</p>
             </div>
-            <form action="discount-doCreate.php" method="POST">
+            <form action="coupon-doCreate.php" method="POST" class="mb-3">
                 <div></div>
                     <ul>
                         <input type="hidden" name="id">
-                        <li>活動名稱</li>
+                        <li>優惠券名稱</li>
                         <li><input type="text" class="form-control my-3" style="width: 1200px;" name="name"></li>
-                        <li>活動簡介</li>
+                        <li>優惠券簡介</li>
                         <li><textarea type="text" class="form-control my-3 content" style="width: 1200px; height:350px;" 
                         name="content"></textarea></li>
                         <li>折數</li>
-                        <li><input type="text" class="form-control my-3" style="width: 1200px;" 
-                        name="product_discount"></li>
+                        <li><input type="text" class="form-control my-3" style="width: 1200px;" name="coupon_discount"></li>
+                        <div class="d-flex">
+                            <div class="pe-4">
+                                <li class="pt-4">發放張數</li>
+                                <li><input type="text" class="form-control my-3" style="width: 500px;" name="amount"></li>
+                            </div>
+                            <div class="ps-4">
+                                <li class="pt-4">折扣碼</li>
+                                <li><input type="text" class="form-control my-3" style="width: 500px;" name="discount_code"></li>
+                            </div>
+                        </div>
                         <li>活動期間</li>
                         <li class="d-flex">
                             <input type="date" class="form-control my-3 me-3" style="width: 500px;" name="start_date">
@@ -79,7 +88,7 @@ $discountCount=$result->rowCount();
                         </li>
                     </ul>
                     <div class="text-end me-5 button">
-                        <a href="discount.php" class="btn btn-cancel mx-2">取消</a>
+                        <a href="coupon.php" class="btn btn-cancel mx-2">取消</a>
                         <button class="btn btn-red mx-2" type="submit">儲存</button>
                     </div>
             </form>

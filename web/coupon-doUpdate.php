@@ -1,32 +1,32 @@
 <?php
 
-if(!isset($_GET["id"])){
+if(!isset($_POST["id"])){
     echo "沒有參數";
     exit;
 }
 
 require("../db-connect.php");
 
+$data=[
+    ':id'=>$_POST["id"],
+    ':name'=>$_POST["name"],
+    ':content'=>$_POST["content"],
+    ':coupon_discount'=>$_POST["coupon_discount"],
+    ':amount'=>$_POST["amount"],
+    ':discount_code'=>$_POST["discount_code"],
+    ':start_date'=>$_POST["start_date"],
+    ':end_date'=>$_POST["end_date"],
+];
+
 $sql = "UPDATE coupon SET 
-(`name`, `content`, `coupon_discount`, `amount`, `discount_code`, `start_date`, `end_date`)
-VALUES(?, ?, ?, ?, ?)
+name=:name, content=:content, coupon_discount=:coupon_discount,
+amount=:amount, discount_code=:discount_code, start_date=:start_date, end_date=:end_date
 WHERE id=:id";
 $stmt = $db_host->prepare($sql);
 
-$values = [
-    $_POST["name"],
-    $_POST["content"],
-    $_POST["coupon_discount"],
-    $_POST["amount"],
-    $_POST["discount_code"],
-    $_POST["start_date"],
-    $_POST["end_date"],
-];
-
-
 try {
-    $stmt->execute($values);
-    echo "資料修改成功";
+    $stmt->execute($data);
+    // echo "成功";
     
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -35,6 +35,6 @@ try {
     exit;
 }
 
-// $sth->execute([$name, $content, $product_discount, $start_date, $end_date]);
-// header("location: discount.php");
+header("location: coupon.php");
+
 ?>
