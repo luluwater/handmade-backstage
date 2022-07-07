@@ -90,8 +90,8 @@ $db_host = NULL;
                     <div class="col-5 d-flex gy-3  align-items-center">
                         <label class="col-2 me-2" for="type">商品類型</label>
                         <select id="type" class="form-select col" aria-label="Default select example" name="type">
-                        <option value="體驗課程">體驗課程</option>
-                        <option value="實體商品">實體商品</option>                    
+                        <option value="course">體驗課程</option>
+                        <option value="product">實體商品</option>                    
                         </select>
                     </div>
                 </div>                
@@ -103,7 +103,7 @@ $db_host = NULL;
                     </div>
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="hour">課程時常</label>
-                        <input class="col form-control" type="number" name="hour" placeholder="請輸入課程時常" required>
+                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常" required>
                     </div>
                 </div>
                 <div class="my-3 row align-items-center">
