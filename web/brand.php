@@ -85,9 +85,9 @@
                 <div >
                     <input type="checkbox" value="1" name="Product_1"><br>
                     <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/spiderman.jpg" alt="">
+                       <img class="object-cover" src="../imagesTest/store_leather_Shekinah_kv.jpg" alt="">
                     </figure>
-                     <h2 class="mb-2 text-center h4">店家名稱</h2>
+                     <h2 class="mb-2 text-center h4">皮革</h2>
 
                     <div class="py-2">
                         <div class="d-grid">
@@ -100,9 +100,9 @@
                 <div >
                     <input type="checkbox" value="1" name="Product_1"><br>
                     <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/spiderman.jpg" alt="">
+                       <img class="object-cover" src="../imagesTest/tufting_997-studio_kv_5.jpg" alt="">
                     </figure>
-                     <h2 class="mb-2 text-center h4">店家名稱</h2>
+                     <h2 class="mb-2 text-center h4">tufting</h2>
 
                     <div class="py-2">
                         <div class="d-grid">
@@ -115,9 +115,9 @@
                 <div >
                     <input type="checkbox" value="1" name="Product_1"><br>
                     <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/spiderman.jpg" alt="">
+                       <img class="object-cover" src="../imagesTest/花藝＿浪花＿KV＿2.jpg" alt="">
                     </figure>
-                     <h2 class="mb-2 text-center h4">店家名稱</h2>
+                     <h2 class="mb-2 text-center h4">花藝</h2>
 
                     <div class="py-2">
                         <div class="d-grid">
@@ -130,9 +130,9 @@
                 <div >
                     <input type="checkbox" value="1" name="Product_1"><br>
                     <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/spiderman.jpg" alt="">
+                       <img class="object-cover" src="../imagesTest/金工_Minifeast_手環課程_kv4.jpg" alt="">
                     </figure>
-                     <h2 class="mb-2 text-center h4">店家名稱</h2>
+                     <h2 class="mb-2 text-center h4">金工</h2>
 
                     <div class="py-2">
                         <div class="d-grid">
@@ -145,9 +145,9 @@
                 <div >
                     <input type="checkbox" value="1" name="Product_1"><br>
                     <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/spiderman.jpg" alt="">
+                       <img class="object-cover" src="../imagesTest/烘焙_趣玩烘焙_kv_4.jpg" alt="">
                     </figure>
-                     <h2 class="mb-2 text-center h4">店家名稱</h2>
+                     <h2 class="mb-2 text-center h4">烘焙</h2>
 
                     <div class="py-2">
                         <div class="d-grid">
@@ -160,9 +160,9 @@
                 <div >
                     <input type="checkbox" value="1" name="Product_1"><br>
                     <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/spiderman.jpg" alt="">
+                       <img class="object-cover" src="../imagesTest/陶藝_歡樂陶一家_KV_3.jpg" alt="">
                     </figure>
-                     <h2 class="mb-2 text-center h4">店家名稱</h2>
+                     <h2 class="mb-2 text-center h4">陶藝</h2>
 
                     <div class="py-2">
                         <div class="d-grid">
