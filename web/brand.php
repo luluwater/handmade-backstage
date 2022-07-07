@@ -73,8 +73,8 @@
              <div class=" d-flex justify-content-between my-4">
                 <button class="side btn-bg-color ">管理分類</button>
                 <div class="delAndAdd ">
-                     <a href="" class=" text-dark m-4"><i class="fa-solid fa-trash m-2"></i>刪除產品</a>
-                      <a href="" class="  text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增產品</a>
+                     <a href="" class=" text-dark m-4"><i class="fa-solid fa-trash m-2"></i>刪除品牌</a>
+                      <a href="" class="  text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增品牌</a>
                 </div>
                      
             

@@ -13,6 +13,12 @@
                 <option value="1" selected>選擇</option>
                 <option value="2">類別</option>
                 <option value="3">品牌</option>
+                <!-- <option value="4">皮革</option>
+                <option value="5">tufting</option>
+                <option value="6">花藝</option>
+                <option value="7">金工</option>
+                <option value="8">烘焙</option>
+                <option value="9">陶藝</option> -->
                 
             </select>
         </div>
