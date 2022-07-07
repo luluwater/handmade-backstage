@@ -7,6 +7,19 @@ if(isset($_GET["page"])){
     $page=1;
 }
 
+if(isset($_GET["searchType"])){
+    $searchType = $_GET["searchType"];
+}
+else{
+    $searchType = "id";
+}
+
+if(isset($_GET["searchText"])){
+    $searchText = $_GET["searchText"];
+}else{
+    $searchText = "";
+}
+
 $urlParams = [];
 parse_str($_SERVER['QUERY_STRING'], $urlParams);
 print_r($_GET);
@@ -39,11 +52,24 @@ switch($order){
       $orderType="id DESC";
   } 
 
+  
+
+  if($_GET['searchSubmit'] == 'search'){
+    $sql = $db_host->prepare("SELECT course_order.*,order_staus.name AS order_staus FROM course_order JOIN order_staus ON course_order.order_state_id = order_staus.id 
+    WHERE $searchType like ? ORDER BY $orderType LIMIT $start , $pageView");
+
+
+
+
+    
+  }else{
+    $sql = $db_host->prepare("SELECT course_order.*,order_staus.name AS order_staus FROM course_order JOIN order_staus ON course_order.order_state_id = order_staus.id ORDER BY $orderType LIMIT $start , $pageView");
+  }
 
 
 $sqlAll = $db_host->prepare("SELECT * FROM course_order");
 
-$sql = $db_host->prepare("SELECT course_order.*,order_staus.name AS order_staus FROM course_order JOIN order_staus ON course_order.order_state_id = order_staus.id ORDER BY $orderType LIMIT $start , $pageView");
+
 
 try {
     $sqlAll->execute();
@@ -105,6 +131,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
     require("../main-menu.html");
     ?>
     <main>
+        <!-- 顯示比數 -->
         <div class="d-flex justify-content-between ">
             <h2 class="main-h2 mt-3 ms-3">訂單-體驗課程</h2>
             <div class="d-flex justify-content-between align-items-center display-page-box">
@@ -119,7 +146,8 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                 </form>
          
                 <p class="m-0">筆</p>
-            </div> <!-- 第一行結束 -->
+            </div> 
+             <!-- 顯示比數結束 -->
 
         </div>
 
@@ -127,27 +155,28 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 
         <div class="ms-3 mt-3">
             <form action="course_order-list.php" method="get" class="d-flex">
-                <select class="form-select search-filter" name="searchType" >
-                    <option selected value="order-id">訂單編號</option>
-                    <option value="create_time">訂單日期</option>
-                    <option value="name">訂購人</option>
-                    <option value="order_state_id">訂單狀態</option>
+                <select class="form-select search-filter" name="searchType" onchange="submit();" >
+                    <option value="id" <?php if ($searchType == 'id') print 'selected'; ?>>訂單編號</option>
+                    <option value="create_time" <?php if ($searchType == 'create_time') print 'selected'; ?>>訂單日期</option>
+                    <option value="name" <?php if ($searchType == 'name') print 'selected'; ?>>訂購人</option>
+                    <option value="order_state_id" <?php if ($searchType == 'order_state_id') print 'selected'; ?>>訂單狀態</option>
                 </select>
 
                 <!-- 輸入搜尋 -->
-                <input type="search" class="form-control mx-2 searchText" name="dateSearch" placeholder="請輸入搜尋關鍵字">
+                <input type="search" class="form-control mx-2 searchText <?php if($searchType == "create_time" || $searchType == "order_state_id" )echo "hide"?>" name="searchText"  placeholder="請輸入搜尋關鍵字">
 
                 <!-- 日期搜尋 -->
-                <input type="date" class="form-control mx-2 searchDate hide " name="dateSearch">
+                <input type="date" class="form-control mx-2 searchDate <?php if($searchType == "id" || $searchType == "order_state_id" || $searchType == "name")echo "hide"?>" name="searchText">
+  
 
                 <!-- 訂單狀態搜尋 -->
-                <select name="" id="" class="form-select mx-2 searchState hide">
-                    <option selected value="3">已付款</option>
-                    <option selected value="5">取消</option>
-
+                <select name="searchText" id="" class="form-select mx-2 searchState <?php if($searchType == "id" || $searchType == "create_time" || $searchType == "name")echo "hide"?>">">
+                    <option value="已付款">已付款</option>
+                    <option value="取消">取消</option>
                 </select>
+                
+              <button type="search" class="btn btn-bg-color" name="searchSubmit" value="search">搜尋</button>
 
-                <button type="search" class="btn btn-bg-color" name="searchSubmit">搜尋</button>
             </form>
         </div>
         <!-- 篩選器結束 -->
@@ -173,7 +202,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                             <td><?=$row["id"]?></td>
                             <td><?=$row["create_time"]?></td>
                             <td><?=$row["name"]?></td>
-                            <td>總金額</td>
+                            <td><?=$row["total_amount"]?></td>
                             <td><?=$row["order_staus"]?></td>
                     </tr>
                     <?php endforeach;?>

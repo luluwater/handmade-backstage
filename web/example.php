@@ -15,8 +15,14 @@
     <?php
     require("./main-menu.html");
     ?>
+<<<<<<< HEAD
     <main>
         h
+=======
+  <h1>test</h1>
+
+>>>>>>> 0d806c959ad3d277253010c4d25a7c9c573be94a
     </main>
+
   </body>
 </html>

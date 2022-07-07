@@ -64,7 +64,7 @@
                   </tr>
               </tbody>
             </table>
-            <?php require("./mod/page-number.php") ?>
+            <?php require("./mod/pagination.php") ?>
         </div>
     </main>
 </body>
