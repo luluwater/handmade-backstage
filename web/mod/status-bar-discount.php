@@ -4,7 +4,7 @@
   <ul class="d-flex list-unstyled justify-content-around align-items-center m-0 h-100 ">
   
     <li class="status-button">
-      <a href="" class=  "status-a text-center fs-5" name="all">全部活動</a>
+      <a href="discount.php" class="status-a text-center fs-5" name="all">全部活動</a>
     </li>
     <li class="status-button">
       <a href="" class="status-a text-center fs-5" name="now">進行中</a>
@@ -18,3 +18,4 @@
 
   </ul>
 </div> 
+

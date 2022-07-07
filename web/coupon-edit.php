@@ -54,6 +54,14 @@ $discountCount=$result->rowCount();
                 position: relative;
                 right: 235px;
             }
+            .state-title{
+                position: relative;
+                left: 800px;
+            }
+            select{
+                position: relative;
+                left: 115px;   
+            }
         </style>
   </head>
   <body>
@@ -82,23 +90,34 @@ $discountCount=$result->rowCount();
                         <div class="d-flex">
                             <div class="pe-4">
                                 <li class="pt-4">發放張數</li>
-                                <li><input type="text" class="form-control my-3" style="width: 500px;" 
+                                <li><input type="text" class="form-control my-3" style="width: 576px;" 
                                 name="amount" value="<?=$row["amount"]?>"></li>
                             </div>
                             <div class="ps-4">
                                 <li class="pt-4">折扣碼</li>
-                                <li><input type="text" class="form-control my-3" style="width: 500px;" 
+                                <li><input type="text" class="form-control my-3" style="width: 576px;" 
                                 name="discount_code" value="<?=$row["discount_code"]?>"></li>
                             </div>
                         </div>
-                        <li>活動期間</li>
-                        <li class="d-flex">
-                            <input type="date" class="form-control my-3 me-3" style="width: 500px;" 
-                            name="start_date" value="<?=$row["start_date"]?>">
-                            <div class="pt-4">至</div>
-                            <input type="date" class="form-control my-3 ms-3" style="width: 500px;" 
-                            name="end_date" value="<?=$row["end_date"]?>">
+                        <div class="d-flex">
+                            <li class="pt-4">活動期間</li>
+                            <li class="pt-4 state-title">活動狀態</li>
+                        </div>
+
+                        <div class="d-flex">
+                        <li><input type="date" class="form-control my-3 me-3" style="width: 350px;" 
+                            name="start_date" value="<?=$row["start_date"]?>"></li>
+                        <li><div class="pt-4">至</div></li>
+                        <li><input type="date" class="form-control my-3 ms-3" style="width: 350px;" 
+                            name="end_date" value="<?=$row["end_date"]?>"></li>   
+                        <li>
+                        <select class="form-select my-3" aria-label="Default select example" style="width: 337px;" name="state">
+                        <option  value="1" selected>接下來</option>
+                        <option  value="2">進行中</option>
+                        <option  value="3">已結束</option>
+                        </select>
                         </li>
+                        </div>
                     </ul>
                     <div class="text-end me-5 button">
                         <a href="discount.php" class="btn btn-cancel mx-2">取消</a>

@@ -16,11 +16,12 @@ $data=[
     ':discount_code'=>$_POST["discount_code"],
     ':start_date'=>$_POST["start_date"],
     ':end_date'=>$_POST["end_date"],
+    ':state'=>$_POST["state"],
 ];
 
 $sql = "UPDATE coupon SET 
 name=:name, content=:content, coupon_discount=:coupon_discount,
-amount=:amount, discount_code=:discount_code, start_date=:start_date, end_date=:end_date
+amount=:amount, discount_code=:discount_code, start_date=:start_date, end_date=:end_date, state=:state
 WHERE id=:id";
 $stmt = $db_host->prepare($sql);
 
