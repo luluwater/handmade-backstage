@@ -14,15 +14,42 @@ else{
     $searchType = "id";
 }
 
-if(isset($_GET["searchText"])){
-    $searchText = $_GET["searchText"];
+
+
+
+
+
+if(isset($_GET["keyword"])){
+    $searchText = "'%".$_GET["keyword"]."%'";
+    
 }else{
-    $searchText = "";
+    $_GET["keyword"]="";
 }
 
-$urlParams = [];
-parse_str($_SERVER['QUERY_STRING'], $urlParams);
-print_r($_GET);
+if(isset($_GET["searchDate"])){
+    $searchText = "'%".$_GET["searchDate"]."%'";
+    
+}else{
+    $_GET["searchDate"]="";
+}
+
+if(isset($_GET["searchState"])){
+    $searchText = $_GET["searchState"];
+    
+}else{
+    $_GET["searchState"]="";
+}
+
+if(!isset($_GET["sBtn"])){
+    $_GET["sBtn"]="";
+}
+
+
+
+
+// $urlParams = [];
+// parse_str($_SERVER['QUERY_STRING'], $urlParams);
+// print_r($_GET);
 
 //取得每頁看到幾欄
 $pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']):5;
@@ -52,13 +79,14 @@ switch($order){
       $orderType="id DESC";
   } 
 
-  
 
-  if($_GET['searchSubmit'] == 'search'){
+
+
+  if($_GET['sBtn'] == 's'){
     $sql = $db_host->prepare("SELECT course_order.*,order_staus.name AS order_staus FROM course_order JOIN order_staus ON course_order.order_state_id = order_staus.id 
-    WHERE $searchType like ? ORDER BY $orderType LIMIT $start , $pageView");
+    WHERE $searchType like $searchText ORDER BY $orderType LIMIT $start , $pageView");
 
-
+    print_r($sql);
 
 
     
@@ -117,13 +145,6 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
     <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="css/order-list-style.css">
-
-
-    <style>
-
-
-
-    </style>
 </head>
 
 <body>
@@ -131,7 +152,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
     require("../main-menu.html");
     ?>
     <main>
-        <!-- 顯示比數 -->
+        <!-- 顯示筆數 -->
         <div class="d-flex justify-content-between ">
             <h2 class="main-h2 mt-3 ms-3">訂單-體驗課程</h2>
             <div class="d-flex justify-content-between align-items-center display-page-box">
@@ -147,7 +168,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
          
                 <p class="m-0">筆</p>
             </div> 
-             <!-- 顯示比數結束 -->
+             <!-- 顯示筆數結束 -->
 
         </div>
 
@@ -162,20 +183,21 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                     <option value="order_state_id" <?php if ($searchType == 'order_state_id') print 'selected'; ?>>訂單狀態</option>
                 </select>
 
-                <!-- 輸入搜尋 -->
-                <input type="search" class="form-control mx-2 searchText <?php if($searchType == "create_time" || $searchType == "order_state_id" )echo "hide"?>" name="searchText"  placeholder="請輸入搜尋關鍵字">
-
-                <!-- 日期搜尋 -->
-                <input type="date" class="form-control mx-2 searchDate <?php if($searchType == "id" || $searchType == "order_state_id" || $searchType == "name")echo "hide"?>" name="searchText">
-  
-
-                <!-- 訂單狀態搜尋 -->
-                <select name="searchText" id="" class="form-select mx-2 searchState <?php if($searchType == "id" || $searchType == "create_time" || $searchType == "name")echo "hide"?>">">
-                    <option value="已付款">已付款</option>
-                    <option value="取消">取消</option>
+                <?php if($searchType == 'id') : ?>
+                <input type="search" class="form-control mx-2 searchText" name="keyword"  placeholder="請輸入搜尋關鍵字">
+                <?php elseif($searchType == 'create_time'):?>
+                    <input type="date" class="form-control mx-2 searchDate" name="searchDate">
+                <?php elseif($searchType == 'name'):?>
+                <input type="search" class="form-control mx-2 searchText" name="keyword"  placeholder="請輸入搜尋關鍵字">
+                <?php elseif($searchType == 'order_state_id'):?>
+                    <select name="searchState" id="" class="form-select mx-2 searchState">
+                    <option value="<?php if($searchType == "order_state_id")echo "3"?>">已付款</option>
+                    <option value="<?php if($searchType == "order_state_id")echo "5"?>">取消</option>
                 </select>
+
+                <?php endif ?>
                 
-              <button type="search" class="btn btn-bg-color" name="searchSubmit" value="search">搜尋</button>
+              <button type="search" class="btn btn-bg-color" name="sBtn" value="s">搜尋</button>
 
             </form>
         </div>
@@ -216,7 +238,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center mt-5">
                 <li class="page-item">
-                    <a class="page-link" href="course_order-list.php?page=<?=$PreviousPage?>&pageView=<?=$pageView?>" aria-label="Previous">
+                    <a class="page-link" href="course_order-list.php?page=<?=$PreviousPage?>&pageView=<?=$pageView?>&order=<?=$order?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -228,7 +250,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 
 
                 <li class="page-item">
-                    <a class="page-link" href="course_order-list.php?page=<?=$nextPage?>&pageView=<?=$pageView?>" aria-label="Next">
+                    <a class="page-link" href="course_order-list.php?page=<?=$nextPage?>&pageView=<?=$pageView?>&order=<?=$order?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
