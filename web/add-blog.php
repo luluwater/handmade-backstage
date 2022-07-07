@@ -1,3 +1,28 @@
+<?php
+
+require_once("../db-connect.php");
+
+$stmt=$db_host->prepare("SELECT * FROM blog");
+
+
+
+try {
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  
+
+} catch (PDOException $e) {
+    echo "預處理陳述式執行失敗！ <br/>";
+    echo "Error: " . $e->getMessage() . "<br/>";
+    $db_host = NULL;
+    exit;
+}
+
+$db_host = NULL;
+
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -75,7 +100,7 @@
             <form action="preview-blog.php" method="post">
                 <h5  class="mb-3">文章編輯</h5>
 
-                <teatarea id="editor" name="content"></teatarea>
+                <teatarea id="editor" name="content"><?=$rows["content"]?></teatarea>
                 <div class="d-flex gap-3 mt-3 justify-content-end">
                     <button type="submit" class="btn btn-bg-color">預覽文章</button>
                     <button type="submit" class="btn btn-main-color">儲存文章</button>

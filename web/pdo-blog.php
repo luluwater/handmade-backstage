@@ -2,7 +2,7 @@
 
 require_once("../db-connect.php");
 
-$stmt=$db_host->prepare("SELECT * FROM blog");
+$stmt=$db_host->prepare("SELECT blog.*,cate ");
 
 try {
     $stmt->execute();

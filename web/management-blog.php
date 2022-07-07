@@ -2,12 +2,17 @@
 
 require_once("../db-connect.php");
 
-$stmt=$db_host->prepare("SELECT * FROM blog");
+
+$stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id LIMIT 0,5");
+$stmtCategory=$db_host->prepare("SELECT * FROM category");
+
 
 try {
     $stmt->execute();
+    $stmtCategory->execute();
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  
+    $categories = $stmtCategory->fetchAll(PDO::FETCH_ASSOC);
+
 
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -71,11 +76,9 @@ $db_host = NULL;
              
                     <select name="category" class="select-category rounded d-none" id="allCategory" >
                         <option selected="selected" value="category" >請選擇分類</option>
-                        <option value="metalwork">金工</option>
-                        <option value="pottery">陶藝</option>
-                        <option value="floral">花藝</option>
-                        <option value="leather">皮革</option>
-                        <option value="tufting">簇絨</option>
+                        <?php foreach( $categories as $category) :?>
+                          <option value="<?=$category["category_en_name"]?>"><?=$category["category_name"]?></option>
+                        <?php endforeach; ?>
                   </select>
 
                   <a href="" type="submit" class="fs-6 btn btn-bg-color" id="submitButton">搜索</a>
@@ -101,12 +104,12 @@ $db_host = NULL;
       <table class="table h-0 mt-4 mb-0 text-center">
               <thead class="table-head">
                 <tr>
-                  <td class="col-1 text-start">日期</td>
+                  <td class="col-1 text-start">日期<i class="fas fa-sort mx-2 trHover"></i></td>
                   <td class="col-3 text-start">文章標題</td>
-                  <td class="col-1">分類</td>
-                  <td class="col-1">狀態</td>
-                  <td class="col-1">留言數</td>
-                  <td class="col-1">收藏數</td>
+                  <td class="col-1">分類 <i class="fas fa-sort mx-2 trHover"></i></td>
+                  <td class="col-1">狀態 <i class="fas fa-sort mx-2 trHover"></i></td>
+                  <td class="col-1">留言數 <i class="fas fa-sort mx-2 trHover"></i></td>
+                  <td class="col-1">收藏數 <i class="fas fa-sort mx-2 trHover"></i></td>
                   <td class="col-1 text-end">編輯</td>
                 </tr>
               </thead>
@@ -115,7 +118,7 @@ $db_host = NULL;
                   <tr class="trHover border-bottom">
                     <td class="text-start pb-2"><?=$row["create_time"]?></td>
                     <td class="text-start td-height"><?=$row["title"]?></td>
-                    <td><?=$row["category_id"]?></td>
+                    <td><?=$row["category_name"]?></td>
                     <td><i class="fas fa-eye"></i></td>
                     <td>55</td>
                     <td>24</td>
