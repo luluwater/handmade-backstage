@@ -2,7 +2,7 @@
 
 require("../db-connect.php");
 
-$sql = "SELECT * FROM coupon";
+$sql = "SELECT * FROM discount";
 
 $result= $db_host->prepare($sql);
 $result->execute();
@@ -14,7 +14,7 @@ $discountCount=$result->rowCount();
 <!doctype html>
 <html lang="en">
   <head>
-    <title>優惠券-新增-手手</title>
+    <title>一般折扣-新增-手手</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -47,6 +47,15 @@ $discountCount=$result->rowCount();
                 position: relative;
                 right: 235px;
             }
+            .state-title{
+                position: relative;
+                left: 800px;
+            }
+            select{
+                position: relative;
+                left: 115px;   
+            }
+        </style>
         </style>
   </head>
   <body>
@@ -57,38 +66,42 @@ $discountCount=$result->rowCount();
         <?php if($discountCount > 0):?>
         <div class="container-fluid">
             <div class="d-flex justify-content-between">
-                <p class="title">新增優惠券</p>
+                <p class="title">新增一般折扣</p>
             </div>
-            <form action="coupon-doCreate.php" method="POST" class="mb-3">
+            <form action="discount-doCreate.php" method="POST" class="mb-3">
                 <div></div>
                     <ul>
                         <input type="hidden" name="id">
-                        <li>優惠券名稱</li>
+                        <li>活動名稱</li>
                         <li><input type="text" class="form-control my-3" style="width: 1200px;" name="name"></li>
-                        <li>優惠券簡介</li>
-                        <li><textarea type="text" class="form-control my-3 content" style="width: 1200px; height:350px;" 
+                        <li>活動簡介</li>
+                        <li><textarea type="text" class="form-control my-3 content" style="width: 1200px; height:400px;" 
                         name="content"></textarea></li>
                         <li>折數</li>
-                        <li><input type="text" class="form-control my-3" style="width: 1200px;" name="coupon_discount"></li>
+                        <li><input type="text" class="form-control my-3" style="width: 1200px;" 
+                        name="product_discount"></li>
                         <div class="d-flex">
-                            <div class="pe-4">
-                                <li class="pt-4">發放張數</li>
-                                <li><input type="text" class="form-control my-3" style="width: 500px;" name="amount"></li>
-                            </div>
-                            <div class="ps-4">
-                                <li class="pt-4">折扣碼</li>
-                                <li><input type="text" class="form-control my-3" style="width: 500px;" name="discount_code"></li>
-                            </div>
+                            <li class="pt-4">活動期間</li>
+                            <li class="pt-4 state-title">活動狀態</li>
                         </div>
-                        <li>活動期間</li>
-                        <li class="d-flex">
-                            <input type="date" class="form-control my-3 me-3" style="width: 500px;" name="start_date">
-                            <div class="pt-4">至</div>
-                            <input type="date" class="form-control my-3 ms-3" style="width: 500px;" name="end_date">
+
+                        <div class="d-flex">
+                        <li><input type="date" class="form-control my-3 me-3" style="width: 350px;" 
+                            name="start_date"></li>
+                        <li><div class="pt-4">至</div></li>
+                        <li><input type="date" class="form-control my-3 ms-3" style="width: 350px;" 
+                            name="end_date"></li>   
+                        <li>
+                        <select class="form-select my-3" aria-label="Default select example" style="width: 337px;" name="state">
+                        <option  value="1" selected>接下來</option>
+                        <option  value="2">進行中</option>
+                        <option  value="3">已結束</option>
+                        </select>
                         </li>
+                        </div>
                     </ul>
                     <div class="text-end me-5 button">
-                        <a href="coupon.php" class="btn btn-cancel mx-2">取消</a>
+                        <a href="discount.php" class="btn btn-cancel mx-2">取消</a>
                         <button class="btn btn-red mx-2" type="submit">儲存</button>
                     </div>
             </form>
