@@ -3,13 +3,17 @@
 require_once("../db-connect.php");
 
 $stmt=$db_host->prepare("SELECT * FROM blog");
-
+$stmtCategory=$db_host->prepare("SELECT * FROM category");
+$stmtStore=$db_host->prepare("SELECT * FROM store");
 
 
 try {
     $stmt->execute();
+    $stmtCategory->execute();
+    $stmtStore->execute();
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  
+    $stores = $stmtStore->fetchAll(PDO::FETCH_ASSOC);
+    $categories = $stmtCategory->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -47,67 +51,70 @@ $db_host = NULL;
     ?>
     <main>
         <div class="container">
-            <form class="w-100" action=""></form>
+        <form action="preview-blog.php" method="post">
                 <div class="mb-3">
                     <label for="blogTitle" class="form-label">文章標題</label>
                     <input type="text" required name="blogTitle" class="form-control" id="blogTitle">
                 </div>
-            </form>
 
-            <div class="d-flex align-items-center gap-5 mb-4">
-                <form class="w-75" action="">
-                    <div class="mb-3">
-                        <label for="pubilshTime" class="form-label">發表時間</label>
-                        <input type="datetime-local" name="pubilshTime" required class="form-control" id="pubilshTime">
+                <div class="d-flex align-items-center gap-5 mb-4">
+                    <div class="w-75">
+                        <div class="mb-3">
+                            <label for="pubilshTime" class="form-label">發表時間</label>
+                            <input type="datetime-local" name="pubilshTime" required class="form-control" id="pubilshTime">
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <h5 class="mb-0 ms-4">發表</h5>
+                        <input name="isPublish" type="checkbox" id="switch" class="switch" />
+                        <label for="switch" class="switch-lable">
+                            <span class="switch-txt" turnOn="On" turnOff="Off"></span>
+                        </label>
+                    </div>    
+                </div>
+
+                <div class="d-flex col-fuild row mb-5">
+                    <div class="col-4 d-flex gap-3">
+                        <div>文章類型</div>
+                        <select name="articleCategorty" class="w-50 rounded" id="articleCategorty" >
+                                <option selected="selected" value="storeIntro">店家介紹</option>
+                                <option value="">體驗課程</option>
+                                <option value="newStore">新店報報</option>
+                        </select>
+                    </div>
+                    <div class="col-4 d-flex gap-3">
+                        <div>館別分類</div>
+                        <select name="storeCategory" class="w-50 rounded" id="storeCategory" >
+                            <?php foreach($categories as $category): ?>
+                                <option value="<?=$category["category_en_name"]?>"><?=$category["category_name"]?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-4 d-flex gap-3">
+                        <div>相關店家</div>
+                        <select name="category" class="w-50 rounded" id="category" >
+                                <?php foreach($stores as $store): ?>
+                                    <option value="storeIntro"><?=$store["name"]?></option>
+                                <?php endforeach; ?>
+
+                            </select>
+                        </div>
+                    </div>  
+
+                    <h5  class="mb-3">文章編輯</h5>
+                    
+                    <textarea name="content" id="editor">
+                        &lt;p&gt;&lt;/p&gt;
+                    </textarea>
+                    <div class="d-flex  gap-3 justify-content-end">
+                        <input class="btn btn-bg-color mt-3 btn-lg" type="submit" value="預覽">
+                        <input class="btn btn-main-color mt-3 btn-lg" type="submit" value="保存">
                     </div>
                 </form>
 
-                <form action="" class="d-flex align-items-center gap-2">
-                    <h5 class="mb-0 ms-4">發表</h5>
-                    <input type="checkbox" id="switch" class="switch" />
-                    <label for="switch" class="switch-lable">
-                        <span class="switch-txt" turnOn="On" turnOff="Off"></span>
-                    </label>
-                </form>
-
-            </div>
-
-            <div class="d-flex col-fuild row mb-5">
-                <div class="col-4 d-flex gap-3">
-                    <div>文章類型</div>
-                    <select name="articleCategorty" class="w-50 rounded" id="articleCategorty" >
-                            <option selected="selected" value="storeIntro">店家介紹</option>
-                            <option value="">體驗課程</option>
-                            <option value="newStore">新店報報</option>
-                    </select>
-                </div>
-                <div class="col-4 d-flex gap-3">
-                    <div>館別分類</div>
-                    <select name="storeCategory" class="w-50 rounded" id="storeCategory" >
-                            <option selected="selected" value="storeIntro">金工</option>
-                            <option value="">花藝</option>
-                    </select>
-                </div>
-                <div class="col-4 d-flex gap-3">
-                    <div>相關店家</div>
-                    <select name="category" class="w-50 rounded" id="category" >
-                            <option selected="selected" value="storeIntro">轉角金工</option>
-                            <option value="">以覺學</option>
-                    </select>
-                </div>
-            </div>
-
-            <form action="preview-blog.php" method="post">
-                <h5  class="mb-3">文章編輯</h5>
-
-                <teatarea id="editor" name="content"><?=$rows["content"]?></teatarea>
-                <div class="d-flex gap-3 mt-3 justify-content-end">
-                    <button type="submit" class="btn btn-bg-color">預覽文章</button>
-                    <button type="submit" class="btn btn-main-color">儲存文章</button>
-                </div>
-            </form>
         </div>
-
+   
     </main>
     
 

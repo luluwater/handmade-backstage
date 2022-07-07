@@ -1,8 +1,16 @@
 <?php
 
-$content=$_POST["content"];
+$isPublish=$_POST["isPublish"];
 
 
-echo "content:"$content;
+
+
+echo $isPublish;
+
+
+
+
+
+
 
 ?>

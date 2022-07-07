@@ -2,10 +2,10 @@
 
 require_once("../db-connect.php");
 
+// $limitNum
 
 $stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id LIMIT 0,5");
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
-
 
 try {
     $stmt->execute();
@@ -22,7 +22,6 @@ try {
 }
 
 $db_host = NULL;
-
 
 ?>
 
@@ -44,6 +43,8 @@ $db_host = NULL;
 
   </head>
   <body>
+
+</select>
     <?php
     require("./main-menu.html");
     ?>
@@ -56,7 +57,7 @@ $db_host = NULL;
 
         <div class="fs-6 container d-flex align-items-center justify-content-between w-50 ms-0 gap-5">
 
-            <select name="" class="select" id="select-1" onChange="changeOption()">
+            <select name="filterWay" class="select" id="select-1" onChange="changeOption()">
                 <option selected="selected" value="keyword" id="keyword">關鍵字</option>
                 <option  value="date" id="date">日期</option>
                 <option value="category" id="category">分類</option>
