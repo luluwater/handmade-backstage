@@ -11,64 +11,120 @@
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/style.css">
+   <style>
+    body{
+     
+    }
 
+   </style>
   </head>
  <body>
    <?php
     require("./main-menu.html");
     ?>
     <main>
-      <div class="mb-3 row">
+      <div class="d-flex flex-column  "> 
+         <div class="d-flex mb-5">
+             <p class=" me-2">品牌LOGO  </p>
+            <img class="object-cover" width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+          </div>
+             <div class="d-flex mb-5"> <p class=" me-2">品牌圖片</p>
+                <img class="me-3 object-cover"width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+                <img class="me-3 object-cover"width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+                <img class="me-3 object-cover"width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+                <img class="me-3 object-cover"width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+             </div>
+           <div class="d-flex mb-5"> <p class="me-3 ">形象  bn</p>
+               <img class="object-cover"width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+          </div>
+        </div>
+      
+      <div class="mb-5 row">
           <label for="inputPassword" class="col-sm-2 col-form-label">品牌名稱</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword">
         </div>
       </div>
-       <div class="mb-3 row">
-        <select class="form-select" aria-label="Default select example">
-                <option value="1" selected>選擇</option>
-                <option value="2">類別</option>
-                <option value="3">品牌</option>
-                
-            </select>
+    
+      
+       <div class="mb-5  row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">品牌簡介</label>
         <div class="col-sm-10">
-        <select class="form-select" aria-label="Default select example">
-                <option value="1" selected>選擇</option>
-                <option value="2">類別</option>
-                <option value="3">品牌</option>
-                
-            </select>
+          
+          <input type="password" class="form-control" id="inputPassword">
         </div>
       </div>
-      <div class="d-flex">
-        <h6 class="me-4">品牌簡介</h6>
-      <textarea name="" id="" cols="100" rows="10"></textarea>
+
+       
+     
+     
+     <div class="mb-5  row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">類別</label>
+          <div class="col-sm-10">
+            <select class="col-sm-10 form-select" aria-label="Default select example">
+                <option value="1" selected>選擇</option>
+                <option value="2">類別</option>
+                <option value="3">品牌</option>
+            </select>
+           </div>
       </div>
       
-       <div class="mb-3 row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+      <div class="mb-5  row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">捷運站點</label>
+        <div class=" d-flex justify-content-between col-sm-10">
+          <select style="width:100px" class="col-sm-5 form-select" aria-label="Default select example">
+                <option value="1" selected>選擇</option>
+                <option value="2">類別</option>
+                <option value="3">品牌</option>
+             </select>
+            <select style="width:100px" class="col-sm-5 form-select" aria-label="Default select example">
+                <option value="1" selected>選擇</option>
+                <option value="2">類別</option>
+                <option value="3">品牌</option>
+             </select>
+        </div>
+       </div>
+     
+       <div class="mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">地址</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword">
         </div>
       </div>
-       <div class="mb-3 row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+       <div class="mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">交通方式</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword">
         </div>
       </div>
-       <div class="mb-3 row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+       <div class="mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">電話</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword">
         </div>
       </div>
-       <div class="mb-3 row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+       </div>
+       <div class="mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">營業時間</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword">
         </div>
       </div>
+       </div>
+       <div class="mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">Instagram</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="inputPassword">
+        </div>
+      </div>
+             <div class="mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">Facebook</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="inputPassword">
+        </div>
+      </div>
+
+
     </main>
    
  </body>
