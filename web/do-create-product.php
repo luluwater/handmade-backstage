@@ -77,7 +77,7 @@
 
     
     
-
+    $id=$db_host->lastInsertId();
     
     
 
@@ -88,5 +88,5 @@
 
     // $db_host = NULL;
 
-    // header("location:creat-new-product.php");
+    header("location: view-product.php?$type=$id");
 ?>

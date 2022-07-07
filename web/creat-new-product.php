@@ -39,19 +39,19 @@ $db_host = NULL;
                     <label class="col-1" for="">圖片</label>
                     <div class="col-auto">
                         <input class="d-none upload_image" type="file" name="product_img1" accept="image/*" required>
-                        <img src="" class="previewImage object-cover" alt="圖片預覽">
+                        <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
                     </div>
                     <div class="col-auto">
                         <input class="d-none upload_image" type="file" name="product_img2" accept="image/*">
-                        <img src="" class="previewImage object-cover" alt="圖片預覽">
+                        <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
                     </div>
                     <div class="col-auto">
                         <input class="d-none upload_image" type="file" name="product_img3" accept="image/*">
-                        <img src="" class="previewImage object-cover" alt="圖片預覽">
+                        <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
                     </div>
                     <div class="col-auto">
                         <input class="d-none upload_image" type="file" name="product_img4" accept="image/*">
-                        <img src="" class="previewImage object-cover" alt="圖片預覽">
+                        <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
                     </div>
                 </div>
                 <div class="my-3 row align-items-center">
@@ -111,7 +111,7 @@ $db_host = NULL;
                     <textarea class="form-control col" name="notice" cols="30" rows="10" style="resize:none" placeholder="請輸入商品注意事項" required></textarea>
                 </div>
                 <div class="my-5 d-flex justify-content-end">
-                    <a href="" class="ms-3 btn btn-bg-color">取消</a>
+                    <a href="product.php" class="ms-3 btn btn-bg-color">取消</a>
                     <button class="ms-3 btn btn-main-color" type="submit">儲存</button>                    
                 </div>
             </form>

@@ -33,7 +33,7 @@
             <?php require("./mod/search-bar.php") ?>
             <div class="text-end my-4">
               <a href="" class="text-dark m-2"><i class="fa-solid fa-trash m-2"></i>下架課程</a>
-              <a href="" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增課程</a>
+              <a href="creat-new-product.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增課程</a>
               
             </div>
             <table class="table">
