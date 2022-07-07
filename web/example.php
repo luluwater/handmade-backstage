@@ -16,7 +16,7 @@
     require("./main-menu.html");
     ?>
     <main>
-        <h1>test</h1>
+        h
     </main>
   </body>
 </html>

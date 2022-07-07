@@ -71,25 +71,23 @@
     line-height: 35px;
 }
 
-
-
 .order-table {
     width: 85%;
 }
 
 .arrowBtn{
-    height: 20px;
+    height: 15px;
+}
+.arrow-color{
+    color:#fff;
+}
+.arrow-active>.arrow-color,.arrow-color.arrow-active{
+    color:var(--main-color);
 }
 
-.arrowBtn a{
-    color: #fff;
-}
-.order-th-btn{
-    color: #e65947;
-}
-.arrowBtn a:hover {
-    color: var(--main-color);
-}
+
+
+
 
 /* 頁碼 */
 

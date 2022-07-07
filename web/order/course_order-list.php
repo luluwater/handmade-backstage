@@ -7,6 +7,9 @@ if(isset($_GET["page"])){
     $page=1;
 }
 
+$urlParams = [];
+parse_str($_SERVER['QUERY_STRING'], $urlParams);
+print_r($_GET);
 
 //取得每頁看到幾欄
 $pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']):5;
@@ -39,7 +42,8 @@ switch($order){
 
 
 $sqlAll = $db_host->prepare("SELECT * FROM course_order");
-$sql = $db_host->prepare("SELECT * FROM course_order ORDER BY $orderType LIMIT $start , $pageView");
+
+$sql = $db_host->prepare("SELECT course_order.*,order_staus.name AS order_staus FROM course_order JOIN order_staus ON course_order.order_state_id = order_staus.id ORDER BY $orderType LIMIT $start , $pageView");
 
 try {
     $sqlAll->execute();
@@ -122,8 +126,8 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
         <!-- 篩選器開始 -->
 
         <div class="ms-3 mt-3">
-            <form action="" method="get" class="d-flex">
-                <select class="form-select search-filter">
+            <form action="course_order-list.php" method="get" class="d-flex">
+                <select class="form-select search-filter" name="searchType" >
                     <option selected value="order-id">訂單編號</option>
                     <option value="create_time">訂單日期</option>
                     <option value="name">訂購人</option>
@@ -131,15 +135,15 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                 </select>
 
                 <!-- 輸入搜尋 -->
-                <input type="search" class="form-control mx-2 searchText hide" name="dateSearch" placeholder="請輸入搜尋關鍵字">
+                <input type="search" class="form-control mx-2 searchText" name="dateSearch" placeholder="請輸入搜尋關鍵字">
 
                 <!-- 日期搜尋 -->
-                <input type="date" class="form-control mx-2 searchDate " name="dateSearch">
+                <input type="date" class="form-control mx-2 searchDate hide " name="dateSearch">
 
                 <!-- 訂單狀態搜尋 -->
                 <select name="" id="" class="form-select mx-2 searchState hide">
-                    <option selected value="">已付款</option>
-                    <option selected value="">取消</option>
+                    <option selected value="3">已付款</option>
+                    <option selected value="5">取消</option>
 
                 </select>
 
@@ -148,15 +152,16 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
         </div>
         <!-- 篩選器結束 -->
 
+
         <!-- 訂單表單開始 -->
         <div class="d-flex justify-content-center">
             <table class="table table-hover mt-5 order-table">
                 <thead class="order-th ">
                     <tr class="text-center order-title">
 
-                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單編號 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn"><a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=1" class="arrowBtn <?php if($order==1)echo "order-th-btn"?>"><i class="fa-solid fa-caret-up"></i></a> <a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=2"><i class="fa-solid fa-caret-down"></i></a></span></span></td>
+                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單編號 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=1" class="arrowBtn <?php if($order==1)echo "arrow-active"?>"><i class="fa-solid fa-caret-up arrow-color"></i></a> <a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=2" class="<?php if($order==2)echo "arrow-active"?>"><i class="fa-solid fa-caret-down arrow-color"></i></a></span></span></td>
 
-                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單日期 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn"><a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=3" class="arrowBtn"><i class="fa-solid fa-caret-up"></i></a> <a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=4"><i class="fa-solid fa-caret-down"></i></a></span></span></td>
+                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單日期 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn"><a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=3" class="arrowBtn <?php if($order==3)echo "arrow-active"?>"><i class="fa-solid fa-caret-up arrow-color"></i></a> <a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=4" class="<?php if($order==4)echo "arrow-active"?>"><i class="fa-solid fa-caret-down arrow-color"></i></a></span></span></td>
                         <td>訂購人</td>
                         <td>總金額</td>
                         <td>訂單狀態</td>
@@ -169,7 +174,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                             <td><?=$row["create_time"]?></td>
                             <td><?=$row["name"]?></td>
                             <td>總金額</td>
-                            <td><?=$row["order_state_id"]?></td>
+                            <td><?=$row["order_staus"]?></td>
                     </tr>
                     <?php endforeach;?>
 
