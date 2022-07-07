@@ -84,7 +84,9 @@
 .arrow-active>.arrow-color,.arrow-color.arrow-active{
     color:var(--main-color);
 }
-
+.table {
+    min-height: 200px;
+}
 
 
 
@@ -103,9 +105,7 @@
     color: var(--main-color);
 }
 
-.table {
-    min-height: 200px;
-}
+
 
 .active>.page-link, .page-link.active {
     background: #fff;
