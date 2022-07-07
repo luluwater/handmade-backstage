@@ -19,7 +19,7 @@ if (isset($_GET["sale_state_category"])){
 //========== discount 主要的資料表 ==========
 $sql = "SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
 JOIN sale_state_category ON discount.state = sale_state_category.id  
-WHERE discount.state!=0 $sqlWhere ORDER BY state ";
+WHERE discount.state!=0 $sqlWhere ORDER BY end_date DESC  ";
 $result= $db_host->prepare($sql);
 $result->execute();
 $rows = $result->fetchAll(PDO::FETCH_ASSOC);
