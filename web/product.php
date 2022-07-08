@@ -1,7 +1,11 @@
 <?php
 require_once("../db-connect.php");
 
-$stmt=$db_host->prepare("SELECT course.id,name,amount,price,sold_amount,state FROM course");
+$stmtCategory=$db_host->prepare("SELECT * FROM category");
+$stmtCategory->execute();
+$rowsCategory=$stmtCategory->fetchALL(PDO::FETCH_ASSOC);
+
+$stmt=$db_host->prepare("SELECT course.id,course_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM course JOIN category ON course.category_id=category.id JOIN course_img ON course.id=course_img.course_id GROUP BY course_id ");
 $stmt->execute();    
 $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
 
@@ -34,9 +38,9 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
             <div class="d-flex justify-content-between">
                 <p class="title">課程管理</p>
                 <p>顯示 
-                  <select class="count-bg text-center" aria-label="Default select example">
-                    <option value="1" selected>5</option>
-                    <option value="2">10</option>
+                  <select id="amount-limit" class="count-bg text-center" aria-label="Default select example">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
                   </select> 
                   筆數
                 </p>
@@ -47,7 +51,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
               <a href="creat-new-product.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增課程</a>
               
             </div>
-            <table class="table">
+            <table class="table align-items-center">
               <thead class="table-head">
                 <tr class="text-center">
                   <td class="col-1"><input type="checkbox" name="" id=""></td>
@@ -62,15 +66,19 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                 </tr>
               </thead>
               <tbody>
-                <?php foreach($rows as $row): ?>                  
-                  <tr>
+                <?php foreach($rows as $row): ?>                              
+                  <tr class="text-center">
                     <td><input type="checkbox" name="" id=""></td>
                     <td><?=$row["id"]?></td>
-                    <td><?=$row["name"]?></td>
+                    <td class="text-start">
+                      <img class="previewImage-sm me-3" src="../img/course/course_<?=$row["category_en_name"]?>_<?=$row["id"]?>/<?=$row["img_name"]?>" alt="">
+                      <?=$row["name"]?>
+                    </td>
                     <td><?=$row["amount"]?></td>
                     <td><?=$row["price"]?></td>
                     <td><?=$row["sold_amount"]?></td>
-                    <td><?=$row["state"]?></td>
+                    <?php if($row["state"]==1)$checked='checked' ?>
+                    <td><input type="checkbox" <?= $checked??""?> disabled></td>
                     <td></td>
                     <td><a href="view-course.php?course=<?=$row["id"]?>"><i class="fa-solid fa-pen"></i></a></td>
                   </tr>
@@ -80,6 +88,11 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
             <?php require("./mod/page-number.php") ?>
         </div>
     </main>
+
+    <script>
+      
+          
+    </script>
 </body>
 
 </html>

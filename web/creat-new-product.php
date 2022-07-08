@@ -164,10 +164,10 @@ $db_host = NULL;
             	})
             	.done(function( response ) {
                 	console.log(response);
-                    for(let row of response.stores){
+                    for(let result of response.stores){
                         html=document.createElement("option");
-                        html.textContent=row.name;
-                        html.setAttribute("value",row.id);
+                        html.textContent=result.name;
+                        html.setAttribute("value",result.id);
                         console.log(html);
                         store.prepend(html);
                     }                    
