@@ -10,7 +10,7 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../../css/style.css">
    <style>
      .space1{
        padding-right:3.25em;
@@ -25,7 +25,7 @@
   </head>
  <body>
    <?php
-    require("./main-menu.html");
+    require("../main-menu.html");
     ?>
     <main>
        <div class="text-end mb-5 row">

@@ -1,5 +1,5 @@
 <?php
-require("../db-connect-test.php");
+require("db-connect-test.php");
 
 $sql="SELECT * FROM category";
 
@@ -7,10 +7,7 @@ $result=$conn->query($sql);
 $category_count=$result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
-
 ?>
-
-
 
 <!doctype html>
 <html lang="en">
@@ -24,7 +21,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../../css/style.css">
     <style>
       .title{
         color:var(--line-color);
@@ -71,7 +68,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
   </head>
   <body>
      <?php
-    require("./main-menu.html");
+    require("../main-menu.html");
     ?>
      <main>
              <div class="container-fluid">
@@ -89,7 +86,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                   筆數
                 </p> -->
             </div>
-            <?php require("./mod/search-category.php") ?>
+            <?php require("../mod/search-category.php") ?>
              <div class=" d-flex justify-content-between my-4">
                 <button class="side btn-bg-color ">管理分類</button>
                  <p class="">共<?=$category_count?>筆資料 </p> 
@@ -103,7 +100,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                       <div class="col-md-4">
                         <div>
                          <figure class="ratio ratio-4x3 mb-2">
-                            <img class="object-cover" src="../imagesTest/<?= $row["category_img"] ?>" alt="">
+                            <img class="object-cover" src="imagesTest/<?= $row["category_img"] ?>" alt="">
                         </figure>
                         <div class="text-center"><?= $row["category_name"] ?></div>
                            <div class="py-2">
@@ -116,7 +113,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                    <?php endforeach; ?>
                  </div>
             <div class="footer">
-                <?php require("./mod/pagination.php") ?>
+                <?php require("../mod/pagination.php") ?>
             </div>
           
          
