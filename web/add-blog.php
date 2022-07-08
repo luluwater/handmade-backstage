@@ -104,21 +104,26 @@ $db_host = NULL;
                             </div>
                         </div>  
                         <!-- CKeditor -->
-                        <h5  class="mb-3">文章編輯</h5>
+                        <div class="d-flex justify-content-between mb-3">  
+                            <h5 >文章編輯</h5>
+                            <a id="preview" class="btn btn-bg-color " data-bs-toggle="modal" data-bs-target="#exampleModal">預覽</a>
+                         </div>
                         <textarea name="content" id="editor">
                             2021下半年開始，在網路上出現一個名詞「Tufting」，中文名為俄羅斯刺繡。利用簇絨槍與紗線，就可做出療癒感十足的毛絨家飾品，像是地毯、杯墊、飾品、甚至是鏡子，隨心所欲地創造屬於自己的毛絨單品，最早從歐美開始流行，後來這把火延燒至韓國，甚至還在小紅書上爆紅。如今台灣也玩得到啦！編輯幫大家整理了5間Tufting工作室，皆有手作地毯課程可以體驗，看完趕緊揪好姐妹或另一半去體驗吧！
                             Tufting中文名為俄羅斯刺繡，製作原理很簡單，利用簇絨槍與紗線，透過手動或電動的方式將紗線穿入織物，讓紗線有如刺繡般緊緊縫製在織物上來完成一幅幅作品。縫製完畢後再使用電動剪毛機或剪刀剪斷或剪斷絨頭，讓作品呈現出毛絨感即可完成！簡單的道具和易上手的製作過程，搭配老師的現場協助，即使對手作一竅不通的人也能立刻上手。
                             <!-- &lt;p&gt;&lt;/p&gt; -->
                         </textarea>
                         <!-- submit button -->
-                        <div class="d-flex gap-3 justify-content-end">
-                            <a id="preview" class="btn btn-bg-color mt-3 btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        預覽</a>
                         
-                            <input class="btn btn-main-color mt-3 btn-lg" type="submit" value="發布">
+                        <div class="d-flex gap-3 justify-content-end">
+                            <a href="management-blog.php" class="btn btn-bg-color mt-3 btn-lg ">返回</a>
+                            <input class="btn btn-main-color mt-3 btn-lg" type="submit" value="儲存">    
                         </div>
+                 
+                     
 
                     </form>
+                 
                 
                 <!-- Preview modal  -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -141,8 +146,10 @@ $db_host = NULL;
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                <button type="button"  class="btn btn-main-color">發布</button>
+                                <button type="button"  class="btn btn-main-color">儲存</button>
+                               
                             </div>
+
                         </div>
                     </div>
                 </div>

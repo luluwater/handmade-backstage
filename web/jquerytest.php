@@ -2,17 +2,49 @@
 
 require_once("../db-connect.php");
 
-$search=$_GET["search"];
 
+// if(isset($_POST['searchType'])){
+    
+// }else{
+//     $serchType="keyword";
+// }
+
+// if(isset($_POST["typeCategory"])){
+//     $typeCategory=$_POST['typeCategory'];
+// }else{
+//     $typeCategory=null;
+// }
+
+// if(isset($_POST["typeKeyword"])){
+//     $typeKeyword=$_POST['typeKeyword'];
+// }else{
+//     $typeKeyword=null;
+// }
+
+// if(isset($_POST["typeDate"])){
+//     $typeCategory=$_POST['typeDate'];
+// }else{
+//     $typeCategory=null;
+// }
+
+// exit($serchType.$typeCategory.$typeKeyword);
+
+$pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']) : 5;
+
+echo $pageView;
+
+$stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id LIMIT 0,5");
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
-$stmtSearch=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE title LIKE '%$search%'");
+
+
 
 try {
-    $stmtSearch->execute();
+    $stmt->execute();
     $stmtCategory->execute();
-    $searches = $stmtSearch->fetchAll(PDO::FETCH_ASSOC);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $categories = $stmtCategory->fetchAll(PDO::FETCH_ASSOC);
- 
+
+
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
     echo "Error: " . $e->getMessage() . "<br/>";
@@ -23,8 +55,8 @@ try {
 $db_host = NULL;
 
 ?>
- 
- 
+
+
 <!doctype html>
 <html lang="en">
 
@@ -53,6 +85,7 @@ $db_host = NULL;
     <?php
     require("./main-menu.html");
     ?>
+
     <main>
         <?php 
         require("./mod/status-bar.php");
@@ -60,22 +93,27 @@ $db_host = NULL;
 
         <div class="d-flex mt-4">
 
-            <div class="fs-6 container d-flex align-items-center justify-content-between w-50 ms-0 gap-5">
+            <!-- Filter start -->
 
-                <select name="filterWay" class="select" id="select-1" onChange="changeOption()">
-                    <option selected="selected" value="keyword" id="keyword">關鍵字</option>
-                    <option value="date" id="date">日期</option>
-                    <option value="category" id="category">分類</option>
-                </select>
+            <div class="fs-6 container d-flex align-items-start justify-content-between w-50 ms-0 gap-5">
+           
+                <form class="input-group" method="post" action="jquerytest.php">
 
-                <form class="input-group" action="filter-blog.php">
+                    <select name="filterWay" class="select" id="searchType" onchange="filter(this.value)">
+                        <option selected="selected" value="keyword" id="keyword">關鍵字</option>
+                        <option value="date" id="date">日期</option>
+                        <option value="category" id="category">分類</option>
+                    </select>
+                    <input type="button" class="fs-6 btn btn-bg-color" id="submitButton" value="搜索">
+           
+                    
                     <span class="input-group-text bg-white" id="searchIcon">
                         <i class="fas fa-search"></i>
                     </span>
-                    <input type="text" class="form-control fs-6" id="textInput" placeholder="Search..."
+                    <input type="text" class="form-control fs-6  d-none" id="typeKeyword" placeholder="Search..."
                         aria-label="search with text input field" aria-describedby="search blog" name="search">
 
-                    <input type="date" class="form-control fs-6 d-none" id="dateInput" placeholder="Search..."
+                    <input type="date" class="form-control fs-6 " id="typeDate" placeholder="Search..."
                         aria-label="search with date input field" aria-describedby="search blog">
 
                     <select class="select-category rounded d-none" id="allCategory">
@@ -84,26 +122,40 @@ $db_host = NULL;
                         <option value="<?=$category["category_en_name"]?>"><?=$category["category_name"]?></option>
                         <?php endforeach; ?>
                     </select>
-
-                    <button  type="submit" class="fs-6 btn btn-bg-color" id="submitButton">搜索</button>
-                </form>
+                </form> 
+                  
+          
             </div>
+            <!-- Filter end -->
 
-            <div class="d-flex align-items-start w-25 justify-content-between">
+
+            <div class="d-flex align-items-center w-25 justify-content-between ">
+                <!-- Post New Article Router-->
                 <div class="d-flex align-items-end">
                     <a href="add-blog.php" class="btn btn-secondary btn-sm ">+
-                        <span class="fs-6 ms-3">發表新文章</span></a>
+                    <span class="fs-6 ms-3">發表新文章</span></a>
                 </div>
-                <div class="fs-6">顯示
-                    <select class="count-bg text-center" aria-label="Default select example">
-                        <option value="1" selected>5</option>
-                        <option value="2">10</option>
-                    </select>
-                    筆
+                <!--------------------------->
+
+                <!--  Article Amount -->
+
+                <div class="d-flex justify-content-between align-items-center display-page-box gap-3">
+                    <p class="m-0 fs-5">顯示</p>
+                    <form action="management-blog.php" method="get" class="pageForm" class="text-center">
+                        <select name="pageView" id="" class="display-page form-select mt-2  " onchange="submit();">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </form>
+                    <p class="m-0 fs-5">筆</p>
                 </div>
+                 <!--------------------------->
+
             </div>
         </div>
 
+        <!-- Articles -->
         <table class="table h-0 mt-4 mb-0 text-center">
             <thead class="table-head">
                 <tr>
@@ -117,12 +169,17 @@ $db_host = NULL;
                 </tr>
             </thead>
             <tbody>
-                <?php foreach( $searches as $search) :?>
+                <?php foreach( $rows as $row) :?>
                 <tr class="trHover border-bottom">
-                    <td class="text-start pb-2"><?=$search["create_time"]?></td>
-                    <td class="text-start td-height"><?=$search["title"]?></td>
-                    <td><?=$search["category_name"]?></td>
-                    <td><i class="fas fa-eye"></i></td>
+                    <td class="text-start pb-2">
+                        <?php      
+                         $date=new DateTime($row["create_time"]);
+                         echo $date->format('Y-m-d');
+                         ?>
+                    </td>
+                    <td class="text-start td-height"><?=$row["title"]?></td>
+                    <td><?=$row["category_name"]?></td>
+                    <td><?=$row["state"]?></td>
                     <td>55</td>
                     <td>24</td>
                     <td class="text-end"><i class="fas fa-pen"></i></td>
@@ -135,18 +192,18 @@ $db_host = NULL;
         <?php
         require("./mod/pagination.php")
         ?>
-
     </main>
 
-
     <script>
+
+
     function changeOption() {
         let select1 = document.getElementById('select-1');
         let option1 = select1.options[select1.selectedIndex].value;
 
         switch (option1) {
             case "keyword":
-                console.log(option1)
+
                 document.getElementById("searchIcon").classList.remove('d-none');
                 document.getElementById("textInput").classList.remove('d-none');
                 document.getElementById("submitButton").classList.remove('d-none');
@@ -172,6 +229,40 @@ $db_host = NULL;
                 break;
         }
     }
+
+    /**
+     * 我要把資料從前端 post 到 server 再透過 server 跟 db 溝通，改變資料庫
+     * 排序的方式，最後渲染到前端
+     * 
+     * 1. 透過 jQuery 抓到 前端的 value
+     * 2. 透過 ajax 把資料丟到 server 的 url 裡面
+     * 3. 在 server url 裡面改變資料庫的排序方式
+     * 4. 把新的排序方式透過 response?? 回傳到前端
+     * 5. 把回傳的資料透過 innerText?? 塞入畫面 ?
+     * 
+     */
+
+
+
+
+    $(function(){
+        $("#submitButton").on("click",function(){
+            // var searchTypeVal= $("#searchType").val();
+            // var typeCategoryVal= $("#typeCategory").val();
+            // var typeKeywordVal = $("#typeKeyword").val();
+            // var typeDateVal =$("#typeDate").val();
+
+        })
+
+     })
+
+
+
+
+
+
+
+
     </script>
 
 </body>
