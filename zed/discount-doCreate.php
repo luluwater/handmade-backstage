@@ -2,17 +2,23 @@
 
 require("../db-connect.php");
 
+$pay=$_POST["discount_type_id"]==1?null:$_POST["pay"];
+$product_discount=$_POST["product_discount"]?$_POST["product_discount"]:$_POST["product_discount2"];
+
 $data=[
     ':name'=>$_POST["name"],
     ':content'=>$_POST["content"],
-    ':product_discount'=>$_POST["product_discount"],
+    ':product_discount'=>$product_discount,
     ':start_date'=>$_POST["start_date"],
     ':end_date'=>$_POST["end_date"],
+    ':discount_type_id'=>$_POST["discount_type_id"],
+    ':pay'=>$pay,
 ];
 
+
 $sql = "INSERT INTO discount 
-(name, content, product_discount, start_date, end_date, state)
-VALUES(:name, :content, :product_discount, :start_date, :end_date, 1)";
+(name, content, product_discount, start_date, end_date, state, discount_type_id, pay)
+VALUES(:name, :content, :product_discount, :start_date, :end_date, 1, :discount_type_id, :pay)";
 
 $stmt = $db_host->prepare($sql);
 

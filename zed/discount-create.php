@@ -77,9 +77,24 @@ $discountCount=$result->rowCount();
                         <li>活動簡介</li>
                         <li><textarea type="text" class="form-control my-3 content" style="width: 1200px; height:400px;" 
                         name="content"></textarea></li>
-                        <li>折數</li>
-                        <li><input type="text" class="form-control my-3" style="width: 1200px;" 
-                        name="product_discount"></li>
+                        <li class="mb-3">折扣內容</li>
+                        <div class="d-flex">
+                            <!-- discount_type_id = 1 -->
+                            <div class="d-flex">
+                                <input class="mt-3" type="radio" name="discount_type_id" value="1">
+                                <p class="mt-2 ms-2 me-3 OFFSTYLE">折數</p>
+                                <input type="text" class="form-control" style="width: 100px; height: 40px" name="product_discount">
+                            </div>     
+                            <!-- discount_type_id = 2 -->
+                            <div class="d-flex">
+                                    <input class="mt-3 ms-5" type="radio"  name="discount_type_id" value="2" >
+                                    <p class="mt-2 ms-2 me-3 OFFSTYLE">滿</p>
+                                    <input type="text" class="form-control" style="width: 100px; height: 40px" name="pay">
+                                    <p class="mt-2 ms-3 me-3 OFFSTYLE">折</p>
+                                    <input type="text" class="form-control" style="width: 100px; height: 40px" name="product_discount2" >   
+                            </div>
+                            </div>
+                        </li>
                         <div class="d-flex">
                             <li class="pt-4">活動期間</li>
                             <li class="pt-4 state-title">活動狀態</li>

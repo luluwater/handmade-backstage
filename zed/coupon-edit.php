@@ -84,9 +84,28 @@ $discountCount=$result->rowCount();
                         <li>優惠券簡介</li>
                         <li><textarea type="text" class="form-control my-3 content" style="width: 1200px; height:350px;" 
                         name="content"><?=$row["content"]?></textarea></li>
-                        <li>折數</li>
-                        <li><input type="text" class="form-control my-3" style="width: 1200px;" 
-                        name="coupon_discount" value="<?=$row["coupon_discount"]?>"></li>
+                        <li class="mb-3">折扣內容</li>
+                        <div class="d-flex">
+                            <!-- discount_type_id = 1 -->
+                            <div class="d-flex">
+                                <input class="mt-3" type="radio" name="discount_type_id" value="<?=$row["discount_type_id"]?>"
+                                <?php if ($row["discount_type_id"]==1) print "checked"?>>
+                                <p class="mt-2 ms-2 me-3 OFFSTYLE">折數</p>
+                                <input type="text" class="form-control" style="width: 100px; height: 40px" 
+                                name="coupon_discount" value="<?php if ($row["discount_type_id"]==1) print($row["coupon_discount"])?>">
+                            </div>     
+                            <!-- discount_type_id = 2 -->
+                            <div class="d-flex">
+                                    <input class="mt-3 ms-5" type="radio" name="discount_type_id" value="<?=$row["discount_type_id"]?>"
+                                    <?php if ($row["discount_type_id"]==2) print "checked"?>>
+                                    <p class="mt-2 ms-2 me-3 OFFSTYLE">滿</p>
+                                    <input type="text" class="form-control" style="width: 100px; height: 40px" 
+                                    name="pay" value="<?=$row["pay"]?>">
+                                    <p class="mt-2 ms-3 me-3 OFFSTYLE">折</p>
+                                    <input type="text" class="form-control" style="width: 100px; height: 40px" 
+                                    name="coupon_discount2" value="<?php if ($row["discount_type_id"]==2) print($row["coupon_discount"])?>">   
+                            </div>
+                            </div>
                         <div class="d-flex">
                             <div class="pe-4">
                                 <li class="pt-4">發放張數</li>
