@@ -18,6 +18,7 @@
     require("./main-menu.html");
     ?>
     <main>
+<<<<<<< HEAD
       <div class="mb-3 row">
           <label for="inputPassword" class="col-sm-2 col-form-label">品牌名稱</label>
         <div class="col-sm-10">
@@ -47,28 +48,138 @@
       
        <div class="mb-3 row">
           <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+=======
+       <div class="text-end mb-5 row">
+          <p  class=" col-sm-2 ">品牌 Logo</p>
+        <div class="col-sm-auto">
+           <img class="object-cover" width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+        </div>
+      </div>
+      
+       <div class="text-end mb-5 row">
+          <p  class=" col-sm-2 ">品牌圖片</p>
+        <div class="col-sm-auto">
+            <img class="me-3 object-cover"width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+                <img class="me-3 object-cover"width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+                <img class="me-3 object-cover"width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+                <img class="me-3 object-cover"width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+        </div>
+      </div>
+
+       <div class="text-end mb-5 row">
+          <p  class=" col-sm-2 ">形象 bn</p>
+        <div class="col-sm-auto">
+           <img class="object-cover" width=100, height=100, src="../imagesTest/spiderman.jpg" alt="">
+        </div>
+      </div>
+
+  
+      
+      <div class="text-end mb-5 row">
+          <label for="inputPassword" class=" col-sm-2 col-form-label">品牌名稱</label>
+>>>>>>> 722e6c2f0fef8e0ef02c4429c923afc417168f8e
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword">
         </div>
       </div>
+<<<<<<< HEAD
        <div class="mb-3 row">
           <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+=======
+    
+      
+       <div class="text-end mb-5  row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">品牌簡介</label>
+        <div class="col-sm-10">
+          
+          <input type="password" class="form-control" id="inputPassword">
+        </div>
+      </div>
+
+       
+     
+     
+     <div class="text-end mb-5  row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">類別</label>
+          <div class="col-sm-10">
+            <select class="col-sm-10 form-select" aria-label="Default select example">
+                <option value="1" selected>選擇</option>
+                <option value="2">類別</option>
+                <option value="3">品牌</option>
+            </select>
+           </div>
+      </div>
+      
+      <div class="text-end mb-5  row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">捷運站點</label>
+        <div class=" d-flex justify-content-between col-sm-10">
+          <select style="width:300px" class="col-sm-5 form-select" aria-label="Default select example">
+                <option value="1" selected>選擇</option>
+                <option value="2">類別</option>
+                <option value="3">品牌</option>
+             </select>
+            <select style="width:300px" class="col-sm-5 form-select" aria-label="Default select example">
+                <option value="1" selected>選擇</option>
+                <option value="2">類別</option>
+                <option value="3">品牌</option>
+             </select>
+        </div>
+       </div>
+     
+       <div class="text-end mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">地址</label>
+>>>>>>> 722e6c2f0fef8e0ef02c4429c923afc417168f8e
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword">
         </div>
       </div>
+<<<<<<< HEAD
        <div class="mb-3 row">
           <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+=======
+       <div class="text-end mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">交通方式</label>
+>>>>>>> 722e6c2f0fef8e0ef02c4429c923afc417168f8e
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword">
         </div>
       </div>
+<<<<<<< HEAD
        <div class="mb-3 row">
           <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+=======
+       <div class="text-end mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">電話</label>
+>>>>>>> 722e6c2f0fef8e0ef02c4429c923afc417168f8e
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword">
         </div>
       </div>
+<<<<<<< HEAD
+=======
+       </div>
+       <div class="text-end mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">營業時間</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="inputPassword">
+        </div>
+      </div>
+       </div>
+       <div class="text-end mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">Instagram</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="inputPassword">
+        </div>
+      </div>
+             <div class="text-end mb-5 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">Facebook</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="inputPassword">
+        </div>
+      </div>
+
+
+>>>>>>> 722e6c2f0fef8e0ef02c4429c923afc417168f8e
     </main>
    
  </body>
