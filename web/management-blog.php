@@ -207,76 +207,50 @@ $db_host = NULL;
                 default:
                     break;
             }
-        
-
-            $("#typeCategory").on("change",function(){
-                var value = $(this).val();
-                $.ajax({
-                    url:"filterByCategory.php",
-                    type:"POST",
-                    data:"request=" + value,
-                    beforeSend:function(){
-                        $("#tbody").html("<span>Working</span>");
-                    },
-                    success:function(data){
-                        $("#tbody").html(data)
-                    }
-                })
-            })
-
-
-            $("#typeKeyword").on("keyup",function(){
-                
-                var value = $(this).val();
-
-                // $.ajax({
-                //     url:"filterByCategory.php",
-                //     type:"POST",
-                //     data:"request=" + value,
-                //     beforeSend:function(){
-                //         $("#tbody").html("<span>Working</span>");
-                //     },
-                //     success:function(data){
-                //         $("#tbody").html(data)
-                //     }
-                // })
-            })
-
-
-
-            $("#typeDate").on("change",function(){
-                var value = $(this).val();
-                $.ajax({
-                    url:"filterByCategory.php",
-                    type:"POST",
-                    data:"request=" + value,
-                    beforeSend:function(){
-                        $("#tbody").html("<span>Working</span>");
-                    },
-                    success:function(data){
-                        $("#tbody").html(data)
-                    }
-                })
-            })
-
-
-
-
         })
-     })
+
+
+        $("#typeCategory").on("change",function(){
+                var value = $(this).val();
+                $.ajax({
+                    url:"filterByCategory.php",
+                    type:"POST",
+                    data:"request=" + value,
+                    beforeSend:function(){
+                        $("#tbody").html("<span>Working</span>");
+                    },
+                    success:function(data){
+                        $("#tbody").html(data)
+                    }
+                })
+            })
+
+
+        $("#typeKeyword").keyup(function(){
+            var inputVal = $(this).val();     
+            if(inputVal != ""){
+
+                $.ajax({
+                    url:"filterByKeyword.php",
+                    type:"POST",
+                    data:"request=" + inputVal,
+                    beforeSend:function(){
+                        $("#tbody").html("<span>Working</span>");
+                    },
+                    success:function(data){
+                        $("#tbody").html(data)
+                    }
+                })
+            }
+        })
 
 
 
-            // $("#typeKeyword").on("keyup",function(){
-        //     var value = $(this).val().toLowerCase();
-        // })
+    })
 
-            // $.ajax({
-            //     url:"changeType.php",
-            //     type:"POST",
-            //     data:value;
-            //     before
-            // })
+
+
+
 
 
     </script>
