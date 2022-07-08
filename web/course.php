@@ -14,9 +14,9 @@ $courseAmount=count($stmtAll->fetchALL(PDO::FETCH_ASSOC));
 // echo $courseAmount;
 $start=($page-1)*$amount_limit;
 if($courseAmount%$amount_limit===0)
-$totalAmount=floor($courseAmount/$amount_limit);
+$totalPage=floor($courseAmount/$amount_limit);
 else
-$totalAmount=floor($courseAmount/$amount_limit)+1;
+$totalPage=floor($courseAmount/$amount_limit)+1;
 
 $stmt=$db_host->prepare("SELECT course.id,course_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM course JOIN category ON course.category_id=category.id JOIN course_img ON course.id=course_img.course_id GROUP BY course_id LIMIT $start,$amount_limit");
 $stmt->execute();    
@@ -102,15 +102,15 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
             <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                    <a class="page-link" href="course.php?amount-limit=<?=$amount_limit?>&page=<?=$page-1<1?$page=1:$page-1?>" aria-label="Previous">
                         <span aria-hidden="true">
                             <</span>
                     </a>
                 </li>
-                  <?php for($i=1;$i<=$totalAmount;$i++): ?>
+                  <?php for($i=1;$i<=$totalPage;$i++): ?>
                 <li class="page-item"><a class="page-link active" href="course.php?amount-limit=<?=$amount_limit?>&page=<?=$i?>"><?=$i?></a></li>
                   <?php endfor; ?>
-                    <a class="page-link" href="#" aria-label="Next">
+                    <a class="page-link" href="course.php?amount-limit=<?=$amount_limit?>&page=<?=$page+1>$totalPage?$page=$totalPage:$page=$page+1?>" aria-label="Next">
                         <span aria-hidden="true">></span>
                     </a>
                 </li>
