@@ -17,7 +17,6 @@ try {
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $categories = $stmtCategory->fetchAll(PDO::FETCH_ASSOC);
 
-
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
     echo "Error: " . $e->getMessage() . "<br/>";
@@ -87,22 +86,24 @@ $db_host = NULL;
                     <div class="d-flex gap-4 align-items-center d-none" id="typeDate"   name="typeDate">
                     <input  type="date" 
                             class="form-control fs-6" 
-                            name="startDate" 
-                            id="startDate" 
+                            name="fromDate" 
+                            id="fromDate" 
                             aria-label="search with date input field">
                             ~
                     <input  type="date" 
                             class="form-control fs-6" 
-                            name="endDate" 
-                            id="endDate" 
-                            aria-label="search with date input field">
+                            name="toDate" 
+                            id="toDate" 
+                           aria-label="search with date input field">
+                     <a id="filterDateBtn" class="btn btn-main-color m-0 ">搜尋</a>
                     </div>
+                      
 
                     <select 
                         class="select-category rounded d-none" 
                         id="typeCategory" 
                         name="typeCategory">
-                        <option selected="selected">請選擇分類</option>
+                        <option selected="selected" value="all">全部分類</option>
                         <?php foreach( $categories as $category) :?>
                         <option value="<?=$category["id"]?>"><?=$category["category_name"]?></option>
                         <?php endforeach; ?>
@@ -140,6 +141,7 @@ $db_host = NULL;
         </div>
 
         <!-- Articles -->
+
         <table class="table h-0 mt-4 mb-0 text-center">
             <thead class="table-head">
                 <tr>
@@ -152,9 +154,8 @@ $db_host = NULL;
                     <td class="col-1 text-end">編輯</td>
                 </tr>
             </thead>
-            <tbody id="tbody">
 
-        
+            <tbody id="tbody">
                 <?php foreach( $rows as $row) :?>
                 <tr class="trHover border-bottom">
                     <td class="text-start pb-2">
@@ -171,52 +172,21 @@ $db_host = NULL;
                     <td class="text-end"><i class="fas fa-pen"></i></td>
                 </tr>
                 <?php endforeach; ?>
-              
             </tbody>
 
+            <!-- Loading spinner -->
             <div class="spinner-border position-absolute top-50 start-50" style="display:none" id="loadSpinner" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
         </table>
-     
-        
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">
-                            <</span>
-                    </a>
-                </li>
-                  <?php for($i=1;$i<=$totalAmount;$i++): ?>
-                <li class="page-item"><a class="page-link active" href="course.php?amount-limit=<?=$amount_limit?>&page=<?=$i?>"><?=$i?></a></li>
-                  <?php endfor; ?>
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">></span>
-                    </a>
-                </li>
-            </ul>
-            </nav>
-
     </main>
-    <script>
-
-    /**
-     * 我要把資料從前端 post 到 server 再透過 server 跟 db 溝通，改變資料庫
-     * 排序的方式，最後渲染到前端
-     * 
-     * 1. 透過 jQuery 抓到 前端的 value
-     * 2. 透過 ajax 把資料丟到 server 的 url 裡面
-     * 3. 在 server url 裡面改變資料庫的排序方式
-     * 4. 把新的排序方式透過 response?? 回傳到前端
-     * 5. 把回傳的資料透過 innerText?? 塞入畫面 ?
-     * 
-     */
+<script>
 
 
     $(function(){
+
         $("#searchType").on("change",function(){
-            var value = $(this).val();
+            const value = $(this).val();
     
             switch (value) {
                 case "keyword":
@@ -243,9 +213,10 @@ $db_host = NULL;
          * 使用類別篩選事件
          */
         $("#typeCategory").on("change",function(){
-                var value = $(this).val();
+                const value = $(this).val();
+
                 $.ajax({
-                    url:"filterByCategory.php",
+                    url:"../api/filterByCategory.php",
                     type:"POST",
                     data:"request=" + value,
                     beforeSend:function(){
@@ -255,21 +226,21 @@ $db_host = NULL;
                         $("#loadSpinner").hide()
                     },
                     success:function(data){
+                        console.log(data)
                         $("#tbody").html(data)
                     }
                 })
             })
 
-
         /**
          * 使用關鍵字篩選事件
          */
         $("#typeKeyword").keyup(function(){
-            var inputVal = $(this).val();     
+            const inputVal = $(this).val();     
             if(inputVal != ""){
 
                 $.ajax({
-                    url:"filterByKeyword.php",
+                    url:"../api/filterByKeyword.php",
                     type:"POST",
                     data:"request=" + inputVal,
                     beforeSend:function(){
@@ -285,31 +256,25 @@ $db_host = NULL;
             }
         })
 
+    $("#filterDateBtn").on("click",function(){
+        const fromDate=$("#fromDate").val();
+        const toDate=$("#toDate").val();
+    
 
-        $("#typeKeyword").keyup(function(){
-            var inputVal = $(this).val();     
-            if(inputVal != ""){
-
-                $.ajax({
-                    url:"filterByKeyword.php",
-                    type:"POST",
-                    data:"request=" + inputVal,
-                    beforeSend:function(){
-                        $("#loadSpinner").show()
-                    },
-                    complete:function(){
-                        $("#loadSpinner").hide()
-                    },
-                    success:function(data){
-                        $("#tbody").html(data)
-                    }
-                })
-            }
-        })
-
-
-
-
+        if(fromDate !='' && toDate !=""){
+            $.ajax({
+                url:"../api/filterByDate.php",
+                method:"POST",
+                data:{
+                    fromDate:fromDate,
+                    toDate:toDate
+                },
+                success:function(data){
+                     $("#tbody").html(data)
+                }
+            });
+        }
+    })
 
 
 

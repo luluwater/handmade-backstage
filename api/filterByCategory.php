@@ -3,8 +3,13 @@
 require_once("../db-connect.php");
 
 if(isset($_POST["request"])){
+
     $request=$_POST["request"];
-    $stmtQuery=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.category_id='$request' LIMIT 0,5");
+    if($request=="all") {
+        $stmtQuery=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id LIMIT 0,5");
+    }else{
+         $stmtQuery=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.category_id='$request' LIMIT 0,5");
+    }
 }
 
 try {
@@ -42,7 +47,6 @@ try {
 <?php else: ?>
 <h1 class="position-absolute top-50 start-50" >請選擇分類條件</h1>
 <?php endif; ?>
-
 
 
 

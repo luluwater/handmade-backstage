@@ -1,14 +1,16 @@
 <?php
 require_once("../db-connect.php");
 
-if(isset($_POST["request"])){
-    $request=$_POST["request"];
-    $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.title LIKE '%$request%' OR category.category_name LIKE '%$request%' LIMIT 0,5");
-}
+if(isset($_POST["fromDate"],$_POST["toDate"])){
 
+  $fromDate=$_POST["fromDate"];
+  $toDate=$_POST["toDate"];
+  $stmtDate=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE create_time BETWEEN '$fromDate' AND '$toDate' ORDER BY create_time desc LIMIT 0,5");
+}
+ 
 try {
-    $stmtKeyword->execute();
-    $keywordQuery = $stmtKeyword->fetchAll(PDO::FETCH_ASSOC);
+    $stmtDate->execute();
+    $dateQuery = $stmtDate->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -16,12 +18,14 @@ try {
     $db_host = NULL;
     exit;
 }
+
 ?>
 
-<?php  if ($keywordQuery): ?>
+
+<?php  if ($dateQuery): ?>
 <table class="table h-0 mt-4 mb-0 text-center">
     <tbody id="tbody">
-        <?php foreach( $keywordQuery as $row) :?>
+        <?php foreach( $dateQuery as $row) :?>
             <tr class="trHover border-bottom">
                 <td class="text-start pb-2">
                 <?php      
@@ -40,5 +44,5 @@ try {
     </tbody>
 </table>
 <?php else: ?>
-    <h1 class="position-absolute top-50 start-50" >請選擇分類條件</h1>
+    <h1 class="position-absolute top-50 start-50">無符合項目</h1>
 <?php endif; ?>
