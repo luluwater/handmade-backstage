@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * 因為只有 value 會透過 change 改變，所以只能取 value 
+ * 的值，不過在這邊 value 會 === 數字，因此沒辦法把她 innerText 出來，
+ * 解決方法，把 category_id 改成用 name 或者再做關聯式
+ */
+
 require_once("../db-connect.php");
 
 $stmt=$db_host->prepare("SELECT * FROM blog");
@@ -79,7 +85,7 @@ $db_host = NULL;
                         <div class="col-4 d-flex gap-3">
                             <div>文章類型</div>
                             <select name="articleCategory" class="w-50 rounded" id="articleCategory" >
-                                    <option selected="selected" value="storeIntro">店家介紹</option>
+                                    <option selected="selected" value="店家介紹">店家介紹</option>
                                     <option value="體驗課程">體驗課程</option>
                                     <option value="新店報報">新店報報</option>
                             </select>
@@ -87,18 +93,18 @@ $db_host = NULL;
                         <!-- Category -->
                         <div class="col-4 d-flex gap-3">
                             <div>館別分類</div>
-                            <select name="storeCategory" class="w-50 rounded" id="storeCategory" >
+                            <select name="category" class="w-50 rounded" id="category">
                                 <?php foreach($categories as $category): ?>
-                                    <option value="<?=$category["category_name"]?>"><?=$category["category_name"]?></option>
+                                    <option data-name="<?=$category["category_name"]?>" name="<?=$category["category_name"]?>" value="<?=$category["id"]?>"><?=$category["category_name"]?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <!-- Related stores -->
                         <div class="col-4 d-flex gap-3">
                             <div>相關店家</div>
-                                <select name="category" class="w-50 rounded" id="category" >
+                                <select name="store" class="w-50 rounded" id="store" >
                                     <?php foreach($stores as $store): ?>
-                                        <option value="<?=$store["name"]?>"><?=$store["name"]?></option>
+                                        <option name="<?=$store["name"]?>" value="<?=$store["name"]?>"><?=$store["name"]?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -116,7 +122,7 @@ $db_host = NULL;
                         <!-- submit button -->
                         
                         <div class="d-flex gap-3 justify-content-end">
-                            <a href="management-blog.php" class="btn btn-bg-color mt-3 btn-lg ">返回</a>
+                            <a href="manage-blog.php" class="btn btn-bg-color mt-3 btn-lg ">返回</a>
                             <input class="btn btn-main-color mt-3 btn-lg" type="submit" value="儲存">    
                         </div>
                  
@@ -185,70 +191,72 @@ $db_host = NULL;
 
 
 
+            // Get value
+            const blogTitleInput = document.getElementById("blogTitle")
+            const publishTimeInput = document.getElementById("publishTime")
+            const isPublishInput = document.getElementById("isPublish")
+            const articleCategoryInput = document.getElementById("articleCategory")
+            const categoryInput = document.getElementById("category")
+            const storeInput = document.getElementById("store")
+            const article = document.getElementById("editor")
+
+            // set value
+            const modalUser = document.getElementById("modalUser")
+            const modalDate = document.getElementById("modalDate")
+            const modalExp = document.getElementById("modalExp")
+            const modalCategory = document.getElementById("modalCategory")
+            const modalStore = document.getElementById("modalStore")
+            const modalArticle = document.getElementById("modalArticle")
+            const modalTitle= document.getElementById("modalTitle")
+
+            const previewElem = document.getElementById("preview")
         
-       // Get value
-        const blogTitleInput = document.getElementById("blogTitle")
-        const publishTimeInput = document.getElementById("publishTime")
-        const isPublishInput = document.getElementById("isPublish")
-        const articleCategoryInput = document.getElementById("articleCategory")
-        const storeCategoryInput = document.getElementById("storeCategory")
-        const categoryInput = document.getElementById("category")
-        const article = document.getElementById("editor")
+            previewElem.addEventListener("click",()=>{
+                modalTitle.innerText=blogTitleInput.value
+                modalExp.innerText=articleCategory.value
+                modalCategory.innerText=categoryInput.value
+                modalStore.innerText=storeInput.value
 
-        // set value
-        const modalUser = document.getElementById("modalUser")
-        const modalDate = document.getElementById("modalDate")
-        const modalExp = document.getElementById("modalExp")
-        const modalCategory = document.getElementById("modalCategory")
-        const modalStore = document.getElementById("modalStore")
-        const modalArticle = document.getElementById("modalArticle")
-        const modalTitle= document.getElementById("modalTitle")
-
-        const previewElem = document.getElementById("preview")
-
-        console.log();
-
-    
-        previewElem.addEventListener("click",()=>{
-            modalTitle.innerText=blogTitleInput.value
-            modalExp.innerText=articleCategory.value
-            modalCategory.innerText=categoryInput.value
-            modalStore.innerText=storeCategoryInput.value
-
-
-            modalArticle.innerText=article.firstChild.data
+                modalArticle.innerText=article.firstChild.data
+                
             
-        
-            modalDate.innerText=publishTimeInput.value
-            modalArticle.innerText=article.value
+                modalDate.innerText=publishTimeInput.value
+                modalArticle.innerText=article.value
 
 
+            })
+
+
+
+        const category=document.querySelector("#category");
+        const store=document.querySelector("#store");
+
+        categoryInput.addEventListener("change",function(){
+            categoryValue=this.value;
+    
+            for(let i=store.children.length-1;i>=0;i-- ){
+                store.removeChild(store[i]);
+            }
+            $.ajax({
+            	method: "POST",  
+            	url:  "../api/filte-store.php",
+            	dataType: "json",
+            	data: { category_id: categoryValue } 
+            	})
+            	.done(function( response ) {
+                    for(let result of response.stores){
+                        html=document.createElement("option");
+                        html.textContent=result.name;
+                        html.setAttribute("name",result.id,);
+                        store.prepend(html);
+                    }                    
+            	}).fail(function( jqXHR, textStatus ) {
+                	console.log( "Request failed: " + textStatus );
+            	});
         })
 
-                          
 
-
-    editor.execute( 'htmlEmbed' );
-
-
-
-
-        // function getUser(id){
-        //     $.ajax({
-        //         method: "GET",
-        //         url: "../api/preview-blog.php",
-        //         dataType: "json",
-        //         data: {
-        //             id: id
-        //         }
-        //     })
-        //     .done(function(response) {
-
-
-        //     }).fail(function(jqXHR, textStatus) {
-        //         console.log("Request failed: " + textStatus);
-        //     });
-        // }
+    
 
         
     </script>

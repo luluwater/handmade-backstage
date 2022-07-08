@@ -2,14 +2,8 @@
 
 require_once("../db-connect.php");
 
-$pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']) : 5;
-
-echo $pageView;
-
 $stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id LIMIT 0,5");
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
-
-
 
 try {
     $stmt->execute();
@@ -117,7 +111,7 @@ $db_host = NULL;
             <div class="d-flex align-items-center w-25 justify-content-between ">
                 <!-- Post New Article Router-->
                 <div class="d-flex align-items-end">
-                    <a href="add-blog.php" class="btn btn-secondary btn-sm ">+
+                    <a href="create-blog.php" class="btn btn-secondary btn-sm ">+
                     <span class="fs-6 ms-3">發表新文章</span></a>
                 </div>
                 <!--------------------------->
@@ -255,12 +249,11 @@ $db_host = NULL;
                 })
             }
         })
+        
 
     $("#filterDateBtn").on("click",function(){
         const fromDate=$("#fromDate").val();
         const toDate=$("#toDate").val();
-    
-
         if(fromDate !='' && toDate !=""){
             $.ajax({
                 url:"../api/filterByDate.php",
@@ -275,18 +268,9 @@ $db_host = NULL;
             });
         }
     })
-
-
-
 })
 
-
-
-
-
-
     </script>
-
 </body>
 
 </html>
