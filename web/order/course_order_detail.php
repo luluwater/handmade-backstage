@@ -1,87 +1,238 @@
+<?php
+
+if (!isset($_GET["id"])) {
+    header("location:course_order-list.php");
+}
+
+$id = $_GET["id"];
+
+require_once("../../db-connect.php");
+
+
+// *******確認是否擁有coupon_id******* //
+
+$sqlCoupon = $db_host->prepare("SELECT coupon_id FROM course_order 
+WHERE course_order.id = $id");
+
+try {
+    $sqlCoupon->execute();
+    $couponIsset = $sqlCoupon->fetch(PDO::FETCH_ASSOC);
+   
+} catch (PDOException $e) {
+    echo "error: " . $e->getMessage() . "<br/>";
+    $db_host = NULL;
+    exit;
+}
+
+// *******擁有的話 資料連接coupon資料庫******* //
+
+$couponId = $couponIsset["coupon_id"];
+if ($couponId!=""){
+    $sqlJoin = ",coupon.discount_type_id,coupon.coupon_discount,coupon.pay";
+    $JoinFrom = "JOIN coupon ON course_order.coupon_id = coupon.id";
+    
+}else{
+    $sqlJoin = "";
+    $JoinFrom = "";
+}
+
+
+
+
+// *******撈取訂單資料******* //
+
+$sqlOrder = $db_host->prepare("SELECT course_order.*,user.account,order_staus.name AS stausName $sqlJoin FROM course_order 
+JOIN user ON course_order.user_id = user.id 
+JOIN order_staus ON course_order.order_state_id = order_staus.id 
+$JoinFrom
+WHERE course_order.id = $id");
+
+
+
+
+
+// *******撈取訂單明細******* //
+$sql = $db_host->prepare("SELECT course_order_list.*,course.name AS courseName ,course_img.img_name FROM course_order_list 
+JOIN course ON course_order_list.course_id = course.id 
+JOIN course_img ON course.id = course_img.course_id  
+WHERE course_order_list.order_id = $id");
+
+
+
+try {
+    $sqlOrder->execute();
+    $orderRow = $sqlOrder->fetch(PDO::FETCH_ASSOC);
+    print_r($orderRow);
+
+    $sql->execute();
+    $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
+    $rowsCount = count($rows);
+} catch (PDOException $e) {
+    echo "預處理陳述式失敗! <br/>";
+    echo "error: " . $e->getMessage() . "<br/>";
+    $db_host = NULL;
+    exit;
+}
+
+// *******將折價券低消設成數字******* //
+$couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
+
+?>
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Title</title>
+
+<head>
+    <title>體驗課程 訂單明細</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.2.0-beta1 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"  integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <head><link rel="stylesheet" href="../../css/style.css"></head>
-    <head><link rel="stylesheet" href="css/order-detail-style.css"></head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-  </head>
-  <body>
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/order-detail-style.css">
+
+
+    <style>
+        .table-w {
+            width: 90%;
+        }
+    </style>
+
+</head>
+
+<body>
     <?php
     require("../main-menu.html");
     ?>
     <main>
+        <!-- 顧客資料 -->
         <div class="row mx-5 my-3">
-            <p class="col-1 dateName">訂單編號</p>
-            <p class="col-auto">1</p>
+            <p class="col-1 boldWord">訂單編號</p>
+            <p class="col-auto">00<?= $orderRow["id"] ?></p>
         </div>
 
         <div class="row mx-5 mb-3">
-            <p class="col-1 dateName">訂單日期</p>
-            <p class="col-auto">2022/07/07</p>
+            <p class="col-1 boldWord">訂單日期</p>
+            <p class="col-auto"><?= $orderRow["create_time"] ?></p>
         </div>
 
         <div class="row mx-5 mb-3">
-            <p class="col-1 dateName">訂購帳號</p>
-            <p class="col-auto">蔡依林</p>
+            <p class="col-1 boldWord">訂購帳號</p>
+            <p class="col-auto"><?= $orderRow["account"] ?></p>
         </div>
 
         <div class="row mx-5 mb-3">
-            <p class="col-1 dateName">收件人</p>
-            <p class="col-auto">蔡依林</p>
+            <p class="col-1 boldWord">收件人</p>
+            <p class="col-auto"><?= $orderRow["name"] ?></p>
         </div>
 
         <div class="row mx-5 mb-3">
-            <p class="col-1 dateName">連絡電話</p>
-            <p class="col-auto">09123456789</p>
-        </div>
-
-        <div class="row mx-5 mb-4 align-items-center">
-            <label for="" class="col-1 dateName">訂單狀態</label>
-            <select name="" id="" class="form-select mx-2 searchState col-auto">
-                <option value="3">已付款</option>
-                <option value="5">取消</option>
-            </select>
+            <p class="col-1 boldWord">連絡電話</p>
+            <p class="col-auto"><?= $orderRow["phone"] ?></p>
         </div>
 
         <div class="row mx-5 mb-3">
-            <p class="col-1 dateName">顧客備註</p>
-            <div class="col-auto note pt-1">出貨請通知!!</div>
+            <p class="col-1 boldWord">付款方式</p>
+            <p class="col-auto"><?= $orderRow["payment"] ?></p>
+        </div>
+
+        <div class="row mx-5 mb-3">
+            <p class="col-1 boldWord">訂單狀態</p>
+            <p class="col-auto"><?= $orderRow["stausName"] ?></p>
+        </div>
+
+
+        <!-- 顧客資料結束 -->
+
+
+
+        <div class="row mx-5 mb-3">
+            <p class="col-1 boldWord">顧客備註</p>
+            <div class="col-auto note pt-1"><?= $orderRow["note"] ?></div>
 
         </div>
+
+        <!-- 顧客購買項目 -->
 
         <div class="d-flex justify-content-center">
-            <table class="table table-hover mt-5">
+            <table class="table table-hover mt-5 table-w">
                 <thead class="order-th ">
-                    <tr class="text-center order-title">
-                        <td>課程名稱</td>
-                        <td>預約日期</td>
-                        <td>人數</td>
-                        <td>單價</td>
-                        <td>小計</td>
+                    <tr class="text-center order-title row">
+                        <td class="col-1"></td>
+                        <td class="col-3 boldWord">課程名稱</td>
+                        <td class="col boldWord">預約日期</td>
+                        <td class="col boldWord">人數</td>
+                        <td class="col boldWord">單價</td>
+                        <td class="col boldWord">小計</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="text-center">
-                        <td>123</td>
-                        <td>123</td>
-                        <td>123</td>
-                        <td>123</td>
-                        <td>123</td>
 
+                        <?php $orderId = "" ?>
+                        <?php $thePrice = intval("") ?>
+                        <?php $totalPrice = intval("") ?>
+                        <?php foreach ($rows as $row) : ?>
+                            <?php if ($orderId == $row["id"]) : ?>
+                                <?php continue; ?>
+                            <?php else : ?>
+                    <tr class="text-center row detail-tr">
+                        <td class="col-1"><img class="coursePic imgObject" src="../../img/course/<?= $row["img_name"] ?>" alt=""></td>
+                        <td class="col-3"><?= $row["courseName"] ?></td>
+                        <td class="col"><?= $row["date"] ?></td>
+                        <td class="col"><?= $row["amount"] ?></td>
+                        <td class="col">$<?= $row["price"] ?></td>
+                        <td class="col">$<?= $row["amount"] * $row["price"] ?></td>
                     </tr>
+
+                        <?php $orderId = $row["id"] ?>
+                        <?php $thePrice = intval($row["amount"] * $row["price"])?>
+                        <?php $totalPrice += $thePrice ?>
+                        <?php endif; ?>
+                        <?php endforeach ?>
+                        
+
+                    
 
                 </tbody>
             </table>
         </div>
+        <div class="text-end boldWord ">
+            <div class="row mx-5 pe-5 mt-2 justify-content-end">
+                <p class="col-2 boldWord ">訂單總金額</p>
+                <p class="col-1 ">$<?= $totalPrice ?></p>
+            </div>
+
+            <div class="row mx-5  pe-5 justify-content-end">
+                <p class="col-2 boldWord ">優惠券折扣</p>
+
+                <?php if (($couponId!= "") && ($orderRow["discount_type_id"] == 1)) :?>
+                    <?php $discountPercent = floatval($orderRow["coupon_discount"]*10)?>
+                    <p class="col-1"><?= $discountPercent?> 折</p>
+                <?php elseif (($couponId!= "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice >= $couponPay)) :?>
+                    <p class="col-1">$<?= $orderRow["coupon_discount"]?></p>
+                <?php elseif (($couponId!= "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice < $couponPay)) :?>
+                <p class="col-1">$0</p>
+                <?php else :?>
+                    <p class="col-1">$0</p>
+                <?php endif; ?>
+                
+            </div>
+
+            <div class="row mx-5  pe-5 justify-content-end ">
+                <p class="col-1 boldWord totalPrice totalPriceBox pb-3">實付金額</p>
+                <p class="col-1 totalPrice totalPriceBox pb-3">$1000</p>
+            </div>
+
+            <div class="row mx-5 my-2 pe-5 justify-content-end">
+                <a href="" class="col-1 btn btn-bg-color mb-5 ">返回列表</a>
+            </div>
+        </div>
     </main>
 
-  </body>
+</body>
+
 </html>

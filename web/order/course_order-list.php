@@ -221,7 +221,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                 <tbody>
                 <?php foreach($orderPageCount as $row):?>
                     <tr class="text-center">
-                            <td><?=$row["id"]?></td>
+                            <td><a class="detailLink" href="course_order_detail.php?id=<?=$row["id"]?>">00<?=$row["id"]?></a></td>
                             <td><?=$row["create_time"]?></td>
                             <td><?=$row["name"]?></td>
                             <td><?=$row["total_amount"]?></td>
@@ -245,7 +245,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                 
                 <?php for($i=1; $i<=$totalPage;$i++): ?>
                 <li class="page-item <?php if($page==$i)echo "active"?>"><a class="page-link" href="course_order-list.php?page=<?=$i?>&pageView=<?=$pageView?>&order=<?=$order?>"><?=$i?></a></li>
-                <?php endfor; ?>
+                <?php endfor; ?>    
 
 
 

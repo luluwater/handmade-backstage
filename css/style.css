@@ -43,7 +43,11 @@ a{
     font-weight: bolder;
     color: white;
     /* padding: .5rem 1rem; */
+<<<<<<< HEAD
    
+=======
+    
+>>>>>>> 16adf1d889e6367f693068a704d0185a35dff79c
 }
 .btn-bg-color{
     background: var(--line-color);
@@ -70,6 +74,9 @@ a{
 }
 .table{
     min-height: 550px;
+}
+.table tbody tr td{
+    vertical-align: middle;
 }
 .sidebar{
     width: 256px;
@@ -147,6 +154,7 @@ a{
     height: 16px;
 }
 
+<<<<<<< HEAD
 
 .switch{
     height: 0;
@@ -229,3 +237,19 @@ a{
     opacity: 1;
     z-index: 100;
 }
+=======
+.previewImage{
+    width: 200px;
+    height: 200px;
+    background: url("../img/previewImage.jpg");
+    display: block;    
+}
+.previewImage:hover{
+    cursor: pointer;
+}
+.previewImage-sm{
+    width: 80px;
+    height: 80px;
+    background: url("../img/previewImage.jpg");    
+}
+>>>>>>> 16adf1d889e6367f693068a704d0185a35dff79c

@@ -87,6 +87,15 @@
 .table {
     min-height: 200px;
 }
+.detailLink{
+    color: var(--line-color);
+    font-size: 18px;
+    font-weight: 900;    
+}
+.detailLink:hover{
+    color: var(--main-color);
+ 
+}
 
 
 

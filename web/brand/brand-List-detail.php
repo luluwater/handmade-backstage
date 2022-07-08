@@ -10,12 +10,27 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
+<<<<<<< HEAD:web/brand-List-detail.php
         <link rel="stylesheet" href="../css/style.css">
 
+=======
+        <link rel="stylesheet" href="../../css/style.css">
+   <style>
+     .space1{
+       padding-right:3.25em;
+   }
+     .space2{
+       padding-right:4.0em;
+   }
+   .space3{
+       padding-right:4.0em;
+   }
+   </style>
+>>>>>>> 16adf1d889e6367f693068a704d0185a35dff79c:web/brand/brand-List-detail.php
   </head>
  <body>
    <?php
-    require("./main-menu.html");
+    require("../main-menu.html");
     ?>
     <main>
 <<<<<<< HEAD
