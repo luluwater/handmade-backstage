@@ -30,7 +30,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
 <html lang="tw-zh">
 
 <head>
-    <title>商品管理-手手</title>
+    <title>課程管理-手手</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
