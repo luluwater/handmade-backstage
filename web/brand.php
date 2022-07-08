@@ -1,3 +1,17 @@
+<?php
+require("../db-connect-test.php");
+
+$sql="SELECT * FROM category";
+
+$result=$conn->query($sql);
+$category_count=$result->num_rows;
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+
+?>
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -16,7 +30,6 @@
         color:var(--line-color);
         margin-top:5px;
         font-size:24px;
-        
       }
       .delAndAdd{
         padding-top:60px;
@@ -49,6 +62,11 @@
         align-items:center;
 
       }
+      .object-fit{
+        width: 100%;
+        height: 100%;
+        object-fit:cover;
+      }
     </style>
   </head>
   <body>
@@ -59,118 +77,44 @@
              <div class="container-fluid">
             <div class="d-flex justify-content-between mb-3">
                 <p class="title">課程管理</p>
-                <p>顯示 
+               
+                <!-- <p>顯示 
                   <select class="count-bg text-center" aria-label="Default select example">
-                    <option value="1" selected>5</option>
-                    <option value="2">10</option>
+                    <option value="1" selected>6</option>
+                    <option value="2">12</option>
+                    <option value="3">18</option>
+                    <option value="4">24</option>
+                    <option value="5">30</option>
                   </select> 
                   筆數
-                </p>
+                </p> -->
             </div>
             <?php require("./mod/search-category.php") ?>
-           
-
              <div class=" d-flex justify-content-between my-4">
                 <button class="side btn-bg-color ">管理分類</button>
+                 <p class="">共<?=$category_count?>筆資料 </p> 
                 <div class="delAndAdd ">
-                     <a href="" class=" text-dark m-4"><i class="fa-solid fa-trash m-2"></i>刪除品牌</a>
-                      <a href="" class="  text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增品牌</a>
-                </div>
-                     
-            
+                    <a href="" class=" text-dark m-4"><i class="fa-solid fa-trash m-2"></i>刪除店家</a>
+                    <a href="" class=" text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增店家</a>
+                </div>     
             </div>
-
-        <div class="row gy-4">
-            <div class="col-md-4">
-                <div >
-                    <input type="checkbox" value="1" name="Product_1"><br>
-                    <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/store_leather_Shekinah_kv.jpg" alt="">
-                    </figure>
-                     <h2 class="mb-2 text-center h4">皮革</h2>
-
-                    <div class="py-2">
-                        <div class="d-grid">
-                           <button class="btn btn-info btn-cart" data-id="1">編輯</button>
-                       </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4">
-                <div >
-                    <input type="checkbox" value="1" name="Product_1"><br>
-                    <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/tufting_997-studio_kv_5.jpg" alt="">
-                    </figure>
-                     <h2 class="mb-2 text-center h4">tufting</h2>
-
-                    <div class="py-2">
-                        <div class="d-grid">
-                           <button class="btn btn-info btn-cart" data-id="1">編輯</button>
-                       </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div >
-                    <input type="checkbox" value="1" name="Product_1"><br>
-                    <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/花藝＿浪花＿KV＿2.jpg" alt="">
-                    </figure>
-                     <h2 class="mb-2 text-center h4">花藝</h2>
-
-                    <div class="py-2">
-                        <div class="d-grid">
-                           <button class="btn btn-info btn-cart" data-id="1">編輯</button>
-                       </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div >
-                    <input type="checkbox" value="1" name="Product_1"><br>
-                    <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/金工_Minifeast_手環課程_kv4.jpg" alt="">
-                    </figure>
-                     <h2 class="mb-2 text-center h4">金工</h2>
-
-                    <div class="py-2">
-                        <div class="d-grid">
-                           <button class="btn btn-info btn-cart" data-id="1">編輯</button>
-                       </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4">
-                <div >
-                    <input type="checkbox" value="1" name="Product_1"><br>
-                    <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/烘焙_趣玩烘焙_kv_4.jpg" alt="">
-                    </figure>
-                     <h2 class="mb-2 text-center h4">烘焙</h2>
-
-                    <div class="py-2">
-                        <div class="d-grid">
-                           <button class="btn btn-info btn-cart" data-id="1">編輯</button>
-                       </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4">
-                <div >
-                    <input type="checkbox" value="1" name="Product_1"><br>
-                    <figure class="ratio ratio-4x3 mb-2">
-                       <img class="object-cover" src="../imagesTest/陶藝_歡樂陶一家_KV_3.jpg" alt="">
-                    </figure>
-                     <h2 class="mb-2 text-center h4">陶藝</h2>
-
-                    <div class="py-2">
-                        <div class="d-grid">
-                           <button class="btn btn-info btn-cart" data-id="1">編輯</button>
-                       </div>
-                    </div>
-                </div>
-            </div>
+               <div class="row gy-4">
+                   <?php foreach ($rows as $row) : ?>
+                      <div class="col-md-4">
+                        <div>
+                         <figure class="ratio ratio-4x3 mb-2">
+                            <img class="object-cover" src="../imagesTest/<?= $row["category_img"] ?>" alt="">
+                        </figure>
+                        <div class="text-center"><?= $row["category_name"] ?></div>
+                           <div class="py-2">
+                             <div class="d-grid">
+                               <button class="btn btn-info btn-cart" data-id="1">編輯</button>
+                             </div>
+                           </div>
+                         </div>
+                      </div>
+                   <?php endforeach; ?>
+                 </div>
             <div class="footer">
                 <?php require("./mod/pagination.php") ?>
             </div>
