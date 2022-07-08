@@ -42,7 +42,7 @@ a{
     background: var(--main-color);
     font-weight: bolder;
     color: white;
-    padding: .5rem 1rem;
+    /* padding: .5rem 1rem; */
     
 }
 .btn-bg-color{
@@ -70,6 +70,9 @@ a{
 }
 .table{
     min-height: 550px;
+}
+.table tbody tr td{
+    vertical-align: middle;
 }
 .sidebar{
     width: 256px;
@@ -147,10 +150,17 @@ a{
     height: 16px;
 }
 
-
-
-
-
-
-
-
+.previewImage{
+    width: 200px;
+    height: 200px;
+    background: url("../img/previewImage.jpg");
+    display: block;    
+}
+.previewImage:hover{
+    cursor: pointer;
+}
+.previewImage-sm{
+    width: 80px;
+    height: 80px;
+    background: url("../img/previewImage.jpg");    
+}
