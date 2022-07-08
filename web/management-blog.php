@@ -83,11 +83,20 @@ $db_host = NULL;
                         aria-label="search with text input field" 
                         name="typeKeyword">
 
+
+                    <div class="d-flex gap-4 align-items-center d-none" id="typeDate"   name="typeDate">
                     <input  type="date" 
-                            class="form-control fs-6 d-none" 
-                            name="typeDate" 
-                            id="typeDate" 
+                            class="form-control fs-6" 
+                            name="startDate" 
+                            id="startDate" 
                             aria-label="search with date input field">
+                            ~
+                    <input  type="date" 
+                            class="form-control fs-6" 
+                            name="endDate" 
+                            id="endDate" 
+                            aria-label="search with date input field">
+                    </div>
 
                     <select 
                         class="select-category rounded d-none" 
@@ -99,7 +108,6 @@ $db_host = NULL;
                         <?php endforeach; ?>
                     </select>
 
-                    <!-- <input type="button" class="fs-6 btn btn-bg-color" id="submitButton" value="搜索"> -->
                 </form>
             </div>
             <!-- Filter end -->
@@ -145,6 +153,8 @@ $db_host = NULL;
                 </tr>
             </thead>
             <tbody id="tbody">
+
+        
                 <?php foreach( $rows as $row) :?>
                 <tr class="trHover border-bottom">
                     <td class="text-start pb-2">
@@ -161,15 +171,34 @@ $db_host = NULL;
                     <td class="text-end"><i class="fas fa-pen"></i></td>
                 </tr>
                 <?php endforeach; ?>
-
+              
             </tbody>
+
+            <div class="spinner-border position-absolute top-50 start-50" style="display:none" id="loadSpinner" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </table>
+     
+        
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">
+                            <</span>
+                    </a>
+                </li>
+                  <?php for($i=1;$i<=$totalAmount;$i++): ?>
+                <li class="page-item"><a class="page-link active" href="course.php?amount-limit=<?=$amount_limit?>&page=<?=$i?>"><?=$i?></a></li>
+                  <?php endfor; ?>
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">></span>
+                    </a>
+                </li>
+            </ul>
+            </nav>
 
-        <?php
-        require("./mod/pagination.php")
-        ?>
     </main>
-
     <script>
 
     /**
@@ -183,6 +212,7 @@ $db_host = NULL;
      * 5. 把回傳的資料透過 innerText?? 塞入畫面 ?
      * 
      */
+
 
     $(function(){
         $("#searchType").on("change",function(){
@@ -209,7 +239,9 @@ $db_host = NULL;
             }
         })
 
-
+        /**
+         * 使用類別篩選事件
+         */
         $("#typeCategory").on("change",function(){
                 var value = $(this).val();
                 $.ajax({
@@ -217,13 +249,41 @@ $db_host = NULL;
                     type:"POST",
                     data:"request=" + value,
                     beforeSend:function(){
-                        $("#tbody").html("<span>Working</span>");
+                        $("#loadSpinner").show()
+                    },
+                    complete:function(){
+                        $("#loadSpinner").hide()
                     },
                     success:function(data){
                         $("#tbody").html(data)
                     }
                 })
             })
+
+
+        /**
+         * 使用關鍵字篩選事件
+         */
+        $("#typeKeyword").keyup(function(){
+            var inputVal = $(this).val();     
+            if(inputVal != ""){
+
+                $.ajax({
+                    url:"filterByKeyword.php",
+                    type:"POST",
+                    data:"request=" + inputVal,
+                    beforeSend:function(){
+                        $("#loadSpinner").show()
+                    },
+                    complete:function(){
+                        $("#loadSpinner").hide()
+                    },
+                    success:function(data){
+                        $("#tbody").html(data)
+                    }
+                })
+            }
+        })
 
 
         $("#typeKeyword").keyup(function(){
@@ -235,7 +295,10 @@ $db_host = NULL;
                     type:"POST",
                     data:"request=" + inputVal,
                     beforeSend:function(){
-                        $("#tbody").html("<span>Working</span>");
+                        $("#loadSpinner").show()
+                    },
+                    complete:function(){
+                        $("#loadSpinner").hide()
                     },
                     success:function(data){
                         $("#tbody").html(data)
@@ -246,7 +309,11 @@ $db_host = NULL;
 
 
 
-    })
+
+
+
+
+})
 
 
 
