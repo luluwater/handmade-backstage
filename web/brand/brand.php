@@ -34,14 +34,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
       .side{
         background:var(--bg-color); 
         border-radius:10%;
-         margin-top:40px;
-          padding:5px 20px ;
-          color:white;
+         margin-top:60px;
+          padding:5px 40px ;
+          color:black;
           border:1px solid var(--bg-color);
          
-      }
-      .side:active{
-           background: #000;
       }
       .count-bg{
         margin-bottom:20px;
@@ -73,8 +70,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
      <main>
              <div class="container-fluid">
             <div class="d-flex justify-content-between mb-3">
-                <p class="title">課程管理</p>
-               
+                <p class="title">課程管理</p>  
                 <!-- <p>顯示 
                   <select class="count-bg text-center" aria-label="Default select example">
                     <option value="1" selected>6</option>
@@ -87,9 +83,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 </p> -->
             </div>
             <?php require("../mod/search-category.php") ?>
-             <div class=" d-flex justify-content-between my-4">
-                <button class="side btn-bg-color ">管理分類</button>
-                 <p class="">共<?=$category_count?>筆資料 </p> 
+             <div class=" d-flex   my-4">
+                 <div class="d-flex">
+                   <p class="side">共<?=$category_count?>筆資料 </p> 
+                 </div>
                 <div class="delAndAdd ">
                     <a href="" class=" text-dark m-4"><i class="fa-solid fa-trash m-2"></i>刪除店家</a>
                     <a href="" class=" text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增店家</a>
