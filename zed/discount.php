@@ -1,5 +1,26 @@
 <?php
+
 require("../db-connect.php");
+
+//========== 抓取全部資料 ==========
+$sqlAll = "SELECT * FROM discount";
+$resultAll= $db_host->prepare($sqlAll);
+$resultAll->execute();
+$rowsAll = $resultAll->fetchAll(PDO::FETCH_ASSOC);
+$discountAllCount = count($rowsAll);
+
+//========== PAGE ==========
+if(isset($_GET["page"])){
+  $page=$_GET["page"];
+}else{
+  $page=1;
+}
+
+//取得每頁看到幾欄
+$pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']):5;
+
+//每頁開始的id
+$start=($page-1)*$pageView;
 
 //========== sale_state_category 狀態類別資料表 ==========
 $sqlState = "SELECT * FROM sale_state_category" ;
@@ -19,13 +40,33 @@ if (isset($_GET["sale_state_category"])){
 //========== discount 主要的資料表 ==========
 $sql = "SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
 JOIN sale_state_category ON discount.state = sale_state_category.id  
-WHERE discount.state!=0 $sqlWhere ORDER BY end_date DESC  ";
+WHERE discount.state!=0 $sqlWhere ORDER BY end_date DESC LIMIT $start , $pageView";
 $result= $db_host->prepare($sql);
 $result->execute();
 $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+$discountCount = count($rows);
 
+//========== Page ==========
+//開始的筆數
+$startItem=($page-1)*$pageView+1;
+//結束的筆數
+$endItem=$page*$pageView;
+if($endItem>$discountAllCount)$endItem=$discountAllCount;
+
+//總筆數
+$totalPage=ceil($discountAllCount / $pageView);
+
+//上一頁
+$PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
+//下一頁
+$nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 
 ?>
+
+
+
+
+
 
 <!doctype html>
 <html lang="tw-zh">
@@ -60,52 +101,60 @@ $rows = $result->fetchAll(PDO::FETCH_ASSOC);
         </style>
 </head>
 
+
+
 <body>
     <?php
     require("./main-menu.html");
     ?>
+
     <main>
 
 <!-- ========== state bar 狀態頁籤 ========== -->
       <div class="mb-4">
-        <?php // require("./mod/status-bar-discount.php");?>
         <div class="title">一般折扣</div>
         <div><br></div>
         <div class="status-bar">
           <ul class="d-flex list-unstyled justify-content-around align-items-center m-0 h-100 ">
-
             <li class="status-button">
               <a href="discount.php" class="status-a text-center fs-5
               <?php if($sale_state_category=="") echo "active"; ?>" name="all">全部活動</a>
             </li>
             <?php foreach($rowsState as $row): ?>
-                    <li class="status-button">
-                        <a class="status-a text-center fs-5
-                        <?php
-                        if($sale_state_category==$row["id"]) echo "active";
-                        ?>" 
-                        href="discount.php?sale_state_category=<?=$row["id"]?>"><?=$row["name"]?></a>
-                    </li>
-        <?php endforeach; ?>
+            <li class="status-button">
+              <a class="status-a text-center fs-5
+              <?php
+              if($sale_state_category==$row["id"]) echo "active";
+              ?>" 
+              href="discount.php?sale_state_category=<?=$row["id"]?>"><?=$row["name"]?></a>
+            </li>
+            <?php endforeach; ?>
           </ul>
       </div> 
 
       </div>
         <div class="container-fluid">
+
+<!-- ========== 每頁顯示幾筆 ========== -->
             <div class="d-flex justify-content-between">
                 <p class="title"></p>
-                <p>顯示 
-                  <select class="count-bg text-center" aria-label="Default select example" method="POST">
-                    <option value="1" name="p5" selected>5</option>
-                    <option value="2" name="p10">10</option>
-                  </select> 
-                  筆數
-                </p>
+                <form action="discount.php" method="GET">
+                  <p>顯示
+                    <select class="count-bg text-center" aria-label="Default select example"  name="pageView" onchange="submit();">
+                      <option value="5" <?php if ($pageView == '5') print 'selected ';?>>5</option>
+                      <option value="10" <?php if ($pageView == '10') print 'selected ';?>>10</option>
+                    </select> 
+                  筆</p>
+                </form>
             </div>
+
+<!-- ========== 搜尋、新增折扣 ========== -->
             <?php require("./mod/search-bar-sale.php") ?>
             <div class="text-end my-4">
               <a href="discount-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
             </div>
+
+<!-- ========== table ========== -->
             <table class="table">
               <thead class="table-head">
                 <tr class="text-center">
@@ -124,14 +173,40 @@ $rows = $result->fetchAll(PDO::FETCH_ASSOC);
                     <td><?=$row["start_date"]?> - <?=$row["end_date"]?></td>
                     <td><?=$row["sale_state_name"]?></td>
                     <td>
-                        <a href="discount-edit.php?id=<?=$row["id"]?>" name="edit">編輯</a> <br>
+                        <a href="discount-edit.php?id=<?=$row["id"]?>" name="edit">編輯</a><br>
                         <a href="discount-doDelete.php?id=<?=$row["id"]?>" name="delete">刪除</a>
                     </td>
                   </tr>
               <?php endforeach; ?>
               </tbody>
             </table>
-            <?php require("./mod/page-number-sale.php") ?>
+
+ <!-- ========== 分頁 ========== -->
+            <div class="d-flex justify-content-center">
+              <nav aria-label="Page navigation example ">
+                <ul class="pagination mt-4 px-5">
+                    <!-- 上一頁 -->
+                    <li class="page-item">
+                        <a class="page-link" href="discount.php?page=<?=$PreviousPage?>&pageView=<?=$pageView?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <!-- 頁碼 -->
+                    <?php for($i=1; $i<=$totalPage;$i++): ?>
+                    <li class="page-item">
+                      <a class="page-link  <?php if($page==$i)echo "active"?>" href="discount.php?page=<?=$i?>&pageView=<?=$pageView?>"><?=$i?></a>
+                    </li>
+                    <?php endfor; ?>
+                    <!-- 下一頁 -->
+                    <li class="page-item">
+                        <a class="page-link" href="discount.php?page=<?=$nextPage?>&pageView=<?=$pageView?>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+              </nav>
+              <div class="mt-4 pt-2">第 <?=$startItem?> - <?=$endItem?> 筆 , 共 <?=$discountAllCount?> 筆資料</div>
+            </div>   
         </div>
     </main>
 </body>

@@ -2,6 +2,8 @@
 
 require("../db-connect.php");
 
+
+//========== 抓取全部資料 ==========
 $sqlAll = "SELECT * FROM coupon";
 $resultAll= $db_host->prepare($sqlAll);
 $resultAll->execute();
@@ -62,8 +64,11 @@ $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
 $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 
-
 ?>
+
+
+
+
 
 <!doctype html>
 <html lang="tw-zh">
@@ -93,8 +98,6 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
           .active{
             background-color: #D6624F;
           }
-
-        
         </style>
 </head>
 
@@ -102,10 +105,11 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
     <?php
     require("./main-menu.html");
     ?>
+
     <main>
+
  <!-- ========== state bar 狀態頁籤 ========== -->
       <div class="mb-4">
-        <?php // require("./mod/status-bar-coupon.php");?>
         <div class="title">優惠券</div>
         <div><br></div>
         <div class="status-bar">
@@ -116,35 +120,38 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
               <?php if($sale_state_category=="") echo "active"; ?>" name="all">全部活動</a>
             </li>
             <?php foreach($rowsState as $row): ?>
-                    <li class="status-button">
-                        <a class="status-a text-center fs-5
-                        <?php
-                        if($sale_state_category==$row["id"]) echo "active";
-                        ?>" 
-                        href="coupon.php?sale_state_category=<?=$row["id"]?>"><?=$row["name"]?></a>
-                    </li>
-        <?php endforeach; ?>
+            <li class="status-button">
+              <a class="status-a text-center fs-5
+              <?php
+              if($sale_state_category==$row["id"]) echo "active";
+              ?>" 
+              href="coupon.php?sale_state_category=<?=$row["id"]?>"><?=$row["name"]?></a>
+            </li>
+            <?php endforeach; ?>
           </ul>
       </div> 
         
         <div class="container-fluid">
+<!-- ========== 每頁顯示幾筆 ========== -->
             <div class="d-flex justify-content-between pt-4">
               <p class="title"></p>
- <!-- ========== 每頁顯示幾筆 ========== -->
-                <form action="coupon.php" method="GET">
+              <form action="coupon.php" method="GET">
                 <p>顯示
                   <select class="count-bg text-center" aria-label="Default select example"  name="pageView" onchange="submit();">
                     <option value="5" <?php if ($pageView == '5') print 'selected ';?>>5</option>
                     <option value="10" <?php if ($pageView == '10') print 'selected ';?>>10</option>
                   </select> 
                 筆</p>
-                </form>
-                
+              </form>
             </div>
+
+<!-- ========== 搜尋、新增優惠券 ========== -->
             <?php require("./mod/search-bar-sale.php") ?>
             <div class="text-end my-4">
               <a href="coupon-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增優惠券</a>
             </div>
+
+<!-- ========== table ========== -->
             <table class="table">
               <thead class="table-head">
                 <tr class="text-center">
@@ -165,7 +172,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                     <td><?=$row["start_date"]?> - <?=$row["end_date"]?></td>
                     <td><?=$row["sale_state_name"]?></td>
                     <td>
-                        <a href="coupon-edit.php?id=<?=$row["id"]?>" name="edit">編輯</a> <br>
+                        <a href="coupon-edit.php?id=<?=$row["id"]?>" name="edit">編輯</a><br>
                         <a href="coupon-doDelete.php?id=<?=$row["id"]?>" name="delete">刪除</a>
                     </td>
                   </tr>
@@ -175,28 +182,29 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 
  <!-- ========== 分頁 ========== -->
             <div class="d-flex justify-content-center">
-            <nav aria-label="Page navigation example ">
-            <ul class="pagination mt-4 px-5">
-                <li class="page-item">
-                    <a class="page-link" href="coupon.php?page=<?=$PreviousPage?>&pageView=<?=$pageView?>" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <?php for($i=1; $i<=$totalPage;$i++): ?>
-                <li class="page-item <?php if($page==$i)echo "active"?>"><a class="page-link" href="coupon.php?page=<?=$i?>&pageView=<?=$pageView?>"><?=$i?></a></li>
-                <?php endfor; ?>
-
-
-
-                <li class="page-item">
-                    <a class="page-link" href="coupon.php?page=<?=$nextPage?>&pageView=<?=$pageView?>" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="mt-4 pt-2">第 <?=$startItem?> - <?=$endItem?> 筆 , 共 <?=$discountAllCount?> 筆資料</div>
-        </div>   
+              <nav aria-label="Page navigation example ">
+                <ul class="pagination mt-4 px-5">
+                    <!-- 上一頁 -->
+                    <li class="page-item">
+                        <a class="page-link" href="coupon.php?page=<?=$PreviousPage?>&pageView=<?=$pageView?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <!-- 頁碼 -->
+                    <?php for($i=1; $i<=$totalPage;$i++): ?>
+                    <li class="page-item"><a class="page-link  <?php if($page==$i)echo "active"?>" 
+                    href="coupon.php?page=<?=$i?>&pageView=<?=$pageView?>"><?=$i?></a></li>
+                    <?php endfor; ?>
+                    <!-- 下一頁 -->
+                    <li class="page-item">
+                        <a class="page-link" href="coupon.php?page=<?=$nextPage?>&pageView=<?=$pageView?>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+              </nav>
+              <div class="mt-4 pt-2">第 <?=$startItem?> - <?=$endItem?> 筆 , 共 <?=$discountAllCount?> 筆資料</div>
+            </div>   
         </div>
     </main>
 </body>
