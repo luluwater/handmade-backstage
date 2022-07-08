@@ -1,0 +1,113 @@
+:root {
+    --bg-color: #eee6de;
+    --main-color: #e65947;
+    --line-color: #ddb9a2;
+    --main-word-color: #3F3F3F;
+    --header-hieght: 100px;
+}
+
+.main-h2 {
+    color: var(--line-color);
+}
+
+.display-page-box {
+    width: 10%;
+}
+
+.display-page {
+    width: 70px;
+    height: 40px;
+}
+
+
+/* 篩選器開始 */
+.search-filter {
+    height: 40px;
+    width: 10%;
+}
+
+.searchText {
+    width: 30%;
+}
+
+.searchDate {
+    width: 20%;
+}
+
+.searchState {
+    width: 10%;
+}
+
+.btn-bg-color {
+    background: var(--line-color);
+    border: 1px solid var(--line-color);
+    color: #fff;
+    font-weight: 700;
+}
+
+
+.btn-bg-color:hover {
+    background: var(--main-color);
+    border: 1px solid var(--main-color);
+    color: #fff;
+}
+
+.hide {
+    display: none;
+}
+
+/* 訂單表格 */
+
+.order-list td {
+    height: 50px;
+}
+
+.order-th {
+    font-size: 18px;
+    /* font-weight: 600; */
+    height: 50px;
+    background: var(--line-color);
+    color: #fff;
+    line-height: 35px;
+}
+
+.order-table {
+    width: 85%;
+}
+
+.arrowBtn{
+    height: 15px;
+}
+.arrow-color{
+    color:#fff;
+}
+.arrow-active>.arrow-color,.arrow-color.arrow-active{
+    color:var(--main-color);
+}
+.table {
+    min-height: 200px;
+}
+
+
+
+
+/* 頁碼 */
+
+.page-item{
+    font-weight: 700;
+}
+
+.page-link {
+    color: var(--main-word-color);
+}
+
+.page-link:hover {
+    color: var(--main-color);
+}
+
+
+
+.active>.page-link, .page-link.active {
+    background: #fff;
+    color: var(--main-color);
+}
