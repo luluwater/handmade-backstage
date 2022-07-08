@@ -50,7 +50,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
         <div class="container-fluid">
             <div class="d-flex justify-content-between">
                 <p class="title">課程管理</p>
-                <form action="product.php" method="get">
+                <form action="course.php" method="get">
                 <p>顯示 
                   <select id="amount-limit" class="count-bg text-center" name="amount-limit"  onchange="submit()">
                     <option value="5" <?= $select=$amount_limit==5?'selected':'' ?>>5</option>
@@ -108,7 +108,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                     </a>
                 </li>
                   <?php for($i=1;$i<=$totalAmount;$i++): ?>
-                <li class="page-item"><a class="page-link active" href="product.php?amount-limit=<?=$amount_limit?>&page=<?=$i?>"><?=$i?></a></li>
+                <li class="page-item"><a class="page-link active" href="course.php?amount-limit=<?=$amount_limit?>&page=<?=$i?>"><?=$i?></a></li>
                   <?php endfor; ?>
                     <a class="page-link" href="#" aria-label="Next">
                         <span aria-hidden="true">></span>
