@@ -5,9 +5,13 @@
     --main-word-color: #3F3F3F;
     --header-hieght: 100px;
 }
+.editBtn{
+    line-height: 29px;
+}
 .form-select{
     width: 200px;
 }
+
 .note{
     width: 800px;
     height: 50px;
@@ -21,6 +25,11 @@
     font-size: 18px;
 }
 .btn:hover{
+    color: #fff;
+    background: var(--main-color);
+    border-color: var(--main-color);
+}
+.btn:active {
     color: #fff;
     background: var(--main-color);
     border-color: var(--main-color);
@@ -42,7 +51,6 @@
 
 .totalPrice{
     color: var(--main-color);
-}
-.totalPriceBox{
     border-bottom: 3px solid var(--main-color);
+
 }

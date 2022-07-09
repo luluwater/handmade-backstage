@@ -72,7 +72,6 @@ try {
     $sql->execute();
     $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
     $rowsCount = count($rows);
-    // print_r($rows);
 } catch (PDOException $e) {
     echo "預處理陳述式失敗! <br/>";
     echo "error: " . $e->getMessage() . "<br/>";
@@ -116,11 +115,14 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
     ?>
     <main>
         <!-- 顧客資料 -->
+        <form action="do_course_Update.php" class="row   mb-4 align-items-center" method="post">
+        <input name="id" type="hidden" value="<?=$orderRow["id"]?>">
+
         <div class="row mx-5 my-3">
             <p class="col-1 boldWord">訂單編號</p>
             <p class="col-2">00<?= $orderRow["id"] ?></p>
-            <a href="course_order_edit.php?id=<?=$orderRow["id"]?>" class="btn btn-bg-color col-1 editBtn">修改資料</a>
-
+            <a href="course_order_detail.php?id=<?=$orderRow["id"]?>" class="col-auto btn btn-bg-color editBtn me-3">取消</a>
+            <button type="submit" class="col-auto btn btn-bg-color ">儲存</button>
         </div>
 
         <div class="row mx-5 mb-3">
@@ -133,14 +135,18 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
             <p class="col-auto"><?= $orderRow["account"] ?></p>
         </div>
 
-        <div class="row mx-5 mb-3">
-            <p class="col-1 boldWord">收件人</p>
-            <p class="col-auto"><?= $orderRow["name"] ?></p>
+        <div class="row mx-5 mb-3 align-items-center">
+            <p class="col-1 boldWord ">收件人</p>
+            <p class="col-auto">
+            <input name="name" type="text" class="form-control" value="<?= $orderRow["name"] ?>">
+        </p>
         </div>
 
-        <div class="row mx-5 mb-3">
+        <div class="row mx-5 mb-3 align-items-center">
             <p class="col-1 boldWord">連絡電話</p>
-            <p class="col-auto"><?= $orderRow["phone"] ?></p>
+            <p class="col-auto">
+            <input name="phone" type="text" class="form-control" value="<?= $orderRow["phone"] ?>">
+            </p>
         </div>
 
         <div class="row mx-5 mb-3">
@@ -148,21 +154,26 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
             <p class="col-auto"><?= $orderRow["payment"] ?></p>
         </div>
 
-        <div class="row mx-5 mb-3">
-            <p class="col-1 boldWord">訂單狀態</p>
-            <p class="col-auto"><?= $orderRow["stausName"] ?></p>
+        <div class="row mx-5 mb-3 align-items-center">
+            <label for="" class="col-1 boldWord">訂單狀態</label>
+            <select name="order_state_id" id="" class="form-select mx-2 searchState col-auto">
+                <option <?php if ($orderRow["order_state_id"] == '3') print 'selected '; ?> value="3">已付款</option>
+                <option <?php if ($orderRow["order_state_id"] == '5') print 'selected '; ?> value="5">取消</option>
+            </select>
         </div>
+        
+        <div class="row mx-5 mb-3 mt-3">
+            <p class="col-1 boldWord">顧客備註</p>
+            <div class="col-auto note pt-1"><?= $orderRow["note"] ?></div>
+
+        </div>
+        </form>
 
 
         <!-- 顧客資料結束 -->
 
 
 
-        <div class="row mx-5 mb-3">
-            <p class="col-1 boldWord">顧客備註</p>
-            <div class="col-auto note pt-1"><?= $orderRow["note"] ?></div>
-
-        </div>
 
         <!-- 顧客購買項目 -->
 
@@ -188,7 +199,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
                                 <?php continue; ?>
                             <?php else : ?>
                     <tr class="text-center row detail-tr">
-                        <td class="col-1"><img class="coursePic imgObject" src="../../img/course/course_<?= $row["category_en_name"] ?>_<?= $row["course_id"] ?>/<?= $row["img_name"] ?>" alt=""></td>
+                    <td class="col-1"><img class="coursePic imgObject" src="../../img/course/course_<?= $row["category_en_name"] ?>_<?= $row["course_id"] ?>/<?= $row["img_name"] ?>" alt=""></td>
                         <td class="col-3"><?= $row["courseName"] ?></td>
                         <td class="col"><?= $row["date"] ?></td>
                         <td class="col"><?= $row["amount"] ?></td>
@@ -253,10 +264,6 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
 
 
                 <!-- <p class="col-1 totalPrice pb-3">$1000</p> -->
-            </div>
-
-            <div class="row mx-5 my-2 pe-5 justify-content-end">
-                <a href="course_order-list.php" class="col-1 btn btn-bg-color mb-5 ">返回列表</a>
             </div>
         </div>
     </main>
