@@ -50,6 +50,20 @@ $result->execute();
 $rows = $result->fetchAll(PDO::FETCH_ASSOC);
 $discountCount = count($rows);
 
+//========== Page ==========
+//開始的筆數
+$startItem=($page-1)*$pageView+1;
+//結束的筆數
+$endItem=$page*$pageView;
+if($endItem>$discountAllCount)$endItem=$discountAllCount;
+
+//總筆數
+$totalPage=ceil($discountAllCount / $pageView);
+
+//上一頁
+$PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
+//下一頁
+$nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 
 //========== Page ==========
 //開始的筆數
@@ -67,8 +81,6 @@ $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
 $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 
 ?>
-
-
 
 <!doctype html>
 <html lang="tw-zh">
@@ -140,15 +152,13 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 <!-- ========== 每頁顯示幾筆 ========== -->
             <div class="d-flex justify-content-between">
                 <p class="title"></p>
-                
-                <form action="discount.php">
+                <form action="discount.php" method="GET">
                   <p>顯示
                     <select class="count-bg text-center" aria-label="Default select example"  name="pageView" onchange="submit();">
                       <option value="5" <?php if ($pageView == '5') print 'selected ';?>>5</option>
                       <option value="10" <?php if ($pageView == '10') print 'selected ';?>>10</option>
                     </select> 
                   筆</p>
-                  
                 </form>
             </div>
 
