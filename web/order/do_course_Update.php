@@ -4,25 +4,30 @@ if(!isset($_POST["name"])){
     exit;
 }
 
-require("../db-connect.php");
+require_once("../../db-connect.php");
+
 
 $id=$_POST["id"];
 $name=$_POST["name"];
 $phone=$_POST["phone"];
-$email=$_POST["email"];
+$order_state_id=$_POST["order_state_id"];
 // echo $name;
 
-$sql="UPDATE users SET name='$name',phone='$phone',email='$email' WHERE id='$id'";
+$sql = $db_host->prepare("UPDATE course_order SET name='$name',phone='$phone', order_state_id='$order_state_id' WHERE id = '$id'");
 
 // echo $sql;
 
-if ($conn->query($sql) === TRUE) {
+try {
+    $sql->execute();
     echo "修改完成";
-} else {
-    echo "修改失敗: " . $conn->error;
+
+
+} catch (PDOException $e) {
+    echo "預處理陳述式失敗! <br/>";
+    echo "error: " . $e->getMessage() . "<br/>";
+    $db_host = NULL;
+    exit;
 }
 
-$conn->close();
-
-header("location: user.php?id=".$id); //儲存後返回的頁面
+header("location: course_order_detail.php?id=".$id); //儲存後返回的頁面
 ?>
