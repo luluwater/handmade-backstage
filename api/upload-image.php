@@ -92,7 +92,7 @@ function updateFileTo_db($typeName,$type_id){
             $stmt=$db_host->prepare("SELECT * FROM course_img WHERE course.id=?");
             $stmt->execute($type_id);
             $rows=$stmt->fecthAll(PDO::FECTH_ASSOC);
-            $stmtImg=$db_host->prepare("UPDATE course_img SET img_name=:img_name, course_id=:course_id WHERE id=:img_id");
+            $stmtImg=$db_host->prepare("INSERT INTO course_img (img_name,course_id) VALUES (:img_name,:course_id) ON DUPLICATE KEY UPDATE id=:img_id");
             for($i=1;$i<=4;$i++){
                 $fileName=$_FILES["product_img".$i]["name"];
                 if($_FILES["product_img".$i]["error"]==0){                    
@@ -100,7 +100,7 @@ function updateFileTo_db($typeName,$type_id){
                         $stmtImg->execute([
                             ":img_name"=>$fileName,
                             ":course_id"=>$type_id,
-                            ":img_id"=>
+                            ":img_id"=> $rows[$i-1]["id"];
                         ]);                        
                     }catch (PDOException $e){
                         echo "預處理陳述式執行失敗！ <br/>";

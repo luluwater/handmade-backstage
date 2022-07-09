@@ -61,13 +61,13 @@ $db_host = NULL;
             <form action="do-update-product.php?id=<?=$id?>" method="post" enctype="multipart/form-data">
                 <div class="my-3 row align-items-center">
                     <label class="col-1" for="">圖片</label>
-                    <?php foreach($rows_Img as $img): ?>
+                    <?php for($i=1;$i<=count($rows_Img);$i++): ?>                        
                         <div class="col-auto">
-                            <input class="d-none upload_image" type="file" name="product_img1" accept="image/*" required readonly>
+                            <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*" required readonly>
                             <img src="../img/course/course_<?= $row["category_en_name"].'_'.$id.'/'.$img["img_name"] ?>"
                             class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
                         </div>
-                    <?php endforeach; ?>
+                    <?php endfor; ?>
                     <?php for($i=count($rows_Img);$i<4;$i++):?>
                     <div class="col-auto">
                         <input class="d-none upload_image" type="file" name="product_img4" accept="image/*">
