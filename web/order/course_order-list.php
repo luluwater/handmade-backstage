@@ -210,7 +210,13 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                 <thead class="order-th ">
                     <tr class="text-center order-title">
 
-                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單編號 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=1" class="arrowBtn <?php if($order==1)echo "arrow-active"?>"><i class="fa-solid fa-caret-up arrow-color"></i></a> <a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=2" class="<?php if($order==2)echo "arrow-active"?>"><i class="fa-solid fa-caret-down arrow-color"></i></a></span></span></td>
+                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單編號 
+                            <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act">
+                                <a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=1" class="arrowBtn <?php if($order==1)echo "arrow-active"?>">
+                                <i class="fa-solid fa-caret-up arrow-color"></i></a> 
+                                <a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=2" class="<?php if($order==2)echo "arrow-active"?>">
+                                <i class="fa-solid fa-caret-down arrow-color">
+                                </i></a></span></span></td>
 
                         <td> <span class="d-flex justify-content-center align-items-center"> 訂單日期 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn"><a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=3" class="arrowBtn <?php if($order==3)echo "arrow-active"?>"><i class="fa-solid fa-caret-up arrow-color"></i></a> <a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=4" class="<?php if($order==4)echo "arrow-active"?>"><i class="fa-solid fa-caret-down arrow-color"></i></a></span></span></td>
                         <td>訂購人</td>

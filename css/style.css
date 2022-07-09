@@ -101,7 +101,6 @@ a{
 .hover:hover{
     background: var(--main-color);
     color:#fff;
- 
 }
 
 .title{
@@ -153,6 +152,14 @@ a{
 .td-height{
     height: 16px;
 }
+
+.orderArrow:hover{
+    cursor: pointer;
+    color:#666;
+}
+
+
+
 
 <<<<<<< HEAD
 
@@ -253,3 +260,4 @@ a{
     background: url("../img/previewImage.jpg");    
 }
 >>>>>>> 16adf1d889e6367f693068a704d0185a35dff79c
+

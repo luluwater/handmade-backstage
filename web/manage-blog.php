@@ -2,8 +2,15 @@
 
 require_once("../db-connect.php");
 
-$stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id LIMIT 0,5");
+
+$stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id ORDER BY create_time DESC LIMIT 0,5");
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
+/**
+ * comment 資料表裡面的 
+ * JOIN blog.id = blog_id，
+ * 
+ * 目標：找尋這篇部落格，COMMENT 的總數量 
+ */
 
 try {
     $stmt->execute();
@@ -75,8 +82,6 @@ $db_host = NULL;
                         placeholder="Search..."
                         aria-label="search with text input field" 
                         name="typeKeyword">
-
-
                     <div class="d-flex gap-4 align-items-center d-none" id="typeDate"   name="typeDate">
                     <input  type="date" 
                             class="form-control fs-6" 
@@ -139,12 +144,12 @@ $db_host = NULL;
         <table class="table h-0 mt-4 mb-0 text-center">
             <thead class="table-head">
                 <tr>
-                    <td class="col-1 text-start">日期<i class="fas fa-sort mx-2 trHover"></i></td>
+                    <td class="col-1 text-start">日期<i id="orderByDate" class="fas orderArrow fa-sort mx-2"></i></td>
                     <td class="col-3 text-start">文章標題</td>
-                    <td class="col-1">分類 <i class="fas fa-sort mx-2 trHover"></i></td>
-                    <td class="col-1">狀態 <i class="fas fa-sort mx-2 trHover"></i></td>
-                    <td class="col-1">留言數 <i class="fas fa-sort mx-2 trHover"></i></td>
-                    <td class="col-1">收藏數 <i class="fas fa-sort mx-2 trHover"></i></td>
+                    <td class="col-1">分類 <i id="orderByCategory" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1">狀態 <i id="orderByStatus" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1">留言數 <i id="orderByComment" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1">收藏數 <i id="orderByFavorite" class="fas orderArrow fa-sort mx-2"></i></td>
                     <td class="col-1 text-end">編輯</td>
                 </tr>
             </thead>
@@ -163,7 +168,7 @@ $db_host = NULL;
                     <td><?=$row["state"]?></td>
                     <td>55</td>
                     <td>24</td>
-                    <td class="text-end"><i class="fas fa-pen"></i></td>
+                    <td class="text-end"><a href="create-blog.php"><i class="fas fa-pen "></i></a></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -175,6 +180,12 @@ $db_host = NULL;
         </table>
     </main>
 <script>
+
+
+  
+    
+   
+
 
 
     $(function(){
@@ -231,8 +242,6 @@ $db_host = NULL;
          */
         $("#typeKeyword").keyup(function(){
             const inputVal = $(this).val();     
-            if(inputVal != ""){
-
                 $.ajax({
                     url:"../api/filterByKeyword.php",
                     type:"POST",
@@ -247,27 +256,51 @@ $db_host = NULL;
                         $("#tbody").html(data)
                     }
                 })
-            }
         })
         
 
-    $("#filterDateBtn").on("click",function(){
-        const fromDate=$("#fromDate").val();
-        const toDate=$("#toDate").val();
-        if(fromDate !='' && toDate !=""){
+        /**
+         * 使用日期篩選事件
+         */
+        $("#filterDateBtn").on("click",function(){
+            const fromDate=$("#fromDate").val();
+            const toDate=$("#toDate").val();
+            if(fromDate !='' || toDate !=""){
+                $.ajax({
+                    url:"../api/filterByDate.php",
+                    method:"POST",
+                    data:{
+                        fromDate:fromDate,
+                        toDate:toDate
+                    },
+                    success:function(data){
+                        $("#tbody").html(data)
+                    }
+                });
+            }
+        })
+
+
+        $(".orderArrow").on("click",function(e){
+            const orderArrows = document.querySelectorAll(".orderArrow ");
+            const target=e.target.id
             $.ajax({
-                url:"../api/filterByDate.php",
-                method:"POST",
-                data:{
-                    fromDate:fromDate,
-                    toDate:toDate
-                },
-                success:function(data){
-                     $("#tbody").html(data)
+                    url:"../api/blogSort.php",
+                    method:"POST",
+                    data:{
+                        target_name:target,
+                    },
+                    success:function(data){
+                        $("#tbody").html(data)
                 }
             });
-        }
-    })
+
+
+        })
+        
+
+
+
 })
 
     </script>
