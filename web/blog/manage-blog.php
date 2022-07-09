@@ -1,6 +1,6 @@
 <?php
 
-require_once("../db-connect.php");
+require_once("../../db-connect.php");
 
 
 $stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id ORDER BY create_time DESC LIMIT 0,5");
@@ -44,7 +44,7 @@ $db_host = NULL;
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
     <head>
-        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../../css/style.css">
     </head>
 
     <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
@@ -55,19 +55,16 @@ $db_host = NULL;
 
 <body>
 
-    <?php
-    require("./main-menu.html");
-    ?>
+    <?php require("../main-menu.html");?>
 
     <main>
         <?php 
-        require("./mod/status-bar.php");
+        require("../mod/status-bar.php");
         ?>
 
         <div class="d-flex mt-4">
 
             <!-- Filter start -->
-
             <div class="fs-6 container d-flex align-items-start justify-content-between w-50 ms-0 gap-5">
                 <select name="searchType" class="select" id="searchType">
                     <option selected="selected" value="keyword" id="keyword">關鍵字</option>
@@ -107,7 +104,7 @@ $db_host = NULL;
                         <?php endforeach; ?>
                     </select>
                 </form>
-                <!-- <div style="width:200px">共....筆資料</div> -->
+
             </div>
             <!-- Filter end -->
 
@@ -238,7 +235,7 @@ $db_host = NULL;
                 const value = $(this).val();
 
                 $.ajax({
-                    url:"../api/filterByCategory.php",
+                    url:"../../api/filterByCategory.php",
                     type:"POST",
                     data:"request=" + value,
                     beforeSend:function(){
@@ -263,7 +260,7 @@ $db_host = NULL;
         $("#typeKeyword").keyup(function(){
             const inputVal = $(this).val();     
                 $.ajax({
-                    url:"../api/filterByKeyword.php",
+                    url:"../../api/filterByKeyword.php",
                     type:"POST",
                     data:"request=" + inputVal,
                     beforeSend:function(){
@@ -287,7 +284,7 @@ $db_host = NULL;
             const toDate=$("#toDate").val();
             if(fromDate !='' || toDate !=""){
                 $.ajax({
-                    url:"../api/filterByDate.php",
+                    url:"../../api/filterByDate.php",
                     method:"POST",
                     data:{
                         fromDate:fromDate,
@@ -307,7 +304,7 @@ $db_host = NULL;
             const order=$(this).data("order")
 
             $.ajax({
-                    url:"../api/blogSort.php",
+                    url:"../../api/blogSort.php",
                     method:"POST",
                     data:{
                         target_name:target,

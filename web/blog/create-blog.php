@@ -1,12 +1,5 @@
 <?php
-
-/**
- * 因為只有 value 會透過 change 改變，所以只能取 value 
- * 的值，不過在這邊 value 會 === 數字，因此沒辦法把她 innerText 出來，
- * 解決方法，把 category_id 改成用 name ji4
- */
-
-require_once("../db-connect.php");
+require_once("../../db-connect.php");
 
 $stmt=$db_host->prepare("SELECT * FROM blog");
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
@@ -41,7 +34,7 @@ $db_host = NULL;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS v5.2.0-beta1 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"  integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <head><link rel="stylesheet" href="../css/style.css"></head>
+    <head><link rel="stylesheet" href="../../css/style.css"></head>
     <!-- font awesome -->
     <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
     <!-- editor font family -->
@@ -51,9 +44,9 @@ $db_host = NULL;
     </head>
 
   <body>
-    <?php
-    require("./main-menu.html");
-    ?>
+
+   <?php require("../main-menu.html");?>
+
     <main>
         <div class="container">
             <form action="create-blog.php" method="post">
@@ -125,9 +118,6 @@ $db_host = NULL;
                             <a href="manage-blog.php" class="btn btn-bg-color mt-3 btn-lg ">返回</a>
                             <input class="btn btn-main-color mt-3 btn-lg" type="submit" value="儲存">    
                         </div>
-                 
-                     
-
                     </form>
                  
                 
@@ -153,9 +143,7 @@ $db_host = NULL;
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
                                 <button type="button"  class="btn btn-main-color">儲存</button>
-                               
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -185,7 +173,7 @@ $db_host = NULL;
     <script src="https://unpkg.com/@ckeditor/ckeditor5-table/build/table.js"></script>
     <script src="https://unpkg.com/@ckeditor/ckeditor5-cloud-services/build/cloud-services.js"></script>
     <script src="https://unpkg.com/@ckeditor/ckeditor5-html-embed/build/html-embed.js"></script>
-    <script src="./helper/editor.js"></script>
+    <script src="../helper/editor.js"></script>
 
     <script>
 
@@ -216,20 +204,10 @@ $db_host = NULL;
                 modalExp.innerText=articleCategory.value
                 modalCategory.innerText=categoryInput.value
                 modalStore.innerText=storeInput.value
-
                 modalArticle.innerText=article.firstChild.data
-                
-            
                 modalDate.innerText=publishTimeInput.value
                 modalArticle.innerText=article.value
-
-
             })
-
-
-
-        const category=document.querySelector("#category");
-        const store=document.querySelector("#store");
 
         categoryInput.addEventListener("change",function(){
             categoryValue=this.value;
@@ -239,7 +217,7 @@ $db_host = NULL;
             }
             $.ajax({
             	method: "POST",  
-            	url:  "../api/filte-store.php",
+            	url:  "../../api/filte-store.php",
             	dataType: "json",
             	data: { category_id: categoryValue } 
             	})
@@ -255,13 +233,7 @@ $db_host = NULL;
             	});
         })
 
-
-    
-
-        
     </script>
-
-
   </body>
 </html>
 
