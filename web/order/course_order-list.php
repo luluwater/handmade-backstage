@@ -216,6 +216,18 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             <td>$<?= $row["total_amount"] ?></td>
                             <td><?= $row["order_staus"] ?></td>
                             <td><a class="trash delete-btn"><i class="fa-solid fa-trash-can trash"></i></a></td>
+                            <!-- 是否確定刪除盒子 -->
+                            <div class="confirm hide" id="confirm">
+                                <div class="popup">
+                                    <div class="close" id="close">X</div>
+                                    <div class="content">
+                                        <h3 class="confirm-h3">是否確定刪除?</h3>
+                                        <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
+                                        <a href="do_course_order_delete.php?id=<?= $row["id"] ?>" class="btn btn-main-color confirm-btn" id="confirm-btn">確認</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 是否確定刪除盒子 -->
                         </tr>
                     <?php endforeach; ?>
 
@@ -257,18 +269,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         <!-- 頁碼結束 -->
 
 
-        <!-- 是否確定刪除盒子 -->
-        <div class="confirm hide" id="confirm">
-            <div class="popup">
-                <div class="close" id="close">X</div>
-                <div class="content">
-                    <h3 class="confirm-h3">是否確定刪除?</h3>
-                    <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
-                    <a href="do_course_order_delete.php?id=<?= $row["id"] ?>" class="btn btn-main-color confirm-btn" id="confirm-btn">確認</a>
-                </div>
-            </div>
-        </div>
-        <!-- 是否確定刪除盒子 -->
+
 
 
 
@@ -281,10 +282,10 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         let confirmBtn = document.querySelector("#confirm-btn");
         let cancelBtn = document.querySelector("#cancelBtn");
 
-        for(let i = 0 ; i < deleteBtn.length ; i++){
+        for (let i = 0; i < deleteBtn.length; i++) {
             deleteBtn[i].addEventListener('click', () => {
-            confirm.classList.remove('hide')
-        })
+                confirm.classList.remove('hide')
+            })
         }
 
         close.addEventListener('click', () => {
