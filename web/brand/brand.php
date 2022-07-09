@@ -1,11 +1,23 @@
 <?php
-require("db-connect-test.php");
+require("../../db-connect.php");
+// // 測試連線
+// try{
+//     $db_host=new PDO("mysql:host={$serverName};dbname={$dbname};charset=utf8",$username,$password);
+//     echo "成功";
+        
+// }catch(PDOException $e){
+//     echo "資料庫連線失敗";
+//     echo "Error: ".$e->getMessage();
+//     exit;
+// }
 
-$sql="SELECT * FROM category";
+$sql="SELECT * FROM store";
+$stmt=$db_host->prepare($sql);//類似sql執行
+$stmt->execute(); 
+// $category_count=$result->num_rows;
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$result=$conn->query($sql);
-$category_count=$result->num_rows;
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+// $storeAllCount =count($rows)
 
 ?>
 
@@ -34,11 +46,19 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
       .side{
         background:var(--bg-color); 
         border-radius:10%;
-         margin-top:60px;
-          padding:5px 40px ;
+         /* margin-top:60px; */
+          /* padding:5px 40px ; */
           color:black;
           border:1px solid var(--bg-color);
          
+      }
+      .btnClass {
+        margin-top:50px;
+        padding:10px;
+        color:white;
+        background: var( --line-color);
+         border:1px solid var( --line-color);
+         border-radius:10%;
       }
       .count-bg{
         margin-bottom:20px;
@@ -69,8 +89,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     ?>
      <main>
              <div class="container-fluid">
-            <div class="d-flex justify-content-between mb-3">
-                <p class="title">課程管理</p>  
+            <div class="d-flex justify-content-between">
+                <p class="title">品牌管理</p>  
                 <!-- <p>顯示 
                   <select class="count-bg text-center" aria-label="Default select example">
                     <option value="1" selected>6</option>
@@ -81,12 +101,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                   </select> 
                   筆數
                 </p> -->
+                  <!-- <p class="side">共筆資料 </p>  -->
             </div>
-            <?php require("../mod/search-category.php") ?>
-             <div class=" d-flex   my-4">
-                 <div class="d-flex">
-                   <p class="side">共<?=$category_count?>筆資料 </p> 
-                 </div>
+           
+             <div class=" d-flex justify-content-between my-4">
+                   <button class="title btnClass" href="">管理分類</button>
                 <div class="delAndAdd ">
                     <a href="" class=" text-dark m-4"><i class="fa-solid fa-trash m-2"></i>刪除店家</a>
                     <a href="" class=" text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增店家</a>
@@ -97,9 +116,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                       <div class="col-md-4">
                         <div>
                          <figure class="ratio ratio-4x3 mb-2">
-                            <img class="object-cover" src="imagesTest/<?= $row["category_img"] ?>" alt="">
+                            <img class="object-cover" src="imagesTest/store_img
+                            <?= $row["img"] ?>" alt="">
                         </figure>
-                        <div class="text-center"><?= $row["category_name"] ?></div>
+                        <div class="text-center"><?= $row["name"] ?></div>
                            <div class="py-2">
                              <div class="d-grid">
                                <button class="btn btn-info btn-cart" data-id="1">編輯</button>
