@@ -3,9 +3,9 @@ require_once("../db-connect.php");
 
 if(isset($_POST["request"])){
     $request=$_POST["request"];
-    $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.title LIKE '%$request%' OR category.category_name LIKE '%$request%' LIMIT 0,5");
+    $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 AND blog.title LIKE '%$request%' OR category.category_name LIKE '%$request%'  LIMIT 0,5");
 }else{
-    $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id LIMIT 0,5");
+    $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 LIMIT 0,5");
 }
 
 try {

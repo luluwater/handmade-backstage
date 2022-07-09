@@ -6,9 +6,9 @@ if(isset($_POST["request"])){
 
     $request=$_POST["request"];
     if($request=="all") {
-        $stmtQuery=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id LIMIT 0,5");
+        $stmtQuery=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 LIMIT 0,5");
     }else{
-         $stmtQuery=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.category_id='$request' LIMIT 0,5");
+         $stmtQuery=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.category_id='$request' AND blog.valid=1 LIMIT 0,5");
     }
 }
 

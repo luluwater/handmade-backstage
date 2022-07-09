@@ -1,5 +1,112 @@
 <?php
+
+/**
+ * 總共有三個?變數
+ * 1. page
+ * 2. order
+ * 3.
+ * 
+ */
+
+
+$page=isset($_POST["page"]) ? $_POST["page"] : 1;
+$order=isset($_POST["order"]) ? $_POST["order"] : 1;
+
+
+
+$perPage=5;
+$start=($page-1)*$perPage;
+
+
+switch ($order) {
+    case 1:
+        $orderType = "create_time ASC";
+        break;
+    case 2:
+        $orderType = "create_time DESC";
+        break;
+    case 3:
+        $orderType = "category_id ASC";
+        break;
+    case 4:
+        $orderType = "category_id DESC";
+        break;
+    case 5:
+        $orderType = "state ASC";
+        break;
+    case 6:
+        $orderType = "state DESC";
+        break;
+    case 7:
+        $orderType = "favorite_amount ASC";
+        break;
+    case 8:
+        $orderType = "favorite_amount DESC";
+        break;
+    case 9:
+        $orderType = "comment_amount ASC";
+        break;
+    case 10:
+        $orderType = "comment_amount DESC";
+        break;
+    default:
+        $orderType = "create_time DESC";
+}
+
+
+
+
+$stmt=$db_host->prepare("SELECT * FROM  JOIN category ON blog.category_id=category.id blog WHERE valid=1 ORDER BY $orderType");
+
+$stmtCategory=$db_host->prepare("SELECT * FROM category");
+
+
+
+
+
+try {
+    $stmt->execute();
+    $stmtCategory->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $categories = $stmtCategory->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "預處理陳述式執行失敗！ <br/>";
+    echo "Error: " . $e->getMessage() . "<br/>";
+    $db_host = NULL;
+    exit;
+}
+
+$db_host = NULL;
+
+
+
+
+
+
+
+
+
+
+
+
+
 require_once("../db-connect.php");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if(isset($_POST["target_name"])){

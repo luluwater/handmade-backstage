@@ -6,7 +6,7 @@ if(isset($_POST["fromDate"],$_POST["toDate"])){
   $fromDate=$_POST["fromDate"];
   $toDate=$_POST["toDate"];
   $stmtDate=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id 
-  WHERE create_time BETWEEN '$fromDate' AND '$toDate' ORDER BY create_time desc
+  WHERE create_time BETWEEN '$fromDate' AND '$toDate' AND blog.valid=1 ORDER BY create_time desc
   LIMIT 0,5");
 }
  

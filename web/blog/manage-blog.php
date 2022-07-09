@@ -3,14 +3,10 @@
 require_once("../../db-connect.php");
 
 
-$stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id ORDER BY create_time DESC LIMIT 0,5");
+$stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.id=category.id  WHERE valid=1  ORDER BY create_time DESC LIMIT 0,5");
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
-/**
- * comment 資料表裡面的 
- * JOIN blog.id = blog_id，
- * 
- * 目標：找尋這篇部落格，COMMENT 的總數量 
- */
+
+
 
 try {
     $stmt->execute();
@@ -152,7 +148,7 @@ $db_host = NULL;
 
             <tbody id="tbody">
                 <?php foreach( $rows as $row) :?>
-                <tr class="trHover border-bottom">
+                <tr class="trHover border-bottom" class="articlesList" data-id=<?=$row["id"]?>>
                     <td class="text-start pb-2">
                         <?php      
                          $date=new DateTime($row["create_time"]);
@@ -164,7 +160,8 @@ $db_host = NULL;
                     <td><?=$row["state"]?></td>
                     <td><?=$row["comment_amount"]?></td>
                     <td><?=$row["favorite_amount"]?></td>
-                    <td class="text-end"><i class="fas fa-trash-alt"></i></td>
+                    <td class="text-end"><i data-id=<?=$row["id"]?>  class="trash-btn fas fa-trash-alt"></i></td>
+
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -200,7 +197,11 @@ $db_host = NULL;
 
 
   
-    
+    /**
+     * 傳送 data set 的 id 來判斷要進入哪個葉面
+     * 
+     *
+     */
 
     $(function(){
 
@@ -315,6 +316,30 @@ $db_host = NULL;
                 }
             });
         })
+
+
+        const deleteBtns=document.querySelectorAll(".trash-btn");
+
+        const tbody=document.getElementById('tbody')
+
+        for(let i=0;i<deleteBtns.length;i++){
+            deleteBtns[i].addEventListener("click",(e)=>{
+                let id = e.target.dataset.id;
+                console.log(id)
+               $.ajax({
+                    method:"POST",
+                    url:"../../api/delete-blog.php",
+                    dataType:"json",
+                    data:{blog_id:id}
+                })
+               .done((res)=>{
+              
+                console.log(res)
+                history("manage-blog.php")
+               })
+            })
+
+        }
 
         
         // function loadDate( page , query="")
