@@ -39,7 +39,7 @@ try {
                 <td><?=$row["state"]?></td>
                 <td>55</td>
                 <td>24</td>
-                <td class="text-end"><a href=""><i class="fas fa-pen"></i></a>  </td>
+                <td class="text-end"><i class="fas fa-trash-alt"></i></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

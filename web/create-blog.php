@@ -3,7 +3,7 @@
 /**
  * 因為只有 value 會透過 change 改變，所以只能取 value 
  * 的值，不過在這邊 value 會 === 數字，因此沒辦法把她 innerText 出來，
- * 解決方法，把 category_id 改成用 name 或者再做關聯式
+ * 解決方法，把 category_id 改成用 name ji4
  */
 
 require_once("../db-connect.php");

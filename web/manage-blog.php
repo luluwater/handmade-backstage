@@ -96,8 +96,7 @@ $db_host = NULL;
                            aria-label="search with date input field">
                      <a id="filterDateBtn" class="btn btn-main-color m-0 ">搜尋</a>
                     </div>
-                      
-
+                   
                     <select 
                         class="select-category rounded d-none" 
                         id="typeCategory" 
@@ -107,8 +106,8 @@ $db_host = NULL;
                         <option value="<?=$category["id"]?>"><?=$category["category_name"]?></option>
                         <?php endforeach; ?>
                     </select>
-
                 </form>
+                <!-- <div style="width:200px">共....筆資料</div> -->
             </div>
             <!-- Filter end -->
 
@@ -141,16 +140,16 @@ $db_host = NULL;
 
         <!-- Articles -->
 
-        <table class="table h-0 mt-4 mb-0 text-center">
+        <table class="table h-0 mt-4 mb-0 text-center" id="table">
             <thead class="table-head">
                 <tr>
-                    <td class="col-1 text-start">日期<i id="orderByDate" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td  class="col-1 text-start">日期<i data-order="desc" id="create_time" class="fas orderArrow fa-sort mx-2"></i></td>
                     <td class="col-3 text-start">文章標題</td>
-                    <td class="col-1">分類 <i id="orderByCategory" class="fas orderArrow fa-sort mx-2"></i></td>
-                    <td class="col-1">狀態 <i id="orderByStatus" class="fas orderArrow fa-sort mx-2"></i></td>
-                    <td class="col-1">留言數 <i id="orderByComment" class="fas orderArrow fa-sort mx-2"></i></td>
-                    <td class="col-1">收藏數 <i id="orderByFavorite" class="fas orderArrow fa-sort mx-2"></i></td>
-                    <td class="col-1 text-end">編輯</td>
+                    <td  class="col-1">分類 <i data-order="desc" id="category_id"class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1">狀態 <i data-order="desc" id="state" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1">留言數 <i data-order="desc" id="comment_amount" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1">收藏數 <i data-order="desc" id="favorite_amount" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1 text-end">刪除</td>
                 </tr>
             </thead>
 
@@ -166,9 +165,9 @@ $db_host = NULL;
                     <td class="text-start td-height"><?=$row["title"]?></td>
                     <td><?=$row["category_name"]?></td>
                     <td><?=$row["state"]?></td>
-                    <td>55</td>
-                    <td>24</td>
-                    <td class="text-end"><a href="create-blog.php"><i class="fas fa-pen "></i></a></td>
+                    <td><?=$row["comment_amount"]?></td>
+                    <td><?=$row["favorite_amount"]?></td>
+                    <td class="text-end"><i class="fas fa-trash-alt"></i></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -178,15 +177,33 @@ $db_host = NULL;
                 <span class="visually-hidden">Loading...</span>
             </div>
         </table>
+
+        <nav  aria-label="Page navigation" id="pagination" style="margin-top:50px">
+            <ul class="pagination justify-content-center align-items-center ">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">
+                            <</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link active" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+  
+
     </main>
 <script>
 
 
   
     
-   
-
-
 
     $(function(){
 
@@ -237,6 +254,9 @@ $db_host = NULL;
                 })
             })
 
+ 
+
+            
         /**
          * 使用關鍵字篩選事件
          */
@@ -284,23 +304,46 @@ $db_host = NULL;
         $(".orderArrow").on("click",function(e){
             const orderArrows = document.querySelectorAll(".orderArrow ");
             const target=e.target.id
+            const order=$(this).data("order")
+
             $.ajax({
                     url:"../api/blogSort.php",
                     method:"POST",
                     data:{
                         target_name:target,
+                        order:order,
                     },
                     success:function(data){
-                        $("#tbody").html(data)
+                        $("#table").html(data)
                 }
             });
-
-
         })
+
         
+        // function loadDate( page , query="")
+        // {
+        //     $.ajax({
+        //         url:"../api/pagination.php",
+        //         method:"POST",
+        //         data:{page:page,query:query},
+        //         success:function(data)
+        //         {  
+        //             console.log(data)
+        //             $("#pagination").html(data);
+        //         }
+        //     })
+        
+        // }
 
+        /**
+         * 使用關鍵字篩選事件
+         */
+        // $("#typeKeyword").keyup(function(){
+        //     const inputVal = $(this).val();     
+        //     loadDate(1,inputVal)
+        // })
 
-
+    
 })
 
     </script>
