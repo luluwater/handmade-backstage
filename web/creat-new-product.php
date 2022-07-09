@@ -146,7 +146,7 @@ $db_host = NULL;
         const course=document.querySelector("#course");
         type.addEventListener("change",function(){
             // console.log("type change");
-            if(this.value=="體驗課程"){
+            if(this.value=="course"){
                 course.classList.remove("d-none");
             }else{
                 course.classList.add("d-none");

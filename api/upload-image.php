@@ -85,4 +85,68 @@ function upFileTo_db($typeName,$type_id){
     }
 }
 
+function updateFileTo_db($typeName,$type_id){
+    require("../db-connect.php"); 
+    switch($typeName){
+        case "course":    
+            $stmt=$db_host->prepare("SELECT * FROM course_img WHERE course.id=?");
+            $stmt->execute($type_id);
+            $rows=$stmt->fecthAll(PDO::FECTH_ASSOC);
+            $stmtImg=$db_host->prepare("UPDATE course_img SET img_name=:img_name, course_id=:course_id WHERE id=:img_id");
+            for($i=1;$i<=4;$i++){
+                $fileName=$_FILES["product_img".$i]["name"];
+                if($_FILES["product_img".$i]["error"]==0){                    
+                    try{
+                        $stmtImg->execute([
+                            ":img_name"=>$fileName,
+                            ":course_id"=>$type_id,
+                            ":img_id"=>
+                        ]);                        
+                    }catch (PDOException $e){
+                        echo "預處理陳述式執行失敗！ <br/>";
+                        echo "Error: " . $e->getMessage() . "<br/>";
+                        // $db_host = NULL;
+                        exit;
+                    }
+                }
+            }   
+            break;
+        case "product":
+            $stmtImg=$db_host->prepare("INSERT INTO product_img(img_name,product_id) VALUES (:img_name, :product_id)");
+            for($i=1;$i<=4;$i++){
+                $fileName=$_FILES["product_img".$i]["name"];
+                if($_FILES["product_img".$i]["error"]==0){
+                    $stmtImg->execute([
+                        ":img_name"=>$fileName,
+                        ":product_id"=>$type_id
+                    ]);
+                }
+            }
+            break;
+        case "store":
+            $stmtImg=$db_host->prepare("INSERT INTO store_img(img_name,store_id) VALUES (:img_name, :store_id)");
+            for($i=1;$i<=4;$i++){
+                $fileName=$_FILES["product_img".$i]["name"];
+                if($_FILES["product_img".$i]["error"]==0){
+                    $stmtImg->execute([
+                        ":img_name"=>$fileName,
+                        ":store_id"=>$type_id
+                    ]);
+                }
+            }
+            break;
+        case "blog":
+            $stmtImg=$db_host->prepare("INSERT INTO blog_img(img_name,blog_id) VALUES (:img_name, :blog_id)");
+            for($i=1;$i<=4;$i++){
+                $fileName=$_FILES["product_img".$i]["name"];
+                if($_FILES["product_img".$i]["error"]==0){
+                    $stmtImg->execute([
+                        ":img_name"=>$fileName,
+                        ":blog_id"=>$type_id
+                    ]);
+                }
+            }
+            break;        
+    }
+}
 ?>
