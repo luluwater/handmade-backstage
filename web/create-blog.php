@@ -125,9 +125,6 @@ $db_host = NULL;
                             <a href="manage-blog.php" class="btn btn-bg-color mt-3 btn-lg ">返回</a>
                             <input class="btn btn-main-color mt-3 btn-lg" type="submit" value="儲存">    
                         </div>
-                 
-                     
-
                     </form>
                  
                 

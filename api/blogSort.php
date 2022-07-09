@@ -1,37 +1,20 @@
 <?php
-
 require_once("../db-connect.php");
-
-
-
 
 
 if(isset($_POST["target_name"])){
 
-    $order=$_POST["target_name"];
+$order=$_POST["target_name"];
+$sort=$_POST["order"];
 
-    switch ($order) {
-        case 'orderByDate':
-            $stmtSort=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id ORDER BY create_time ASC LIMIT 0,5");
-            break;
-        case 'orderByCategory':
-              $stmtSort=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id ORDER BY category_id ASC LIMIT 0,5");
-            break;
-        case 'orderByStatus':
-            $stmtSort=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id ORDER BY state ASC LIMIT 0,5");
-            break;
-        case 'orderByComment':
-            $stmtSort=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id ORDER BY state ASC LIMIT 0,5");
-            break;
-        case 'orderByFavorite':
-            
-            break;
-            
-        default:
-            
-            break;
-    }    
-     
+if($sort=="desc"){
+    $sort="asc";
+}else{
+    $sort="desc"; 
+}
+
+$stmtSort=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id ORDER BY ".$_POST["target_name"]. " ".$_POST["order"]." LIMIT 0,5");
+
 }
 
 
@@ -47,29 +30,44 @@ try {
 }
 ?>
 
+<table class="table h-0 mt-4 mb-0 text-center" id="table">
+            <thead class="table-head">
+                <tr>
+                    <td class="col-1 text-start">日期<i data-order=<?=$sort?> id="create_time" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-3 text-start">文章標題</td>
+                    <td class="col-1">分類 <i data-order=<?=$sort?> id="category_id" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1">狀態 <i data-order=<?=$sort?> id="state" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1">留言數 <i data-order=<?=$sort?> id="user_id" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1">收藏數 <i data-order=<?=$sort?> id="store_id" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1 text-end">編輯</td>
+                </tr>
+            </thead>
 
-<?php  if ($sortyQuery): ?>
-    <table class="table h-0 mt-4 mb-0 text-center">
-        <tbody id="tbody">
-            <?php foreach( $sortyQuery as $row) :?>
-            <tr class="trHover border-bottom">
-                <td class="text-start pb-2">
-                <?php      
-                $date=new DateTime($row["create_time"]);
-                echo $date->format('Y-m-d');
-                ?>
-                </td>
-                <td class="text-start td-height"><?=$row["title"]?></td>
-                <td><?=$row["category_name"]?></td>
-                <td><?=$row["state"]?></td>
-                <td>55</td>
-                <td>24</td>
-                <td class="text-end"><i class="fas fa-pen"></i></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-<?php else: ?>
-<h1 class="position-absolute top-50 start-50" >請選擇分類條件</h1>
-<?php endif; ?>
+            <tbody id="tbody">
+                <?php foreach( $sortyQuery as $row) :?>
+                <a href="create-blog.php">
+                    <tr class="trHover border-bottom">
+                        <td class="text-start pb-2">
+                            <?php      
+                            $date=new DateTime($row["create_time"]);
+                            echo $date->format('Y-m-d');
+                            ?>
+                        </td>
+                        <td class="text-start td-height"><?=$row["title"]?></td>
+                        <td><?=$row["category_name"]?></td>
+                        <td><?=$row["state"]?></td>
+                        <td>55</td>
+                        <td>24</td>
+                        <td class="text-end"><a href="create-blog.php"><i class="fa-solid fa-trash-can"></i></a></td>
+                    </tr>
+                </a>
+                <?php endforeach; ?>
+            </tbody>
+
+            <!-- Loading spinner -->
+            <div class="spinner-border position-absolute top-50 start-50" style="display:none" id="loadSpinner" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+</table> 
+
 
