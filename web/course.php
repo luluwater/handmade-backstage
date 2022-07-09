@@ -1,8 +1,33 @@
 <?php
 require_once("../db-connect.php");
+session_start();
+
+function orderLink($item,$cur_amount_limit,$orderType,$order,$orderState){
+  if($item=="state"){
+    $orderState=$orderState?0:1;
+  return  "course.php?amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";
+  }elseif($item=="nextPage"){
+    return  "course.php?amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";
+  }
+  else{
+    if($orderType==$item){ 
+      $order=$order=="ASC"?"DESC":"ASC";
+    }else{
+      $orderType=$item;
+    }    
+    return  "course.php?amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";  
+  } 
+}
 
 $amount_limit=$_GET["amount-limit"]??5;
 $page=$_GET["page"]??1;
+$orderState=$_GET["orderState"]??1;
+$orderStateType=$orderState?"DESC":"ASC";
+$orderType=$_GET["orderType"]??"id";
+$order=$_GET["order"]??"ASC";
+// echo $orderType;
+
+$secendOrder="$orderType $order";
 
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
 $stmtCategory->execute();
@@ -18,7 +43,13 @@ $totalPage=floor($courseAmount/$amount_limit);
 else
 $totalPage=floor($courseAmount/$amount_limit)+1;
 
-$stmt=$db_host->prepare("SELECT course.id,course_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM course JOIN category ON course.category_id=category.id JOIN course_img ON course.id=course_img.course_id GROUP BY course_id LIMIT $start,$amount_limit");
+
+$stmt=$db_host->prepare("SELECT course.id,course_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM course 
+JOIN category ON course.category_id=category.id 
+JOIN course_img ON course.id=course_img.course_id 
+GROUP BY course_id 
+ORDER BY state $orderStateType ,$secendOrder
+LIMIT $start,$amount_limit");
 $stmt->execute();    
 $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
 
@@ -60,7 +91,23 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                 </p>
                 </form>                
             </div>
-            <?php require("./mod/search-bar.php") ?>
+            <form action="course.php" method="get">
+            <div class="row  my-4">
+                <div class="col-2">
+                    <select class="form-select" name="searchType" aria-label="Default select example">
+                        <option value="id" selected>課程編號</option>
+                        <option value="name">課程名稱</option>
+                        <option value="category">類別</option> 
+                    </select>
+                </div>
+                <div class="col-6">
+                    <input class="form-control" type="search" name="search" id="">
+                </div>
+                <div class="col-1">
+                    <a href="" class="btn btn-bg-color">搜索</a>
+                </div>
+            </div>
+            </form>
             <div class="text-end my-4">
               <a href="" class="text-dark m-2"><i class="fa-solid fa-trash m-2"></i>下架課程</a>
               <a href="creat-new-product.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增課程</a>
@@ -70,13 +117,29 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
               <thead class="table-head">
                 <tr class="text-center">
                   <td class="col-1"><input type="checkbox" name="" id=""></td>
-                  <td class="col">課程編號<i class="fa-solid fa-sort mx-2"></i></td>
+                  <td class="col">課程編號                     
+                    <a href="<?=orderLink("id",$amount_limit,$orderType,$order,$orderState)?>">
+                    <i class="fa-solid fa-sort mx-2 text-dark"></i>
+                  </a>
+                  </td>
                   <td class="col-3">課程名稱</td>
                   <td class="col-1">上線人數</td>
                   <td class="col-1">金額</td>
-                  <td class="col-1">售出堂數</td>
-                  <td class="col-1">上架</td>
-                  <td class="col-1">收藏數<i class="fa-solid fa-sort mx-2"></i></td>
+                  <td class="col-1">售出堂數
+                    <a href="<?=orderLink("sold_amount",$amount_limit,$orderType,$order,$orderState)?>">
+                    <i class="fa-solid fa-sort mx-2 text-dark"></i>
+                  </a>
+                  </td>
+                  <td class="col-1">上架
+                    <a href="<?=orderLink("state",$amount_limit,$orderType,$order,$orderState)?>">
+                    <i class="fa-solid fa-sort mx-2 text-dark"></i>
+                  </a>
+                  </td>
+                  <td class="col-1">收藏數 
+                    <a href="course.php?amount-limit=<?=$amount_limit?>">
+                    <i class="fa-solid fa-sort mx-2 text-dark"></i>
+                  </a>
+                  </td>
                   <td class="col-1">編輯</td>
                 </tr>
               </thead>
@@ -85,7 +148,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                   <tr class="text-center">
                     <td><input type="checkbox" name="" id=""></td>
                     <td><?=$row["id"]?></td>
-                    <td class="text-start">
+                    <td class="text-start align-items-center">                      
                       <img class="previewImage-sm me-3" src="../img/course/course_<?=$row["category_en_name"]?>_<?=$row["id"]?>/<?=$row["img_name"]?>" alt="">
                       <?=$row["name"]?>
                     </td>
@@ -94,7 +157,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                     <td><?=$row["sold_amount"]?></td>                    
                     <td><input type="checkbox" <?php if($row["state"]==1)print("checked") ?> disabled></td>
                     <td></td>
-                    <td><a href="view-course.php?course=<?=$row["id"]?>"><i class="fa-solid fa-pen"></i></a></td>
+                    <td><a class="text-dark" href="view-course.php?course=<?=$row["id"]?>"><i class="fa-solid fa-pen"></i></a></td>
                   </tr>
                   <?php endforeach; ?>
               </tbody>
@@ -102,15 +165,14 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
             <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    <a class="page-link" href="course.php?amount-limit=<?=$amount_limit?>&page=<?=$page-1<1?$page=1:$page-1?>" aria-label="Previous">
-                        <span aria-hidden="true">
-                            <</span>
+                    <a class="page-link" href="<?=orderLink("nextPage",$amount_limit,$orderType,$order,$orderState)?>&page=<?=$page-1<1?$page=1:$page-1?>" aria-label="Previous">
+                        <span aria-hidden="true"><</span>
                     </a>
                 </li>
                   <?php for($i=1;$i<=$totalPage;$i++): ?>
-                <li class="page-item"><a class="page-link active" href="course.php?amount-limit=<?=$amount_limit?>&page=<?=$i?>"><?=$i?></a></li>
+                <li class="page-item"><a class="page-link <?=$i==$page?"active":""?>" href="<?=orderLink("nextPage",$amount_limit,$orderType,$order,$orderState)?>&page=<?=$i?>"><?=$i?></a></li>
                   <?php endfor; ?>
-                    <a class="page-link" href="course.php?amount-limit=<?=$amount_limit?>&page=<?=$page+1>$totalPage?$page=$totalPage:$page=$page+1?>" aria-label="Next">
+                    <a class="page-link" href="<?=orderLink("nextPage",$amount_limit,$orderType,$order,$orderState)?>&page=<?=$page+1>$totalPage?$page=$totalPage:$page=$page+1?>" aria-label="Next">
                         <span aria-hidden="true">></span>
                     </a>
                 </li>

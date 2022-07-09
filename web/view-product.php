@@ -105,7 +105,7 @@ try{
       </div>
       <div class="my-5 d-flex justify-content-end">
         <a href="product.php" class="ms-3 btn btn-bg-color">返回</a>
-        <a href="update-product.php" class="ms-3 btn btn-main-color">編輯</a>
+        <a href="edit-product.php?porduct=<?=$product_id?>" class="ms-3 btn btn-main-color">編輯</a>
       </div>
     </div>
   </main>
