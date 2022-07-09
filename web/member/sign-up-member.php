@@ -25,7 +25,8 @@ session_start();
     background: var(--bg-color);
   }
   .object-cover {
-    object-fit: cover;    
+    object-fit: cover; 
+    width: 200px;   
   }
   .display {
     position: absolute;

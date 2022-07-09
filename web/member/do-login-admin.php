@@ -40,7 +40,7 @@ try {
             unset($_SESSION["error"]);
             //$_SESSION["user"]=$dataUser;
 //連線路徑調整===========================================
-        header("location: ../web/example.php");
+        header("location: ../example.php");
 //======================================================    
         }
     }

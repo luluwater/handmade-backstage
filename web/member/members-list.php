@@ -31,7 +31,7 @@
   </head>
   <body>
 <!-- 路徑調整 ============================================= -->
-    <?php require("../web/main-menu.html");?>
+    <?php require("../main-menu.html");?>
     <?php require("do-members-list.php") ?>
 <!-- ====================================================== -->
     <main>

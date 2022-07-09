@@ -4,7 +4,7 @@ session_start();
 
 if(isset($_SESSION["account"])){
 //連線路徑調整===========================================
-    header("location: ../web/example.php");
+    header("location: ../example.php");
 //======================================================    
 }
 
@@ -29,7 +29,7 @@ if(isset($_SESSION["account"])){
         <div class="logo mb-5 d-flex justify-content-center align-items-center">
             <h1 class="mx-2 fw-bold">登入</h1>
 <!-- 圖片路徑調整 ============================================= -->
-            <img class="object-cover" src="../../img/HANDMADE - LOGO-01.png" alt="">
+            <!-- <img class="object-cover" src="../../img/HANDMADE - LOGO-02.png" alt=""> -->
 <!-- ========================================================= -->
             <h1 class="mx-2 fw-bold">手手</h1>
         </div>

@@ -27,10 +27,7 @@ $result = $db_host->prepare($sql);
 $result -> execute([":id"=> $id]);
 $row = $result ->fetch();
 $member = $result -> rowCount();
-
 ?>
-
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -103,7 +100,7 @@ $member = $result -> rowCount();
   </head>
   <body>
 <!-- 路徑調整 ============================================= -->
-    <?php require("../web/main-menu.html");?>
+    <?php require("../main-menu.html");?>
 <!-- ====================================================== -->
     <main>
         <div class="mt-3 ms-3 container-fluid d-flex">
