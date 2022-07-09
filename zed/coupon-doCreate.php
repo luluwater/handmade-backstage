@@ -12,7 +12,10 @@ $data=[
     ':amount'=>$_POST["amount"],
     ':discount_code'=>$_POST["discount_code"],
     ':start_date'=>$_POST["start_date"],
-    ':end_date'=>$_POST["end_date"]
+    ':end_date'=>$_POST["end_date"],
+    ':discount_type_id'=>$_POST["discount_type_id"],
+    ':pay'=>$_POST["pay"],
+
 ];
 
 $sql="INSERT INTO coupon
@@ -23,7 +26,7 @@ $stmt = $db_host->prepare($sql);
 
 try {
     $stmt->execute($data);
-    echo "成功";
+    // echo "成功";
     
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -32,6 +35,6 @@ try {
     exit;
 }
 $id = $db_host->lastInsertId();
-// header("location: coupon.php");
+header("location: coupon.php");
 
 ?>

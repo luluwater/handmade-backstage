@@ -55,6 +55,9 @@ $discountCount=$result->rowCount();
                 position: relative;
                 left: 115px;   
             }
+            .OFFSTYLE{
+                padding-top: 1.5px;
+            }
         </style>
   </head>
   <body>

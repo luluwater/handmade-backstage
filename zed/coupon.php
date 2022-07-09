@@ -4,7 +4,7 @@ require("../db-connect.php");
 
 
 //========== 抓取全部資料 ==========
-$sqlAll = "SELECT * FROM coupon";
+$sqlAll = "SELECT * FROM coupon WHERE coupon.state!=0";
 $resultAll= $db_host->prepare($sqlAll);
 $resultAll->execute();
 $rowsAll = $resultAll->fetchAll(PDO::FETCH_ASSOC);

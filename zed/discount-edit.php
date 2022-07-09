@@ -122,10 +122,10 @@ $discountCount=$result->rowCount();
                             name="end_date" value="<?=$row["end_date"]?>"></li>   
                         <li>
                         <select class="form-select my-3" aria-label="Default select example" style="width: 337px;" name="state">
-                        <option  value="1" selected>接下來</option>
-                        <option  value="2">進行中</option>
-                        <option  value="3">已結束</option>
-                        </select>
+                            <option value="1" <?php if ($row["state"]=="1") print 'selected ';?>>接下來</option>
+                            <option value="2" <?php if ($row["state"]=="2") print 'selected ';?>>進行中</option>
+                            <option value="3" <?php if ($row["state"]=="3") print 'selected ';?>>已結束</option>
+                        </select> 
                         </li>
                         </div>
                     </ul>

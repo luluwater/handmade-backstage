@@ -1,5 +1,11 @@
 <?php
 
+if(!isset($_POST["id"])){
+    echo "沒有參數啦!!";
+    exit;
+};
+
+
 require("../db-connect.php");
 
 $pay=$_POST["discount_type_id"]==1?null:$_POST["pay"];

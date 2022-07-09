@@ -2,8 +2,11 @@
 
 require("../db-connect.php");
 
+
+
+
 //========== 抓取全部資料 ==========
-$sqlAll = "SELECT * FROM discount";
+$sqlAll = "SELECT * FROM discount WHERE discount.state!=0";
 $resultAll= $db_host->prepare($sqlAll);
 $resultAll->execute();
 $rowsAll = $resultAll->fetchAll(PDO::FETCH_ASSOC);
@@ -37,6 +40,7 @@ if (isset($_GET["sale_state_category"])){
   $sqlWhere="";
 }
 
+
 //========== discount 主要的資料表 ==========
 $sql = "SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
 JOIN sale_state_category ON discount.state = sale_state_category.id  
@@ -63,9 +67,6 @@ $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
 $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 
 ?>
-
-
-
 
 
 
@@ -127,7 +128,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
               <?php
               if($sale_state_category==$row["id"]) echo "active";
               ?>" 
-              href="discount.php?sale_state_category=<?=$row["id"]?>"><?=$row["name"]?></a>
+              href="discount.php?sale_state_category=<?=$row["id"]?>&pageView=<?=$pageView?>"><?=$row["name"]?></a>
             </li>
             <?php endforeach; ?>
           </ul>
@@ -139,13 +140,15 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 <!-- ========== 每頁顯示幾筆 ========== -->
             <div class="d-flex justify-content-between">
                 <p class="title"></p>
-                <form action="discount.php" method="GET">
+                
+                <form action="discount.php">
                   <p>顯示
                     <select class="count-bg text-center" aria-label="Default select example"  name="pageView" onchange="submit();">
                       <option value="5" <?php if ($pageView == '5') print 'selected ';?>>5</option>
                       <option value="10" <?php if ($pageView == '10') print 'selected ';?>>10</option>
                     </select> 
                   筆</p>
+                  
                 </form>
             </div>
 

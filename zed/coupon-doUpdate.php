@@ -41,6 +41,6 @@ try {
     exit;
 }
 
-header("location: coupon.php");
+header("location: coupon-preview.php?id=$_POST[id]");
 
 ?>

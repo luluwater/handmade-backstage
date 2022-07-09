@@ -1,11 +1,13 @@
 <?php
 
+
 if(!isset($_POST["id"])){
-    echo "沒有參數";
+    echo "沒有參數啦!!";
     exit;
 };
 
 require("../db-connect.php");
+
 
 $pay=$_POST["discount_type_id"]==1?null:$_POST["pay"];
 $product_discount=$_POST["product_discount"]?$_POST["product_discount"]:$_POST["product_discount2"];
@@ -41,5 +43,5 @@ try {
     exit;
 }
 
-header("location: discount.php");
+header("location: discount-preview.php?id=$_POST[id]");
 ?>
