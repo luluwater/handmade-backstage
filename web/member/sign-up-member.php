@@ -51,7 +51,7 @@ session_start();
   </head>
   <body>
     <div class="display">
-      <div class="logo mb-5 d-flex justify-content-center align-items-center">
+      <div class="logo d-flex justify-content-center align-items-center">
         <h1 class="mx-2 fw-bold">註冊</h1>
 <!-- 圖片路徑調整  ============================================ -->
         <img class="object-cover" src="../../img/HANDMADE - LOGO-02.png" alt="">

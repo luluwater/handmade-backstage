@@ -209,13 +209,13 @@ $member = $result -> rowCount();
                         <td><input type="text" name="address" class="form-control" value="<?=$row["address"]?>"></td>
                     </tr>
                     <tr>
-                        <th class="align-middle text-center">電話</th>
+                        <th class="align-middle text-center mb-5">電話</th>
                         <td><input type="text" name="phone" class="form-control" value="<?=$row["phone"]?>"></td>
                     </tr>
                 </table>
-                    <div class="button d-flex justify-content-center">
-                        <a href="member-list.php?id=<?=$row["id"]?>" class="cancel-btn btn btn-main-color me-2">取消</a>
-                        <button class="save-btn btn btn-main-color me-2" type="submit">儲存</button>
+                    <div class="button d-flex justify-content-end">
+                        <a href="member-list.php?id=<?=$row["id"]?>" class="cancel-btn btn btn-main-color me-3 mb-5">取消</a>
+                        <button class="save-btn btn btn-main-color mb-5 me-5" type="submit">儲存</button>
                     </div>
                 </form>
             <?php endif; ?>
