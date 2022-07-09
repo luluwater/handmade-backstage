@@ -108,6 +108,9 @@ function updateFileTo_db($typeName,$type_id){
                         // $db_host = NULL;
                         exit;
                     }
+                }else{
+                    $stmtImgDel=$db_host->prepare("DELETE FROM course_img WHERE id=:img_id");
+                    // $stmtImgDel->execute([$type_id]);
                 }
             }   
             break;

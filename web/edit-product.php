@@ -31,7 +31,7 @@ try{
     $stmt_store->execute([$row["category_id"]]);
     $rows_store=$stmt_store->fetchAll(PDO::FETCH_ASSOC);
     $stmtImg->execute([$id]);    
-    $rows_Img=$stmtImg->fetchAll(PDO::FETCH_ASSOC);
+    $rows_Img=$stmtImg->fetchAll(PDO::FETCH_ASSOC);    
 }catch (PDOException $e){
     echo "預處理陳述式執行失敗！ <br/>";
     echo "Error: " . $e->getMessage() . "<br/>";
@@ -61,16 +61,16 @@ $db_host = NULL;
             <form action="do-update-product.php?id=<?=$id?>" method="post" enctype="multipart/form-data">
                 <div class="my-3 row align-items-center">
                     <label class="col-1" for="">圖片</label>
-                    <?php for($i=1;$i<=count($rows_Img);$i++): ?>                        
-                        <div class="col-auto">
+                    <?php for($i=1;$i<=count($rows_Img);$i++): ?>   
+                        <div class="col-auto">                            
                             <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*" required readonly>
-                            <img src="../img/course/course_<?= $row["category_en_name"].'_'.$id.'/'.$img["img_name"] ?>"
+                            <img src="../img/<?=$type?>/<?=$type?>_<?= $row["category_en_name"].'_'.$id.'/'.$rows_Img[$i-1]["img_name"] ?>"
                             class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
                         </div>
                     <?php endfor; ?>
-                    <?php for($i=count($rows_Img);$i<4;$i++):?>
+                    <?php for($i=count($rows_Img)+1;$i<=4;$i++):?>
                     <div class="col-auto">
-                        <input class="d-none upload_image" type="file" name="product_img4" accept="image/*">
+                        <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*">
                         <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
                     </div>
                     <?php endfor; ?>
