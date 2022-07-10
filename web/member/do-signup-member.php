@@ -27,8 +27,8 @@ $email=$_POST["email"];
 $sqlCheck = "SELECT * FROM user WHERE account=? AND email=? ";
 $stmt = $db_host->prepare($sqlCheck);
 try {
-    $stmt->execute([$account, $email]);
-    $memberExist = $stmt->rowCount();
+    $stmt->execute([$account, $email]); 
+    $memberExist = $stmt->rowCount(); //已註冊
     if ($memberExist > 0) {
         $row = $stmt->fetch();
         $user = [
@@ -43,7 +43,7 @@ try {
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
-if ($memberExist == 0) {
+if ($memberExist == 0) { //未註冊
     $now = date("Y-m-d H:i:s");
     $password=md5($password);
     $sql = "INSERT INTO user 
