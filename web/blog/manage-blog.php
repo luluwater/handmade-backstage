@@ -425,7 +425,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         pageView:pageView
                     },
                     success:function(data){
-                        console.log(data)
                         $("#tbody").html(data)
                  }
                 })

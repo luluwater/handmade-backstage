@@ -18,8 +18,7 @@ try {
     $stmtDelete->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $orderCount = count($result);
-  
-
+    header('refresh:2; url=manage-blog.php');
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
     echo "Error: " . $e->getMessage() . "<br/>";
