@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 總共有三個?變數
  * 1. page
@@ -7,12 +6,8 @@
  * 3. pageView
  * 
  */
-
-
 $page=isset($_POST["page"]) ? $_POST["page"] : 1;
 $order=isset($_POST["order"]) ? $_POST["order"] : 1;
-
-
 
 $perPage=5;
 $start=($page-1)*$perPage;
@@ -54,15 +49,9 @@ switch ($order) {
 }
 
 
-
-
 $stmt=$db_host->prepare("SELECT * FROM  JOIN category ON blog.category_id=category.id blog WHERE valid=1 ORDER BY $orderType");
 
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
-
-
-
-
 
 try {
     $stmt->execute();
@@ -82,35 +71,10 @@ $db_host = NULL;
 
 
 
-
-
-
-
-
-
-
-
-
 require_once("../db-connect.php");
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if(isset($_POST["target_name"])){
-
 
 $order=$_POST["target_name"];
 $sort=$_POST["order"];
@@ -124,8 +88,6 @@ if($sort=="desc"){
 $stmtSort=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id ORDER BY ".$_POST["target_name"]. " ".$_POST["order"]." LIMIT 0,5");
 
 }
-
-
 
 try {
     $stmtSort->execute();
@@ -145,8 +107,10 @@ try {
                     <td class="col-3 text-start">文章標題</td>
                     <td class="col-1">分類 <i data-order=<?=$sort?> id="category_id" class="fas orderArrow fa-sort mx-2"></i></td>
                     <td class="col-1">狀態 <i data-order=<?=$sort?> id="state" class="fas orderArrow fa-sort mx-2"></i></td>
+
                     <td class="col-1">留言數 <i data-order=<?=$sort?> id="comment_amount" class="fas orderArrow fa-sort mx-2"></i></td>
-                    <td class="col-1">收藏數 <i data-order=<?=$sort?> id="favorite_amount" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td class="col-1">收藏數 <i data-order=<?=$sort?> id="favorite_amount" class="fas orderArrow 
+
                     <td class="col-1 text-end">編輯</td>
                 </tr>
             </thead>
@@ -164,9 +128,11 @@ try {
                         <td class="text-start td-height"><?=$row["title"]?></td>
                         <td><?=$row["category_name"]?></td>
                         <td><?=$row["state"]?></td>
+
                         <td> <?=$row["comment_amount"]?></td>
                         <td> <?=$row["favorite_amount"]?></td>
-                         <td class="text-end"><i class="fas fa-trash-alt"></i></td>
+
+
                     </tr>
                 </a>
                 <?php endforeach; ?>
