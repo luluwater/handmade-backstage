@@ -6,7 +6,6 @@ session_start();
 
 <!doctype html>
 <html lang="en">
-
 <head>
     <title>HANDMADE_singup</title>
     <!-- Required meta tags -->
@@ -76,7 +75,6 @@ session_start();
                 <?php if(isset($_SESSION["user"]["account"])):?>
                 <div class="text-danger fw-bold text-end"><?=$_SESSION["user"]["account"]?>帳號已註冊</div>
                 <?php endif; ?>
-
             </div>
             <div class="mb-3 row">
                 <label for="" class="col-2 col-form-label text-center">姓名</label>
@@ -132,6 +130,7 @@ session_start();
                     <input type="number" class="form-control" name="phone">
                 </div>
             </div>
+            <?php unset($_SESSION["user"]); ?>
             <div>
                 <div class="d-flex justify-content-center">
                     <button class="btn btn-main-color mx-2">取消</button>

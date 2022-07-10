@@ -1,108 +1,20 @@
-<style>
-.tabs {
-    display: block;
-}
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-.btn-main-color {
-    background: var(--main-color);
-    font-weight: bolder;
-    color: white;
-    padding: .5rem 1rem;
-}
-</style>
-<div class="container">
-    <div class="tabs mb-5">
-        <button class="btn btn-main-color" style="active" type="submit">商品訂單</button>
-        <button class="btn btn-main-color" type="submit">課程訂單</button>
-        <button class="btn btn-main-color" type="submit">部落格</button>
-    </div>
-    <div class="tab-content col">
-        <div class="content">
-            <table class="table text-center">
-                <thead>
-                    <tr class="table-head text-light">
-                        <th>訂單編號</th>
-                        <th>訂單日期</th>
-                        <th>總金額</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="table-body">
-                        <td>111</td>
-                        <td>111</td>
-                        <td>NT$ 988</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="tab-content col">
-        <div class="content" style="display: none">
-            <table class="table text-center">
-                <thead>
-                    <tr class="table-head text-light">
-                        <th>訂單編號</th>
-                        <th>訂單日期</th>
-                        <th>總金額</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="table-body">
-                        <td>888</td>
-                        <td>000000</td>
-                        <td>NT$ 988</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="tab-content col">
-        <div class="content" style="display: none">
-            <table class="table text-center">
-                <thead>
-                    <tr class="table-head text-light">
-                        <th>日期</th>
-                        <th>文章標題</th>
-                        <th>類別</th>
-                        <th>分類</th>
-                        <th>狀態</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="table-body align-items-center">
-                        <td>2202/06/20</td>
-                        <!-- text-truncate -->
-                        <td>一器一花體驗分享</td>
-                        <td>花藝</td>
-                        <td>新店報報</td>
-                        <td>on</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+    <!-- Bootstrap CSS v5.2.0-beta1 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"  integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-<script>
-let tab = document.querySelectorAll("button");
-let content = document.querySelectorAll(".content");
+  </head>
+  <body>
+      sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
 
-for (let i = 0; i < tab.length; i++) {
-    tab[i].addEventListener("click", function(e) {
-        e.preventDefault();
-        contentDisplay(this);
-    });
-}
-
-function contentDisplay(activeContent) {
-    for (let i = 0; i < tab.length; i++) {
-        if (tab[i] == activeContent) {
-            tab[i].classList.add("active");
-            content[i].style.display = "block";
-        } else {
-            tab[i].classList.remove("active");
-            content[i].style.display = "none";
-        }
-    }
-}
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+  </body>
+</html>

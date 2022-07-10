@@ -21,29 +21,37 @@ $newUser =[
     ':gender'=>$_POST["gender"],
 ];
 
-
 $account=$_POST["account"];
 $email=$_POST["email"];
 $sqlCheck = "SELECT * FROM user WHERE account=? AND email=? ";
 $stmt = $db_host->prepare($sqlCheck);
-try {
-    $stmt->execute([$account, $email]); 
-    $memberExist = $stmt->rowCount(); //已註冊
-    if ($memberExist > 0) {
-        $row = $stmt->fetch();
-        $user = [
-            "account" => $row["account"],
-            "email" => $row["email"]
-        ];
-        $_SESSION["user"] = $user;
-//連線路徑調整===========================================
-        header("location: sign-up-member.php");
-//=======================================================
-    }
-} catch (PDOException $e) {
+$stmt->execute([$account, $email]);
+$memberExist = $stmt->rowCount();
+
+if ($memberExist > 0) {
+    $row = $stmt->fetch();
+    // $userAccount = [
+    //     "account" => $row["account"],
+    // ];
+    // $userEmail = [
+    //     "email" => $row["email"],
+    // ];
+    $user = [
+        "account" => $row["account"],
+        "email" => $row["email"]
+    ];
+    try {
+    $_SESSION["user"] = $user;
+    // $_SESSION["userAccount"] = $userAccount;
+    // $_SESSION["userEmail"] = $userEmail;
+    header("location: sign-up-member.php");
+    } 
+catch (PDOException $e) {
     echo $e->getMessage();
+    }
 }
-if ($memberExist == 0) { //未註冊
+
+if ($memberExist == 0) {
     $now = date("Y-m-d H:i:s");
     $password=md5($password);
     $sql = "INSERT INTO user 
@@ -58,6 +66,5 @@ if ($memberExist == 0) { //未註冊
         $db_host = NULL;
         exit;
     }
-}
-
+}   
 ?>
