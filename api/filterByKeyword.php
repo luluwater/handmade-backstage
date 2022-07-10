@@ -1,16 +1,22 @@
 <?php
 require_once("../db-connect.php");
 
-if(isset($_POST["request"])){
-    $request=$_POST["request"];
-    $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 AND blog.title LIKE '%$request%' OR category.category_name LIKE '%$request%'  LIMIT 0,5");
+if(isset($_POST["inputVal"])){
+    $inputVal=$_POST["inputVal"];
+    $orderType=$_POST["orderType"];
+    $start=$_POST["start"];
+    $pageView=$_POST["pageView"];
+    $stmtKeyword=$db_host->prepare("SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 AND blog.title LIKE '%$inputVal%' OR category.category_name LIKE '%$inputVal%' ORDER BY $orderType LIMIT $start,$pageView");
 }else{
-    $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 LIMIT 0,5");
+    $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 LIMIT $start,$pageView");
 }
 
 try {
     $stmtKeyword->execute();
     $keywordQuery = $stmtKeyword->fetchAll(PDO::FETCH_ASSOC);
+    $orderCount = count($keywordQuery);
+   
+   
 
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -18,6 +24,7 @@ try {
     $db_host = NULL;
     exit;
 }
+
 ?>
 
 <?php  if ($keywordQuery): ?>
@@ -34,13 +41,13 @@ try {
                 <td class="text-start td-height"><?=$row["title"]?></td>
                 <td><?=$row["category_name"]?></td>
                 <td><?=$row["state"]?></td>
-                <td>55</td>
-                <td>24</td>
+                <td><?=$row["comment_amount"]?></td>
+                <td><?=$row["favorite_amount"]?></td>
                 <td class="text-end"><i class="fas fa-trash-alt"></i></td>
             </tr>
         <?php endforeach; ?>
-    </tbody>
-</table>
-<?php else: ?>
-    <h1 class="position-absolute top-50 start-50">無符合項目</h1>
+   
+    <div class="mt-3 text-center" style="margin-letft:500px">搜尋到 <?= $orderCount ?> 筆</div>
 <?php endif; ?>
+
+    

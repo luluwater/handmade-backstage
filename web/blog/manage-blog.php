@@ -9,10 +9,10 @@ $start = ($page - 1) * $pageView;
 
 switch ($order) {
     case 1:
-        $orderType = "create_time ASC";
+        $orderType = "create_time DESC";
         break;
     case 2:
-        $orderType = "create_time DESC";
+        $orderType = "create_time ASC";
         break;
     case 3:
         $orderType = "category_id ASC";
@@ -43,7 +43,8 @@ switch ($order) {
 }
 
 
-$stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1  ORDER BY $orderType LIMIT $start,$pageView");
+$stmt=$db_host->prepare("SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1  ORDER BY $orderType LIMIT $start,$pageView");
+
 
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
 
@@ -59,8 +60,6 @@ try {
     $orderStmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $categories = $stmtCategory->fetchAll(PDO::FETCH_ASSOC);
     $orderCount = count($rows);
-
-    echo $orderCount;
 
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -154,7 +153,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             class="form-control fs-6" 
                             name="toDate" 
                             id="toDate">
-                     <a id="filterDateBtn" class="btn btn-main-color btn-lg"><i class="fas fa-search"></i></a>
+                     <a id="filterDateBtn" class="btn btn-main-color "><i class="fas fa-search"></i></a>
                     </div>
                    
                     <select 
@@ -210,41 +209,29 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             </thead>
 
             <tbody id="tbody">
-                <?php foreach( $orderStmt as $row) :?>
-                <tr class="trHover border-bottom" class="articlesList" data-id=<?=$row["id"]?>>
-                    <td class="text-start pb-2">
-                        <?php      
-                         $date=new DateTime($row["create_time"]);
-                         echo $date->format('Y-m-d');
-                         ?>
-                    </td>
-                    <td class="text-start td-height"><?=$row["title"]?></td>
-                    <td><?=$row["category_name"]?></td>
-                    <td><?=$row["state"]?></td>
-                    <td><?=$row["comment_amount"]?></td>
-                    <td><?=$row["favorite_amount"]?></td>
-                    <td class=" text-end"><a class="trash delete-btn"><i class="fas fa-trash-alt"></i></a></td>
-                            <div class="confirm hide" id="confirm">
-                                <div class="popup">
-                                    <div class="close" id="close">X</div>
-                                    <div class="content">
-                                        <h3 class="confirm-h3">是否確定刪除?</h3>
-                                        <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
-                                        <a href="delete-blog.php?id=<?= $row["id"] ?>" class="btn btn-main-color confirm-btn" id="confirm-btn">確認</a>
-                                </div>
-                            </div>
+
+
+                    <?php foreach( $orderStmt as $row) :?>
+                    <tr class="trHover border-bottom" class="articlesList" id="articlesList" data-id=<?=$row["id"]?>>
+                        <td class="text-start pb-2">
+                            <?php      
+                            $date=new DateTime($row["create_time"]);
+                            echo $date->format('Y-m-d');
+                            ?>
+                        </td>
+                        <td class="text-start td-height"><?=$row["title"]?></td>
+                        <td><?=$row["category_name"]?></td>
+                        <td><?=$row["state"]?></td>
+                        <td><?=$row["comment_amount"]?></td>
+                        <td><?=$row["favorite_amount"]?></td>
+                        <td class="text-end"><i data-id=<?=$row["id"]?>  class="trash-btn fas fa-trash-alt"></i></td>
                     </div>
-                </div>
-                </tr>
-                <?php endforeach; ?>
+                    </tr>
+                    <?php endforeach; ?>
+
             </tbody>
-
-            <!-- Loading spinner -->
-            <div class="spinner-border position-absolute top-50 start-50" style="display:none" id="loadSpinner" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
         </table>
-
+        <div class="mt-3 text-end">共 <?= $orderCount ?>筆資料</div>
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
@@ -267,12 +254,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
                 </div>
 
-                <li class="px-5 py-2">
-                    第<?= $startItem ?>- <?= $endItem ?>筆,共 <?= $orderCount ?> 筆資料
-                </li>
-
             </ul>
-
 
         </nav>
 
@@ -285,8 +267,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
   
     /**
      * 傳送 data set 的 id 來判斷要進入哪個葉面
-     * 
-     *
      */
 
     $(function(){
@@ -320,11 +300,19 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
          */
         $("#typeCategory").on("change",function(){
                 const value = $(this).val();
+                const orderType="<?=$orderType?>"
+                const start="<?=$start?>"
+                const pageView="<?=$pageView?>"
 
                 $.ajax({
                     url:"../../api/filterByCategory.php",
                     type:"POST",
-                    data:"request=" + value,
+                    data:{
+                        value:value,
+                        orderType:orderType,
+                        start:start,
+                        pageView:pageView,
+                    },
                     beforeSend:function(){
                         $("#loadSpinner").show()
                     },
@@ -338,18 +326,25 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                 })
             })
 
- 
 
-            
         /**
          * 使用關鍵字篩選事件
          */
         $("#typeKeyword").keyup(function(){
-            const inputVal = $(this).val();     
+            const inputVal = $(this).val();
+            const orderType="<?=$orderType?>"
+            const start="<?=$start?>"
+            const pageView="<?=$pageView?>"
+
                 $.ajax({
                     url:"../../api/filterByKeyword.php",
                     type:"POST",
-                    data:"request=" + inputVal,
+                    data:{
+                        inputVal:inputVal,
+                        orderType:orderType,
+                        start:start,
+                        pageView:pageView,
+                    },
                     beforeSend:function(){
                         $("#loadSpinner").show()
                     },
@@ -369,13 +364,19 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         $("#filterDateBtn").on("click",function(){
             const fromDate=$("#fromDate").val();
             const toDate=$("#toDate").val();
+            const orderType="<?=$orderType?>"
+            const start="<?=$start?>"
+            const pageView="<?=$pageView?>"
             if(fromDate !='' || toDate !=""){
                 $.ajax({
                     url:"../../api/filterByDate.php",
                     method:"POST",
                     data:{
                         fromDate:fromDate,
-                        toDate:toDate
+                        toDate:toDate,
+                        orderType:orderType,
+                        start:start,
+                        pageView:pageView
                     },
                     success:function(data){
                         $("#tbody").html(data)
@@ -389,7 +390,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             const orderArrows = document.querySelectorAll(".orderArrow ");
             const target=e.target.id
             const order=$(this).data("order")
-
+            console.log(e)
             $.ajax({
                     url:"../../api/blogSort.php",
                     method:"POST",
@@ -398,31 +399,41 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         order:order,
                     },
                     success:function(data){
+                      
                         $("#table").html(data)
+                        
                 }
             });
         })
 
 
         const deleteBtns=document.querySelectorAll(".trash-btn");
-
+        const articlesList=document.querySelector("#articlesList");
         const tbody=document.getElementById('tbody')
+
+        console.log(articlesList)
+        
 
         for(let i=0;i<deleteBtns.length;i++){
             deleteBtns[i].addEventListener("click",(e)=>{
                 let id = e.target.dataset.id;
-                console.log(id)
+                const orderType="<?=$orderType?>"
+                const start="<?=$start?>"
+                const pageView="<?=$pageView?>"
+                
                $.ajax({
                     method:"POST",
                     url:"../../api/delete-blog.php",
-                    dataType:"json",
-                    data:{blog_id:id}
+                    data:{
+                        blog_id:id,
+                        orderType:orderType,
+                        start:start,
+                        pageView:pageView
+                    },
+                    success:function(data){
+                        $("#tbody").html(data)
+                 }
                 })
-               .done((res)=>{
-              
-                console.log(res)
-               
-               })
             })
 
         }
@@ -449,6 +460,8 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         cancelBtn.addEventListener('click', () => {
             confirm.classList.add('hide')
         })
+        
+
         
         // function loadDate( page , query="")
         // {
