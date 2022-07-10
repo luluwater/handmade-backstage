@@ -43,7 +43,7 @@ switch ($order) {
 }
 
 
-$stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1  ORDER BY $orderType LIMIT $start,$pageView");
+$stmt=$db_host->prepare("SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1  ORDER BY $orderType LIMIT $start,$pageView");
 
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
 
@@ -59,8 +59,6 @@ try {
     $orderStmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $categories = $stmtCategory->fetchAll(PDO::FETCH_ASSOC);
     $orderCount = count($rows);
-
-    echo $orderCount;
 
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -154,7 +152,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             class="form-control fs-6" 
                             name="toDate" 
                             id="toDate">
-                     <a id="filterDateBtn" class="btn btn-main-color btn-lg"><i class="fas fa-search"></i></a>
+                     <a id="filterDateBtn" class="btn btn-main-color "><i class="fas fa-search"></i></a>
                     </div>
                    
                     <select 
@@ -310,11 +308,19 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
          */
         $("#typeCategory").on("change",function(){
                 const value = $(this).val();
+                const orderType="<?=$orderType?>"
+                const start="<?=$start?>"
+                const pageView="<?=$pageView?>"
 
                 $.ajax({
                     url:"../../api/filterByCategory.php",
                     type:"POST",
-                    data:"request=" + value,
+                    data:{
+                        value:value,
+                        orderType:orderType,
+                        start:start,
+                        pageView:pageView,
+                    },
                     beforeSend:function(){
                         $("#loadSpinner").show()
                     },
@@ -328,18 +334,25 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                 })
             })
 
- 
 
-            
         /**
          * 使用關鍵字篩選事件
          */
         $("#typeKeyword").keyup(function(){
-            const inputVal = $(this).val();     
+            const inputVal = $(this).val();
+            const orderType="<?=$orderType?>"
+            const start="<?=$start?>"
+            const pageView="<?=$pageView?>"
+
                 $.ajax({
                     url:"../../api/filterByKeyword.php",
                     type:"POST",
-                    data:"request=" + inputVal,
+                    data:{
+                        inputVal:inputVal,
+                        orderType:orderType,
+                        start:start,
+                        pageView:pageView,
+                    },
                     beforeSend:function(){
                         $("#loadSpinner").show()
                     },
@@ -347,6 +360,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         $("#loadSpinner").hide()
                     },
                     success:function(data){
+                        console.log(data)
                         $("#tbody").html(data)
                     }
                 })
@@ -359,13 +373,19 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         $("#filterDateBtn").on("click",function(){
             const fromDate=$("#fromDate").val();
             const toDate=$("#toDate").val();
+            const orderType="<?=$orderType?>"
+            const start="<?=$start?>"
+            const pageView="<?=$pageView?>"
             if(fromDate !='' || toDate !=""){
                 $.ajax({
                     url:"../../api/filterByDate.php",
                     method:"POST",
                     data:{
                         fromDate:fromDate,
-                        toDate:toDate
+                        toDate:toDate,
+                        orderType:orderType,
+                        start:start,
+                        pageView:pageView
                     },
                     success:function(data){
                         $("#tbody").html(data)
@@ -379,7 +399,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             const orderArrows = document.querySelectorAll(".orderArrow ");
             const target=e.target.id
             const order=$(this).data("order")
-
+            console.log(e)
             $.ajax({
                     url:"../../api/blogSort.php",
                     method:"POST",
@@ -416,6 +436,8 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             })
 
         }
+
+        
 
         
         // function loadDate( page , query="")

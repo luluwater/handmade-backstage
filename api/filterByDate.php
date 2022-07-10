@@ -5,9 +5,14 @@ if(isset($_POST["fromDate"],$_POST["toDate"])){
 
   $fromDate=$_POST["fromDate"];
   $toDate=$_POST["toDate"];
-  $stmtDate=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id 
-  WHERE create_time BETWEEN '$fromDate' AND '$toDate' AND blog.valid=1 ORDER BY create_time desc
-  LIMIT 0,5");
+  $orderType=$_POST["orderType"];
+  $start=$_POST["start"];
+  $pageView=$_POST["pageView"];
+ 
+
+ $stmtDate=$db_host->prepare("SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id 
+  WHERE create_time BETWEEN '$fromDate' AND '$toDate' AND blog.valid=1 ORDER BY  $orderType
+  LIMIT $start,$pageView");
 }
  
 try {
@@ -37,8 +42,8 @@ try {
                 <td class="text-start td-height"><?=$row["title"]?></td>
                 <td><?=$row["category_name"]?></td>
                 <td><?=$row["state"]?></td>
-                <td>55</td>
-                <td>24</td>
+                <td><?=$row["comment_amount"]?></td>
+                <td><?=$row["favorite_amount"]?></td>
                 <td class="text-end"><i class="fas fa-trash-alt"></i></td>
             </tr>
         <?php endforeach; ?>
