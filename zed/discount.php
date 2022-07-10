@@ -2,8 +2,7 @@
 
 require("../db-connect.php");
 
-
-
+//========== search ==========
 
 //========== 抓取全部資料 ==========
 $sqlAll = "SELECT * FROM discount WHERE discount.state!=0";
@@ -40,11 +39,10 @@ if (isset($_GET["sale_state_category"])){
   $sqlWhere="";
 }
 
-
 //========== discount 主要的資料表 ==========
 $sql = "SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
 JOIN sale_state_category ON discount.state = sale_state_category.id  
-WHERE discount.state!=0 $sqlWhere ORDER BY end_date DESC LIMIT $start , $pageView";
+WHERE discount.state!=0 $sqlWhere ORDER BY end_date DESC LIMIT $start , $pageView ";
 $result= $db_host->prepare($sql);
 $result->execute();
 $rows = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -165,7 +163,16 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
             </div>
 
 <!-- ========== 搜尋、新增折扣 ========== -->
-            <?php require("./mod/search-bar-sale.php") ?>
+            <form action="dsicount.php" method="get">
+                <div class="row  my-4">
+                    <div class="col-4">
+                    <input type="search" class="form-control mx-2 searchText" name="keyword" placeholder="搜尋活動名稱關鍵字">
+                    </div>
+                    <div class="col-1">
+                        <button type="submit" class="btn btn-bg-color">搜尋</button>
+                    </div>
+                </div>
+            </form>
             <div class="text-end my-4">
               <a href="discount-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
             </div>
