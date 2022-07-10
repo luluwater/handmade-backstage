@@ -115,6 +115,7 @@
 
 
 
+
 /* 頁碼 */
 
 .page-item{
@@ -174,4 +175,9 @@
     width: 100%;
     height: 100%;
     z-index: 4;
+}
+
+.image_sz{
+    width: 750px;
+    height: 500px;
 }

@@ -15,31 +15,31 @@ switch ($order) {
         $orderType = "create_time ASC";
         break;
     case 3:
-        $orderType = "category_id ASC";
-        break;
-    case 4:
         $orderType = "category_id DESC";
         break;
-    case 5:
-        $orderType = "state ASC";
+    case 4:
+        $orderType = "category_id ASC";
         break;
-    case 6:
+    case 5:
         $orderType = "state DESC";
         break;
-    case 7:
-        $orderType = "comment_amount ASC";
+    case 6:
+        $orderType = "state ASC";
         break;
-    case 8:
+    case 7:
         $orderType = "comment_amount DESC";
         break;
-    case 9:
-        $orderType = "favorite_amount ASC";
+    case 8:
+        $orderType = "comment_amount ASC";
         break;
-    case 10:
+    case 9:
         $orderType = "favorite_amount DESC";
         break;
+    case 10:
+        $orderType = "favorite_amount ASC";
+        break;
     default:
-        $orderType = "create_time DESC";
+        $orderType = "create_time ASC";
 }
 
 
@@ -200,10 +200,10 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                 <tr>
                     <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 日期 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=1" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=2" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
                     <td class="col-3 text-start">文章標題</td>
-                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 分類 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=3" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=4" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
-                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 狀態 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=5" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=6" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
-                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 留言 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=7" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=8" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
-                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 收藏 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=9" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=10" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 分類 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=3" class="arrowBtn <?php if ($order == 3) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=4" class="<?php if ($order == 4) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 狀態 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=5" class="arrowBtn <?php if ($order == 5) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=6" class="<?php if ($order == 6) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 留言 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=7" class="arrowBtn <?php if ($order == 7) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=8" class="<?php if ($order == 8) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 收藏 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=9" class="arrowBtn <?php if ($order == 9) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=10" class="<?php if ($order == 10) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
                     <td class="col-1 text-end">刪除</td>
                 </tr>
             </thead>
@@ -219,12 +219,12 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             echo $date->format('Y-m-d');
                             ?>
                         </td>
-                        <td class="text-start td-height"><?=$row["title"]?></td>
+                        <td class="text-start td-height article_title"><a style="color:#3F3F3F;" class="" href="blog-page.php?id=<?=$row["id"]?>"><?=$row["title"]?></a></td>
                         <td><?=$row["category_name"]?></td>
                         <td><?=$row["state"]?></td>
                         <td><?=$row["comment_amount"]?></td>
                         <td><?=$row["favorite_amount"]?></td>
-                        <td class="text-end"><i data-id=<?=$row["id"]?>  class="trash-btn fas fa-trash-alt"></i></td>
+                        <td class="text-end"><i data-id=<?=$row["id"]?>  class="trash-btn trash fas fa-trash-alt"></i></td>
                     </div>
                     </tr>
                     <?php endforeach; ?>
@@ -251,9 +251,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
-
                 </div>
-
             </ul>
 
         </nav>

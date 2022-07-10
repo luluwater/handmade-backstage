@@ -40,7 +40,7 @@ try {
                 echo $date->format('Y-m-d');
                 ?>
                 </td>
-                <td class="text-start td-height"><?=$row["title"]?></td>
+                <td class="text-start td-height article_title"><a style="color:#3F3F3F;" class="" href="blog-page.php"><?=$row["title"]?></a></td>
                 <td><?=$row["category_name"]?></td>
                 <td><?=$row["state"]?></td>
                 <td><?=$row["comment_amount"]?></td>

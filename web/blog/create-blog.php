@@ -58,7 +58,7 @@ $db_host = NULL;
 
 
 
-            <form action="blog-page.php" method="post">
+            <form action="do-create-blog.php" method="post">
                 <div class="mb-3">
                     <label for="blogTitle" class="form-label">文章標題</label>
                     <input type="text" required name="blogTitle" class="form-control" id="blogTitle">
