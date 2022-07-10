@@ -1,6 +1,7 @@
 <?php
 
 require("../db-connect.php");
+session_start();
 
 $sql = "SELECT * FROM discount";
 
@@ -74,6 +75,11 @@ $discountCount=$result->rowCount();
                         <input type="hidden" name="id">
                         <li>活動名稱</li>
                         <li><input type="text" class="form-control my-3" style="width: 1200px;" name="name"></li>
+
+                        <?php if(isset($_SESSION["discount"]["name"])):?> 
+                        <div class="text-danger text-end me-5"><?=$_SESSION["discount"]["name"]?>活動名稱重複囉！請發揮創意</div>
+                        <?php endif; ?>
+
                         <li>活動簡介</li>
                         <li><textarea type="text" class="form-control my-3 content" style="width: 1200px; height:400px;" 
                         name="content"></textarea></li>

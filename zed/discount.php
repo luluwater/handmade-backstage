@@ -152,14 +152,16 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 <!-- ========== 每頁顯示幾筆 ========== -->
             <div class="d-flex justify-content-between">
                 <p class="title"></p>
+                
                 <form action="discount.php" method="GET">
                   <p>顯示
-                    <select class="count-bg text-center" aria-label="Default select example"  name="pageView" onchange="submit();">
-                      <option value="5" <?php if ($pageView == '5') print 'selected ';?>>5</option>
-                      <option value="10" <?php if ($pageView == '10') print 'selected ';?>>10</option>
+                    <select class="count-bg text-center" aria-label="Default select example"  name="pageView" onchange=submit();>
+                      <option value="5&sale_state_category=<?=$sale_state_category?>" <?php if ($pageView == '5') print 'selected ';?>>5</option>
+                      <option value="10&sale_state_category=<?=$sale_state_category?>" <?php if ($pageView == '10') print 'selected ';?>>10</option>
                     </select> 
                   筆</p>
                 </form>
+            
             </div>
 
 <!-- ========== 搜尋、新增折扣 ========== -->
