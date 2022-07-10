@@ -2,10 +2,61 @@
 
 require_once("../../db-connect.php");
 
+$order=isset($_GET["order"]) ? $_GET["order"] : 1;
+
+
+
+$page=isset($_GET["page"]) ? $_GET["page"] : 1;
+
+
+$pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']) : 5;
+
+//每頁開始的id
+$start = ($page - 1) * $pageView;
+
+
+
+
+switch ($order) {
+    case 1:
+        $orderType = "create_time ASC";
+        break;
+    case 2:
+        $orderType = "create_time DESC";
+        break;
+    case 3:
+        $orderType = "category_id ASC";
+        break;
+    case 4:
+        $orderType = "category_id DESC";
+        break;
+    case 5:
+        $orderType = "state ASC";
+        break;
+    case 6:
+        $orderType = "state DESC";
+        break;
+    case 7:
+        $orderType = "favorite_amount ASC";
+        break;
+    case 8:
+        $orderType = "favorite_amount DESC";
+        break;
+    case 9:
+        $orderType = "comment_amount ASC";
+        break;
+    case 10:
+        $orderType = "comment_amount DESC";
+        break;
+    default:
+        $orderType = "create_time DESC";
+}
+
+
+
 
 $stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.id=category.id  WHERE valid=1  ORDER BY create_time DESC LIMIT 0,5");
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
-
 
 
 try {
@@ -22,6 +73,20 @@ try {
 }
 
 $db_host = NULL;
+
+// //開始的筆數
+// $startItem = ($page - 1) * $pageView + 1;
+// //結束的筆數
+// $endItem = $page * $pageView;
+// if ($endItem > $orderCount) $endItem = $orderCount;
+
+// //總筆數
+// $totalPage = ceil($orderCount / $pageView);
+
+// //上一頁
+// $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
+// //下一頁
+// $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
 ?>
 
@@ -113,21 +178,18 @@ $db_host = NULL;
                 </div>
                 <!--------------------------->
 
-                <!--  Article Amount -->
+               <p class="m-0">顯示</p>
+                    <form action="course_order-list.php" method="get" class="pageForm" class="text-center">
+                        <select name="pageView" id="" class="display-page form-select mx-1 " onchange="submit();">
+                            <option value="5" <?php if ($pageView == '5') print 'selected '; ?>>5</option>
+                            <option value="10" <?php if ($pageView == '10') print 'selected '; ?>>10</option>
+                            <option value="15" <?php if ($pageView == '15') print 'selected '; ?>>15</option>
 
-                <div class="d-flex justify-content-between align-items-center display-page-box gap-3">
-                    <p class="m-0 fs-5">顯示</p>
-                    <form action="management-blog.php" method="get" class="pageForm" class="text-center">
-                        <select name="pageView" id="" class="display-page form-select mt-2  " onchange="submit();">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
                         </select>
                     </form>
-                    <p class="m-0 fs-5">筆</p>
-                </div>
-                 <!--------------------------->
 
+                    <p class="m-0">筆</p>
+            
             </div>
         </div>
 
