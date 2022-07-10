@@ -209,7 +209,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
             <tbody id="tbody">
                     <?php foreach( $orderStmt as $row) :?>
-                    <tr class="trHover border-bottom" class="articlesList" data-id=<?=$row["id"]?>>
+                    <tr class="trHover border-bottom" class="articlesList" id="articlesList" data-id=<?=$row["id"]?>>
                         <td class="text-start pb-2">
                             <?php      
                             $date=new DateTime($row["create_time"]);
@@ -346,7 +346,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         $("#loadSpinner").hide()
                     },
                     success:function(data){
-                        console.log(data)
                         $("#tbody").html(data)
                     }
                 })
@@ -394,6 +393,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         order:order,
                     },
                     success:function(data){
+                      
                         $("#table").html(data)
                         
                 }
@@ -402,8 +402,11 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
 
         const deleteBtns=document.querySelectorAll(".trash-btn");
-
+        const articlesList=document.querySelector("#articlesList");
         const tbody=document.getElementById('tbody')
+
+        console.log(articlesList)
+        
 
         for(let i=0;i<deleteBtns.length;i++){
             deleteBtns[i].addEventListener("click",(e)=>{
@@ -415,19 +418,17 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                $.ajax({
                     method:"POST",
                     url:"../../api/delete-blog.php",
-                    dataType:"json",
                     data:{
                         blog_id:id,
                         orderType:orderType,
                         start:start,
                         pageView:pageView
-                    }
+                    },
+                    success:function(data){
+                        console.log(data)
+                        $("#tbody").html(data)
+                 }
                 })
-               .done((res)=>{
-        
-                console.log(res)
-               
-               })
             })
 
         }
