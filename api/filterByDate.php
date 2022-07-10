@@ -18,6 +18,8 @@ if(isset($_POST["fromDate"],$_POST["toDate"])){
 try {
     $stmtDate->execute();
     $dateQuery = $stmtDate->fetchAll(PDO::FETCH_ASSOC);
+    $orderCount = count($dateQuery);
+   
 
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -48,6 +50,7 @@ try {
             </tr>
         <?php endforeach; ?>
     </tbody>
+    <div class="mt-3 text-center" style="margin-letft:500px">搜尋到 <?= $orderCount ?> 筆</div>
 </table>
 <?php else: ?>
     <h1 class="position-absolute top-50 start-50">無符合項目</h1>

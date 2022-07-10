@@ -1,13 +1,19 @@
 <?php
 require_once("../db-connect.php");
 
+if(isset($_POST["blog_id"])){
 
+    $blog_id=$_POST["blog_id"];
+    $orderType=$_POST["orderType"];
+    $start=$_POST["start"];
+    $pageView=$_POST["pageView"];
+    $stmtDelete=$db_host->prepare("UPDATE blog SET valid=0 WHERE id='$blog_id'");
+    $stmt=$db_host->prepare("SELECT blog.*,category.category_name FROM blog JOIN category ON  blog.category_id = category.id  WHERE blog.valid=1  ORDER BY $orderType LIMIT $start,$pageView");
 
-$blog_id=$_POST["blog_id"];
+}
+
     
-$stmtDelete=$db_host->prepare("UPDATE blog SET valid=0 WHERE id='$blog_id'");
 
-$stmt=$db_host->prepare("SELECT * FROM blog INNER JOIN category ON blog.id=category.id  WHERE blog.valid=1  ORDER BY create_time DESC");
 
 try {
     $stmt->execute();

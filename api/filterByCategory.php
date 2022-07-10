@@ -19,7 +19,8 @@ if(isset($_POST["value"])){
 try {
     $stmtQuery->execute();
     $categoryQuery = $stmtQuery->fetchAll(PDO::FETCH_ASSOC);
-    
+    $orderCount = count($categoryQuery);
+
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
     echo "Error: " . $e->getMessage() . "<br/>";
@@ -47,6 +48,7 @@ try {
                 <td class="text-end"><i class="fas fa-trash-alt"></i></td>
             </tr>
             <?php endforeach; ?>
+            <div class="mt-3 text-center" style="margin-letft:500px">搜尋到 <?= $orderCount ?> 筆</div>
         </tbody>
     </table>
 <?php else: ?>

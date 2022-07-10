@@ -208,31 +208,26 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             </thead>
 
             <tbody id="tbody">
-                <?php foreach( $orderStmt as $row) :?>
-                <tr class="trHover border-bottom" class="articlesList" data-id=<?=$row["id"]?>>
-                    <td class="text-start pb-2">
-                        <?php      
-                         $date=new DateTime($row["create_time"]);
-                         echo $date->format('Y-m-d');
-                         ?>
-                    </td>
-                    <td class="text-start td-height"><?=$row["title"]?></td>
-                    <td><?=$row["category_name"]?></td>
-                    <td><?=$row["state"]?></td>
-                    <td><?=$row["comment_amount"]?></td>
-                    <td><?=$row["favorite_amount"]?></td>
-                    <td class="text-end"><i data-id=<?=$row["id"]?>  class="trash-btn fas fa-trash-alt"></i></td>
-                </div>
-                </tr>
-                <?php endforeach; ?>
+                    <?php foreach( $orderStmt as $row) :?>
+                    <tr class="trHover border-bottom" class="articlesList" data-id=<?=$row["id"]?>>
+                        <td class="text-start pb-2">
+                            <?php      
+                            $date=new DateTime($row["create_time"]);
+                            echo $date->format('Y-m-d');
+                            ?>
+                        </td>
+                        <td class="text-start td-height"><?=$row["title"]?></td>
+                        <td><?=$row["category_name"]?></td>
+                        <td><?=$row["state"]?></td>
+                        <td><?=$row["comment_amount"]?></td>
+                        <td><?=$row["favorite_amount"]?></td>
+                        <td class="text-end"><i data-id=<?=$row["id"]?>  class="trash-btn fas fa-trash-alt"></i></td>
+                    </div>
+                    </tr>
+                    <?php endforeach; ?>
             </tbody>
-
-            <!-- Loading spinner -->
-            <div class="spinner-border position-absolute top-50 start-50" style="display:none" id="loadSpinner" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
         </table>
-
+        <div class="mt-3 text-end">共 <?= $orderCount ?>筆資料</div>
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
@@ -252,16 +247,9 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
-
                 </div>
-
-                <li class="px-5 py-2">
-                    第<?= $startItem ?>- <?= $endItem ?>筆,共 <?= $orderCount ?> 筆資料
-                </li>
-
             </ul>
-
-
+       
         </nav>
 
 
@@ -273,8 +261,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
   
     /**
      * 傳送 data set 的 id 來判斷要進入哪個葉面
-     * 
-     *
      */
 
     $(function(){
@@ -409,6 +395,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     },
                     success:function(data){
                         $("#table").html(data)
+                        
                 }
             });
         })
@@ -421,15 +408,23 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         for(let i=0;i<deleteBtns.length;i++){
             deleteBtns[i].addEventListener("click",(e)=>{
                 let id = e.target.dataset.id;
-                console.log(id)
+                const orderType="<?=$orderType?>"
+                const start="<?=$start?>"
+                const pageView="<?=$pageView?>"
+                
                $.ajax({
                     method:"POST",
                     url:"../../api/delete-blog.php",
                     dataType:"json",
-                    data:{blog_id:id}
+                    data:{
+                        blog_id:id,
+                        orderType:orderType,
+                        start:start,
+                        pageView:pageView
+                    }
                 })
                .done((res)=>{
-              
+        
                 console.log(res)
                
                })
