@@ -17,14 +17,15 @@ if(isset($_POST["submit_data"])){
     echo $pubilshTime;
     echo $category;
 
-    // if( $state=="發布"){
+    if( $state=="發布"){
         $stmt=$db_host->prepare("INSERT INTO blog(title,content,create_time,category_id,state,valid) VALUES ('$title','$content','$pubilshTime', '$category', '$state',1)");
+        header('refresh:3; url=manage-blog.php');
         echo "發布成功";
-    // }
-    // else{
-    //     header("Location:create-blog.php?未發表");
-    //     exit();
-    // }
+    }
+    else{
+        header("Location:create-blog.php?未發表");
+        exit();
+    }
 }else{
     header("Location:create-blog.php?invalidRequset");
 

@@ -9,10 +9,10 @@ $start = ($page - 1) * $pageView;
 
 switch ($order) {
     case 1:
-        $orderType = "create_time ASC";
+        $orderType = "create_time DESC";
         break;
     case 2:
-        $orderType = "create_time DESC";
+        $orderType = "create_time ASC";
         break;
     case 3:
         $orderType = "category_id ASC";
