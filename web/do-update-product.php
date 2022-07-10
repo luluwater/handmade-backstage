@@ -19,6 +19,12 @@
     $stmtCategoryName->execute([$category]);
     $row=$stmtCategoryName->fetch();   
     $categoryName=$row["category_en_name"]; 
+    $change=[];
+    for($i=1;$i<=4;$i++){
+        
+        array_push($change,$_POST["change$i"]??"unchange");
+    }
+    print_r($change);
     
     require_once("../api/upload-image.php");
 
@@ -47,10 +53,9 @@
             echo "Error: " . $e->getMessage() . "<br/>";
             // $db_host = NULL;
             exit;
-        }
-        $course_id = $db_host->lastInsertId();
-        upFileToDir($type,$categoryName,$course_id);
-        upFileTo_db($type,$course_id);
+        }        
+        upFileToDir($type,$categoryName,$id);
+        updateFileTo_db($type,$id,$change);
     }else{
         $stmt=$db_host->prepare("INSERT INTO product (store_id,category_id,create_time,name,intro,amount,price,note) VALUES (:store_id, :category_id, :creat_time, :name, :intro, :amount, :price, :note)");
 
@@ -71,10 +76,9 @@
             echo "Error: " . $e->getMessage() . "<br/>";
             // $db_host = NULL;
             exit;
-        }
-        $product_id = $db_host->lastInsertId();
-        upFileToDir($type,$categoryName,$product_id);
-        upFileTo_db($type,$product_id);
+        }        
+        upFileToDir($type,$categoryName,$id);
+        updateFileTo_db($type,$id,$change);
     }
 
     
@@ -90,5 +94,5 @@
 
     $db_host = NULL;
 
-    header("location: view-$type.php?$type=$id");
+    // header("location: view-$type.php?$type=$id");
 ?>

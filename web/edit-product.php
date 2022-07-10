@@ -51,6 +51,8 @@ $db_host = NULL;
     <!-- Bootstrap CSS v5.2.0-beta1 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"  integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
+    <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
+
   </head>
   <body>
     <?php
@@ -62,16 +64,19 @@ $db_host = NULL;
                 <div class="my-3 row align-items-center">
                     <label class="col-1" for="">圖片</label>
                     <?php for($i=1;$i<=count($rows_Img);$i++): ?>   
-                        <div class="col-auto">                            
-                            <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*" required readonly>
+                        <div class="col-auto position-relative p-0 mx-2"> 
+                            <input class="img-state" type="hidden" name="change<?=$i?>" value="unchange"> 
+                            <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*">
                             <img src="../img/<?=$type?>/<?=$type?>_<?= $row["category_en_name"].'_'.$id.'/'.$rows_Img[$i-1]["img_name"] ?>"
-                            class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
+                            class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg'">
+                            <i class="fa-solid fa-xmark text-light position-absolute top-0 end-0 translate-end p-1 cancel-img"></i>
                         </div>
                     <?php endfor; ?>
                     <?php for($i=count($rows_Img)+1;$i<=4;$i++):?>
-                    <div class="col-auto">
+                    <div class="col-auto position-relative p-0 mx-2">
                         <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*">
                         <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
+                        <i class="fa-solid fa-xmark text-light position-absolute top-0 end-0 translate-end p-1 cancel-img d-none"></i>
                     </div>
                     <?php endfor; ?>
                 </div>
@@ -113,7 +118,7 @@ $db_host = NULL;
                     </div>
                     <div class="col-5 d-flex gy-3  align-items-center">
                         <label class="col-2 me-2" for="type">商品類型</label>
-                        <select id="type" class="form-select col" aria-label="Default select example" name="type">
+                        <select id="type" class="form-select col" aria-label="Default select example" name="type" disabled>
                         <option value="course" <?=$type=="course"?"selected":""?>>體驗課程</option>
                         <option value="product" <?=$type=="product"?"selected":""?>>實體商品</option>                    
                         </select>
@@ -146,6 +151,9 @@ $db_host = NULL;
     <script>
         const previewImages=document.querySelectorAll(".previewImage");
         const upload_images=document.querySelectorAll(".upload_image");
+        const cancel_img=document.querySelectorAll(".cancel-img");
+        const imgs_state=document.querySelectorAll(".img-state");
+
         for(let i=0;i<previewImages.length;i++){
             previewImages[i].addEventListener("click",function(){
                 upload_images[i].click();
@@ -155,10 +163,21 @@ $db_host = NULL;
                 const img=previewImages[i];
                 const objUrl=URL.createObjectURL(myFile);
                 img.src=objUrl;
-                img.onload=()=>window.URL.revokeObjectURL(objUrl);
+                img.onload=()=>window.URL.revokeObjectURL(objUrl);  
+                console.log(cancel_img[i]);
+                cancel_img[i].classList.remove("d-none");
             })
-        }   
-        
+            cancel_img[i].addEventListener("click",function(){
+                this.classList.add("d-none");
+                const state=imgs_state[i];
+                const imgFile=upload_images[i];
+                const preImg=previewImages[i];
+                imgFile.value="";
+                preImg.setAttribute("src","../img/previewImage.jpg");   
+                state.value="del";             
+            })
+        } 
+
         const type=document.querySelector("#type");
         const course=document.querySelector("#course");
         type.addEventListener("change",function(){
@@ -203,6 +222,7 @@ $db_host = NULL;
         backBtn.addEventListener("click",function(){
             history.back();
         })
+        
 
     </script>
   </body>
