@@ -43,7 +43,7 @@ switch ($order) {
 }
 
 
-$stmt=$db_host->prepare("SELECT * FROM blog WHERE valid=1  ORDER BY $orderType LIMIT $start,$pageView");
+$stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1  ORDER BY $orderType LIMIT $start,$pageView");
 
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
 
@@ -254,9 +254,15 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
+
                 </div>
 
+                <li class="px-5 py-2">
+                    第<?= $startItem ?>- <?= $endItem ?>筆,共 <?= $orderCount ?> 筆資料
+                </li>
+
             </ul>
+
 
         </nav>
 
