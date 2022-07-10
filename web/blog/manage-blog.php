@@ -1,20 +1,10 @@
 <?php
 
 require_once("../../db-connect.php");
-
 $order=isset($_GET["order"]) ? $_GET["order"] : 1;
-
-
-
 $page=isset($_GET["page"]) ? $_GET["page"] : 1;
-
-
 $pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']) : 5;
-
-//每頁開始的id
 $start = ($page - 1) * $pageView;
-
-
 
 
 switch ($order) {
@@ -37,33 +27,40 @@ switch ($order) {
         $orderType = "state DESC";
         break;
     case 7:
-        $orderType = "favorite_amount ASC";
-        break;
-    case 8:
-        $orderType = "favorite_amount DESC";
-        break;
-    case 9:
         $orderType = "comment_amount ASC";
         break;
-    case 10:
+    case 8:
         $orderType = "comment_amount DESC";
+        break;
+    case 9:
+        $orderType = "favorite_amount ASC";
+        break;
+    case 10:
+        $orderType = "favorite_amount DESC";
         break;
     default:
         $orderType = "create_time DESC";
 }
 
 
+$stmt=$db_host->prepare("SELECT * FROM blog WHERE valid=1  ORDER BY $orderType LIMIT $start,$pageView");
 
-
-$stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.id=category.id  WHERE valid=1  ORDER BY create_time DESC LIMIT 0,5");
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
+
+$sqlAll = $db_host->prepare("SELECT * FROM blog WHERE valid=1");
 
 
 try {
     $stmt->execute();
+    $sqlAll->execute();
     $stmtCategory->execute();
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $rows = $sqlAll->fetchAll(PDO::FETCH_ASSOC);
+    $orderStmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $categories = $stmtCategory->fetchAll(PDO::FETCH_ASSOC);
+    $orderCount = count($rows);
+
+    echo $orderCount;
 
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -74,19 +71,12 @@ try {
 
 $db_host = NULL;
 
-// //開始的筆數
-// $startItem = ($page - 1) * $pageView + 1;
-// //結束的筆數
-// $endItem = $page * $pageView;
-// if ($endItem > $orderCount) $endItem = $orderCount;
-
-// //總筆數
-// $totalPage = ceil($orderCount / $pageView);
-
-// //上一頁
-// $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
-// //下一頁
-// $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
+$startItem = ($page - 1) * $pageView + 1;
+$endItem = $page * $pageView;
+if ($endItem > $orderCount) $endItem = $orderCount;
+$totalPage = ceil($orderCount / $pageView);
+$PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
+$nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
 ?>
 
@@ -103,9 +93,12 @@ $db_host = NULL;
     <!-- Bootstrap CSS v5.2.0-beta1 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+   
 
     <head>
+        
         <link rel="stylesheet" href="../../css/style.css">
+        <link rel="stylesheet" href="./style/blog.css">
     </head>
 
     <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
@@ -119,11 +112,22 @@ $db_host = NULL;
     <?php require("../main-menu.html");?>
 
     <main>
-        <?php 
-        require("../mod/status-bar.php");
-        ?>
+      <div class="title">文章管理</div>
+        <div class="status-bar">
+            <ul class="d-flex list-unstyled justify-content-around align-items-center m-0 h-100">
+                <li class="status-button ">
+                <a href="" class=  "status-a text-center fs-5 ">全部文章</a>
+                </li>
+                <li class="status-button">
+                <a href="" class="status-a text-center fs-5 ">已發表</a>
+                </li>
+                <li class="status-button">
+                <a href="" class="status-a text-center fs-5">隱藏文章</a>
+                </li>
 
-        <div class="d-flex mt-4">
+            </ul>
+        </div> 
+        <div class="d-flex mt-4 justify-content-between">
 
             <!-- Filter start -->
             <div class="fs-6 container d-flex align-items-start justify-content-between w-50 ms-0 gap-5">
@@ -140,23 +144,21 @@ $db_host = NULL;
                         placeholder="Search..."
                         aria-label="search with text input field" 
                         name="typeKeyword">
-                    <div class="d-flex gap-4 align-items-center d-none" id="typeDate"   name="typeDate">
+                    <div class="d-flex gap-4 align-items-start d-none" id="typeDate"   name="typeDate">
                     <input  type="date" 
                             class="form-control fs-6" 
                             name="fromDate" 
-                            id="fromDate" 
-                            aria-label="search with date input field">
-                            ~
+                            id="fromDate">
+                           <span class="mt-2">至</span>
                     <input  type="date" 
                             class="form-control fs-6" 
                             name="toDate" 
-                            id="toDate" 
-                           aria-label="search with date input field">
-                     <a id="filterDateBtn" class="btn btn-main-color m-0 ">搜尋</a>
+                            id="toDate">
+                     <a id="filterDateBtn" class="btn btn-main-color btn-lg"><i class="fas fa-search"></i></a>
                     </div>
                    
                     <select 
-                        class="select-category rounded d-none" 
+                        class="select-category rounded d-none w-75" 
                         id="typeCategory" 
                         name="typeCategory">
                         <option selected="selected" value="all">全部分類</option>
@@ -170,26 +172,25 @@ $db_host = NULL;
             <!-- Filter end -->
 
 
-            <div class="d-flex align-items-center w-25 justify-content-between ">
+            <div class="d-flex align-items-start gap-3 w-25 justify-content-between ">
                 <!-- Post New Article Router-->
                 <div class="d-flex align-items-end">
-                    <a href="create-blog.php" class="btn btn-secondary btn-sm ">+
-                    <span class="fs-6 ms-3">發表新文章</span></a>
+                    <a href="create-blog.php" class="btn btn-main-color btn-sm ">+
+                    <span class="fs-6 ms-3">新增</span></a>
                 </div>
                 <!--------------------------->
+                <div class="d-flex gap-2">
+                    <div class="mt-2">顯示</div>
+                        <form action="manage-blog.php" method="get" class="pageForm" class="text-center">
+                            <select name="pageView" id="" class="display-page form-select mx-1" onchange="submit();">
+                                <option value="5" <?php if ($pageView == '5') print 'selected '; ?>>5</option>
+                                <option value="10" <?php if ($pageView == '10') print 'selected '; ?>>10</option>
+                                <option value="15" <?php if ($pageView == '15') print 'selected '; ?>>15</option>
 
-               <p class="m-0">顯示</p>
-                    <form action="course_order-list.php" method="get" class="pageForm" class="text-center">
-                        <select name="pageView" id="" class="display-page form-select mx-1 " onchange="submit();">
-                            <option value="5" <?php if ($pageView == '5') print 'selected '; ?>>5</option>
-                            <option value="10" <?php if ($pageView == '10') print 'selected '; ?>>10</option>
-                            <option value="15" <?php if ($pageView == '15') print 'selected '; ?>>15</option>
-
-                        </select>
-                    </form>
-
-                    <p class="m-0">筆</p>
-            
+                            </select>
+                        </form>
+                    <div class="mt-2">筆</div>
+             </div>
             </div>
         </div>
 
@@ -198,18 +199,18 @@ $db_host = NULL;
         <table class="table h-0 mt-4 mb-0 text-center" id="table">
             <thead class="table-head">
                 <tr>
-                    <td  class="col-1 text-start">日期<i data-order="desc" id="create_time" class="fas orderArrow fa-sort mx-2"></i></td>
+                    <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 日期 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=1" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=2" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
                     <td class="col-3 text-start">文章標題</td>
-                    <td  class="col-1">分類 <i data-order="desc" id="category_id"class="fas orderArrow fa-sort mx-2"></i></td>
-                    <td class="col-1">狀態 <i data-order="desc" id="state" class="fas orderArrow fa-sort mx-2"></i></td>
-                    <td class="col-1">留言數 <i data-order="desc" id="comment_amount" class="fas orderArrow fa-sort mx-2"></i></td>
-                    <td class="col-1">收藏數 <i data-order="desc" id="favorite_amount" class="fas orderArrow fa-sort mx-2"></i></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 分類 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=3" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=4" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 狀態 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=5" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=6" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 留言 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=7" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=8" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 收藏 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=9" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=10" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
                     <td class="col-1 text-end">刪除</td>
                 </tr>
             </thead>
 
             <tbody id="tbody">
-                <?php foreach( $rows as $row) :?>
+                <?php foreach( $orderStmt as $row) :?>
                 <tr class="trHover border-bottom" class="articlesList" data-id=<?=$row["id"]?>>
                     <td class="text-start pb-2">
                         <?php      
@@ -223,7 +224,7 @@ $db_host = NULL;
                     <td><?=$row["comment_amount"]?></td>
                     <td><?=$row["favorite_amount"]?></td>
                     <td class="text-end"><i data-id=<?=$row["id"]?>  class="trash-btn fas fa-trash-alt"></i></td>
-
+                </div>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -234,25 +235,32 @@ $db_host = NULL;
             </div>
         </table>
 
-        <nav  aria-label="Page navigation" id="pagination" style="margin-top:50px">
-            <ul class="pagination justify-content-center align-items-center ">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">
-                            <</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">></span>
-                    </a>
-                </li>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center mt-5">
+                <div class="d-flex">
+                    <li class="page-item">
+                        <a class="page-link" href="manage-blog.php?page=<?= $PreviousPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                        <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="manage-blog.php?page=<?= $i ?>&pageView=<?= $pageView ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                    <?php endfor; ?>
+
+
+                    <li class="page-item">
+                        <a class="page-link" href="manage-blog.php?page=<?= $nextPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </div>
+
             </ul>
+
         </nav>
-  
+
+
 
     </main>
 <script>
@@ -397,7 +405,7 @@ $db_host = NULL;
                .done((res)=>{
               
                 console.log(res)
-                history("manage-blog.php")
+               
                })
             })
 
