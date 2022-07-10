@@ -118,7 +118,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
         <!-- 顧客資料 -->
         <div class="row mx-5 my-3">
             <p class="col-1 boldWord">訂單編號</p>
-            <p class="col-2">00<?= $orderRow["id"] ?></p>
+            <p class="col-2"><?= $orderRow["id"] ?></p>
             <a href="course_order_edit.php?id=<?=$orderRow["id"]?>" class="btn btn-bg-color col-1 editBtn">修改資料</a>
 
         </div>
