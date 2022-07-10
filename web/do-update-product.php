@@ -11,10 +11,10 @@
     $amount=$_POST["amount"];
     $category=$_POST["category"];
     $store=$_POST["store"];
-    $type=$_POST["type"];  
+    $type=$_POST["type"];
     $notice=$_POST["notice"];
     $now=date('Y-m-d H:i:s');
-    $id=$_GET["id"];    
+    $id=$_POST["id"];    
     $stmtCategoryName=$db_host->prepare("SELECT category_en_name FROM category WHERE category.id = ?");
     $stmtCategoryName->execute([$category]);
     $row=$stmtCategoryName->fetch();   
@@ -57,7 +57,9 @@
         upFileToDir($type,$categoryName,$id);
         updateFileTo_db($type,$id,$change);
     }else{
-        $stmt=$db_host->prepare("INSERT INTO product (store_id,category_id,create_time,name,intro,amount,price,note) VALUES (:store_id, :category_id, :creat_time, :name, :intro, :amount, :price, :note)");
+        $stmt=$db_host->prepare("UPDATE  product
+        SET store_id=:store_id, category_id=:category_id, create_time=:create_time, name=:name, intro=:intro, amount=:amount, price=:price, note=:note
+        WHERE product.id=$id");
 
         try{    
             $stmt->execute([
@@ -83,7 +85,7 @@
 
     
     
-    $id=$db_host->lastInsertId();
+    // $id=$db_host->lastInsertId();
     
     
 
@@ -94,5 +96,5 @@
 
     $db_host = NULL;
 
-    // header("location: view-$type.php?$type=$id");
+    header("location: view-$type.php?$type=$id");
 ?>

@@ -133,16 +133,44 @@ function updateFileTo_db($typeName,$type_id,$change){
             }   
             break;
         case "product":
-            $stmtImg=$db_host->prepare("INSERT INTO product_img(img_name,product_id) VALUES (:img_name, :product_id)");
+            $stmt=$db_host->prepare("SELECT * FROM product_img WHERE product_id=?");
+            $stmt->execute([$type_id]);
+            $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmtImg=$db_host->prepare("INSERT INTO product_img (img_name,product_id) VALUES (:img_name,:product_id) ON DUPLICATE KEY UPDATE id=:img_id");
             for($i=1;$i<=4;$i++){
-                $fileName=$_FILES["product_img".$i]["name"];
-                if($_FILES["product_img".$i]["error"]==0){
-                    $stmtImg->execute([
-                        ":img_name"=>$fileName,
-                        ":product_id"=>$type_id
-                    ]);
+                $fileName=$_FILES["product_img".$i]["name"];                
+                if($_FILES["product_img".$i]["error"]==0){   
+                    try{
+                        $stmtImg->execute([
+                            ":img_name"=>$fileName,
+                            ":product_id"=>$type_id,
+                            ":img_id"=> $rows[$i-1]["id"]
+                        ]);              
+                        echo "圖片更新成功";          
+                    }catch (PDOException $e){
+                        echo "預處理陳述式執行失敗！ <br/>";
+                        echo "Error: " . $e->getMessage() . "<br/>";
+                        // $db_host = NULL;
+                        exit;
+                    }
+                    
+                }else{
+                    if($change[$i-1]=="del"){
+                        echo $change[$i-1]."<hr>";
+                        echo $rows[$i-1]["id"]."<hr>";
+
+                        $stmtImgDel=$db_host->prepare("DELETE FROM product_img WHERE id=:img_id");
+                        $stmtImgDel->execute([ 
+                            ":img_id"=> $rows[$i-1]["id"]
+                        ]);
+                        echo "刪除";
+                    }                    
+                    
+                    // echo "沒有圖片檔";
                 }
-            }
+            }   
+
+            
             break;
         case "store":
             $stmtImg=$db_host->prepare("INSERT INTO store_img(img_name,store_id) VALUES (:img_name, :store_id)");

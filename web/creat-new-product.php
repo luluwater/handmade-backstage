@@ -109,7 +109,7 @@ $db_host = NULL;
                     </div>
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="hour">課程時常</label>
-                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常" required>
+                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常">
                     </div>
                 </div>
                 <div class="my-3 row align-items-center">

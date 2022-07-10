@@ -59,8 +59,9 @@ $db_host = NULL;
     require("./main-menu.html");
     ?>
     <main>
-        <div class="container-fluid">
-            <form action="do-update-product.php?id=<?=$id?>" method="post" enctype="multipart/form-data">
+        <div class="container-fluid">            
+            <form action="do-update-product.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<?=$id?>">
                 <div class="my-3 row align-items-center">
                     <label class="col-1" for="">圖片</label>
                     <?php for($i=1;$i<=count($rows_Img);$i++): ?>   
@@ -74,6 +75,7 @@ $db_host = NULL;
                     <?php endfor; ?>
                     <?php for($i=count($rows_Img)+1;$i<=4;$i++):?>
                     <div class="col-auto position-relative p-0 mx-2">
+                        <input class="img-state" type="hidden" name="change<?=$i?>" value="unchange">
                         <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*">
                         <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
                         <i class="fa-solid fa-xmark text-light position-absolute top-0 end-0 translate-end p-1 cancel-img d-none"></i>
@@ -118,6 +120,7 @@ $db_host = NULL;
                     </div>
                     <div class="col-5 d-flex gy-3  align-items-center">
                         <label class="col-2 me-2" for="type">商品類型</label>
+                        <input type="hidden" name="type" value="<?=$type?>">
                         <select id="type" class="form-select col" aria-label="Default select example" name="type" disabled>
                         <option value="course" <?=$type=="course"?"selected":""?>>體驗課程</option>
                         <option value="product" <?=$type=="product"?"selected":""?>>實體商品</option>                    
@@ -127,11 +130,11 @@ $db_host = NULL;
                 <div id="course" class="<?=$type=="course"?"":"d-none"?>">
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="datetime">課程日程</label>
-                        <input class="col form-control" type="datetime-local" name="datetime" value="<?= $row["course_date"]??""?>">
+                        <input class="col form-control" type="datetime-local" name="datetime" value="<?= $row["course_date"]??""?>" <?=$type=="course"?"required":""?>>
                     </div>
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="hour">課程時常</label>
-                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常" required value="<?= $row["course_time"]??"" ?>">
+                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常" value="<?= $row["course_time"]??"" ?>" <?=$type=="course"?"required":""?>>
                     </div>
                 </div>
                 <div class="my-3 row align-items-center">
@@ -141,7 +144,7 @@ $db_host = NULL;
                 <div class="my-5 d-flex justify-content-end">
                     <a id="back" class="ms-3 btn btn-bg-color">取消</a>
                     <button class="ms-3 btn btn-main-color" type="submit">儲存</button>                    
-                </div>
+                </div>                
             </form>
         </div>
     </main>
@@ -162,10 +165,12 @@ $db_host = NULL;
                 const myFile=this.files[0];                
                 const img=previewImages[i];
                 const objUrl=URL.createObjectURL(myFile);
+                const state=imgs_state[i];
                 img.src=objUrl;
                 img.onload=()=>window.URL.revokeObjectURL(objUrl);  
                 console.log(cancel_img[i]);
                 cancel_img[i].classList.remove("d-none");
+                state.value="new";
             })
             cancel_img[i].addEventListener("click",function(){
                 this.classList.add("d-none");
@@ -174,7 +179,7 @@ $db_host = NULL;
                 const preImg=previewImages[i];
                 imgFile.value="";
                 preImg.setAttribute("src","../img/previewImage.jpg");   
-                state.value="del";             
+                state.value="del";    
             })
         } 
 

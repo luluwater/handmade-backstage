@@ -1,21 +1,41 @@
 <?php
 require_once("../db-connect.php");
 session_start();
+if(!isset($_GET["type"])){
+  echo "沒有帶商品類型參數";
+  exit;
+}
+$type=$_GET["type"];
 
 function orderLink($item,$cur_amount_limit,$orderType,$order,$orderState){
+  $type=$_GET["type"];
+  switch($item){
+    case "state":
+        $orderState=$orderState?0:1;
+        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";
+      break;
+      case "nextPage":
+        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";
+        break;   
+      case "amount-list":
+        $cur_amount_limit=$cur_amount_limit==10?5:10;
+        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";
+        break;   
+      default:
+        if($orderType==$item){ 
+          $order=$order=="ASC"?"DESC":"ASC";
+        }else{
+          $orderType=$item;
+        }    
+        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";  
+      break;
+  }
   if($item=="state"){
-    $orderState=$orderState?0:1;
-  return  "course.php?amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";
+    
   }elseif($item=="nextPage"){
-    return  "course.php?amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";
   }
   else{
-    if($orderType==$item){ 
-      $order=$order=="ASC"?"DESC":"ASC";
-    }else{
-      $orderType=$item;
-    }    
-    return  "course.php?amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";  
+   
   } 
 }
 
@@ -28,28 +48,42 @@ $order=$_GET["order"]??"ASC";
 // echo $orderType;
 
 $secendOrder="$orderType $order";
+$start=($page-1)*$amount_limit;
+
 
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
 $stmtCategory->execute();
 $rowsCategory=$stmtCategory->fetchALL(PDO::FETCH_ASSOC);
 
-$stmtAll=$db_host->prepare("SELECT * FROM course JOIN course_img ON course.id=course_img.course_id GROUP BY course_id");
+if($type=="course"){
+  $stmtAll=$db_host->prepare("SELECT * FROM course JOIN course_img ON course.id=course_img.course_id GROUP BY course_id");
+  $stmt=$db_host->prepare("SELECT course.id,course_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM course 
+  JOIN category ON course.category_id=category.id 
+  JOIN course_img ON course.id=course_img.course_id 
+  GROUP BY id 
+  ORDER BY state $orderStateType ,$secendOrder
+  LIMIT $start,$amount_limit");
+}else if($type=="product"){
+  $stmtAll=$db_host->prepare("SELECT * FROM product /*JOIN product_img ON product.id=product_img.product_id GROUP BY product_id*/");
+  $stmt=$db_host->prepare("SELECT product.id,product_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM product 
+  JOIN category ON product.category_id=category.id 
+  JOIN product_img /*ON product.id=product_img.product_id*/
+  GROUP BY id
+  ORDER BY state $orderStateType ,$secendOrder
+  LIMIT $start,$amount_limit");
+}
+
+
 $stmtAll->execute();
 $courseAmount=count($stmtAll->fetchALL(PDO::FETCH_ASSOC));
 // echo $courseAmount;
-$start=($page-1)*$amount_limit;
 if($courseAmount%$amount_limit===0)
 $totalPage=floor($courseAmount/$amount_limit);
 else
 $totalPage=floor($courseAmount/$amount_limit)+1;
 
 
-$stmt=$db_host->prepare("SELECT course.id,course_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM course 
-JOIN category ON course.category_id=category.id 
-JOIN course_img ON course.id=course_img.course_id 
-GROUP BY course_id 
-ORDER BY state $orderStateType ,$secendOrder
-LIMIT $start,$amount_limit");
+
 $stmt->execute();    
 $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
 
@@ -81,11 +115,11 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
         <div class="container-fluid">
             <div class="d-flex justify-content-between">
                 <p class="title">課程管理</p>
-                <form action="course.php" method="get">
+                <form action="course.php?" method="get">
                 <p>顯示 
-                  <select id="amount-limit" class="count-bg text-center" name="amount-limit"  onchange="submit()">
-                    <option value="5" <?= $select=$amount_limit==5?'selected':'' ?>>5</option>
-                    <option value="10"<?= $select=$amount_limit==10?'selected':'' ?>>10</option>
+                  <select id="amount-limit" class="count-bg text-center" name="amount-limit" >
+                    <option value="5" <?= $amount_limit==5?'selected':'' ?>>5</option>
+                    <option value="10"<?= $amount_limit==10?'selected':'' ?>>10</option>
                   </select> 
                   筆數
                 </p>
@@ -136,7 +170,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                   </a>
                   </td>
                   <td class="col-1">收藏數 
-                    <a href="course.php?amount-limit=<?=$amount_limit?>">
+                    <a href="course.php?type=<?=$type?>&amount-limit=<?=$amount_limit?>">
                     <i class="fa-solid fa-sort mx-2 text-dark"></i>
                   </a>
                   </td>
@@ -149,7 +183,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                     <td><input type="checkbox" name="" id=""></td>
                     <td><?=$row["id"]?></td>
                     <td class="text-start align-items-center">                      
-                      <img class="previewImage-sm me-3" src="../img/course/course_<?=$row["category_en_name"]?>_<?=$row["id"]?>/<?=$row["img_name"]?>" alt="">
+                      <img class="previewImage-sm me-3" src="../img/<?=$type?>/<?=$type?>_<?=$row["category_en_name"]?>_<?=$row["id"]?>/<?=$row["img_name"]?>" alt="">
                       <?=$row["name"]?>
                     </td>
                     <td><?=$row["amount"]?></td>
@@ -157,7 +191,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                     <td><?=$row["sold_amount"]?></td>                    
                     <td><input type="checkbox" <?php if($row["state"]==1)print("checked") ?> disabled></td>
                     <td></td>
-                    <td><a class="text-dark" href="view-course.php?course=<?=$row["id"]?>"><i class="fa-solid fa-pen"></i></a></td>
+                    <td><a class="text-dark" href="view-<?=$type?>.php?<?=$type?>=<?=$row["id"]?>"><i class="fa-solid fa-pen"></i></a></td>
                   </tr>
                   <?php endforeach; ?>
               </tbody>
@@ -182,7 +216,11 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
     </main>
 
     <script>
-      
+      const amount_limit_select=document.querySelector("#amount-limit");
+      amount_limit_select.addEventListener("change",function(){
+        window.location.assign("<?=orderLink("amount-list",$amount_limit,$orderType,$order,$orderState)?>"); 
+        console.log("<?=$amount_limit?>");
+      })
           
     </script>
 </body>
