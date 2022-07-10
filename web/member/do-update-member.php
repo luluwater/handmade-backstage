@@ -1,22 +1,11 @@
 <?php
-//連線路徑調調整===========================================
+//連線路徑調整===========================================
 if(!isset($_POST["id"])){
     echo "沒有帶資料";
     exit;
 }
 require("../../db-connect.php");
 //=======================================================
-
-//測試連線
-// try{
-//     $db_host=new PDO("mysql:host={$serverName};dbname={$dbname};charset=utf8",$username,$password);
-//     echo "成功";
-        
-// }catch(PDOException $e){
-//     echo "資料庫連線失敗";
-//     echo "Error: ".$e->getMessage();
-//     exit;
-// }
 
 $sql = "SELECT user.*, user_state_category.name AS user_state_name FROM user
 JOIN user_state_category ON user.state = user_state_category.id";
@@ -45,7 +34,7 @@ try {
     exit;
 }
 
-$db_host = NULL;
+//$db_host = NULL;
 
 //路徑調整 ============================================= 
 header("location: member-list.php?id=$_POST[id]");

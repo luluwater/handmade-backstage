@@ -1,8 +1,9 @@
 <style>
-.tabs  {
-display: block;
+.tabs {
+    display: block;
 }
-.btn-main-color{
+
+.btn-main-color {
     background: var(--main-color);
     font-weight: bolder;
     color: white;
@@ -11,30 +12,31 @@ display: block;
 </style>
 <div class="container">
     <div class="tabs mb-5">
-        <button class="btn btn-main-color" type="submit">商品訂單</button>
+        <button class="btn btn-main-color" style="active" type="submit">商品訂單</button>
         <button class="btn btn-main-color" type="submit">課程訂單</button>
         <button class="btn btn-main-color" type="submit">部落格</button>
     </div>
-        <div class="tab-content col">
-            <div class="content">
-                <table class="table text-center">
-                    <thead>
-                        <tr class="table-head text-light">
-                            <th>訂單編號</th>
-                            <th>訂單日期</th>
-                            <th>總金額</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="table-body">
-                            <td>777</td>
-                            <td>000000</td>
-                            <td>NT$ 988</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="tab-content col">
+        <div class="content">
+            <table class="table text-center">
+                <thead>
+                    <tr class="table-head text-light">
+                        <th>訂單編號</th>
+                        <th>訂單日期</th>
+                        <th>總金額</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-body">
+                        <td>111</td>
+                        <td>111</td>
+                        <td>NT$ 988</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
+    <div class="tab-content col">
         <div class="content" style="display: none">
             <table class="table text-center">
                 <thead>
@@ -53,6 +55,8 @@ display: block;
                 </tbody>
             </table>
         </div>
+    </div>
+    <div class="tab-content col">
         <div class="content" style="display: none">
             <table class="table text-center">
                 <thead>
@@ -80,25 +84,25 @@ display: block;
 </div>
 
 <script>
-      let tab = document.querySelectorAll("button");
-      let content = document.querySelectorAll(".content");
+let tab = document.querySelectorAll("button");
+let content = document.querySelectorAll(".content");
 
-      for (let i = 0; i < tab.length; i++) {
-        tab[i].addEventListener("click", function (e) {
-          e.preventDefault();
-          contentDisplay(this);
-        });
-      }
+for (let i = 0; i < tab.length; i++) {
+    tab[i].addEventListener("click", function(e) {
+        e.preventDefault();
+        contentDisplay(this);
+    });
+}
 
-      function contentDisplay(activeContent) {
-        for (let i = 0; i < tab.length; i++) {
-          if (tab[i] == activeContent) {
+function contentDisplay(activeContent) {
+    for (let i = 0; i < tab.length; i++) {
+        if (tab[i] == activeContent) {
             tab[i].classList.add("active");
             content[i].style.display = "block";
-          } else {
+        } else {
             tab[i].classList.remove("active");
             content[i].style.display = "none";
-          }
         }
-      }
+    }
+}
 </script>

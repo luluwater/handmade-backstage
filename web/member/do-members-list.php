@@ -3,18 +3,6 @@
 require("../../db-connect.php");
 //=======================================================
 
-//測試連線
-// try{
-//     $db_host=new PDO("mysql:host={$serverName};dbname={$dbname};charset=utf8",$username,$password);
-//     echo "成功";
-        
-// }catch(PDOException $e){
-//     echo "資料庫連線失敗";
-//     echo "Error: ".$e->getMessage();
-//     exit;
-// }
-
-
 if(isset($_GET["page"])){
     $page=$_GET["page"];
   }else{
