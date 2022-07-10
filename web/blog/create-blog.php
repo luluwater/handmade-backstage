@@ -125,7 +125,7 @@ $db_host = NULL;
                 <!-- ****************************BLOG!!****************************** -->
                 <textarea  id="atricle_editor" name="atricle_content">
                             This is my textarea to be replaced with CKEditor 4.
-                        </textarea>
+                </textarea>
                 <!-- ********************************************************** -->
 
                 
@@ -173,13 +173,18 @@ $db_host = NULL;
     </main>
 
 
-    <script src="../../ckeditor/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-    CKEDITOR.replace('atricle_editor');
+    CKEDITOR.replace('atricle_editor',{
+        height:300,
+        filebrowserBrowserUrl:"create-blog.php",
+        filebrowserUploadUrl:"upload.php",
+        filebrowserUploadMethod: "form"
+    });
 
 
     // Get value
