@@ -230,10 +230,12 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             <div class="confirm hide" id="confirm">
                                 <div class="popup">
                                     <div class="close" id="close">X</div>
-                                    <div class="content">
+                                    <div class="content ">
                                         <h3 class="confirm-h3">是否確定刪除?</h3>
-                                        <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
-                                        <a href="do_course_order_delete.php?id=<?= $row["id"] ?>" class="btn btn-main-color confirm-btn" id="confirm-btn">確認</a>
+                                        <div class="text-end">
+                                            <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
+                                            <a href="do_course_order_delete.php?id=<?= $row["id"] ?>" class="btn btn-main-color confirm-btn" id="confirm-btn">確認</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -251,7 +253,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
                     <li class="page-item">
-                        <a class="page-link" href="course_order-list.php&page=<?= $PreviousPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Previous">
+                        <a class="page-link" href="course_order-list.php?page=<?= $PreviousPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
