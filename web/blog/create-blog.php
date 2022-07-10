@@ -29,17 +29,14 @@ $db_host = NULL;
 <html lang="en">
 
 <head>
-    <title>Blog</title>
+    <title>Create-Blog</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS v5.2.0-beta1 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-
-    <head>
         <link rel="stylesheet" href="../../css/style.css">
-    </head>
     <!-- font awesome -->
     <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
     <!-- editor font family -->
@@ -47,9 +44,24 @@ $db_host = NULL;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap"
         rel="stylesheet">
-</head>
+ </head>
+ <style>
+    .ck-editor__editable[role="textbox"] {
+      /* editing area */
+      min-height: 200px;
+    }
+
+    .ck-content .image {
+      /* block images */
+      max-width: 80%;
+      margin: 20px auto;
+    }
+    
+ </style>
 
 <body>
+
+
 
     <?php require("../main-menu.html");?>
 
@@ -124,7 +136,6 @@ $db_host = NULL;
 
                 <!-- ****************************BLOG!!****************************** -->
                 <textarea  id="atricle_editor" name="atricle_content">
-                            This is my textarea to be replaced with CKEditor 4.
                 </textarea>
                 <!-- ********************************************************** -->
 
@@ -173,18 +184,239 @@ $db_host = NULL;
     </main>
 
 
-    <script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/super-build/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-    CKEDITOR.replace('atricle_editor',{
-        height:300,
-        filebrowserBrowserUrl:"create-blog.php",
-        filebrowserUploadUrl:"upload.php",
-        filebrowserUploadMethod: "form"
-    });
+
+CKEDITOR.ClassicEditor.create(document.getElementById("atricle_editor"), {
+  toolbar: {
+    items: [
+      "exportPDF",
+      "exportWord",
+      "|",
+      "findAndReplace",
+      "selectAll",
+      "|",
+      "heading",
+      "|",
+      "bold",
+      "italic",
+      "strikethrough",
+      "underline",
+      "code",
+      "subscript",
+      "superscript",
+      "removeFormat",
+      "|",
+      "bulletedList",
+      "numberedList",
+      "todoList",
+      "|",
+      "outdent",
+      "indent",
+      "|",
+      "undo",
+      "redo",
+      "-",
+      "fontSize",
+      "fontFamily",
+      "fontColor",
+      "fontBackgroundColor",
+      "highlight",
+      "|",
+      "alignment",
+      "|",
+      "link",
+      "insertImage",
+      "blockQuote",
+      "insertTable",
+      "mediaEmbed",
+      "codeBlock",
+      "htmlEmbed",
+      "|",
+      "specialCharacters",
+      "horizontalLine",
+      "pageBreak",
+      "|",
+      "textPartLanguage",
+      "|",
+      "sourceEditing",
+    ],
+    shouldNotGroupWhenFull: true,
+  },
+  list: {
+    properties: {
+      styles: true,
+      startIndex: true,
+      reversed: true,
+    },
+  },
+
+  heading: {
+    options: [
+      { model: "paragraph", title: "Paragraph", class: "ck-heading_paragraph" },
+      {
+        model: "heading1",
+        view: "h1",
+        title: "Heading 1",
+        class: "ck-heading_heading1",
+      },
+      {
+        model: "heading2",
+        view: "h2",
+        title: "Heading 2",
+        class: "ck-heading_heading2",
+      },
+      {
+        model: "heading3",
+        view: "h3",
+        title: "Heading 3",
+        class: "ck-heading_heading3",
+      },
+      {
+        model: "heading4",
+        view: "h4",
+        title: "Heading 4",
+        class: "ck-heading_heading4",
+      },
+      {
+        model: "heading5",
+        view: "h5",
+        title: "Heading 5",
+        class: "ck-heading_heading5",
+      },
+      {
+        model: "heading6",
+        view: "h6",
+        title: "Heading 6",
+        class: "ck-heading_heading6",
+      },
+    ],
+  },
+
+  placeholder: "開始寫文章吧!!",
+
+  fontFamily: {
+    options: [
+      "default",
+      "Arial, Helvetica, sans-serif",
+      "Courier New, Courier, monospace",
+      "Georgia, serif",
+      "Lucida Sans Unicode, Lucida Grande, sans-serif",
+      "Tahoma, Geneva, sans-serif",
+      "Times New Roman, Times, serif",
+      "Trebuchet MS, Helvetica, sans-serif",
+      "Verdana, Geneva, sans-serif",
+    ],
+    supportAllValues: true,
+  },
+
+  fontSize: {
+    options: [10, 12, 14, "default", 18, 20, 22],
+    supportAllValues: true,
+  },
+
+  htmlSupport: {
+    allow: [
+      {
+        name: /.*/,
+        attributes: true,
+        classes: true,
+        styles: true,
+      },
+    ],
+  },
+
+  htmlEmbed: {
+    showPreviews: true,
+  },
+
+  link: {
+    decorators: {
+      addTargetToExternalLinks: true,
+      defaultProtocol: "https://",
+      toggleDownloadable: {
+        mode: "manual",
+        label: "Downloadable",
+        attributes: {
+          download: "file",
+        },
+      },
+    },
+  },
+
+  mention: {
+    feeds: [
+      {
+        marker: "@",
+        feed: [
+          "@apple",
+          "@bears",
+          "@brownie",
+          "@cake",
+          "@cake",
+          "@candy",
+          "@canes",
+          "@chocolate",
+          "@cookie",
+          "@cotton",
+          "@cream",
+          "@cupcake",
+          "@danish",
+          "@donut",
+          "@dragée",
+          "@fruitcake",
+          "@gingerbread",
+          "@gummi",
+          "@ice",
+          "@jelly-o",
+          "@liquorice",
+          "@macaroon",
+          "@marzipan",
+          "@oat",
+          "@pie",
+          "@plum",
+          "@pudding",
+          "@sesame",
+          "@snaps",
+          "@soufflé",
+          "@sugar",
+          "@sweet",
+          "@topping",
+          "@wafer",
+        ],
+        minimumCharacters: 1,
+      },
+    ],
+  },
+  removePlugins: [
+    "CKBox",
+    "CKFinder",
+    "EasyImage",
+    "RealTimeCollaborativeComments",
+    "RealTimeCollaborativeTrackChanges",
+    "RealTimeCollaborativeRevisionHistory",
+    "PresenceList",
+    "Comments",
+    "TrackChanges",
+    "TrackChangesData",
+    "RevisionHistory",
+    "Pagination",
+    "WProofreader",
+    "MathType",
+  ],
+});
+
+
+    // CKEDITOR.replace('atricle_editor',{
+    //     height:300,
+    //     filebrowserBrowserUrl:"create-blog.php",
+    //     filebrowserUploadUrl:"upload.php",
+    //     filebrowserUploadMethod: "form"
+    // });
 
 
     // Get value
