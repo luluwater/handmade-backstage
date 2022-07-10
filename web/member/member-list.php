@@ -11,10 +11,9 @@ $id=$_GET["id"];
 
 //個人
 $sql = "SELECT user.*, user_state_category.name AS user_state_name FROM user
-JOIN user_state_category ON user.state = user_state_category.id WHERE user.id = $id";
+JOIN user_state_category ON user.state = user_state_category.id WHERE user.id = '$id'";
 $result= $db_host->prepare($sql);
 // print_r ($row);
-
 
 try {
     $result->execute();
@@ -110,7 +109,6 @@ try {
     }
     </style>
 </head>
-
 <body>
     <!-- 路徑調整 ============================================= -->
     <?php require("../main-menu.html");?>
@@ -165,105 +163,97 @@ try {
                 </div>
             </div>
             <!-- 路徑調整 ============================================= -->
-            <?php require("member-details.php"); ?>
+            
             <!-- ====================================================== -->
-            <div class="bg-mask"></div>
-            <div class="edit-member-card">
-                <div class="card d-flex p-2">
-                    <?php if($member>0):$member = $result->fetch_assoc();?>
-                    <p class="title fw-bold text-center mt-3 mb-5">基本資料</p>
-                    <form action="do-update-member.php" method="post">
-                        <input name="id" type="hidden" value="<?=$member["id"]?>">
-                        <table class="member-card-table table table-borderless">
-                            <tr>
-                                <th class="text-center">會員編號</th>
-                                <td><?=$member["id"]?></td>
-                            </tr>
-                            <tr>
-                                <th class="text-center">會員建立時間</th>
-                                <td><?=$member["create_time"]?></td>
-                            </tr>
-                            <tr>
-                                <th class="align-middle text-center">帳號狀態</th>
-                                <td>
-                                    <select class="form-select" aria-label="Default select example"
-                                        name="user_state_name" value="<?=$member["user_state_name"]?>">
-                                        <option value="1">一般會員</option>
-                                        <option value="2">黑名單</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="text-center">帳號</th>
-                                <td><?=$member["account"]?></td>
-                            </tr>
-                            <tr>
-                                <th class="align-middle text-center">姓名</th>
-                                <td><input type="text" name="name" class="form-control" value="<?=$member["name"]?>"></td>
-                            </tr>
-                            <tr>
-                                <th class="align-middle text-center">性別</th>
-                                <td>
-                                    <select class="form-select" aria-label="Default select example" name="gender"
-                                        value="<?=$member["gender"]?>">
-                                        <option value="female">female</option>
-                                        <option value="male">male</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="align-middle text-center">信箱</th>
-                                <td><input type="email" name="email" class="form-control" value="<?=$member["email"]?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="align-middle text-center">地址</th>
-                                <td><input type="text" name="address" class="form-control" value="<?=$member["address"]?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="align-middle text-center mb-5">電話</th>
-                                <td><input type="text" name="phone" class="form-control" value="<?=$member["phone"]?>">
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="button d-flex justify-content-end">
-                            <a href="member-list.php?id=<?=$member["id"]?>"
-                                class="cancel-btn btn btn-main-color me-3 mb-5">取消</a>
-                            <button class="save-btn btn btn-main-color mb-5 me-5" type="submit">儲存</button>
-                        </div>
-                    </form>
-                    <?php else: ?>
-                    沒有該使用者
-                    <?php endif; ?>
-                </div>
-            </div>
+            <div class="bg-mask"></div>        
+        <div class="edit-member-card">
+        <div class="card d-flex p-2">
+        <?php if($member>0): $result -> rowCount();?>
+                <p class="title fw-bold text-center mt-3 mb-5">基本資料</p>
+                <form action="do-update-member.php" method="post">
+                <input name="id" type="hidden" value="<?=$member["id"]?>">
+                    <table class="member-card-table table table-borderless">
+                    <tr>
+                        <th class="text-center">會員編號</th>
+                        <td><?=$member["id"]?></td>
+                    </tr>
+                    <tr>
+                        <th class="text-center">會員建立時間</th>
+                        <td><?=$member["create_time"]?></td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle text-center">帳號狀態</th>
+                        <td>
+                            <select class="form-select" aria-label="Default select example" name="user_state_name" value="<?=$member["user_state_name"]?>">
+                                <option value="1">一般會員</option>
+                                <option value="2">黑名單</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="text-center">帳號</th>
+                        <td><?=$member["account"]?></td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle text-center">姓名</th>
+                        <td><input type="text" name="name" class="form-control" value="<?=$member["name"]?>"></td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle text-center">性別</th>
+                        <td>
+                            <select class="form-select" aria-label="Default select example" name="gender" value="<?=$member["gender"]?>">
+                                <option value="female">female</option>
+                                <option value="male">male</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle text-center">信箱</th>
+                        <td><input type="email" name="email" class="form-control" value="<?=$member["email"]?>"></td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle text-center">地址</th>
+                        <td><input type="text" name="address" class="form-control" value="<?=$member["address"]?>"></td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle text-center mb-5">電話</th>
+                        <td><input type="text" name="phone" class="form-control" value="<?=$member["phone"]?>"></td>
+                    </tr>
+                </table>
+                    <div class="button d-flex justify-content-end">
+                        <a href="member-list.php?id=<?=$member["id"]?>" class="cancel-btn btn btn-main-color me-3 mb-5">取消</a>
+                        <button class="save-btn btn btn-main-color mb-5 me-5" type="submit">儲存</button>
+                    </div>
+                </form>
+            <?php endif; ?>
+        </div>
+        </div>
     </main>
 </body>
 <script>
-let bgMask = document.querySelector(".bg-mask");
-let returnBtn = document.querySelector(".return-btn");
-let editBtn = document.querySelector(".edit-btn");
-let saveBtn = document.querySelector(".save-btn");
-let cancelBtn = document.querySelector(".cancel-btn");
-let editMemberCard = document.querySelector(".edit-member-card");
-let memberCard = document.querySelector(".member-card");
-let memberDetailsCard = document.querySelector(".member-details-card");
+    let bgMask=document.querySelector(".bg-mask");
+    let returnBtn=document.querySelector(".return-btn");
+    let editBtn=document.querySelector(".edit-btn");
+    let saveBtn=document.querySelector(".save-btn");
+    let cancelBtn=document.querySelector(".cancel-btn");
+    let editMemberCard=document.querySelector(".edit-member-card");
+    let memberCard=document.querySelector(".member-card");
+    let memberDetailsCard=document.querySelector(".member-details-card");
 
-editBtn.onclick = function() {
-    bgMask.style.display = "block";
-    saveBtn.style.display = "block";
-    cancelBtn.style.display = "block";
-    editMemberCard.style.display = "block";
-    memberCard.style.display = "none";
-    returnBtn.style.display = "none";
-    memberDetailsCard.style.display = "none";
+    editBtn.onclick=function(){
+        bgMask.style.display="block";
+        saveBtn.style.display="block";
+        cancelBtn.style.display="block";
+        editMemberCard.style.display="block";
+        memberCard.style.display="none";
+        returnBtn.style.display="none";
+        memberDetailsCard.style.display="none";
 }
-saveBtn.onclick = function() {
-    bgMask.style.display = "none";
-    saveBtn.style.display = "none";
-    cancelBtn.style.display = "none";
-    editMemberCard.style.display = "none";
+    saveBtn.onclick=function(){
+        bgMask.style.display="none";
+        saveBtn.style.display="none";
+        cancelBtn.style.display="none";
+        editMemberCard.style.display="none";
 }
 </script>
 
