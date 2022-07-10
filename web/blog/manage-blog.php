@@ -43,7 +43,7 @@ switch ($order) {
 }
 
 
-$stmt=$db_host->prepare("SELECT * FROM blog WHERE valid=1  ORDER BY $orderType LIMIT $start,$pageView");
+$stmt=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1  ORDER BY $orderType LIMIT $start,$pageView");
 
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
 
@@ -223,7 +223,17 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     <td><?=$row["state"]?></td>
                     <td><?=$row["comment_amount"]?></td>
                     <td><?=$row["favorite_amount"]?></td>
-                    <td class="text-end"><i data-id=<?=$row["id"]?>  class="trash-btn fas fa-trash-alt"></i></td>
+                    <td class=" text-end"><a class="trash delete-btn"><i class="fas fa-trash-alt"></i></a></td>
+                            <div class="confirm hide" id="confirm">
+                                <div class="popup">
+                                    <div class="close" id="close">X</div>
+                                    <div class="content">
+                                        <h3 class="confirm-h3">是否確定刪除?</h3>
+                                        <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
+                                        <a href="delete-blog.php?id=<?= $row["id"] ?>" class="btn btn-main-color confirm-btn" id="confirm-btn">確認</a>
+                                </div>
+                            </div>
+                    </div>
                 </div>
                 </tr>
                 <?php endforeach; ?>
@@ -254,9 +264,15 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
+
                 </div>
 
+                <li class="px-5 py-2">
+                    第<?= $startItem ?>- <?= $endItem ?>筆,共 <?= $orderCount ?> 筆資料
+                </li>
+
             </ul>
+
 
         </nav>
 
@@ -411,6 +427,28 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
         }
 
+
+        let deleteBtn = document.querySelectorAll(".delete-btn");
+        let confirm = document.querySelector("#confirm");
+        let close = document.querySelector("#close");
+        let confirmBtn = document.querySelector("#confirm-btn");
+        let cancelBtn = document.querySelector("#cancelBtn");
+
+        for (let i = 0; i < deleteBtn.length; i++) {
+            deleteBtn[i].addEventListener('click', () => {
+                confirm.classList.remove('hide')
+            })
+        }
+
+        close.addEventListener('click', () => {
+            confirm.classList.add('hide')
+        })
+        confirmBtn.addEventListener('click', () => {
+            confirm.classList.add('hide')
+        })
+        cancelBtn.addEventListener('click', () => {
+            confirm.classList.add('hide')
+        })
         
         // function loadDate( page , query="")
         // {
