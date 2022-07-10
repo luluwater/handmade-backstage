@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require("../db-connect.php");
 
 $sql = "SELECT * FROM coupon";
@@ -106,6 +106,9 @@ $discountCount=$result->rowCount();
                                 <li class="pt-4">折扣碼</li>
                                 <li><input type="text" class="form-control my-3" style="width: 576px;" 
                                 name="discount_code"></li>
+                                <?php if(isset($_SESSION["coupon"]["discount_code"])):?> 
+                                <div class="text-danger text-end me-2 fw-bold">折扣碼  <?=$_SESSION["coupon"]["discount_code"]?>  已經使用過了！再想一個吧</div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="d-flex">

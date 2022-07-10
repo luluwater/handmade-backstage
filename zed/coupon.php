@@ -125,7 +125,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
               <?php
               if($sale_state_category==$row["id"]) echo "active";
               ?>" 
-              href="coupon.php?sale_state_category=<?=$row["id"]?>"><?=$row["name"]?></a>
+              href="coupon.php?sale_state_category=<?=$row["id"]?>&pageView=<?=$pageView?>"><?=$row["name"]?></a>
             </li>
             <?php endforeach; ?>
           </ul>
