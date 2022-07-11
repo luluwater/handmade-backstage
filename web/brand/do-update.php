@@ -6,6 +6,7 @@ if (isset($_GET["name"])) {
     $order = $_GET["name"];
     echo $order;
 }
+//定義name值 變數= get or post 取德的name值
 $id=$_GET["id"];
 $category_name=$_GET["categoryName"];
 $category_en_name=$_GET["categoryNO1"];
@@ -31,6 +32,7 @@ try {
     exit;
 }
 
+//更新完回到這頁
 header("location:brand-edit.php?id=$_GET[id]");
 
 ?>
