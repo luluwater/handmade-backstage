@@ -168,7 +168,7 @@ $db_host = NULL;
                         html=document.createElement("option");
                         html.textContent=result.name;
                         html.setAttribute("value",result.id);
-                        console.log(html);
+                        // console.log(html);
                         store.prepend(html);
                     }                    
             	}).fail(function( jqXHR, textStatus ) {
