@@ -154,13 +154,6 @@ $db_host = NULL;
 
 </body>
 <script>
-    // BalloonEditor
-    //   .create(document.querySelector('#editor')
-    // )
-    
-    //   .catch(error => {
-    //     console.error(error);
-    // });
 
 </script>
 

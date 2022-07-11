@@ -126,10 +126,8 @@ $db_host = NULL;
         <!-- CKeditor -->
         <div class="d-flex justify-content-between mb-3">
           <h5>文章編輯</h5>
-          <a id="preview" class="btn btn-bg-color " data-bs-toggle="modal" data-bs-target="#exampleModal">預覽</a>
+          <a id="preview" class="btn btn-bg-color" data-bs-toggle="modal" data-bs-target="#exampleModal">預覽</a>
         </div>
-
-
 
         <!-- ****************************BLOG!!****************************** -->
         <textarea id="atricle_editor" name="atricle_content">
@@ -143,6 +141,7 @@ $db_host = NULL;
                 在「以覺學INTZUITION」的三小時過去，獨一無二的專屬成品面世，這幾個小時的收獲，與環境中的一切互動，非單純的飾品製作，而是用心生活的體驗。工作室門外的自己，就先留在門外，遲下再見。
         </textarea>
         <!-- ********************************************************** -->
+
     <!-- Preview modal  -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-xl">
@@ -190,11 +189,6 @@ $db_host = NULL;
         </div>
       </form>
 
-
-
-
-    
-
   </main>
 
 
@@ -207,8 +201,9 @@ $db_host = NULL;
   </script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script>  
 
+
+  <script>  
   CKEDITOR.ClassicEditor.create(document.getElementById("atricle_editor"), {
       toolbar: {
         items: [
@@ -431,15 +426,6 @@ $db_host = NULL;
 
 
 
-
-  // CKEDITOR.replace('atricle_editor',{
-  //     height:300,
-  //     filebrowserBrowserUrl:"create-blog.php",
-  //     filebrowserUploadUrl:"upload.php",
-  //     filebrowserUploadMethod: "form"
-  // });
-
-
   // Get value
   const blogTitleInput = document.getElementById("blogTitle")
   const publishTimeInput = document.getElementById("publishTime")
@@ -463,15 +449,9 @@ $db_host = NULL;
   previewElem.addEventListener("click", () => {
     modalTitle.innerText = blogTitleInput.value
     modalExp.innerText = articleCategory.value
-
-
     modalCategory.innerText = categoryInput.children[categoryInput.value - 1].innerText
     modalStore.innerText = storeInput.children[storeInput.value -1 ].innerText
-
     modalArticle.innerText = article.innerText
-    console.log(modalCategory)
-    console.log(modalStore)
-
     modalDate.innerText = publishTimeInput.value
   })
 
@@ -503,43 +483,8 @@ $db_host = NULL;
       });
   })
 
-  /**
-   * 當按下預覽時，跑 do-create-blog.php
-   * 
-   * 
-   * 
-   * 
-   */
 
-
-  // do-create-blog.php
-
-  // $(document).ready(function(){
-  //     $("#save").click(function(){
-  //         var Content = CKEDITOR.instances['Content'].getData();
-  //                 $.ajax({
-  //     url: "do-create-blog.php",
-  //     type: "POST",
-  //     data: {
-  //     Content: Content
-  //     },
-  //     cache: false,
-  //     success: function(dataResult){
-  //     var dataResult = JSON.parse(dataResult);
-  //     if(dataResult.statusCode==200){
-
-  //     $('#success').html('Data Saved successfully !');
-  //     }
-  //     else if(dataResult.statusCode==201){
-  //     alert("Error occured !");
-  //     }
-
-  //     }
-  //     });
-  //     });
-  //     CKEDITOR.replace('Content');
-  // });
-  </>
+  </script>
 </body>
 
 </html>

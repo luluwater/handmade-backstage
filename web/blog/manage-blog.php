@@ -219,7 +219,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             echo $date->format('Y-m-d');
                             ?>
                         </td>
-                        <td class="text-start td-height article_title"><a style="color:#3F3F3F;" class="" href="blog-page.php?id=<?=$row["id"]?>"><?=$row["title"]?></a></td>
+                        <td class="text-start td-height article_title"><a style="color:#3F3F3F;" class="" href="edit-page.php?id=<?=$row["id"]?>"><?=$row["title"]?></a></td>
                         <td><?=$row["category_name"]?></td>
                         <td><?=$row["state"]?></td>
                         <td><?=$row["comment_amount"]?></td>
@@ -388,7 +388,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             const orderArrows = document.querySelectorAll(".orderArrow ");
             const target=e.target.id
             const order=$(this).data("order")
-            console.log(e)
             $.ajax({
                     url:"../../api/blogSort.php",
                     method:"POST",
@@ -399,7 +398,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     success:function(data){
                       
                         $("#table").html(data)
-                        
+
                 }
             });
         })
@@ -408,9 +407,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         const deleteBtns=document.querySelectorAll(".trash-btn");
         const articlesList=document.querySelector("#articlesList");
         const tbody=document.getElementById('tbody')
-
-        console.log(articlesList)
-        
 
         for(let i=0;i<deleteBtns.length;i++){
             deleteBtns[i].addEventListener("click",(e)=>{
@@ -461,29 +457,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         })
         
 
-        
-        // function loadDate( page , query="")
-        // {
-        //     $.ajax({
-        //         url:"../api/pagination.php",
-        //         method:"POST",
-        //         data:{page:page,query:query},
-        //         success:function(data)
-        //         {  
-        //             console.log(data)
-        //             $("#pagination").html(data);
-        //         }
-        //     })
-        
-        // }
-
-        /**
-         * 使用關鍵字篩選事件
-         */
-        // $("#typeKeyword").keyup(function(){
-        //     const inputVal = $(this).val();     
-        //     loadDate(1,inputVal)
-        // })
+    
 
     
 })
