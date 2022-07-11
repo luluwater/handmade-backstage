@@ -99,7 +99,7 @@ function updateFileTo_db($typeName,$type_id,$change){
             $stmt=$db_host->prepare("SELECT * FROM course_img WHERE course_id=?");
             $stmt->execute([$type_id]);
             $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
-            $stmtImg=$db_host->prepare("INSERT INTO course_img (img_name,course_id) VALUES (:img_name,:course_id) ON DUPLICATE KEY UPDATE id=:img_id");
+            $stmtImg=$db_host->prepare("INSERT INTO course_img (id,img_name,course_id) VALUES (:img_id,:img_name,:course_id) ON DUPLICATE KEY UPDATE img_name=:img_name,course_id=:course_id");
             for($i=1;$i<=4;$i++){
                 $fileName=$_FILES["product_img".$i]["name"];                
                 if($_FILES["product_img".$i]["error"]==0){                    

@@ -64,10 +64,10 @@ if($type=="course"){
   ORDER BY state $orderStateType ,$secendOrder
   LIMIT $start,$amount_limit");
 }else if($type=="product"){
-  $stmtAll=$db_host->prepare("SELECT * FROM product /*JOIN product_img ON product.id=product_img.product_id GROUP BY product_id*/");
+  $stmtAll=$db_host->prepare("SELECT * FROM product JOIN product_img ON product.id=product_img.product_id GROUP BY product_id");
   $stmt=$db_host->prepare("SELECT product.id,product_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM product 
   JOIN category ON product.category_id=category.id 
-  JOIN product_img /*ON product.id=product_img.product_id*/
+  JOIN product_img ON product.id=product_img.product_id
   GROUP BY id
   ORDER BY state $orderStateType ,$secendOrder
   LIMIT $start,$amount_limit");
@@ -191,7 +191,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                     <td><?=$row["sold_amount"]?></td>                    
                     <td><input type="checkbox" <?php if($row["state"]==1)print("checked") ?> disabled></td>
                     <td></td>
-                    <td><a class="text-dark" href="view-<?=$type?>.php?<?=$type?>=<?=$row["id"]?>"><i class="fa-solid fa-pen"></i></a></td>
+                    <td><a class="text-dark" href="edit-product.php?type=<?=$type?>&id=<?=$row["id"]?>"><i class="fa-solid fa-pen"></i></a></td>
                   </tr>
                   <?php endforeach; ?>
               </tbody>
