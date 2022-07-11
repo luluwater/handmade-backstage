@@ -24,9 +24,18 @@ switch($order){
     $orderType = "id ASC";
 }
 
+//取得會員狀態頁面
+$state = isset($_GET['state']) ? $_GET['state']: "全部會員";
+if ($state!="全部會員"){
+  $state = $_GET["state"];
+  $sqlWhere="WHERE user.state =$state";
+}else{
+  $state="";
+  $sqlWhere="";
+}
 
 //取得每頁看到幾欄
-$pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']):5;
+$pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']) : 5;
 //每頁開始的id
 $start=($page-1)*$pageView;
 
@@ -43,9 +52,11 @@ $resultState= $db_host->prepare($sqlState);
 $resultState->execute();
 $rowsState = $resultState->fetchAll(PDO::FETCH_ASSOC);
 
+
 //全部會員資料
 $sql = "SELECT user.*, user_state_category.name AS user_state_name FROM user
-JOIN user_state_category ON user.state = user_state_category.id ORDER BY $orderType LIMIT $start, $pageView";
+JOIN user_state_category ON user.state = user_state_category.id $sqlWhere
+ORDER BY $orderType LIMIT $start, $pageView"; //here
 $result= $db_host->prepare($sql);
 $result->execute();
 $rows = $result->fetchAll(PDO::FETCH_ASSOC);

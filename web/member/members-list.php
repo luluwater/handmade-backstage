@@ -60,8 +60,7 @@ require("../../db-connect.php");
                 <form action="members-list.php" method="GET">
                     <!-- ====================================================== -->
                     <p>顯示每頁
-                        <select class="count-bg text-center" aria-label="Default select example" name="pageView"
-                            onchange="submit();">
+                        <select class="count-bg text-center" aria-label="Default select example" name="pageView" onchange="submit();">
                             <option value="5" <?php if ($pageView == '5') print 'selected ';?>>5</option>
                             <option value="10" <?php if ($pageView == '10') print 'selected ';?>>10</option>
                         </select>
@@ -90,7 +89,16 @@ require("../../db-connect.php");
                     <td class="col-1">姓名</td>
                     <td class="col-4">地址</td>
                     <td class="col-2">電話</td>
-                    <td class="col-1">狀態</td>
+                    <!-- <td class="col-1">狀態</td> -->
+                    <td>
+                    <form action="members-list.php" method="GET">
+                        <select class="count-bg text-center" aria-label="Default select example" name="state" onchange="submit(); ">
+                            <option <?php if($state == "") print 'selected';?>>全部會員</option>
+                            <option value="1" <?php if ($state == '1') print 'selected ';?>>一般會員</option>
+                            <option value="2" <?php if ($state == '2') print 'selected ';?>>黑名單</option>
+                        </select>
+                    </form>
+                    </td>
                     <td class="col-1">詳細資料</td>
                 </tr>
             </thead>
