@@ -72,7 +72,7 @@ WHERE product_order_list.order_id = $id");
 try {
     $sqlOrder->execute();
     $orderRow = $sqlOrder->fetch(PDO::FETCH_ASSOC);
-    print_r($orderRow);
+    // print_r($orderRow);
 
     $sql->execute();
     $rows = $sql->fetchAll(PDO::FETCH_ASSOC);

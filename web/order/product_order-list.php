@@ -251,8 +251,10 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                                     <div class="close" id="close">X</div>
                                     <div class="content">
                                         <h3 class="confirm-h3">是否確定刪除?</h3>
+                                        <div class="text-end">
                                         <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
                                         <a href="do_product_order_delete.php?id=<?= $row["id"] ?>" class="btn btn-main-color confirm-btn" id="confirm-btn">確認</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

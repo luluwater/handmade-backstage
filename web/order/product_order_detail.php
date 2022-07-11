@@ -58,15 +58,11 @@ WHERE product_order.id = $id");
 
 
 // *******撈取訂單明細******* //
-$sql = $db_host->prepare("SELECT product_order_list.*,product.name AS productName, product.category_id,category.category_en_name  FROM product_order_list 
+$sql = $db_host->prepare("SELECT product_order_list.*,product.name AS productName, product.category_id,category.category_en_name,product_img.img_name  FROM product_order_list 
 JOIN product ON product_order_list.product_id = product.id 
 JOIN category ON product.category_id = category.id 
+JOIN product_img ON product.id = product_img.product_id  
 WHERE product_order_list.order_id = $id");
-
-// 暫時拿掉照片
-// ,product_img.img_name
-// JOIN product_img ON product.id = product_img.product_id  
-
 
 
 try {
@@ -77,7 +73,7 @@ try {
     $sql->execute();
     $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
     $rowsCount = count($rows);
-    print_r($rows);
+    // print_r($rows);
 } catch (PDOException $e) {
     echo "預處理陳述式失敗! <br/>";
     echo "error: " . $e->getMessage() . "<br/>";
@@ -94,7 +90,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
 <html lang="en">
 
 <head>
-    <title>體驗課程 訂單明細</title>
+    <title>實體商品 訂單明細</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -221,7 +217,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
                 <thead class="order-th ">
                     <tr class="text-center order-title row">
                         <td class="col-1"></td>
-                        <td class="col-3 boldWord">課程名稱</td>
+                        <td class="col-3 boldWord">商品名稱</td>
                         <td class="col boldWord">數量</td>
                         <td class="col boldWord">單價</td>
                         <td class="col boldWord">小計</td>
@@ -237,7 +233,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
                             <?php continue; ?>
                         <?php else : ?>
                             <tr class="text-center row detail-tr">
-                                <td class="col-1"><img class="coursePic imgObject" src="../../img/course/course_<?= $row["category_en_name"] ?>_<?= $row["course_id"] ?>/<?= $row["img_name"] ?>" alt=""></td>
+                                <td class="col-1"><img class="coursePic imgObject" src="../../img/product/product_<?= $row["category_en_name"] ?>_<?= $row["product_id"] ?>/<?= $row["img_name"] ?>" alt=""></td>
                                 <td class="col-3"><?= $row["productName"] ?></td>
                                 <td class="col"><?= $row["amount"] ?></td>
                                 <td class="col">$<?= $row["price"] ?></td>

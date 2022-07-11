@@ -45,9 +45,10 @@ if ($couponId!=""){
 
 // *******撈取訂單資料******* //
 
-$sqlOrder = $db_host->prepare("SELECT course_order.*,user.account,order_staus.name AS stausName $sqlJoin FROM course_order 
+$sqlOrder = $db_host->prepare("SELECT course_order.*,user.account,order_staus.name AS stausName, payment.name AS paymentName $sqlJoin FROM course_order 
 JOIN user ON course_order.user_id = user.id 
 JOIN order_staus ON course_order.order_state_id = order_staus.id 
+JOIN payment ON course_order.payment_id = payment.id
 $JoinFrom
 WHERE course_order.id = $id");
 
@@ -151,7 +152,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
 
         <div class="row mx-5 mb-3">
             <p class="col-1 boldWord">付款方式</p>
-            <p class="col-auto"><?= $orderRow["payment"] ?></p>
+            <p class="col-auto"><?= $orderRow["paymentName"] ?></p>
         </div>
 
         <div class="row mx-5 mb-3 align-items-center">

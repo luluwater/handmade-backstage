@@ -7,29 +7,9 @@ if (isset($_GET["page"])) {
     $page = 1;
 }
 
-if (isset($_GET["searchType"])) {
-    $searchType = $_GET["searchType"];
-} else {
-    $searchType = "id";
-}
+isset(($_GET["searchType"]))?  $searchType = $_GET["searchType"] :$searchType = "course_order.id";
 
-if (isset($_GET["keyword"])) {
-    $searchText = "'%" . $_GET["keyword"] . "%'";
-} else {
-    $_GET["keyword"] = "";
-}
-
-if (isset($_GET["searchDate"])) {
-    $searchText = "'%" . $_GET["searchDate"] . "%'";
-} else {
-    $_GET["searchDate"] = "";
-}
-
-if (isset($_GET["searchState"])) {
-    $searchText = $_GET["searchState"];
-} else {
-    $_GET["searchState"] = "";
-}
+isset($_GET["keyword"])?$searchText = "'%" . $_GET["keyword"] . "%'":$_GET["keyword"] = "";
 
 if (!isset($_GET["sBtn"])) {
     $_GET["sBtn"] = "";
@@ -77,7 +57,7 @@ if ($_GET['sBtn'] == 's') {
     $sql = $db_host->prepare("SELECT course_order.*,order_staus.name AS order_staus FROM course_order JOIN order_staus ON course_order.order_state_id = order_staus.id 
     WHERE $searchType like $searchText AND valid=1 ORDER BY $orderType LIMIT $start , $pageView");
 
-    print_r($sql);
+    // print_r($sql);
 } else {
     $sql = $db_host->prepare("SELECT course_order.*,order_staus.name AS order_staus FROM course_order JOIN order_staus ON course_order.order_state_id = order_staus.id AND valid=1 ORDER BY $orderType LIMIT $start , $pageView");
 }
@@ -174,20 +154,20 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         <div class="ms-3 mt-3">
             <form action="course_order-list.php" method="get" class="d-flex">
                 <select class="form-select search-filter" name="searchType" onchange="submit();">
-                    <option value="id" <?php if ($searchType == 'id') print 'selected'; ?>>訂單編號</option>
+                    <option value="course_order.id" <?php if ($searchType == 'course_order.id') print 'selected'; ?>>訂單編號</option>
                     <option value="create_time" <?php if ($searchType == 'create_time') print 'selected'; ?>>訂單日期</option>
-                    <option value="name" <?php if ($searchType == 'name') print 'selected'; ?>>訂購人</option>
+                    <option value="course_order.name" <?php if ($searchType == 'course_order.name') print 'selected'; ?>>訂購人</option>
                     <option value="order_state_id" <?php if ($searchType == 'order_state_id') print 'selected'; ?>>訂單狀態</option>
                 </select>
 
-                <?php if ($searchType == 'id') : ?>
+                <?php if ($searchType == 'course_order.id') : ?>
                     <input type="search" class="form-control mx-2 searchText" name="keyword" placeholder="請輸入搜尋關鍵字">
                 <?php elseif ($searchType == 'create_time') : ?>
-                    <input type="date" class="form-control mx-2 searchDate" name="searchDate">
-                <?php elseif ($searchType == 'name') : ?>
+                    <input type="date" class="form-control mx-2 searchDate" name="keyword">
+                <?php elseif ($searchType == 'course_order.name') : ?>
                     <input type="search" class="form-control mx-2 searchText" name="keyword" placeholder="請輸入搜尋關鍵字">
                 <?php elseif ($searchType == 'order_state_id') : ?>
-                    <select name="searchState" id="" class="form-select mx-2 searchState">
+                    <select name="keyword" id="" class="form-select mx-2 searchState">
                         <option value="<?php if ($searchType == "order_state_id") echo "3" ?>">已付款</option>
                         <option value="<?php if ($searchType == "order_state_id") echo "5" ?>">取消</option>
                     </select>
@@ -232,8 +212,10 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                                     <div class="close" id="close">X</div>
                                     <div class="content">
                                         <h3 class="confirm-h3">是否確定刪除?</h3>
+                                        <div class="text-end">
                                         <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
-                                        <a href="do_course_order_delete.php?id=<?= $row["id"] ?>" class="btn btn-main-color confirm-btn" id="confirm-btn">確認</a>
+                                        <a href="do_course_order_delete.php?id=<?= $row["id"] ?>" class="btn btn-main-color " id="confirm-btn">確認</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -251,7 +233,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
                     <li class="page-item">
-                        <a class="page-link" href="course_order-list.php&page=<?= $PreviousPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Previous">
+                        <a class="page-link" href="course_order-list.php?page=<?= $PreviousPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
