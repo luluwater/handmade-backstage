@@ -164,3 +164,6 @@ a{
     height: 80px;
     background: url("../img/previewImage.jpg");    
 }
+.up-down:hover{
+    color:var(--main-color);
+}

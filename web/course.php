@@ -142,8 +142,11 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                 </div>
             </div>
             </form>
+            <form action="do-discontinued-state.php" method="post">
+              <input type="hidden" name="type" value="<?=$_GET["type"]?>">
             <div class="text-end my-4">
-              <a href="" class="text-dark m-2"><i class="fa-solid fa-trash m-2"></i>下架課程</a>
+              <button type="submit" class="m-2 border-0 bg-transparent up-down" name="上架"><i class="fa-solid fa-up-long m-2"></i>上架課程</button>
+              <button type="submit" class="m-2 border-0 bg-transparent up-down" name="下架"><i class="fa-solid fa-down-long m-2"></i>下架課程</button>
               <a href="creat-new-product.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增課程</a>
               
             </div>
@@ -151,7 +154,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
               <thead class="table-head">
                 <tr class="text-center">
                   <td class="col-1">
-                    <input type="checkbox" id="select-all" class="form-check-input">
+                    <input type="checkbox" id="select-all" class="form-check-input" autocomplete="off">
                   </td>
                   <td class="col">課程編號                     
                     <a href="<?=orderLink("id",$amount_limit,$orderType,$order,$orderState)?>">
@@ -183,7 +186,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                 <?php foreach($rows as $row): ?>                              
                   <tr class="text-center">
                     <td>
-                      <input type="checkbox" class="check-select form-check-input" value="<?=$row["id"]?>" >
+                      <input type="checkbox" class="check-select form-check-input" name="checked[]" value="<?=$row["id"]?>" autocomplete="off">
                     </td>
                     <td><?=$row["id"]?></td>
                     <td class="text-start align-items-center">                      
@@ -200,6 +203,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                   <?php endforeach; ?>
               </tbody>
             </table>
+            </form>
             <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
@@ -226,7 +230,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
         console.log("<?=$amount_limit?>");
       })
       const select_all=document.querySelector("#select-all");
-      const selects=document.querySelectorAll(".check-select");
+      const selects=document.querySelectorAll(".check-select");      
       let isSelectAll=false;
       select_all.addEventListener("change",function(){
         isSelectAll=!isSelectAll;
