@@ -6,9 +6,6 @@
 // }
 require("../../db-connect.php");
 //=======================================================
-
-
-
 // 測試連線
 // try{
 //     $db_host=new PDO("mysql:host={$serverName};dbname={$dbname};charset=utf8",$username,$password);
@@ -19,17 +16,14 @@ require("../../db-connect.php");
 //     echo "Error: ".$e->getMessage();
 //     exit;
 // }
-$id=$_GET["id"];
-$sql = "SELECT * FROM category";
+
+$sql = "SELECT * FROM category WHERE valid=1 ";
 $result =$db_host->prepare($sql);
-// $stmt->execute();
-// $rows= $stmt ->fetchAll(PDO::FETECH_ASSOC);
-// $result -> execute([":id"=> $id]);
-// $rows = $result ->fetchAll();
-// $member = $result -> rowCount();
+
 try {
     $result->execute();
-    $member = $result ->fetch(PDO::FETCH_ASSOC);
+    $categories = $result ->fetchAll(PDO::FETCH_ASSOC);
+ //讀取category資料庫的所有資料語法
 } catch (PDOException $e) {
     echo "error: " . $e->getMessage() . "<br/>";
     $db_host = NULL;
@@ -40,7 +34,7 @@ try {
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Title</title>
+    <title>第二頁</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -58,34 +52,39 @@ try {
         --main-word-color: #3F3F3F;
         --header-hieght: 100px;
     }
-    th{
-        border-bottom:1px solid gray;
-    }
+ 
     </style>
   </head>
   <body>
     <?php
     require("../main-menu.html");
-    // require("do-member.php");
     ?>
     <main>
+     
+  <p class="title">管理分類</p>  
+    <form action="do-Delete.php" method="post">
       <div class="text-end my-4">
         <table class="table align-items-center">
               <thead class="table-head">
                 <tr class="text-center">
-                  <td class=" col-2">序號</td>
+                  <td class="col-2">序號</td>
                   <td class="col-4">類型</td>
                   <td class="col-4">英文名</td>
                   <td class="col-2">詳細資料</td>
                 </tr>
               </thead>
+               <?php foreach($categories as $category ):?>
               <tbody class= text-center>
-                <th class="pt-3" ><?=$member["id"]?></th>
-                <th class="pt-3" ><?=$member["category_name"]?></th>
-                <th class="pt-3" ><?=$member["category_en_name"]?></th>
+              
+                <th class="pt-3" ><input value="<?=$category["id"] ?>" name="name" 
+                 class="me-4" type="checkbox">
+                <?=$category["id"]?></th>
+                <th class="pt-3" ><?=$category["category_name"]?></th>
+                <th class="pt-3" ><?=$category["category_en_name"]?></th>
                 <th><a class="btn btn-bg-color" 
-                href="brand-list.php?id=<?=$row["id"]?>">查看</a></th>
+                href="brand-detail.php">查看</a></th>
               </tbody>
+             <?php endforeach ; ?> 
         </table>
       </div>
                  <!-- 這邊點心曾可以跳到另一個畫面然後類似老師
@@ -96,11 +95,24 @@ try {
                 然後刪除也一樣 會顯示刪除成功
                 -->
          <div class="d-flex justify-content-around">
-              <a class="button btn btn-main-color" href="do-Delete.php">刪除</a>
-              <a class="button btn btn-main-color" href="do-Create.php">新增</a>
-         </div>
+     <input class="btn btn-main-color" type="submit" name="submit" value="刪除">
      
-    </main>
-    
+      <div class="d-flex justify-content-center">
+         <a class="button btn btn-main-color" href="brand-add.php">新增</a>
+      </div>
+      <!-- <input class="button btn btn-main-color" type="submit" name="submit" value="新增" href="brand-add.php"> -->
+          
+      <!-- <a class="button btn btn-main-color" href="do-Delete.php">刪除</a>
+              <a class="button btn btn-main-color" href="do-Create.php">新增</a> -->
+  </div>   
+ </form>  
+ 
+      
+ <!-- form 表班包含者所有input的欄位 可以送往資料庫處理選取功能 -->
+</main>
+   <script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+   </script>
   </body>
 </html>
