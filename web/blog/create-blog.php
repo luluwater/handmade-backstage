@@ -13,6 +13,7 @@ try {
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $stores = $stmtStore->fetchAll(PDO::FETCH_ASSOC);
     $categories = $stmtCategory->fetchAll(PDO::FETCH_ASSOC);
+   var_dump($categories);
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
     echo "Error: " . $e->getMessage() . "<br/>";
@@ -118,7 +119,7 @@ $db_host = NULL;
             <div>相關店家</div>
             <select name="store" class="w-50 rounded" id="store">
               <?php foreach($stores as $store): ?>
-              <option name="<?=$store["name"]?>" value="<?=$store["name"]?>"><?=$store["name"]?></option>
+              <option name="storeName"  value="<?=$store["id"]?>"><?=$store["name"]?></option>
               <?php endforeach; ?>
             </select>
           </div>
@@ -145,7 +146,7 @@ $db_host = NULL;
         <!-- ********************************************************** -->
 
 
-
+              
         <!-- submit button -->
         <div class="d-flex gap-3 justify-content-end">
           <a href="manage-blog.php" class="btn btn-bg-color mt-3 btn-lg ">返回</a>
@@ -186,7 +187,7 @@ $db_host = NULL;
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-              <button type="button" class=" btn btn-main-color">儲存</button>
+              <input class="btn btn-main-color mt-3 btn-lg" id="save" name="submit_data" type="submit" value="儲存">
             </div>
           </div>
         </div>
@@ -457,13 +458,14 @@ $db_host = NULL;
   previewElem.addEventListener("click", () => {
     modalTitle.innerText = blogTitleInput.value
     modalExp.innerText = articleCategory.value
+
+
     modalCategory.innerText = categoryInput.children[categoryInput.value - 1].innerText
-
-
-    modalStore.innerText = storeInput.value
-
+    modalStore.innerText = storeInput.children[storeInput.value -1 ].innerText
 
     modalArticle.innerText = article.innerText
+    console.log(modalCategory)
+    console.log(modalStore)
 
     modalDate.innerText = publishTimeInput.value
   })
@@ -486,8 +488,10 @@ $db_host = NULL;
         for (let result of response.stores) {
           html = document.createElement("option");
           html.textContent = result.name;
-          html.setAttribute("name", result.id, );
+          html.setAttribute("name", result.id );
+          html.setAttribute("value", result.id );
           store.prepend(html);
+         
         }
       }).fail(function(jqXHR, textStatus) {
         console.log("Request failed: " + textStatus);

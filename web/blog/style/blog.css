@@ -177,7 +177,21 @@
     z-index: 4;
 }
 
-.image_sz{
-    width: 750px;
-    height: 500px;
+
+
+.blogTitleInput{    
+    all: unset;
+    font-size: 35px;
 }
+
+.blogContent{
+    all: unset;
+
+
+}
+
+.mediaIcon{
+    color: var(--main-color);
+    font-size: 50px;
+}   
+
