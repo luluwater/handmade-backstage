@@ -156,6 +156,10 @@ a{
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 66cffef12d5e15e269d4f10aaa09bdc8842839f5
 
 .switch{
     height: 0;
@@ -253,5 +257,11 @@ a{
     height: 80px;
     background: url("../img/previewImage.jpg");    
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 66cffef12d5e15e269d4f10aaa09bdc8842839f5
 
+.up-down:hover{
+    color:var(--main-color);
+}

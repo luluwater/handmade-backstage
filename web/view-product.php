@@ -8,7 +8,7 @@ $stmt=$db_host->prepare("SELECT product.*,category.*,store.name AS store_name FR
 $stmtImg=$db_host->prepare("SELECT * FROM product_img WHERE product_img.product_id = ?");
 try{    
     $stmt->execute([$product_id]);    
-    $row=$stmt->fetch();
+    $row=$stmt->fetch();        
     $stmtImg->execute([$product_id]);    
     $rowsImg=$stmtImg->fetchAll(PDO::FETCH_ASSOC);
     // print_r($row);   
@@ -37,7 +37,7 @@ try{
 <body>
   <?php    require("./main-menu.html");    ?>
   <main>
-    <?php
+    <?php    
     if(!isset($_GET["product"]) || $row == null){
         echo "查無此商品";
         exit;
@@ -49,7 +49,7 @@ try{
         <?php foreach($rowsImg as $img): ?>
         <div class="col-auto">
           <input class="d-none upload_image" type="file" name="product_img1" accept="image/*" required readonly>
-          <img src="../img/product/product<?= $row["category_en_name"].'_'.$product_id.'/'.$img["img_name"] ?>"
+          <img src="../img/product/product_<?= $row["category_en_name"].'_'.$product_id.'/'.$img["img_name"] ?>"
           class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
         </div>
         <?php endforeach; ?>
@@ -104,8 +104,8 @@ try{
           required readonly><?= $row["note"] ?></textarea>
       </div>
       <div class="my-5 d-flex justify-content-end">
-        <a href="product.php" class="ms-3 btn btn-bg-color">返回</a>
-        <a href="update-product.php" class="ms-3 btn btn-main-color">編輯</a>
+        <a href="course.php?type=product" class="ms-3 btn btn-bg-color">返回</a>
+        <a href="edit-product.php?type=product&id=<?=$product_id?>" class="ms-3 btn btn-main-color">編輯</a>
       </div>
     </div>
   </main>

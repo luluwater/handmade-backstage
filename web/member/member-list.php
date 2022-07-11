@@ -129,6 +129,7 @@ $blog = count($blogRows);
                     <button class="edit-btn btn btn-main-color me-2 btn-members-list" type="submit">修改</button>
                 </div>
             </div>
+            <!-- 更新資料 -->
             <div class="bg-mask"></div>        
             <div class="edit-member-card">
                 <div class="card d-flex p-2">
