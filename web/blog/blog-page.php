@@ -98,12 +98,6 @@ $db_host = NULL;
             ?> 
 
         </div>
-
-
-        <!-- <textarea id="w3review" name="w3review" style="width:1200px;height:500px" rows="4" cols="50">
-   
-        </textarea> -->
-      
       
       <input class="btn btn-main-color mt-3 btn-lg" id="save" name="submit_data" type="submit" value="修改文章">
 

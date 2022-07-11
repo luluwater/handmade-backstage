@@ -383,7 +383,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             }
         })
 
-
         $(".orderArrow").on("click",function(e){
             const orderArrows = document.querySelectorAll(".orderArrow ");
             const target=e.target.id
@@ -396,9 +395,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         order:order,
                     },
                     success:function(data){
-                      
                         $("#table").html(data)
-
                 }
             });
         })

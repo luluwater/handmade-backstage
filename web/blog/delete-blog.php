@@ -6,11 +6,6 @@ $PreviousPage=$_GET["page"];
 $pageView=$_GET["pageView"];
 $order=$_GET["order"];
 
-echo $id;
-echo $PreviousPage;
-echo $pageView;
-echo $order;
-
 $sql = $db_host->prepare("UPDATE course_order SET valid=0 WHERE id='$id'");
 
 try {
