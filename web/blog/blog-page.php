@@ -68,53 +68,12 @@ $db_host = NULL;
     </div>
     <hr>
 
-    <div id="editor">
-      <img
-        src="https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80 "
-        class="img-thumbnail my-5 rounded w-75" style="width:" 200px" alt="...">
-      <div class='text-start'>
-        <article>
-          <?=$blog[0]["content"]?>
-        </article>
-      </div>
+
+    <div class='text-center'>
+      <article>
+        <?=$blog[0]["content"]?>
+      </article>
     </div>
-
-    <!-- <div class="d-flex mt-5 gap-5 justify-content-around">
-      <div class="card" style="width: 18rem;">
-        <img style="height: 200px   ;"
-          src="https://images.unsplash.com/photo-1631125915902-d8abe9225ff2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8aGFuZG1hZGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-          class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-          <a href="#" class="btn btn-main-color">Go somewhere</a>
-        </div>
-      </div>
-      <div class="card" style="width: 18rem;">
-        <img style="height: 200px   ;"
-          src="https://images.unsplash.com/photo-1615243639681-1208d685758a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8aGFuZG1hZGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-          class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-          <a href="#" class="btn btn-main-color">Go somewhere</a>
-        </div>
-      </div>
-      <div class="card" style="width: 18rem;">
-        <img style="height: 200px   ;"
-          src="https://images.unsplash.com/photo-1586216583645-bf798306a3d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1188&q=80"
-          class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-          <a href="#" class="btn btn-main-color">Go somewhere</a>
-        </div>
-      </div>
-    </div> -->
-
 
 
 
