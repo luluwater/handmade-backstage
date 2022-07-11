@@ -86,13 +86,25 @@ $db_host = NULL;
         </div>
         <hr>
 
-      <div id="editor">
-        <div class='text-center'>
-          <article>
-            <?=$blog[0]["content"]?>
-          </article>
+        <div>
+       
         </div>
-      </div>
+
+
+        <div name="" id="editor" cols="30" rows="10">
+          <?php
+            $newString=$blog[0]["content"];
+            echo  $newString;
+            ?> 
+
+        </div>
+
+
+        <!-- <textarea id="w3review" name="w3review" style="width:1200px;height:500px" rows="4" cols="50">
+   
+        </textarea> -->
+      
+      
       <input class="btn btn-main-color mt-3 btn-lg" id="save" name="submit_data" type="submit" value="修改文章">
 
       <div>營業時間 ：<?=$blog[0]["opening_hour"]?></div>
@@ -105,11 +117,7 @@ $db_host = NULL;
 
 
 
-  
-                             <?php      
-                           
-                           
-                            ?>
+
   <div class=" d-flex gap-5 justify-content-around">
     <?php foreach($comments as $comment): ?>
         <div class="card my-5">
@@ -146,15 +154,14 @@ $db_host = NULL;
 
 </body>
 <script>
-    BalloonEditor
-      .create(document.querySelector('#editor'),{
-        toolbar: [ 'bold', 'italic', 'link', 'undo', 'redo', 'numberedList', 'bulletedList','uploadImage' ]
-    }     
-    )
+    // BalloonEditor
+    //   .create(document.querySelector('#editor')
+    // )
     
-      .catch(error => {
-        console.error(error);
-    });
+    //   .catch(error => {
+    //     console.error(error);
+    // });
+
 </script>
 
 </html>

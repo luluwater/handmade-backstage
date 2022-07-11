@@ -12,6 +12,12 @@ if(isset($_POST["submit_data"])){
     $state=$_POST["submit_data"];
     $content = str_replace( '&', '&amp;',$content );
 
+    echo $state;
+
+    if(isset($_POST["isPublish"])){
+        
+    }
+    
 
 
 
