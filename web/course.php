@@ -150,7 +150,9 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
             <table class="table align-items-center">
               <thead class="table-head">
                 <tr class="text-center">
-                  <td class="col-1"><input type="checkbox" name="" id=""></td>
+                  <td class="col-1">
+                    <input type="checkbox" id="select-all" class="form-check-input">
+                  </td>
                   <td class="col">課程編號                     
                     <a href="<?=orderLink("id",$amount_limit,$orderType,$order,$orderState)?>">
                     <i class="fa-solid fa-sort mx-2 text-dark"></i>
@@ -180,7 +182,9 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
               <tbody>
                 <?php foreach($rows as $row): ?>                              
                   <tr class="text-center">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <td>
+                      <input type="checkbox" class="check-select form-check-input" value="<?=$row["id"]?>" >
+                    </td>
                     <td><?=$row["id"]?></td>
                     <td class="text-start align-items-center">                      
                       <img class="previewImage-sm me-3" src="../img/<?=$type?>/<?=$type?>_<?=$row["category_en_name"]?>_<?=$row["id"]?>/<?=$row["img_name"]?>" alt="">
@@ -189,7 +193,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                     <td><?=$row["amount"]?></td>
                     <td><?=$row["price"]?></td>
                     <td><?=$row["sold_amount"]?></td>                    
-                    <td><input type="checkbox" <?php if($row["state"]==1)print("checked") ?> disabled></td>
+                    <td><input type="checkbox" class="form-check-input" <?php if($row["state"]==1)print("checked") ?> disabled></td>
                     <td></td>
                     <td><a class="text-dark" href="edit-product.php?type=<?=$type?>&id=<?=$row["id"]?>"><i class="fa-solid fa-pen"></i></a></td>
                   </tr>
@@ -221,7 +225,23 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
         window.location.assign("<?=orderLink("amount-list",$amount_limit,$orderType,$order,$orderState)?>"); 
         console.log("<?=$amount_limit?>");
       })
-          
+      const select_all=document.querySelector("#select-all");
+      const selects=document.querySelectorAll(".check-select");
+      let isSelectAll=false;
+      select_all.addEventListener("change",function(){
+        isSelectAll=!isSelectAll;
+        // console.log(isSelectAll);
+        if(isSelectAll){
+          for(let checkbox of selects){
+            checkbox.checked=true;
+          }
+        }else{
+          for(let checkbox of selects){
+            checkbox.checked=false;
+          }
+        }
+      })
+      
     </script>
 </body>
 
