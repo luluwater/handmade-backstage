@@ -105,7 +105,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
            
              <div class=" d-flex justify-content-between my-4">
-                   <button class="title btnClass" href="">管理分類</button>
+                   <a class="title btnClass" href="brand-control.php">管理分類</a>
                 <div class="delAndAdd ">
                     <a href="" class=" text-dark m-4"><i class="fa-solid fa-trash m-2"></i>刪除店家</a>
                     <a href="" class=" text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增店家</a>
