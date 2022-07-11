@@ -219,7 +219,11 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             echo $date->format('Y-m-d');
                             ?>
                         </td>
+<<<<<<< HEAD
                         <td class="text-start td-height article_title"><a style="color:#3F3F3F;" class="" href="blog-page.php?id=<?=$row["id"]?>"><?=$row["title"]?></a></td>
+=======
+                        <td class="text-start td-height article_title"><a style="color:#3F3F3F;" class="" href="edit-page.php?id=<?=$row["id"]?>"><?=$row["title"]?></a></td>
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
                         <td><?=$row["category_name"]?></td>
                         <td><?=$row["state"]?></td>
                         <td><?=$row["comment_amount"]?></td>
@@ -383,12 +387,18 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             }
         })
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
         $(".orderArrow").on("click",function(e){
             const orderArrows = document.querySelectorAll(".orderArrow ");
             const target=e.target.id
             const order=$(this).data("order")
+<<<<<<< HEAD
             console.log(e)
+=======
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
             $.ajax({
                     url:"../../api/blogSort.php",
                     method:"POST",
@@ -397,9 +407,13 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         order:order,
                     },
                     success:function(data){
+<<<<<<< HEAD
                       
                         $("#table").html(data)
                         
+=======
+                        $("#table").html(data)
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
                 }
             });
         })
@@ -409,9 +423,12 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         const articlesList=document.querySelector("#articlesList");
         const tbody=document.getElementById('tbody')
 
+<<<<<<< HEAD
         console.log(articlesList)
         
 
+=======
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
         for(let i=0;i<deleteBtns.length;i++){
             deleteBtns[i].addEventListener("click",(e)=>{
                 let id = e.target.dataset.id;
@@ -430,6 +447,10 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     },
                     success:function(data){
                         $("#tbody").html(data)
+<<<<<<< HEAD
+=======
+                        location.reload()
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
                  }
                 })
             })
@@ -460,6 +481,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         })
         
 
+<<<<<<< HEAD
         
         // function loadDate( page , query="")
         // {
@@ -483,6 +505,9 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         //     const inputVal = $(this).val();     
         //     loadDate(1,inputVal)
         // })
+=======
+    
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
 
     
 })

@@ -1,4 +1,10 @@
 <?php
+// if(!isset($_GET["type"])){
+//     echo "沒有帶商品類型參數";
+//     exit;
+// }
+// $type=$_GET["type"];
+
 require_once("../db-connect.php");
 $stmt=$db_host->prepare("SELECT * FROM category");
 $stmt_store=$db_host->prepare("SELECT store.id,store.name FROM store WHERE store.category_id = 1");
@@ -103,7 +109,7 @@ $db_host = NULL;
                     </div>
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="hour">課程時常</label>
-                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常" required>
+                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常">
                     </div>
                 </div>
                 <div class="my-3 row align-items-center">
@@ -111,7 +117,7 @@ $db_host = NULL;
                     <textarea class="form-control col" name="notice" cols="30" rows="10" style="resize:none" placeholder="請輸入商品注意事項" required></textarea>
                 </div>
                 <div class="my-5 d-flex justify-content-end">
-                    <a href="product.php" class="ms-3 btn btn-bg-color">取消</a>
+                    <a id="back" class="ms-3 btn btn-bg-color">取消</a>
                     <button class="ms-3 btn btn-main-color" type="submit">儲存</button>                    
                 </div>
             </form>
@@ -140,7 +146,7 @@ $db_host = NULL;
         const course=document.querySelector("#course");
         type.addEventListener("change",function(){
             // console.log("type change");
-            if(this.value=="體驗課程"){
+            if(this.value=="course"){
                 course.classList.remove("d-none");
             }else{
                 course.classList.add("d-none");
@@ -176,6 +182,11 @@ $db_host = NULL;
             	});
         })
         
+        const backBtn=document.querySelector("#back");
+        backBtn.addEventListener("click",function(){
+            history.back();
+        })
+
     </script>
   </body>
 </html>

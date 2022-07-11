@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 // require_once("../../db-connect.php");
 
 
@@ -30,6 +31,8 @@
 
 
 <?php
+=======
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
 require_once("../../db-connect.php");
 
 $id=$_GET["id"];
@@ -37,11 +40,14 @@ $PreviousPage=$_GET["page"];
 $pageView=$_GET["pageView"];
 $order=$_GET["order"];
 
+<<<<<<< HEAD
 echo $id;
 echo $PreviousPage;
 echo $pageView;
 echo $order;
 
+=======
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
 $sql = $db_host->prepare("UPDATE course_order SET valid=0 WHERE id='$id'");
 
 try {
