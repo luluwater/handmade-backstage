@@ -24,7 +24,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Title</title>
+    <title>第一頁</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -105,7 +105,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
            
              <div class=" d-flex justify-content-between my-4">
-                   <a class="title btnClass" href="brand-control.php">管理分類</a>
+                   <a class="title btnClass" href="brand-list.php">管理分類</a>
                 <div class="delAndAdd ">
                     <a href="" class=" text-dark m-4"><i class="fa-solid fa-trash m-2"></i>刪除店家</a>
                     <a href="" class=" text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增店家</a>
