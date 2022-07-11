@@ -82,7 +82,7 @@ try {
                 <th class="pt-3" ><?=$category["category_name"]?></th>
                 <th class="pt-3" ><?=$category["category_en_name"]?></th>
                 <th><a class="btn btn-bg-color" 
-                href="brand-detail.php">查看</a></th>
+                href="brand-detail.php?id=<?=$category["id"]?>">查看</a></th>
               </tbody>
              <?php endforeach ; ?> 
         </table>
