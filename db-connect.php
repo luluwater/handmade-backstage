@@ -2,7 +2,7 @@
 $serverName = "localhost";
 $username = "admin";
 $password = "12345";
-$dbname = "test";
+$dbname = "hand_db";
 
 try{
     $con=mysqli_connect($serverName ,
