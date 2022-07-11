@@ -39,11 +39,27 @@ if (isset($_GET["sale_state_category"])){
   $sqlWhere="";
 }
 
-//========== coupon 主要的資料表 ==========
-$sql = "SELECT coupon.*, sale_state_category.name AS sale_state_name FROM coupon
-JOIN sale_state_category ON coupon.state = sale_state_category.id  
-WHERE coupon.state!=0 $sqlWhere ORDER BY end_date DESC LIMIT $start , $pageView";
-$result= $db_host->prepare($sql);
+//========== discount 主要的資料表 & search ==========
+if(isset($_GET["keyword"])){
+  $searchText = "'%" . $_GET["keyword"] . "%'";
+  $sqlSearch = "SELECT coupon.name, discount_type_id, coupon_discount, pay, start_date, end_date,discount_code, amount,
+  sale_state_category.name AS sale_state_name FROM coupon
+  JOIN sale_state_category ON coupon.state = sale_state_category.id  
+  WHERE coupon.state!=0 $sqlWhere AND coupon.name LIKE $searchText ";
+  $keyword=$_GET["keyword"];
+  $result= $db_host->prepare($sqlSearch);
+  $resultSearch= $db_host->prepare($sqlSearch);
+  $resultSearch->execute();
+  $rowsSearch = $resultSearch->fetchAll(PDO::FETCH_ASSOC);
+  $searchCount = count($rowsSearch);
+} else {
+  $sql = "SELECT coupon.*, sale_state_category.name AS sale_state_name FROM coupon
+  JOIN sale_state_category ON coupon.state = sale_state_category.id  
+  WHERE coupon.state!=0 $sqlWhere ORDER BY end_date DESC LIMIT $start , $pageView";
+  $result= $db_host->prepare($sql);
+
+
+}
 $result->execute();
 $rows = $result->fetchAll(PDO::FETCH_ASSOC);
 $discountCount = count($rows);
@@ -146,7 +162,16 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
             </div>
 
 <!-- ========== 搜尋、新增優惠券 ========== -->
-            <?php require("./mod/search-bar-sale.php") ?>
+            <form action="coupon.php" method="get">
+                <div class="row my-4">
+                    <div class="col-4">
+                    <input class="form-control mx-2 searchText" name="keyword" placeholder="活動名稱">
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-bg-color">搜尋</button>
+                    </div>
+                </div>
+            </form>
             <div class="text-end my-4">
               <a href="coupon-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增優惠券</a>
             </div>
@@ -186,8 +211,11 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
               </tbody>
             </table>
 
- <!-- ========== 分頁 ========== -->
-            <div class="d-flex justify-content-center">
+<!-- ========== 分頁 ========== -->
+          <div class="d-flex justify-content-center">
+            <?php if (isset($_GET['keyword'])) : ?>  
+            <div class="mt-4 pt-2 d-flex">關鍵字<p class="text-danger fw-bold">&nbsp;<?=$_GET["keyword"]?>&nbsp;</p>的搜尋結果&nbsp;;&nbsp;共 <?=$searchCount?> 筆資料</div>
+            <?php elseif (!isset($_GET['keyword']) && ($sale_state_category=="") ) : ?>  
               <nav aria-label="Page navigation example ">
                 <ul class="pagination mt-4 px-5">
                     <!-- 上一頁 -->
@@ -198,8 +226,9 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                     </li>
                     <!-- 頁碼 -->
                     <?php for($i=1; $i<=$totalPage;$i++): ?>
-                    <li class="page-item"><a class="page-link  <?php if($page==$i)echo "active"?>" 
-                    href="coupon.php?page=<?=$i?>&pageView=<?=$pageView?>"><?=$i?></a></li>
+                    <li class="page-item">
+                      <a class="page-link  <?php if($page==$i)echo "active"?>" href="coupon.php?page=<?=$i?>&pageView=<?=$pageView?>"><?=$i?></a>
+                    </li>
                     <?php endfor; ?>
                     <!-- 下一頁 -->
                     <li class="page-item">
@@ -210,6 +239,9 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                 </ul>
               </nav>
               <div class="mt-4 pt-2">第 <?=$startItem?> - <?=$endItem?> 筆 , 共 <?=$discountAllCount?> 筆資料</div>
+              <?php else: ?>
+              
+              <?php endif; ?>
             </div>   
         </div>
     </main>

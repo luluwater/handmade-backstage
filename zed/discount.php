@@ -2,13 +2,6 @@
 
 require("../db-connect.php");
 
-// ========= search type ==========
-
-if (isset($_GET["searchType"])) {
-  $searchType = $_GET["searchType"];
-} else {
-  $searchType = "name";
-}
 
 
 //========== 抓取全部資料 ==========
@@ -199,8 +192,8 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 
             <form action="discount.php" method="get">
                 <div class="row my-4">
-                    <div class="col-6">
-                    <input class="form-control mx-2 searchText" name="keyword" placeholder="活動名稱關鍵字">
+                    <div class="col-4">
+                    <input class="form-control mx-2 searchText" name="keyword" placeholder="活動名稱">
                     </div>
                     <div class="col-2">
                         <button type="submit" class="btn btn-bg-color">搜尋</button>
@@ -211,29 +204,6 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
               <a href="discount-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
             </div>
 
-            <!-- <form action="discount.php" method="get">
-
-                <select class="form-select search-filter" name="searchType" onchange="submit();">
-                        <option value="name" <?php //if ($searchType == 'name') print 'selected'; ?>>活動名稱</option>
-                        <option value="time" <?php //if ($searchType == 'time') print 'selected'; ?>>活動日期</option>
-                </select>
-
-                <div class="row my-4">
-                    <div class="col-4">
-                    <?php //if ($searchType == 'name') : ?>
-                    <input class="form-control mx-2 searchText" name="keyword" placeholder="活動名稱關鍵字">
-                    <?php //elseif ($searchType == 'date') : ?>
-                      <input type="date" class="form-control mx-2 searchText" name="keyword" placeholder="活動名稱關鍵字">
-                    <?php //endif; ?>
-                    </div>
-                    <div class="col-1">
-                        <button type="submit" class="btn btn-bg-color">搜尋</button>
-                    </div>
-                </div>
-            </form>
-            <div class="text-end my-4">
-              <a href="discount-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
-            </div> -->
 
 <!-- ========== table ========== -->
             <table class="table">
