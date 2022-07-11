@@ -75,9 +75,9 @@ $discountCount=$result->rowCount();
                         <input type="hidden" name="id">
                         <li>活動名稱</li>
                         <li><input type="text" class="form-control my-3" style="width: 1200px;" name="name"></li>
-
+                    
                         <?php if(isset($_SESSION["discount"]["name"])):?> 
-                        <div class="text-danger text-end me-5 fw-bold">活動名稱  <?=$_SESSION["discount"]["name"]?>  重複囉！請發揮創意</div>
+                        <div class="text-danger col-10 text-end fw-bold">活動名稱  <?=$_SESSION["discount"]["name"]?>  重複囉！請發揮創意</div>
                         <?php endif; ?>
 
                         <li>活動簡介</li>

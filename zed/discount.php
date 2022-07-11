@@ -2,8 +2,6 @@
 
 require("../db-connect.php");
 
-
-
 //========== 抓取全部資料 ==========
 $sqlAll = "SELECT * FROM discount WHERE discount.state!=0";
 $resultAll= $db_host->prepare($sqlAll);
@@ -189,7 +187,6 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
             </div>
  
 <!-- ========== 搜尋、新增折扣 ========== -->
-
             <form action="discount.php" method="get">
                 <div class="row my-4">
                     <div class="col-4">
@@ -203,7 +200,6 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
             <div class="text-end my-4">
               <a href="discount-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
             </div>
-
 
 <!-- ========== table ========== -->
             <table class="table">
