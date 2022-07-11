@@ -156,7 +156,7 @@ a{
 
 
 
-<<<<<<< HEAD
+
 
 .switch{
     height: 0;
@@ -239,7 +239,7 @@ a{
     opacity: 1;
     z-index: 100;
 }
-=======
+
 .previewImage{
     width: 200px;
     height: 200px;
@@ -254,5 +254,7 @@ a{
     height: 80px;
     background: url("../img/previewImage.jpg");    
 }
->>>>>>> 16adf1d889e6367f693068a704d0185a35dff79c
 
+.up-down:hover{
+    color:var(--main-color);
+}
