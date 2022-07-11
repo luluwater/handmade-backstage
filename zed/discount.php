@@ -2,7 +2,14 @@
 
 require("../db-connect.php");
 
-//========== search ==========
+// ========= search type ==========
+
+if (isset($_GET["searchType"])) {
+  $searchType = $_GET["searchType"];
+} else {
+  $searchType = "name";
+}
+
 
 //========== 抓取全部資料 ==========
 $sqlAll = "SELECT * FROM discount WHERE discount.state!=0";
@@ -29,7 +36,6 @@ $sqlState = "SELECT * FROM sale_state_category" ;
 $resultState= $db_host->prepare($sqlState);
 $resultState->execute();
 $rowsState = $resultState->fetchAll(PDO::FETCH_ASSOC);
-
 if (isset($_GET["sale_state_category"])){
   $sale_state_category = $_GET["sale_state_category"];
   $sqlWhere="AND discount.state = $sale_state_category ";
@@ -39,14 +45,41 @@ if (isset($_GET["sale_state_category"])){
   $sqlWhere="";
 }
 
-//========== discount 主要的資料表 ==========
-$sql = "SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
-JOIN sale_state_category ON discount.state = sale_state_category.id  
-WHERE discount.state!=0 $sqlWhere ORDER BY end_date DESC LIMIT $start , $pageView ";
-$result= $db_host->prepare($sql);
+//========== discount 主要的資料表 & search ==========
+
+if(isset($_GET["keyword"])){
+  $searchText = "'%" . $_GET["keyword"] . "%'";
+  $sqlSearch = "SELECT discount.name, discount_type_id, product_discount, pay, start_date, end_date,
+  sale_state_category.name AS sale_state_name FROM discount
+  JOIN sale_state_category ON discount.state = sale_state_category.id  
+  WHERE discount.state!=0 $sqlWhere AND discount.name LIKE $searchText ";
+  $keyword=$_GET["keyword"];
+  $result= $db_host->prepare($sqlSearch);
+  $resultSearch= $db_host->prepare($sqlSearch);
+  $resultSearch->execute();
+  $rowsSearch = $resultSearch->fetchAll(PDO::FETCH_ASSOC);
+  $searchCount = count($rowsSearch);
+} else {
+  $sql = "SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
+  JOIN sale_state_category ON discount.state = sale_state_category.id  
+  WHERE discount.state!=0 $sqlWhere ORDER BY end_date DESC LIMIT $start , $pageView";
+  $result= $db_host->prepare($sql);
+
+
+}
+
 $result->execute();
 $rows = $result->fetchAll(PDO::FETCH_ASSOC);
 $discountCount = count($rows);
+
+
+// $sql = "SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
+// JOIN sale_state_category ON discount.state = sale_state_category.id  
+// WHERE discount.state!=0 $sqlWhere ORDER BY end_date DESC LIMIT $start , $pageView";
+// $result= $db_host->prepare($sql);
+// $result->execute();
+// $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+// $discountCount = count($rows);
 
 //========== Page ==========
 //開始的筆數
@@ -151,22 +184,47 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
             <div class="d-flex justify-content-between">
                 <p class="title"></p>
                 
-                <form action="discount.php" method="GET">
+                <form action="discount.php?" method="GET">
                   <p>顯示
                     <select class="count-bg text-center" aria-label="Default select example"  name="pageView" onchange=submit();>
-                      <option value="5&sale_state_category=<?=$sale_state_category?>" <?php if ($pageView == '5') print 'selected ';?>>5</option>
-                      <option value="10&sale_state_category=<?=$sale_state_category?>" <?php if ($pageView == '10') print 'selected ';?>>10</option>
+                      <option value="5" <?php if ($pageView == '5') print 'selected ';?>>5</option>
+                      <option value="10" <?php if ($pageView == '10') print 'selected ';?>>10</option>
                     </select> 
                   筆</p>
                 </form>
             
             </div>
-
+ 
 <!-- ========== 搜尋、新增折扣 ========== -->
-            <form action="dsicount.php" method="get">
-                <div class="row  my-4">
+
+            <form action="discount.php" method="get">
+                <div class="row my-4">
+                    <div class="col-6">
+                    <input class="form-control mx-2 searchText" name="keyword" placeholder="活動名稱關鍵字">
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-bg-color">搜尋</button>
+                    </div>
+                </div>
+            </form>
+            <div class="text-end my-4">
+              <a href="discount-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
+            </div>
+
+            <!-- <form action="discount.php" method="get">
+
+                <select class="form-select search-filter" name="searchType" onchange="submit();">
+                        <option value="name" <?php //if ($searchType == 'name') print 'selected'; ?>>活動名稱</option>
+                        <option value="time" <?php //if ($searchType == 'time') print 'selected'; ?>>活動日期</option>
+                </select>
+
+                <div class="row my-4">
                     <div class="col-4">
-                    <input type="search" class="form-control mx-2 searchText" name="keyword" placeholder="搜尋活動名稱關鍵字">
+                    <?php //if ($searchType == 'name') : ?>
+                    <input class="form-control mx-2 searchText" name="keyword" placeholder="活動名稱關鍵字">
+                    <?php //elseif ($searchType == 'date') : ?>
+                      <input type="date" class="form-control mx-2 searchText" name="keyword" placeholder="活動名稱關鍵字">
+                    <?php //endif; ?>
                     </div>
                     <div class="col-1">
                         <button type="submit" class="btn btn-bg-color">搜尋</button>
@@ -175,7 +233,7 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
             </form>
             <div class="text-end my-4">
               <a href="discount-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
-            </div>
+            </div> -->
 
 <!-- ========== table ========== -->
             <table class="table">
@@ -213,6 +271,9 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 
  <!-- ========== 分頁 ========== -->
             <div class="d-flex justify-content-center">
+            <?php if (isset($_GET['keyword'])) : ?>  
+            <div class="mt-4 pt-2 d-flex">關鍵字<p class="text-danger fw-bold">&nbsp;<?=$_GET["keyword"]?>&nbsp;</p>的搜尋結果&nbsp;;&nbsp;共 <?=$searchCount?> 筆資料</div>
+            <?php elseif (!isset($_GET['keyword']) && ($sale_state_category=="") ) : ?>  
               <nav aria-label="Page navigation example ">
                 <ul class="pagination mt-4 px-5">
                     <!-- 上一頁 -->
@@ -236,6 +297,9 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                 </ul>
               </nav>
               <div class="mt-4 pt-2">第 <?=$startItem?> - <?=$endItem?> 筆 , 共 <?=$discountAllCount?> 筆資料</div>
+              <?php else: ?>
+              
+              <?php endif; ?>
             </div>   
         </div>
     </main>
