@@ -1,0 +1,56 @@
+:root {
+    --bg-color: #eee6de;
+    --main-color: #e65947;
+    --line-color: #ddb9a2;
+    --main-word-color: #3F3F3F;
+    --header-hieght: 100px;
+}
+.editBtn{
+    line-height: 29px;
+}
+.form-select{
+    width: 200px;
+}
+
+.note{
+    width: 800px;
+    height: 50px;
+    /* border: 1px solid black; */
+}
+.table{
+    min-height: 200px;
+}
+.boldWord{
+    font-weight: 700;
+    font-size: 18px;
+}
+.btn:hover{
+    color: #fff;
+    background: var(--main-color);
+    border-color: var(--main-color);
+}
+.btn:active {
+    color: #fff;
+    background: var(--main-color);
+    border-color: var(--main-color);
+}
+
+.coursePic{
+    width: 100px;
+    height: 100px;
+}
+.imgObject{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.detail-tr td{
+    line-height: 100px;
+
+}
+
+.totalPrice{
+    color: var(--main-color);
+    border-bottom: 3px solid var(--main-color);
+
+}
