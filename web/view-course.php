@@ -116,7 +116,7 @@ try{
           required readonly><?= $row["note"] ?></textarea>
       </div>
       <div class="my-5 d-flex justify-content-end">
-        <a href="course.php" class="ms-3 btn btn-bg-color">返回</a>
+        <a href="course.php?type=course" class="ms-3 btn btn-bg-color">返回</a>
         <a href="edit-product.php?type=course&id=<?=$course_id?>" class="ms-3 btn btn-main-color">編輯</a>
       </div>
     </div>
