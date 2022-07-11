@@ -173,28 +173,10 @@ function updateFileTo_db($typeName,$type_id,$change){
             
             break;
         case "store":
-            $stmtImg=$db_host->prepare("INSERT INTO store_img(img_name,store_id) VALUES (:img_name, :store_id)");
-            for($i=1;$i<=4;$i++){
-                $fileName=$_FILES["product_img".$i]["name"];
-                if($_FILES["product_img".$i]["error"]==0){
-                    $stmtImg->execute([
-                        ":img_name"=>$fileName,
-                        ":store_id"=>$type_id
-                    ]);
-                }
-            }
+           
             break;
         case "blog":
-            $stmtImg=$db_host->prepare("INSERT INTO blog_img(img_name,blog_id) VALUES (:img_name, :blog_id)");
-            for($i=1;$i<=4;$i++){
-                $fileName=$_FILES["product_img".$i]["name"];
-                if($_FILES["product_img".$i]["error"]==0){
-                    $stmtImg->execute([
-                        ":img_name"=>$fileName,
-                        ":blog_id"=>$type_id
-                    ]);
-                }
-            }
+            
             break;        
     }
 }

@@ -9,17 +9,20 @@ $type=$_GET["type"];
 
 function orderLink($item,$cur_amount_limit,$orderType,$order,$orderState){
   $type=$_GET["type"];
+  $searchItems=$_GET["search"]??"";
+  $searchText=$_GET["searchText"]??"";
+  $searchType=$_GET["searchType"]??"";
   switch($item){
     case "state":
         $orderState=$orderState?0:1;
-        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";
+        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState&searchText=$searchText&searchType=$searchType";
       break;
       case "nextPage":
-        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";
+        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState&search=$searchItems&searchText=$searchText&searchType=$searchType";
         break;   
       case "amount-list":
         $cur_amount_limit=$cur_amount_limit==10?5:10;
-        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";
+        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState&searchText=$searchText&searchType=$searchType";
         break;   
       default:
         if($orderType==$item){ 
@@ -27,7 +30,7 @@ function orderLink($item,$cur_amount_limit,$orderType,$order,$orderState){
         }else{
           $orderType=$item;
         }    
-        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState";  
+        return  "course.php?type=$type&amount-limit=$cur_amount_limit&orderType=$orderType&order=$order&orderState=$orderState&searchText=$searchText&searchType=$searchType";  
       break;
   }
   if($item=="state"){
@@ -45,6 +48,8 @@ $orderState=$_GET["orderState"]??1;
 $orderStateType=$orderState?"DESC":"ASC";
 $orderType=$_GET["orderType"]??"id";
 $order=$_GET["order"]??"ASC";
+$searchText=$_GET["searchText"]??"";
+$searchType=$_GET["searchType"]??"";
 // echo $orderType;
 
 $secendOrder="$orderType $order";
@@ -54,22 +59,39 @@ $start=($page-1)*$amount_limit;
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
 $stmtCategory->execute();
 $rowsCategory=$stmtCategory->fetchALL(PDO::FETCH_ASSOC);
+if($searchText != "" && $searchType !=""){
+  $sqlWhere="WHERE $searchType LIKE '%$searchText%'";
+}else{
+  $sqlWhere="";
+}
 
 if($type=="course"){
-  $stmtAll=$db_host->prepare("SELECT * FROM course JOIN course_img ON course.id=course_img.course_id GROUP BY course_id");
+  $stmtAll=$db_host->prepare("SELECT *,category.category_name FROM course 
+  JOIN course_img ON course.id=course_img.course_id 
+  JOIN category ON course.category_id=category.id 
+  $sqlWhere
+  GROUP BY course_id");
+
   $stmt=$db_host->prepare("SELECT course.id,course_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM course 
   JOIN category ON course.category_id=category.id 
-  JOIN course_img ON course.id=course_img.course_id 
+  JOIN course_img ON course.id=course_img.course_id
+  $sqlWhere
   GROUP BY id 
   ORDER BY state $orderStateType ,$secendOrder
   LIMIT $start,$amount_limit");
 }else if($type=="product"){
-  $stmtAll=$db_host->prepare("SELECT * FROM product JOIN product_img ON product.id=product_img.product_id GROUP BY product_id");
+  $stmtAll=$db_host->prepare("SELECT *,category.category_name FROM product 
+  JOIN product_img ON product.id=product_img.product_id 
+  JOIN category ON product.category_id=category.id
+  $sqlWhere
+  GROUP BY product_id");
+  
   $stmt=$db_host->prepare("SELECT product.id,product_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM product 
   JOIN category ON product.category_id=category.id 
   JOIN product_img ON product.id=product_img.product_id
+  $sqlWhere
   GROUP BY id
-  ORDER BY state $orderStateType ,$secendOrder
+  ORDER BY state $orderStateType ,$secendOrder  
   LIMIT $start,$amount_limit");
 }
 
@@ -125,20 +147,21 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                 </p>
                 </form>                
             </div>
-            <form action="course.php" method="get">
+            <form action="" method="get">
             <div class="row  my-4">
                 <div class="col-2">
                     <select class="form-select" name="searchType" aria-label="Default select example">
-                        <option value="id" selected>課程編號</option>
+                        <option value="<?=$type?>.id" selected>課程編號</option>
                         <option value="name">課程名稱</option>
-                        <option value="category">類別</option> 
+                        <option value="category_name">類別</option> 
                     </select>
                 </div>
                 <div class="col-6">
-                    <input class="form-control" type="search" name="search" id="">
+                    <input class="form-control" type="search" name="searchText" id="searchText" required>
                 </div>
                 <div class="col-1">
-                    <a href="" class="btn btn-bg-color">搜索</a>
+                    <input type="hidden" name="type" value="<?=$type?>">
+                    <button type="submit" class="btn btn-bg-color">搜索</button>
                 </div>
             </div>
             </form>
