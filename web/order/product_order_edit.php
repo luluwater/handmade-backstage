@@ -58,14 +58,11 @@ WHERE product_order.id = $id");
 
 
 // *******撈取訂單明細******* //
-$sql = $db_host->prepare("SELECT product_order_list.*,product.name AS productName, product.category_id,category.category_en_name  FROM product_order_list 
+$sql = $db_host->prepare("SELECT product_order_list.*,product.name AS productName, product.category_id,category.category_en_name,product_img.img_name  FROM product_order_list 
 JOIN product ON product_order_list.product_id = product.id 
 JOIN category ON product.category_id = category.id 
+JOIN product_img ON product.id = product_img.product_id  
 WHERE product_order_list.order_id = $id");
-
-// 暫時拿掉照片
-// ,product_img.img_name
-// JOIN product_img ON product.id = product_img.product_id  
 
 
 
@@ -264,7 +261,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
                             <?php continue; ?>
                         <?php else : ?>
                             <tr class="text-center row detail-tr">
-                                <td class="col-1"><img class="coursePic imgObject" src="../../img/course/course_<?= $row["category_en_name"] ?>_<?= $row["course_id"] ?>/<?= $row["img_name"] ?>" alt=""></td>
+                                <td class="col-1"><img class="coursePic imgObject" src="../../img/product/product_<?= $row["category_en_name"] ?>_<?= $row["product_id"] ?>/<?= $row["img_name"] ?>" alt=""></td>
                                 <td class="col-3"><?= $row["productName"] ?></td>
                                 <td class="col"><?= $row["amount"] ?></td>
                                 <td class="col">$<?= $row["price"] ?></td>

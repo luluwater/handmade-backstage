@@ -1,15 +1,15 @@
 <?php
 require_once("../../db-connect.php");
 
+if (isset($_GET["checkbox"])) {
+    $order = $_GET["checkbox"];
+    echo $order;
+}
 
-$id=$_GET["id"];
-$PreviousPage=$_GET["page"];
-$pageView=$_GET["pageView"];
-$order=$_GET["order"];
+//更新valid 會變成0 導致選項消失
+$sql = $db_host->prepare("UPDATE store SET valid=0  WHERE  id='$order'");
 
 
-
-$sql = $db_host->prepare("UPDATE course_order SET valid=0 WHERE id='$id'");
 
 try {
     $sql->execute();
@@ -22,7 +22,7 @@ try {
     exit;
 }
 
-header('Location:'. $_SERVER['HTTP_REFERER']);
+header("Location:store.php");
 
 
 ?>

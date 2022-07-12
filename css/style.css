@@ -49,6 +49,15 @@ a{
     font-weight: bolder;
     color: white;    
 }
+.btn-line-color{
+    background: var(--line-color);
+    color: white;    
+}
+.btn-line-color:hover{
+    background: var(--bg-color);
+    color: #000;   
+    border: 1px solid #000; 
+}
 .count-bg{
     background: var(--bg-color);
     padding: 0px 5px;
@@ -220,8 +229,6 @@ a{
 .trHover:hover{
     background:#eee;
 }
-
-
 
 .ajax-loading {
     transition: all 0.3s;

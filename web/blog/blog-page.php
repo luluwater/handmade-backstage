@@ -1,5 +1,4 @@
 
-
 <!doctype html>
 <html lang="en">
 
@@ -8,13 +7,14 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <link rel="stylesheet" href="./style/blog.css">
   <link rel="stylesheet" href="../../css/style.css">
  
   <!-- Bootstrap CSS v5.2.0-beta1 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-   
+
 </head>
 
 <body>
@@ -33,10 +33,12 @@
   </header>
 
 
+
   <form action="do-edit-blog.php">
       <div class="container mt-5 text-center" style="">
         <div class="text-center text-center"> 發布於
           <?php
+
                 $date=new DateTime($blog[0]["create_time"]);
                 echo  $date->format('M-d-Y H:i:s');
             ?></div>
@@ -74,6 +76,8 @@
       <a  href="<?=$blog[0]["FB_url"]?>"><i  class="fs-4 fab fa-facebook-square"></i></a>
       <a  href="<?=$blog[0]["IG_url"]?>"><i class="fs-4 fab fa-instagram-square"></i></a>
     </form>
+
+
 
 
 

@@ -416,7 +416,10 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         order:order,
                     },
                     success:function(data){
+<<<<<<< HEAD
+=======
                         $("#table").html(data)
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
                 }
             });
         })
@@ -426,6 +429,10 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         const articlesList=document.querySelector("#articlesList");
         const tbody=document.getElementById('tbody')
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
         for(let i=0;i<deleteBtns.length;i++){
             deleteBtns[i].addEventListener("click",(e)=>{
                 let id = e.target.dataset.id;
@@ -447,7 +454,11 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     },
                     success:function(data){
                         $("#tbody").html(data)
+<<<<<<< HEAD
+
+=======
                         location.reload()
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
                  }
                 })
             })
@@ -477,6 +488,10 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         })
         
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
 
     
 })

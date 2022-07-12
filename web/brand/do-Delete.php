@@ -7,9 +7,7 @@ if (isset($_POST["name"])) {
 }
 
 //更新valid 會變成0 導致選項消失
-$sql = $db_host->prepare
-("UPDATE category SET valid=0 WHERE  id='$order'")
-;
+$sql = $db_host->prepare("UPDATE category SET valid=0 WHERE  id='$order'");
 
 
 
