@@ -251,7 +251,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     </div>
             </tbody>
         </table>
-        <div class="mt-3 text-end">共 <?= $blogCount ?>筆資料</div>
+        <div class="mt-3 text-end">共 <?= $blogCount ?> 篇文章</div>
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
