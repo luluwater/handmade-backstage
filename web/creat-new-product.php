@@ -4,6 +4,8 @@
 //     exit;
 // }
 // $type=$_GET["type"];
+$type=$_GET["type"];
+
 
 require_once("../db-connect.php");
 $stmt=$db_host->prepare("SELECT * FROM category");
@@ -96,13 +98,13 @@ $db_host = NULL;
                     <div class="col-5 d-flex gy-3  align-items-center">
                         <label class="col-2 me-2" for="type">商品類型</label>
                         <select id="type" class="form-select col" aria-label="Default select example" name="type">
-                        <option value="course">體驗課程</option>
-                        <option value="product">實體商品</option>                    
+                        <option value="course" <?=$type=="course"?"selected":""?>>體驗課程</option>
+                        <option value="product"<?=$type=="product"?"selected":""?>>實體商品</option>                    
                         </select>
                     </div>
                 </div>                
                 <!--  -->
-                <div id="course">
+                <div id="course" class="<?=$type=="product"?"d-none":""?>">
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="datetime">課程日程</label>
                         <input class="col form-control" type="datetime-local" name="datetime">

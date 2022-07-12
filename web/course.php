@@ -172,7 +172,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
             <div class="text-end my-4">
               <button type="submit" class="m-2 border-0 bg-transparent up-down" name="上架"><i class="fa-solid fa-up-long m-2"></i>上架課程</button>
               <button type="submit" class="m-2 border-0 bg-transparent up-down" name="下架"><i class="fa-solid fa-down-long m-2"></i>下架課程</button>
-              <a href="creat-new-product.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增課程</a>
+              <a href="creat-new-product.php?type=<?=$type?>" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增課程</a>
               
             </div>
             <table class="table align-items-center">
