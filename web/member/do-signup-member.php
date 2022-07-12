@@ -51,6 +51,7 @@ catch (PDOException $e) {
     }
 }
 
+
 if ($memberExist == 0) {
     $now = date("Y-m-d H:i:s");
     $password=md5($password);
