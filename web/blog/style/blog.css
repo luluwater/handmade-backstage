@@ -177,6 +177,12 @@
     z-index: 4;
 }
 
+<<<<<<< HEAD
+.image_sz{
+    width: 750px;
+    height: 500px;
+}
+=======
 
 
 .blogTitleInput{    
@@ -196,3 +202,4 @@
     font-size: 50px;
 }   
 
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7

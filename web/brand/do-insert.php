@@ -13,7 +13,9 @@ $categoryEnglish=$_POST["category-type-en"];
 
 //prepare 欲處理
 // values 後面帶入的是:->等於是變數 代表欄位
-$sql=$db_host->prepare("INSERT INTO category ( category_name, category_en_name) VALUES (:categoryNo1 , :categoryNo2)");
+$sql=$db_host->prepare("INSERT INTO 
+category ( category_name, category_en_name)
+ VALUES (:categoryNo1 , :categoryNo2)");
 
 try {
     //這邊是去執行 類似php陣列 用=>胖箭頭
