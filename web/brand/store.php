@@ -1,17 +1,31 @@
 <?php
 require("../../db-connect.php");
 
+//三源運算子 跟if else很像
+$page=isset($_GET["page"]) ?$_GET["page"]:1;
+$order = isset($_GET["order"]) ? $_GET["order"] : 1;
+$perPage=5; //這邊我預設每個page分頁只會有5個店家
+$start = ($page-1)*$perPage; 
+
+// echo $start; //start 這個變數設成 點選分頁會-1 *現在顯示第幾個分頁 
 $sql = "SELECT store.* ,category.category_name FROM store
-JOIN category ON store.category_id = category.id WHERE store.valid= 1";
-
+JOIN category ON store.category_id = category.id WHERE 
+store.valid= 1 LIMIT $start, $perPage"; //start設為第一個
 $result= $db_host->prepare($sql);
+$pageUserCount=$result->fetchALL(PDO::FETCH_ASSOC);
+// var_dump($result);
+$sqlStores="SELECT store.* FROM store";
 
-
+$sqlAll= $db_host->prepare($sqlStores);
 
 
 try {
+   $sqlAll->execute();
+   $stores=$sqlAll->fetchALL(PDO::FETCH_ASSOC);
    $result->execute();  
-  $rows=$result->fetchALL(PDO::FETCH_ASSOC);
+   $rows=$result->fetchALL(PDO::FETCH_ASSOC);
+   $storeCount=count($stores);
+
 
 } catch (PDOException $e) {
     echo "error: " . $e->getMessage() . "<br/>";
@@ -20,6 +34,30 @@ try {
 }
 
 
+
+
+// echo $storeCount;
+
+// $pageUserCount = $result->num_rows;
+//$pageUserCount 不是0才可以正常顯示一頁有幾個資料
+//開始的筆數
+
+
+$startItem = ($page - 1) * $perPage + 1;
+$endItem = $page * $perPage;
+if ($endItem > $storeCount) $endItem = $storeCount;
+$totalPage = ceil($storeCount / $perPage);
+$PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
+$nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
+
+// echo $page;
+// echo $startItem; //顯示每頁的開頭數
+
+// echo $endItem; //顯示每頁的尾數
+
+// echo $totalPage;
+// echo $storeCount; //所有店家總數 30 
+// echo $perPage; // 顯示一個分頁有幾個店家
 ?>
 
 <!doctype html>
@@ -83,6 +121,24 @@ try {
         height: 100%;
         object-fit:cover;
       }
+      
+.page-item{
+    font-weight: 700;
+}
+
+.page-link {
+    color: var(--main-word-color);
+}
+
+.page-link:hover {
+    color: var(--main-color);
+}
+
+.active>.page-link, .page-link.active {
+    background: #fff;
+    color: var(--main-color);
+}
+
     </style>
   </head>
   <body>
@@ -125,7 +181,7 @@ try {
                         <div>
                           <!-- 這邊的input吃到的是資料庫id 渲染顯示的地方 藉由軟刪除讓它顯示不見 -->
                           <input value="<?=$row["id"] ?>" name="checkbox" 
-                            class="me-4" type="checkbox">
+                            class="me-4 mb-3" type="checkbox">
                          <figure class="ratio ratio-4x3 mb-2">
                              <img class=" border border-secondary object-cover" src="imagesTest/<?= $row["img"] ?>" alt="">
                         </figure>
@@ -146,48 +202,24 @@ try {
                             
                           </div>
                       </div>
-                   <?php endforeach; ?>
-                 
+                   <?php endforeach; ?>  
                  </div>
             </form>
-                 
-            <!-- <div class="footer">
-               <div class="d-flex justify-content-center">
-            <nav aria-label="Page navigation example ">
-                <ul class="pagination mt-4 px-5">
-                    <li class="page-item">
-                        <a class="page-link"
-                            href="store.php?page=<?=$PreviousPage?>&pageView=
-                            <?=$pageView?>&order=<?=$order?>"
-                            aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <?php for($i=1; $i<=$totalPage;$i++): ?>
-                    <li class="page-item <?php if($page==$i)echo "active"?>">
-                    <a class="page-link"
-                            href="store.php?page=<?=$i?>&pageView=
-                            <?=$pageView?>&order=<?=$order?>"><?=$i?></a>
-                    </li>
-                    <?php endfor; ?>
-                    <li class="page-item">
-                        <a class="page-link"
-                            href="store.php?page=<?=$nextPage?>
-                            &pageView=<?=$pageView?>&order=<?=$order?>"
-                            aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="mt-4 pt-2">第 <?=$startItem?> -
-             <?=$endItem?> 筆 , 共
-             <?=$membersAllCount?> 筆資料</div>
-        </div>
-        </div>
-            </div>
-          
-          -->
+       <div class="py-2 d-flex justify-content-center">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+          <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+            <li class="page-item
+          <?php if ($page == $i) echo "active"; ?>
+          ">
+          <a name="" class="page-link" href="store.php?page=
+          <?= $i ?>"><?= $i ?></a></li>
+          <?php endfor; ?>
+          <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+        </ul>
+      </nav>
+    </div>
     </main>
  
 </html>
