@@ -1,0 +1,148 @@
+:root{
+    --bg-color: #eee6de;
+    --main-color: #e65947;
+    --line-color: #ddb9a2;
+    --main-word-color: #3F3F3F;
+    --thead-color: #d6624f;
+    --header-hieght: 100px;
+    --page-number-color: #3f3f3f;
+}
+
+
+main{
+    padding: 130px 100px 0 300px;
+}
+.text-main-color{
+    color: var(--main-color);
+    font-weight: bolder;
+}
+.object-cover{
+    object-fit: cover;    
+}
+a{
+    text-decoration: none;   
+    color: #fff;
+}
+.header{
+    background: var(--bg-color);
+    height: var(--header-hieght);
+    width: 100vw;
+    z-index: 1;
+    border-bottom: 1px solid var(--line-color);
+}
+.header h3{
+    letter-spacing: 5px;
+}
+.logo img{
+    position: relative;
+    height: 100px;
+    right: 15px;
+}
+.btn-main-color{
+    background: var(--main-color);
+    font-weight: bolder;
+    color: white;
+    padding: .5rem 1rem;
+    
+}
+.btn-bg-color{
+    background: var(--line-color);
+    font-weight: bolder;
+    color: white;    
+}
+.count-bg{
+    background: var(--bg-color);
+    padding: 0px 5px;
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;    
+}
+.page-link{
+    border:none;
+    color:var(--page-number-color);
+}
+.page-link.active{
+    background: transparent;
+    color:var(--main-color);
+}
+.table-head{
+    background: var(--bg-color);
+}
+.table{
+    min-height: 200px;
+}
+.sidebar{
+    width: 256px;
+    height: 100vh;
+    background: var(--bg-color);
+    padding-top: var(--header-hieght);
+}
+.nav-title:not(:last-child){
+    border-bottom: 1px solid var(--line-color);
+}
+.nav-title h3{
+    font-weight: bolder;
+    font-size: 26px;
+}
+.main-nav li{
+    color:var(--main-word-color);
+}
+.nav-link{
+    padding: .5rem;
+    font-size: 20px;
+}
+.hover:hover{
+    background: var(--main-color);
+    color:#fff;
+ 
+}
+
+.title{
+    font-size: 24px;
+    color: var(--line-color);
+    margin-bottom: 10px;
+}
+
+
+.status-bar{
+    width: 100%;
+    background:var(--bg-color);
+    height: 72px;
+}
+
+
+.status-button{
+    background:var(--line-color);
+    width: 150px;
+}
+
+.status-a{
+    padding: 6px;
+    display: block;
+}
+
+
+.status-button :hover{
+    background:var(--main-color);
+    color: #fff;
+}
+
+.select{
+    width: 120px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.select-category{
+    width: 600px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.blog-search-input{
+    width: 150px;
+}
+
+.td-height{
+    height: 16px;
+}
