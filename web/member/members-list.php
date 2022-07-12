@@ -157,24 +157,6 @@ require("../../db-connect.php");
                             <?=$pageView?>&order=<?=$order?>"><?=$i?></a>
                     </li>
                     <?php endfor; ?>
-                    <li class="page-item">
-                        <a class="page-link"
-                            href="members-list.php?page=<?=$nextPage?>
-                            &pageView=<?=$pageView?>&order=<?=$order?>"
-                            aria-label="Next">
-                        <a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&<?= $PreviousPage ?>" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                        <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&page=<?= $i ?>"><?= $i ?></a></li>
-                    <?php endfor; ?>
-                    <li class="page-item">
-                        <a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&<?= $theNextPage ?>" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </div>
                 <li class="px-5 py-2">
                     第<?= $startItem ?>- <?= $endItem ?>筆,共 <?= $memberCount ?> 筆資料
                 </li>
