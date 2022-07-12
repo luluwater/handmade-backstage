@@ -29,6 +29,6 @@ $db_host = NULL;
             echo $content;
         ?>
     </div>
+    <button class="btn btn-success"><a style="all:unset" href="manage-blog.php" >回編輯列表</a></button>
 
-    <button ><a herf="manage-blog.php" class=" btn-bg-color"></a>返回</button>
 </div>
