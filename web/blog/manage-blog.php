@@ -74,9 +74,9 @@ try {
     $stmtCategory->execute();
 
     $rows = $sqlAll->fetchAll(PDO::FETCH_ASSOC);
-    $orderStmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $blogStmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $categories = $stmtCategory->fetchAll(PDO::FETCH_ASSOC);
-    $orderCount = count($rows);
+    $blogCount = count($rows);
 
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -89,8 +89,8 @@ $db_host = NULL;
 
 $startItem = ($page - 1) * $pageView + 1;
 $endItem = $page * $pageView;
-if ($endItem > $orderCount) $endItem = $orderCount;
-$totalPage = ceil($orderCount / $pageView);
+if ($endItem > $blogCount) $endItem = $blogCount;
+$totalPage = ceil($blogCount / $pageView);
 $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
 $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
@@ -227,7 +227,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             <tbody id="tbody">
 
 
-                    <?php foreach( $orderStmt as $row) :?>
+                    <?php foreach( $blogStmt as $row) :?>
                     <tr class="trHover border-bottom" class="articlesList" id="articlesList" data-id=<?=$row["id"]?>>
                         <td class="text-start pb-2">
                             <?php      
@@ -245,10 +245,13 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     </div>
                     </tr>
                     <?php endforeach; ?>
-
+                    <!-- spinner -->
+                    <div id="spinner" class="spinner-border position-absolute top-50 start-50 d-none" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
             </tbody>
         </table>
-        <div class="mt-3 text-end">共 <?= $orderCount ?>筆資料</div>
+        <div class="mt-3 text-end">共 <?= $blogCount ?>筆資料</div>
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
@@ -257,12 +260,12 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-
+                
                     <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                         <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="manage-blog.php?page=<?= $i ?>&pageView=<?= $pageView ?>&order=<?= $order ?>"><?= $i ?></a></li>
                     <?php endfor; ?>
 
-
+                
                     <li class="page-item">
                         <a class="page-link" href="manage-blog.php?page=<?= $nextPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
@@ -454,6 +457,9 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         start:start,
                         pageView:pageView
                     },
+                    beforeSend: function() {
+                        $("#spinner").removeClass('d-none');
+                    },
                     success:function(data){
                         $("#tbody").html(data)
                         location.reload()
@@ -463,7 +469,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
         }
 
-
+    
         let deleteBtn = document.querySelectorAll(".delete-btn");
         let confirm = document.querySelector("#confirm");
         let close = document.querySelector("#close");
@@ -475,7 +481,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                 confirm.classList.remove('hide')
             })
         }
-
         close.addEventListener('click', () => {
             confirm.classList.add('hide')
         })
