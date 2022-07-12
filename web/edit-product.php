@@ -78,7 +78,7 @@ $db_host = NULL;
                         <input class="img-state" type="hidden" name="change<?=$i?>" value="unchange">
                         <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*">
                         <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
-                        <i class="fa-solid fa-xmark text-light position-absolute top-0 end-0 translate-end p-1 cancel-img d-none"></i>
+                        <i class="fa-solid fa-xmark text-light position-absolute top-0 end-0 translate-end p-1 cancel-img"></i>
                     </div>
                     <?php endfor; ?>
                 </div>
@@ -164,6 +164,10 @@ $db_host = NULL;
             upload_images[i].addEventListener("change",function(){
                 const myFile=this.files[0];                
                 const img=previewImages[i];
+                if(myFile==undefined){
+                    cancel_img[i].click();
+                    return;
+                }
                 const objUrl=URL.createObjectURL(myFile);
                 const state=imgs_state[i];
                 img.src=objUrl;

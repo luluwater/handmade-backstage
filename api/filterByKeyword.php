@@ -9,7 +9,10 @@ if(isset($_POST["inputVal"])){
 
     $stmtKeyword=$db_host->prepare("SELECT blog.*,category.category_name 
     FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 AND blog.title LIKE '%$inputVal%' OR category.category_name LIKE '%$inputVal%' ORDER BY $orderType LIMIT $start,$pageView");
+<<<<<<< HEAD
 
+=======
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
 }else{
     $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 LIMIT $start,$pageView");
 }

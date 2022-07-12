@@ -4,7 +4,10 @@ require_once("../../db-connect.php");
 $current_id=$_GET["id"];
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
 
 $stmtBlog=$db_host->prepare("SELECT blog.*,category.category_name, store.* FROM blog 
 JOIN category ON blog.category_id = category.id 
@@ -43,14 +46,21 @@ $db_host = NULL;
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<<<<<<< HEAD
 
+=======
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
   <link rel="stylesheet" href="./style/blog.css">
   <link rel="stylesheet" href="../../css/style.css">
  
   <!-- Bootstrap CSS v5.2.0-beta1 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<<<<<<< HEAD
 
+=======
+   
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
 </head>
 
 <body>
@@ -68,13 +78,19 @@ $db_host = NULL;
 
   </header>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
 
   <form action="do-edit-blog.php">
       <div class="container mt-5 text-center" style="">
         <div class="text-center text-center"> 發布於
           <?php
+<<<<<<< HEAD
 
+=======
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
                 $date=new DateTime($blog[0]["create_time"]);
                 echo  $date->format('M-d-Y H:i:s');
             ?></div>
@@ -116,7 +132,10 @@ $db_host = NULL;
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
   <div class=" d-flex gap-5 justify-content-around">
     <?php foreach($comments as $comment): ?>
         <div class="card my-5">
@@ -153,7 +172,10 @@ $db_host = NULL;
 
 </body>
 <script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
 
 </script>
 

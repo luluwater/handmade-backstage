@@ -17,6 +17,10 @@ if(isset($_POST["submit_data"])){
     
     if( $state=="發布"){
         $stmt=$db_host->prepare("INSERT INTO blog(title,content,create_time,category_id, store_id,state,valid) VALUES ('$title','$content','$pubilshTime', '$category', $storeId,'$state',1)");
+<<<<<<< HEAD
+=======
+
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
         header('refresh:2; url=manage-blog.php');
         echo "發布成功";
     }

@@ -23,10 +23,12 @@ $db_host = NULL;
  
 ?>
 
-<div id="test">
-        <div id="editor" name="content">
+<div id="test" style="text-align:start">
+        <div id="editor"  name="content">
             <?php
             echo $content;
         ?>
     </div>
+
+    <button ><a herf="manage-blog.php" class=" btn-bg-color"></a>返回</button>
 </div>

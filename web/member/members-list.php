@@ -2,6 +2,7 @@
 //連線路徑調調整===========================================
 require("../../db-connect.php");
 //=======================================================
+
 ?>
 
 <!doctype html>
@@ -19,9 +20,7 @@ require("../../db-connect.php");
     <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
     <!-- css路徑調整 ============================================= -->
 
-    <head>
-        <link rel="stylesheet" href="../../css/style.css">
-    </head>
+    <link rel="stylesheet" href="../../css/style.css">
     <!-- ========================================================= -->
     <style>
     :root {
@@ -31,19 +30,18 @@ require("../../db-connect.php");
         --main-word-color: #3F3F3F;
         --header-hieght: 100px;
     }
-
     .title {
         font-size: 26px;
         color: var(--line-color);
     }
-
     .table {
         min-height: 200px;
     }
-
-    main {
-        /* padding: 30px 100px 0 300px;  */
+    .hover:hover{
+        background: #E2E2E2;
+        color: var(---main-word-color);
     }
+
     </style>
 </head>
 
@@ -53,20 +51,30 @@ require("../../db-connect.php");
     <?php require("do-members-list.php") ?>
     <!-- ====================================================== -->
     <main>
-        <div class="d-flex justify-content-between">
-            <p class="title">會員管理</p>
+        <form action="members-list.php" method="get">
+            <div class="row my-4">
+                <div class="col-6">
+                    <input class="form-control mx-2" name="search" placeholder="請輸入會員帳號">
+                </div>
+                <div class="col-2">
+                    <button type="submit"  class="btn btn-bg-color">搜尋</button>
+                </div>
+            </div>
+        </form>
+        <!-- 顯示筆數 -->
+        <div class="d-flex justify-content-between ">
+            <h2 class="main-h2 mt-3 ms-3">會員管理</h2>
             <div class="d-flex justify-content-between align-items-center display-page-box">
-                <!-- 路徑調整 ============================================= -->
-                <form action="members-list.php" method="GET">
-                    <!-- ====================================================== -->
-                    <p>顯示每頁
-                        <select class="count-bg text-center" aria-label="Default select example" name="pageView"
-                            onchange="submit();">
-                            <option value="5" <?php if ($pageView == '5') print 'selected ';?>>5</option>
-                            <option value="10" <?php if ($pageView == '10') print 'selected ';?>>10</option>
-                        </select>
-                        筆會員
-                    </p>
+                <p class="m-0">顯示&nbsp;&nbsp;</p>
+                <form action="" method="get" class="pageForm" class="text-center">
+                    <select name="pageView" class="display-page form-select mx-1 " id="pageView">
+                        <option value="5" <?php if ($pageView == '5') print 'selected '; ?>> 5 </option>
+                        <option value="10" <?php if ($pageView == '10') print 'selected '; ?>> 10 </option>
+                    </select>
+                </form>
+                <p class="m-0">&nbsp;&nbsp;筆</p>
+            </div>
+            <!-- 顯示筆數結束 -->
                 </form>
             </div>
         </div>
@@ -74,30 +82,39 @@ require("../../db-connect.php");
             <thead class="table-head">
                 <tr class="text-center align-middle fw-bold">
                     <td>
-                        <span class="d-flex justify-content-center align-items-center">會員編號
-                            <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act">
-                                <a href="members-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=1"
-                                    class="arrowBtn <?php if($order==1)echo "arrow-active"?>"><i
-                                        class="fa-solid fa-caret-up arrow-color"></i></a>
-                                <a href="members-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=2"
-                                    class="<?php if($order==2)echo "arrow-active"?>"><i
-                                        class="fa-solid fa-caret-down arrow-color"></i></a>
-                            </span>
-                        </span>
+                        <span class="d-flex justify-content-center align-items-center">編號
+                        <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act">
+                        <a href="<?=orderLink("1",$pageView,$order)?>" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>">
+                        <i class="fa-solid fa-caret-up arrow-color"></i></a>
+                        <a href="<?=orderLink("2",$pageView,$order)?>" class="<?php if ($order == 2) echo "arrow-active" ?>">
+                        <i class="fa-solid fa-caret-down arrow-color"></i>
+                        </a></span></span>
                     </td>
+<<<<<<< HEAD
                     <!-- <td class="col-2">會員編號 <a href="">
                         <i class="fa-solid fa-sort mx-2"></i></a></td> -->
+=======
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
                     <td class="col-1">帳號</td>
                     <td class="col-1">姓名</td>
                     <td class="col-4">地址</td>
                     <td class="col-2">電話</td>
-                    <td class="col-1">狀態</td>
+                    <td>
+                    <form action="members-list.php" method="GET">
+                        <select class="count-bg text-center" aria-label="Default select example" name="state" onchange="submit(); ">
+                            <option <?php if($state == "") print 'selected';?>>全部會員</option>
+                            <option value="1" <?php if ($state == '1') print 'selected ';?>>一般會員</option>
+                            <option value="2" <?php if ($state == '2') print 'selected ';?>>黑名單</option>
+                            <!-- <option class="fw-bold">狀態</option>     -->
+                        </select>
+                    </form>
+                    </td>
                     <td class="col-1">詳細資料</td>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($rows as $row): ?>
-                <tr class="text-center align-middle">
+                <?php foreach ( $memberPageCount as $row): ?>
+                <tr class="text-center align-middle hover">
                     <td><?=$row["id"]?></td>
                     <td><?=$row["account"]?></td>
                     <td><?=$row["name"]?></td>
@@ -112,10 +129,12 @@ require("../../db-connect.php");
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <div class="d-flex justify-content-center">
-            <nav aria-label="Page navigation example ">
-                <ul class="pagination mt-4 px-5">
+        <!-- 頁碼開始 -->
+            <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center mt-5">
+                <div class="d-flex">
                     <li class="page-item">
+<<<<<<< HEAD
                         <a class="page-link"
                             href="members-list.php?page=<?=$PreviousPage?>&pageView=
                             <?=$pageView?>&order=<?=$order?>"
@@ -135,14 +154,34 @@ require("../../db-connect.php");
                             href="members-list.php?page=<?=$nextPage?>
                             &pageView=<?=$pageView?>&order=<?=$order?>"
                             aria-label="Next">
+=======
+                        <a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&<?= $PreviousPage ?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                        <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&page=<?= $i ?>"><?= $i ?></a></li>
+                    <?php endfor; ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&<?= $theNextPage ?>" aria-label="Next">
+>>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
-                </ul>
+                </div>
+                <li class="px-5 py-2">
+                    第<?= $startItem ?>- <?= $endItem ?>筆,共 <?= $memberCount ?> 筆資料
+                </li>
+            </ul>
             </nav>
-            <div class="mt-4 pt-2">第 <?=$startItem?> - <?=$endItem?> 筆 , 共 <?=$membersAllCount?> 筆資料</div>
-        </div>
+        <!-- 頁碼結束 -->
         </div>
 </body>
+<script>
+        const pageView = document.querySelector("#pageView");
+        pageView.addEventListener("change", function() {
+            window.location.assign("<?= orderLink("pageView", $pageView, $order) ?>");
+        })
+</script>
 
 </html>
