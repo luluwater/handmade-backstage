@@ -10,6 +10,7 @@ if(isset($_POST["inputVal"])){
     $stmtKeyword=$db_host->prepare("SELECT blog.*,category.category_name 
     FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 AND blog.title LIKE '%$inputVal%' OR category.category_name LIKE '%$inputVal%' ORDER BY $orderType LIMIT $start,$pageView");
 }else{
+    echo $inputVal;
     $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 LIMIT $start,$pageView");
 }
 
@@ -17,7 +18,8 @@ try {
     $stmtKeyword->execute();
     $keywordQuery = $stmtKeyword->fetchAll(PDO::FETCH_ASSOC);
     $orderCount = count($keywordQuery);
-   
+
+    // print_r($keywordQuery[0]["content"]);
    
 
 } catch (PDOException $e) {

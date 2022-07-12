@@ -9,7 +9,8 @@ if(isset($_POST["submit_data"])){
     $category=$_POST["category"];
     $state=$_POST["submit_data"];
     $content = str_replace( '&', '&amp;',$content );
-    echo $state;
+
+    // echo $content;
 
     if(isset($_POST["isPublish"])){
         
