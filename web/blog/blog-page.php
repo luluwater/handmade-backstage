@@ -4,6 +4,7 @@ require_once("../../db-connect.php");
 $current_id=$_GET["id"];
 
 
+
 $stmtBlog=$db_host->prepare("SELECT blog.*,category.category_name, store.* FROM blog 
 JOIN category ON blog.category_id = category.id 
 JOIN store ON blog.store_id = store.id
@@ -20,6 +21,7 @@ try {
     $blog = $stmtBlog->fetchAll(PDO::FETCH_ASSOC);
     $stmtComments->execute();
     $comments = $stmtComments->fetchAll(PDO::FETCH_ASSOC);
+
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
     echo "Error: " . $e->getMessage() . "<br/>";
@@ -40,7 +42,6 @@ $db_host = NULL;
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <link rel="stylesheet" href="./style/blog.css">
   <link rel="stylesheet" href="../../css/style.css">
  
@@ -66,7 +67,6 @@ $db_host = NULL;
   </header>
 
 
-
   <form action="do-edit-blog.php">
       <div class="container mt-5 text-center" style="">
         <div class="text-center text-center"> 發布於
@@ -74,7 +74,6 @@ $db_host = NULL;
                 $date=new DateTime($blog[0]["create_time"]);
                 echo  $date->format('M-d-Y H:i:s');
             ?></div>
-
 
         <input type="text" class="d-none" value="<?=$blog[0]["id"]?>">
         <input type="text" name="blogTitle" class="blogTitleInput mt-5"  value="<?=$blog[0]["title"]?>">
@@ -109,7 +108,6 @@ $db_host = NULL;
       <a  href="<?=$blog[0]["FB_url"]?>"><i  class="fs-4 fab fa-facebook-square"></i></a>
       <a  href="<?=$blog[0]["IG_url"]?>"><i class="fs-4 fab fa-instagram-square"></i></a>
     </form>
-
 
 
 
@@ -150,14 +148,9 @@ $db_host = NULL;
 
 </body>
 <script>
-BalloonEditor
-  .create(document.querySelector('#editor'))
-  .catch(error => {
-    console.error(error);
-  });
-
 
 </script>
 
 </html>
+
 

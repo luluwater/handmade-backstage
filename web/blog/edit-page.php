@@ -65,7 +65,7 @@ $db_host = NULL;
             ?>
         </div>
 
-        <div id="insert">
+      
             <input type="text" class="d-none" id="currentId" name="currentId" value="<?=$blog[0]["BLOG_ID"]?>">
             <input type="text" name="blogTitle" id="blogTitle" class="blogTitleInput mt-5"
                 value="<?=$blog[0]["title"]?>">
@@ -77,7 +77,7 @@ $db_host = NULL;
                 <span class="badge bg-secondary"><?=$blog[0]["name"]?></span>
             </div>
             <hr>
-
+        <div id="insert">
             <div id="editor" name="content">
                 <?php
                     $newString=$blog[0]["content"];
