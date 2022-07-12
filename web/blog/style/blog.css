@@ -178,8 +178,6 @@
 }
 
 
-
-
 .blogTitleInput{    
     all: unset;
     font-size: 35px;
@@ -196,3 +194,7 @@
     color: var(--main-color);
     font-size: 50px;
 }   
+
+.active{
+    background:var(--main-color);
+}

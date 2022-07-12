@@ -1,38 +1,4 @@
-<?php
-require_once("../../db-connect.php");
 
-$current_id=$_GET["id"];
-
-
-
-$stmtBlog=$db_host->prepare("SELECT blog.*,category.category_name, store.* FROM blog 
-JOIN category ON blog.category_id = category.id 
-JOIN store ON blog.store_id = store.id
-WHERE blog.id=$current_id");
-
-$stmtComments=$db_host->prepare("SELECT comment.*, user.* FROM comment 
-JOIN user ON comment.user_id = user.id
-WHERE comment.blog_id=$current_id");
-
-
-
-try {
-    $stmtBlog->execute();
-    $blog = $stmtBlog->fetchAll(PDO::FETCH_ASSOC);
-    $stmtComments->execute();
-    $comments = $stmtComments->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    echo "預處理陳述式執行失敗！ <br/>";
-    echo "Error: " . $e->getMessage() . "<br/>";
-    $db_host = NULL;
-    exit;
-}
-
-
-$db_host = NULL;
-
-?>
 
 <!doctype html>
 <html lang="en">

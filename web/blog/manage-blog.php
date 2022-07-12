@@ -5,6 +5,9 @@ $order=isset($_GET["order"]) ? $_GET["order"] : 1;
 $page=isset($_GET["page"]) ? $_GET["page"] : 1;
 $pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']) : 5;
 $start = ($page - 1) * $pageView;
+$status=isset($_GET["status"]) ? $_GET["status"] : "all";
+
+
 
 
 switch ($order) {
@@ -43,11 +46,25 @@ switch ($order) {
 }
 
 
-$stmt=$db_host->prepare("SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1  ORDER BY $orderType LIMIT $start,$pageView");
+switch ($status) {
+    case 'publish':
+    $statusType="發布";
+        break;
+    
+    case 'unPublish':
+     $statusType="未發布";
+        break;
+}
 
+if($status=="all"){
+    $sql="SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1 ORDER BY $orderType LIMIT $start,$pageView";
+}else{
+    $sql="SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1 AND state='$statusType' ORDER BY $orderType LIMIT $start,$pageView";
+}
+
+$stmt=$db_host->prepare($sql);
 
 $stmtCategory=$db_host->prepare("SELECT * FROM category");
-
 $sqlAll = $db_host->prepare("SELECT * FROM blog WHERE valid=1");
 
 
@@ -57,9 +74,9 @@ try {
     $stmtCategory->execute();
 
     $rows = $sqlAll->fetchAll(PDO::FETCH_ASSOC);
-    $orderStmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $blogStmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $categories = $stmtCategory->fetchAll(PDO::FETCH_ASSOC);
-    $orderCount = count($rows);
+    $blogCount = count($rows);
 
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
@@ -72,8 +89,8 @@ $db_host = NULL;
 
 $startItem = ($page - 1) * $pageView + 1;
 $endItem = $page * $pageView;
-if ($endItem > $orderCount) $endItem = $orderCount;
-$totalPage = ceil($orderCount / $pageView);
+if ($endItem > $blogCount) $endItem = $blogCount;
+$totalPage = ceil($blogCount / $pageView);
 $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
 $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
@@ -109,19 +126,18 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 <body>
 
     <?php require("../main-menu.html");?>
-
     <main>
       <div class="title">文章管理</div>
-        <div class="status-bar">
+        <div class="status-bar" id="status-bar">
             <ul class="d-flex list-unstyled justify-content-around align-items-center m-0 h-100">
                 <li class="status-button ">
-                <a href="" class=  "status-a text-center fs-5 ">全部文章</a>
+                <a href="manage-blog.php?page=<?=$page?>&pageView=<?= $pageView?>&order=<?=$order?>&status=all" id="allAcritle" class="status-a text-center fs-5 <?php if($status=="all") echo "active"?>">全部文章</a>
                 </li>
                 <li class="status-button">
-                <a href="" class="status-a text-center fs-5 ">已發表</a>
+                <a href="manage-blog.php?page=<?=$page?>&pageView=<?= $pageView?>&order=<?=$order?>&status=publish" id="publishAcritle" class="status-a text-center fs-5 <?php if($status=="publish") echo "active"?>">已發表</a>
                 </li>
                 <li class="status-button">
-                <a href="" class="status-a text-center fs-5">隱藏文章</a>
+                <a href="manage-blog.php?page=<?=$page?>&pageView=<?= $pageView?>&order=<?=$order?>&status=unPublish" id="hiddenAcritle" class="status-a text-center fs-5 <?php if($status=="unPublish") echo "active"?>">未發布</a>
                 </li>
 
             </ul>
@@ -143,7 +159,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         placeholder="Search..."
                         aria-label="search with text input field" 
                         name="typeKeyword">
-                    <div class="d-flex gap-4 align-items-start d-none" id="typeDate"   name="typeDate">
+                    <div class="d-flex gap-4 align-items-start d-none" id="typeDate"  name="typeDate">
                     <input  type="date" 
                             class="form-control fs-6" 
                             name="fromDate" 
@@ -198,12 +214,12 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         <table class="table h-0 mt-4 mb-0 text-center" id="table">
             <thead class="table-head">
                 <tr>
-                    <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 日期 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=1" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=2" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                    <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 日期 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=1&status=<?=$status?>" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=2&status=<?=$status?>" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
                     <td class="col-3 text-start">文章標題</td>
-                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 分類 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=3" class="arrowBtn <?php if ($order == 3) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=4" class="<?php if ($order == 4) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
-                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 狀態 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=5" class="arrowBtn <?php if ($order == 5) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=6" class="<?php if ($order == 6) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
-                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 留言 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=7" class="arrowBtn <?php if ($order == 7) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=8" class="<?php if ($order == 8) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
-                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 收藏 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=9" class="arrowBtn <?php if ($order == 9) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=10" class="<?php if ($order == 10) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 分類 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=3&status=<?=$status?>" class="arrowBtn <?php if ($order == 3) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=4&status=<?=$status?>" class="<?php if ($order == 4) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 狀態 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=5&status=<?=$status?>" class="arrowBtn <?php if ($order == 5) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=6&status=<?=$status?>" class="<?php if ($order == 6) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 留言 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=7&status=<?=$status?>" class="arrowBtn <?php if ($order == 7) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=8&status=<?=$status?>" class="<?php if ($order == 8) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
+                      <td  class="col-1 text-start"><span class="d-flex justify-content-center align-items-center"> 收藏 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=9&status=<?=$status?>" class="arrowBtn <?php if ($order == 9) echo "arrow-active" ?>"><i class="fas fa-sort-up arrow-color"></i></a> <a href="manage-blog.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=10&status=<?=$status?>" class="<?php if ($order == 10) echo "arrow-active" ?>"><i class="fas fa-sort-down arrow-color"></i></a></span></span></td>
                     <td class="col-1 text-end">刪除</td>
                 </tr>
             </thead>
@@ -211,7 +227,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             <tbody id="tbody">
 
 
-                    <?php foreach( $orderStmt as $row) :?>
+                    <?php foreach( $blogStmt as $row) :?>
                     <tr class="trHover border-bottom" class="articlesList" id="articlesList" data-id=<?=$row["id"]?>>
                         <td class="text-start pb-2">
                             <?php      
@@ -229,10 +245,13 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     </div>
                     </tr>
                     <?php endforeach; ?>
-
+                    <!-- spinner -->
+                    <div id="spinner" class="spinner-border position-absolute top-50 start-50 d-none" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
             </tbody>
         </table>
-        <div class="mt-3 text-end">共 <?= $orderCount ?>筆資料</div>
+        <div class="mt-3 text-end">共 <?= $blogCount ?> 篇文章</div>
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
@@ -241,12 +260,12 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-
+                
                     <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                         <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="manage-blog.php?page=<?= $i ?>&pageView=<?= $pageView ?>&order=<?= $order ?>"><?= $i ?></a></li>
                     <?php endfor; ?>
 
-
+                
                     <li class="page-item">
                         <a class="page-link" href="manage-blog.php?page=<?= $nextPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
@@ -272,7 +291,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
         $("#searchType").on("change",function(){
             const value = $(this).val();
-    
             switch (value) {
                 case "keyword":
                     $("#typeKeyword").removeClass("d-none")
@@ -293,6 +311,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     break;
             }
         })
+
 
         /**
          * 使用類別篩選事件
@@ -423,6 +442,9 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         start:start,
                         pageView:pageView
                     },
+                    beforeSend: function() {
+                        $("#spinner").removeClass('d-none');
+                    },
                     success:function(data){
                         $("#tbody").html(data)
                         location.reload()
@@ -432,7 +454,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
         }
 
-
+    
         let deleteBtn = document.querySelectorAll(".delete-btn");
         let confirm = document.querySelector("#confirm");
         let close = document.querySelector("#close");
@@ -444,7 +466,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                 confirm.classList.remove('hide')
             })
         }
-
         close.addEventListener('click', () => {
             confirm.classList.add('hide')
         })
