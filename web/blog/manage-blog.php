@@ -313,21 +313,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         })
 
 
-        
-// publishAcritle
-// hiddenAcritle
-
-                
-
-        // $("#status-bar").on("click",function(e){
-            
-        //     const target=e.target
-        //     if(target.)
-        //     console.log(target)
-        
-
-        // })
-
         /**
          * 使用類別篩選事件
          */

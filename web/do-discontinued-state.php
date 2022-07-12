@@ -20,7 +20,7 @@ foreach($checked_id as $id){
             $stmt->execute([$id]);    
             break;
         case "product":
-            $stmt=$db_host->prepare("UPDATE course SET state=$state WHERE id=?");
+            $stmt=$db_host->prepare("UPDATE product SET state=$state WHERE id=?");
             $stmt->execute([$id]); 
             break;
     }    

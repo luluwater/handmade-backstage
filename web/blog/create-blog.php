@@ -118,7 +118,7 @@ $db_host = NULL;
             <div>相關店家</div>
             <select name="store" class="w-50 rounded" id="store">
               <?php foreach($stores as $store): ?>
-              <option name="<?=$store["name"]?>" value="<?=$store["name"]?>"><?=$store["name"]?></option>
+              <option name="<?=$store["name"]?>" value="<?=$store["id"]?>"><?=$store["name"]?></option>
               <?php endforeach; ?>
             </select>
           </div>
@@ -488,6 +488,7 @@ $db_host = NULL;
           html = document.createElement("option");
           html.textContent = result.name;
           html.setAttribute("name", result.id, );
+          html.setAttribute("value", result.id, );
           store.prepend(html);
         }
       }).fail(function(jqXHR, textStatus) {
@@ -496,31 +497,6 @@ $db_host = NULL;
   })
 
 
-  // $(document).ready(function(){
-  //     $("#save").click(function(){
-  //         var Content = CKEDITOR.instances['Content'].getData();
-  //                 $.ajax({
-  //     url: "do-create-blog.php",
-  //     type: "POST",
-  //     data: {
-  //     Content: Content
-  //     },
-  //     cache: false,
-  //     success: function(dataResult){
-  //     var dataResult = JSON.parse(dataResult);
-  //     if(dataResult.statusCode==200){
-
-  //     $('#success').html('Data Saved successfully !');
-  //     }
-  //     else if(dataResult.statusCode==201){
-  //     alert("Error occured !");
-  //     }
-
-  //     }
-  //     });
-  //     });
-  //     CKEDITOR.replace('Content');
-  // });
   </script>
 </body>
 
