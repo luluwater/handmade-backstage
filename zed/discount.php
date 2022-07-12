@@ -45,19 +45,19 @@ isset($_GET["sale_state_category"]) ? $sale_state_category = $_GET["sale_state_c
 
 // 1=接下來 2=進行中 3=已結束
 if ($keyword != "" && $sale_state_category == "") {
-    $sqlWhere = "WHERE discount.name LIKE '%$keyword%'";
+    $sqlWhere = "AND discount.name LIKE '%$keyword%'";
 } elseif ($keyword != "" && $sale_state_category == "1") {
-    $sqlWhere = "WHERE discount.state = 1 AND  discount.name LIKE '%$keyword%' ";
+    $sqlWhere = "AND discount.state = 1 AND  discount.name LIKE '%$keyword%' ";
 } elseif ($keyword != "" && $sale_state_category == "2") {
-    $sqlWhere = "WHERE discount.state = 2 AND discount.name LIKE '%$keyword%' ";
+    $sqlWhere = "AND discount.state = 2 AND discount.name LIKE '%$keyword%' ";
 } elseif ($keyword != "" && $sale_state_category == "3") {
-    $sqlWhere = "WHERE discount.state = 3 AND discount.name LIKE '%$keyword%' ";
+    $sqlWhere = "AND discount.state = 3 AND discount.name LIKE '%$keyword%' ";
 } elseif ($sale_state_category == "1") {
-    $sqlWhere = "WHERE discount.state = 1";
+    $sqlWhere = "AND discount.state = 1";
 } elseif ($sale_state_category == "2") {
-    $sqlWhere = "WHERE discount.state = 2";
+    $sqlWhere = "AND discount.state = 2";
 } elseif ($sale_state_category == "3") {
-    $sqlWhere = "WHERE discount.state = 3";
+    $sqlWhere = "AND discount.state = 3";
 } else {
     $sqlWhere = "";
 }
@@ -67,7 +67,7 @@ if ($keyword != "" && $sale_state_category == "") {
 
 $sql = $db_host->prepare("SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
 JOIN sale_state_category ON discount.state = sale_state_category.id  
-$sqlWhere AND discount.state!=0 ORDER BY id  LIMIT $start , $pageView");
+WHERE discount.state!=0 $sqlWhere ORDER BY id  LIMIT $start , $pageView");
 
 $sql->execute();
 $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
