@@ -248,8 +248,9 @@ a{
     background: url("../img/previewImage.jpg");    
 }
 .up-down{
-    color: var(--main-word-color);
+    color: var(--line-color);
 }
 .up-down:hover{
     color:var(--main-color);
+    cursor: pointer;
 }
