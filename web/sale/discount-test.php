@@ -130,7 +130,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
 <body>
   <?php
-  require("./main-menu.html");
+  require("../main-menu.html");
   ?>
 
   <main>
