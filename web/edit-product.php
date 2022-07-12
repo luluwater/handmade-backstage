@@ -78,7 +78,7 @@ $db_host = NULL;
                         <input class="img-state" type="hidden" name="change<?=$i?>" value="unchange">
                         <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*">
                         <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
-                        <i class="fa-solid fa-xmark text-light position-absolute top-0 end-0 translate-end p-1 cancel-img"></i>
+                        <i class="fa-solid fa-xmark text-light position-absolute top-0 end-0 translate-end p-1 cancel-img d-none"></i>
                     </div>
                     <?php endfor; ?>
                 </div>
