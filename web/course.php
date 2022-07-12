@@ -60,7 +60,7 @@ $stmtCategory=$db_host->prepare("SELECT * FROM category");
 $stmtCategory->execute();
 $rowsCategory=$stmtCategory->fetchALL(PDO::FETCH_ASSOC);
 if($searchText != "" && $searchType !=""){
-  $sqlWhere="WHERE $searchType LIKE '%$searchText%'";
+  $sqlWhere="AND $searchType LIKE '%$searchText%'";
 }else{
   $sqlWhere="";
 }
@@ -69,13 +69,13 @@ if($type=="course"){
   $stmtAll=$db_host->prepare("SELECT *,category.category_name FROM course 
   JOIN course_img ON course.id=course_img.course_id 
   JOIN category ON course.category_id=category.id 
-  $sqlWhere
+  WHERE isDelete=0 $sqlWhere
   GROUP BY course_id");
 
-  $stmt=$db_host->prepare("SELECT course.id,course_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM course 
+  $stmt=$db_host->prepare("SELECT course.id,course_img.img_name,name,category.category_en_name,amount,price,sold_amount,state,user_like FROM course 
   JOIN category ON course.category_id=category.id 
   JOIN course_img ON course.id=course_img.course_id
-  $sqlWhere
+  WHERE isDelete=0 $sqlWhere
   GROUP BY id 
   ORDER BY state $orderStateType ,$secendOrder
   LIMIT $start,$amount_limit");
@@ -83,13 +83,13 @@ if($type=="course"){
   $stmtAll=$db_host->prepare("SELECT *,category.category_name FROM product 
   JOIN product_img ON product.id=product_img.product_id 
   JOIN category ON product.category_id=category.id
-  $sqlWhere
+  WHERE isDelete=0 $sqlWhere
   GROUP BY product_id");
   
-  $stmt=$db_host->prepare("SELECT product.id,product_img.img_name,name,category.category_en_name,amount,price,sold_amount,state FROM product 
+  $stmt=$db_host->prepare("SELECT product.id,product_img.img_name,name,category.category_en_name,amount,price,sold_amount,state,user_like FROM product 
   JOIN category ON product.category_id=category.id 
   JOIN product_img ON product.id=product_img.product_id
-  $sqlWhere
+  WHERE isDelete=0 $sqlWhere  
   GROUP BY id
   ORDER BY state $orderStateType ,$secendOrder  
   LIMIT $start,$amount_limit");
@@ -127,6 +127,8 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="./order/css/order-list-style.css">
+
 </head>
 
 <body>
@@ -198,7 +200,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                   </a>
                   </td>
                   <td class="col-1">收藏數 
-                    <a href="course.php?type=<?=$type?>&amount-limit=<?=$amount_limit?>">
+                    <a href="<?=orderLink("user_like",$amount_limit,$orderType,$order,$orderState)?>">
                     <i class="fa-solid fa-sort mx-2 text-dark"></i>
                   </a>
                   </td>
@@ -220,8 +222,11 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                     <td><?=$row["price"]?></td>
                     <td><?=$row["sold_amount"]?></td>                    
                     <td><input type="checkbox" class="form-check-input" <?php if($row["state"]==1)print("checked") ?> disabled></td>
-                    <td></td>
-                    <td><a class="text-dark" href="edit-product.php?type=<?=$type?>&id=<?=$row["id"]?>"><i class="fa-solid fa-pen"></i></a></td>
+                    <td><?=$row["user_like"]?></td>
+                    <td>
+                      <a class="m-2 up-down" href="edit-product.php?type=<?=$type?>&id=<?=$row["id"]?>"><i class="fa-solid fa-pen"></i></a>
+                      <a class="delete m-2 up-down" data-id="<?=$row["id"]?>"><i class="fa-solid fa-trash" ></i></a>
+                    </td>
                   </tr>
                   <?php endforeach; ?>
               </tbody>
@@ -245,7 +250,16 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
             </nav>
         </div>
     </main>
-
+    <div class="confirm d-none" id="confirm">
+      <div class="popup d-flex align-items-center">
+        <div class="close" id="close">X</div>
+        <div class="content">
+            <h3 class="confirm-h3 my-3">是否確定刪除?</h3>
+            <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
+            <a href="" class="btn btn-main-color confirm-btn" id="confirm-btn">確認</a>
+        </div>
+      </div>
+    </div>
     <script>
       const amount_limit_select=document.querySelector("#amount-limit");
       amount_limit_select.addEventListener("change",function(){
@@ -268,6 +282,19 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
           }
         }
       })
+      const confirm = document.querySelector("#confirm");
+      const close = document.querySelector("#close");
+      const deletes=document.querySelectorAll(".delete");
+      close.addEventListener('click', () => {
+        confirm.classList.add('d-none');
+      })
+      for(let deleteBtn of deletes)
+        deleteBtn.addEventListener("click",function(){
+        confirm.classList.remove('d-none');
+        confirmBtn=confirm.querySelector("#confirm-btn");
+        confirmBtn.setAttribute("href",`do-delete-product.php?type=<?=$type?>&id=${this.dataset.id}`);
+      })
+
       
     </script>
 </body>
