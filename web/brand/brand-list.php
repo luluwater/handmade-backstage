@@ -65,6 +65,8 @@ try {
     <main>
      
   <p class="title">管理分類</p>  
+  <a class="btn btn-main-color" 
+                href="store.php">回到品牌管理</a>
     <form action="do-Delete.php" method="post">
       <div class="text-end my-4">
         <table class="table align-items-center">

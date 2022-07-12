@@ -1,8 +1,8 @@
 <?php
 require("../../db-connect.php");
 
-$sql = "SELECT store.* ,category.category_name, store.valid AS storeValid FROM store
-JOIN category ON store.category_id = category.id ";
+$sql = "SELECT store.* ,category.category_name FROM store
+JOIN category ON store.category_id = category.id WHERE store.valid= 1";
 
 $result= $db_host->prepare($sql);
 
@@ -37,12 +37,12 @@ try {
         <link rel="stylesheet" href="../../css/style.css">
     <style>
       .title{
-        color:var(--line-color);
-        margin-top:5px;
-        font-size:24px;
+        color:var(--main-color);
+        font-size:36px;
+        margin-bottom:24px;
       }
       .delAndAdd{
-        padding-top:60px;
+        padding-top:24px;
       }
       .side{
         background:var(--bg-color); 
@@ -54,12 +54,13 @@ try {
          
       }
       .btnClass {
-        margin-top:50px;
-        padding:10px;
+        margin-top:60px;
         color:white;
         background: var( --line-color);
          border:1px solid var( --line-color);
          border-radius:10%;
+         font-size:24px;
+
       }
       .count-bg{
         margin-bottom:20px;
@@ -90,7 +91,7 @@ try {
     ?>
      <main>
              <div class="container-fluid">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between mb-3">
                 <p class="title">品牌管理</p>  
                 <!-- <p>顯示 
                   <select class="count-bg text-center" aria-label="Default select example">
@@ -109,9 +110,10 @@ try {
             </div>
            <!-- form 配呵input type="submit name=要輸入的職" -->
            <form action="do-store-delete.php" method="get">
+        
              <div class=" d-flex justify-content-between my-4">
-                   <a class=" title btnClass" href="brand-list.php">管理分類</a>
-                <div class="delAndAdd ">
+                    <a class=" d-flex align-content-center mb-4 btnClass" href="brand-list.php">管理分類</a>
+                <div class="delAndAdd mt-3 ">
                   <input class=" -main-color m-4" name="delete" type="submit" value="刪除店家">
                     <a href="brand-List-detail.php" class=" text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增店家</a>
                 </div>     
@@ -125,11 +127,11 @@ try {
                           <input value="<?=$row["id"] ?>" name="checkbox" 
                             class="me-4" type="checkbox">
                          <figure class="ratio ratio-4x3 mb-2">
-                             <img class="object-cover" src="imagesTest/<?= $row["img"] ?>" alt="">
+                             <img class=" border border-secondary object-cover" src="imagesTest/<?= $row["img"] ?>" alt="">
                         </figure>
                              <div class="text-center"><?= $row["name"] ?></div>
                              
-                             <div class="text-center "><?= $row["category_name"] ?>
+                             <div class="text-center ">類型:&nbsp<?= $row["category_name"] ?>
                             </div>
                     
                           <div class=" d-flex  justify-content-center">                       

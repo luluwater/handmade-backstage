@@ -3,14 +3,7 @@ require_once("../../db-connect.php");
 
 $current_id=$_GET["id"];
 
-<<<<<<< HEAD
-$stmt=$db_host->prepare("SELECT * FROM blog WHERE id=$current_id");
 
-
-try {
-    $stmt->execute();
-    $blog = $stmt->fetchAll(PDO::FETCH_ASSOC);
-=======
 
 
 $stmtBlog=$db_host->prepare("SELECT blog.*,category.category_name, store.* FROM blog 
@@ -30,7 +23,6 @@ try {
     $stmtComments->execute();
     $comments = $stmtComments->fetchAll(PDO::FETCH_ASSOC);
 
->>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
     echo "Error: " . $e->getMessage() . "<br/>";
@@ -51,21 +43,14 @@ $db_host = NULL;
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<<<<<<< HEAD
-  <link rel="stylesheet" href="../../css/style.css">
-  <!-- Bootstrap CSS v5.2.0-beta1 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-=======
   <link rel="stylesheet" href="./style/blog.css">
   <link rel="stylesheet" href="../../css/style.css">
  
   <!-- Bootstrap CSS v5.2.0-beta1 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-   
->>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
+
 </head>
 
 <body>
@@ -83,39 +68,17 @@ $db_host = NULL;
 
   </header>
 
-<<<<<<< HEAD
-  <div class="container mt-5 text-center" style="">
-    <div class="text-center text-center"> 發布於
-      <?php
-=======
+
 
   <form action="do-edit-blog.php">
       <div class="container mt-5 text-center" style="">
         <div class="text-center text-center"> 發布於
           <?php
->>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
+
                 $date=new DateTime($blog[0]["create_time"]);
                 echo  $date->format('M-d-Y H:i:s');
             ?></div>
 
-<<<<<<< HEAD
-
-    <h3 class="text-center my-4"><?=$blog[0]["title"]?></h3>
-    <h5>by 黑色小花貓</h5>
-    <div class="text-center my-4">
-      <span class="badge bg-secondary"><?=$blog[0]["title"]?></span>
-      <span class="badge bg-secondary"><?=$blog[0]["title"]?></span>
-      <span class="badge bg-secondary"><?=$blog[0]["title"]?></span>
-    </div>
-    <hr>
-
-
-    <div class='text-center'>
-      <article>
-        <?=$blog[0]["content"]?>
-      </article>
-    </div>
-=======
         <input type="text" class="d-none" value="<?=$blog[0]["id"]?>">
         <input type="text" name="blogTitle" class="blogTitleInput mt-5"  value="<?=$blog[0]["title"]?>">
         <h3 class="text-center my-4"></h3>
@@ -149,13 +112,11 @@ $db_host = NULL;
       <a  href="<?=$blog[0]["FB_url"]?>"><i  class="fs-4 fab fa-facebook-square"></i></a>
       <a  href="<?=$blog[0]["IG_url"]?>"><i class="fs-4 fab fa-instagram-square"></i></a>
     </form>
->>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
 
 
 
 
-<<<<<<< HEAD
-=======
+
   <div class=" d-flex gap-5 justify-content-around">
     <?php foreach($comments as $comment): ?>
         <div class="card my-5">
@@ -182,7 +143,6 @@ $db_host = NULL;
 
 
     <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
->>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
       integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
     </script>
@@ -193,20 +153,10 @@ $db_host = NULL;
 
 </body>
 <script>
-<<<<<<< HEAD
-BalloonEditor
-  .create(document.querySelector('#editor'))
-  .catch(error => {
-    console.error(error);
-  });
-</script>
 
-</html>
-=======
 
 </script>
 
 </html>
 
 
->>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7

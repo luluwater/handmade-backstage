@@ -2,7 +2,6 @@
 
 <form action="">
     <div class="row  my-4">
-<<<<<<< HEAD
         <div class="col-2">
             <select class="form-select" aria-label="Default select example">
                 <option value="1" selected>選擇</option>
@@ -11,7 +10,6 @@
 
                 
             </select>
-=======
         <div class="col-3">
            <ul class="nav nav-pills">
             <li class="nav-item">
@@ -25,7 +23,6 @@
                 <a class="nav-link" href="products.php?category=2">DC Comics</a>
             </li> -->
         </ul>
->>>>>>> 16adf1d889e6367f693068a704d0185a35dff79c
         </div>
         <div class="col-7">
             <input class="form-control" type="search" name="search" id="">
