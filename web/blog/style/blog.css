@@ -182,6 +182,7 @@
 .blogTitleInput{    
     all: unset;
     font-size: 35px;
+    width: 800px;
 }
 
 .blogContent{

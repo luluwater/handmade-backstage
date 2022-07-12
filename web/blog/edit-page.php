@@ -54,6 +54,9 @@ $db_host = NULL;
         </div>
     </header>
 
+
+
+
     <div class="container mt-5 text-center">
         <div class="text-center text-center"> 發布於
             <?php
@@ -62,29 +65,27 @@ $db_host = NULL;
             ?>
         </div>
 
-        <input type="text" class="d-none" id="currentId" name="currentId" value="<?=$blog[0]["BLOG_ID"]?>">
+        <div id="insert">
+            <input type="text" class="d-none" id="currentId" name="currentId" value="<?=$blog[0]["BLOG_ID"]?>">
+            <input type="text" name="blogTitle" id="blogTitle" class="blogTitleInput mt-5"
+                value="<?=$blog[0]["title"]?>">
+            <h3 class="text-center my-4"></h3>
+            <h5 id="user">by 黑色小花貓</h5>
+            <div class="text-center my-4">
+                <span class="badge bg-secondary"><?=$blog[0]["tag"]?></span>
+                <span class="badge bg-secondary"><?=$blog[0]["category_name"]?></span>
+                <span class="badge bg-secondary"><?=$blog[0]["name"]?></span>
+            </div>
+            <hr>
 
-        <input type="text" name="blogTitle" id="blogTitle" class="blogTitleInput mt-5" value="<?=$blog[0]["title"]?>">
-        <h3 class="text-center my-4"></h3>
-        <h5 id="user">by 黑色小花貓</h5>
-        <div class="text-center my-4">
-            <span class="badge bg-secondary"><?=$blog[0]["tag"]?></span>
-            <span class="badge bg-secondary"><?=$blog[0]["category_name"]?></span>
-            <span class="badge bg-secondary"><?=$blog[0]["name"]?></span>
-        </div>
-        <hr>
-        <div id="test">
             <div id="editor" name="content">
                 <?php
                     $newString=$blog[0]["content"];
                     echo $newString;
                     ?>
             </div>
+            <input id="updateActicle" class="btn btn-success mt-3 btn-lg" name="submit_data" type="submit" value="修改文章">
         </div>
-
-        <!-- <input class="btn btn-main-color mt-3 btn-lg"  name="submit_data" type="submit" value="修改文章"> -->
-
-        <button name="submit_data" class="btn btn-success mt-3 btn-lg" id="updateActicle">修改文章</button>
 
         <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
@@ -124,7 +125,7 @@ $(function() {
                 user: user,
             },
             success: function(data) {
-                $("#test").html(data)
+                $("#insert").html(data)
             }
         })
     })
