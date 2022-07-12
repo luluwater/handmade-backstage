@@ -181,7 +181,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                   <td class="col-1">
                     <input type="checkbox" id="select-all" class="form-check-input" autocomplete="off">
                   </td>
-                  <td class="col">課程編號                     
+                  <td class="col-1">課程編號                     
                     <a href="<?=orderLink("id",$amount_limit,$orderType,$order,$orderState)?>">
                     <i class="fa-solid fa-sort mx-2 text-dark"></i>
                   </a>
@@ -214,9 +214,11 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                       <input type="checkbox" class="check-select form-check-input" name="checked[]" value="<?=$row["id"]?>" autocomplete="off">
                     </td>
                     <td><?=$row["id"]?></td>
-                    <td class="text-start align-items-center">                      
+                    <td class="text-start ">                      
+                      <div class="d-flex align-items-center">
                       <img class="previewImage-sm me-3" src="../img/<?=$type?>/<?=$type?>_<?=$row["category_en_name"]?>_<?=$row["id"]?>/<?=$row["img_name"]?>" alt="">
-                      <?=$row["name"]?>
+                      <p class="m-0"><?=$row["name"]?></p>
+                      </div>
                     </td>
                     <td><?=$row["amount"]?></td>
                     <td><?=$row["price"]?></td>
