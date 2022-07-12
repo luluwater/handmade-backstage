@@ -86,13 +86,6 @@ if(isset($_SESSION["account"])){
             <!-- ========================================================= -->
             <h1 class="mx-2 fw-bold">手手</h1>
         </div>
-
-        <!-- 瘋狂失敗晚點再來-->
-        <!-- <?php if(isset($_SESSION["error"]) && $_SESSION["error"]["times"]>3): ?>    
-            <h2 class="error-text text-center fw-bold">您已嘗試錯誤超過 3 次 <br> 請稍後再登入</h2>
-        <?php else: ?> -->
-        <!-- 瘋狂失敗晚點再來-->
-
         <!-- 路徑調整 ============================================= -->
         <form action="do-login-admin.php" method="post">
             <!-- ================================================= -->
@@ -114,7 +107,6 @@ if(isset($_SESSION["account"])){
                 </div>
             </div>
         </form>
-        <?php endif; ?>
     </div>
 </body>
 

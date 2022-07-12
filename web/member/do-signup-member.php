@@ -4,12 +4,6 @@ session_start();
 require("../../db-connect.php");
 //=======================================================
 
-//$rowsMemebr = NULL;
-//if(!isset($_GET["id"])){
-//    echo "您不是從正常程序進入此頁";
-//    exit();
-//}
-
 $newUser =[
     ':account'=>$_POST["account"],
     ':password'=>$password=$_POST["password"],
@@ -30,27 +24,18 @@ $memberExist = $stmt->rowCount();
 
 if ($memberExist > 0) {
     $row = $stmt->fetch();
-    // $userAccount = [
-    //     "account" => $row["account"],
-    // ];
-    // $userEmail = [
-    //     "email" => $row["email"],
-    // ];
     $user = [
         "account" => $row["account"],
         "email" => $row["email"]
     ];
     try {
     $_SESSION["user"] = $user;
-    // $_SESSION["userAccount"] = $userAccount;
-    // $_SESSION["userEmail"] = $userEmail;
     header("location: sign-up-member.php");
     } 
 catch (PDOException $e) {
     echo $e->getMessage();
     }
 }
-
 
 if ($memberExist == 0) {
     $now = date("Y-m-d H:i:s");

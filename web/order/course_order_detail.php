@@ -253,7 +253,6 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
 
 
 
-                <!-- <p class="col-1 totalPrice pb-3">$1000</p> -->
             </div>
 
             <div class="row mx-5 my-2 pe-5 justify-content-end">

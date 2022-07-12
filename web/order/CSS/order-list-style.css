@@ -27,7 +27,7 @@
 }
 
 .searchText {
-    width: 30%;
+    width: 40%;
 }
 
 .searchDate {
@@ -35,7 +35,7 @@
 }
 
 .searchState {
-    width: 10%;
+    width: 200px;
 }
 
 .btn-bg-color,.btn-cancel-color {
@@ -109,6 +109,8 @@
 .trash{
     color:var(--line-color);
     cursor: pointer;
+    padding: 5px 30px;
+
 }
 .trash:hover{
     color:var(--main-color);
@@ -169,12 +171,20 @@
         
 }
 .confirm{
-    background: rgba(0, 0, 0, .5);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 5;
+}
+.black-box{
+    position: fixed;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
     z-index: 4;
+    top: 0;
+    left: 0;
 }
 

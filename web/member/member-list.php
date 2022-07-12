@@ -80,13 +80,6 @@ $PreviousPageProduct = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
 $nextPageProduct = (($page + 1) >$totalPageProduct) ? $totalPageProduct: ($page + 1);
 
-//課程
-////取得每頁看到幾欄
-//$pageViewCourse = (isset($_GET['pageView'])) ? intval($_GET['pageView']):5;
-////每頁開始的id
-//$startViewCourse=($page-1)*$pageViewCourse;
-////頁數開始的筆數
-//$startItemCourse=($page-1)*$pageView+1;
 
 if($endItem>$courseOrder) $endItem=$courseOrder;
 //無條件進位筆數
@@ -96,13 +89,6 @@ $PreviousPageCourse = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
 $nextPageCourse = (($page + 1) >$totalPageCourse) ? $totalPageCourse: ($page + 1);
 
-//部落格
-// //取得每頁看到幾欄
-// $pageViewBlog = (isset($_GET['pageView'])) ? intval($_GET['pageView']):5;
-// //每頁開始的id
-// $startViewBlog=($page-1)*$pageViewBlog;
-// //頁數開始的筆數
-// $startItemViewBlog=($page-1)*$pageViewBlog+1;
 
 if($endItem>$blog) $endItem=$blog;
 //無條件進位筆數
@@ -283,10 +269,10 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         <tbody>
                             <?php foreach ($rows as $row): ?>
                             <tr class="table-body hover">
-                                <td><?=$row["product_order_id"]?></td>
-                                <td><?=$row["create_time"]?></td>
-                                <td><?=$row["total_amount"]?></td>
-                                <td class="text-start"><?=$row["note"]?></td>
+                                <td class="col-2"><a class="text-info" href="/HANDMADE/web/order/product_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
+                                <td class="col-2"><?=$row["create_time"]?></td>
+                                <td class="col-2"><?=$row["total_amount"]?></td>
+                                <td class="col-6 text-start"><?=$row["note"]?></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -319,16 +305,16 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                     <table class="table text-center align-middle">
                         <thead>
                             <tr class="table-head text-light align-middle">
-                                <th>訂單編號</th>
-                                <th>訂單日期</th>
-                                <th>總金額</th>
-                                <th>備註</th>
+                                <th class="col-2">訂單編號</th>
+                                <th class="col-2">訂單日期</th>
+                                <th class="col-2">總金額</th>
+                                <th class="col-6">備註</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($courseRows as $row): ?>
                             <tr class="table-body hover">
-                                <td><?=$row["id"]?></td>
+                                <td><a class="text-info" href="/HANDMADE/web/order/course_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
                                 <td><?=$row["create_time"]?></td>
                                 <td><?=$row["total_amount"]?></td>
                                 <td class="text-start"><?=$row["note"]?></td>
@@ -377,7 +363,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                                 <td><?=$row["create_time"]?></td>
                                 <td><?=$row["category_name"]?></td>
                                 <td><?=$row["name"]?></td>
-                                <th class="col-2">文章分類</th>
+                                <th class="col-2"><?=$row["tag"]?></th>
                                 <td class="text-start"><?=$row["title"]?></td>
                             </tr>
                             <?php endforeach; ?>
