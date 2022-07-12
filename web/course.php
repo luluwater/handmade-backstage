@@ -232,7 +232,8 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
               </tbody>
             </table>
             </form>
-            <nav aria-label="Page navigation example">
+            <?php if($totalPage>2):?>
+              <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
                     <a class="page-link" href="<?=orderLink("nextPage",$amount_limit,$orderType,$order,$orderState)?>&page=<?=$page-1<1?$page=1:$page-1?>" aria-label="Previous">
@@ -264,6 +265,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                 </li>
             </ul>
             </nav>
+          <?php endif; ?>
         </div>
     </main>
     <div class="confirm d-none" id="confirm">
@@ -299,17 +301,19 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
         }
       })
       const confirm = document.querySelector("#confirm");
+      const confirmBtn=confirm.querySelector("#confirm-btn");
       const close = document.querySelector("#close");
       const deletes=document.querySelectorAll(".delete");
       close.addEventListener('click', () => {
         confirm.classList.add('d-none');
       })
-      for(let deleteBtn of deletes)
+      for(let deleteBtn of deletes){
         deleteBtn.addEventListener("click",function(){
-        confirm.classList.remove('d-none');
-        confirmBtn=confirm.querySelector("#confirm-btn");
-        confirmBtn.setAttribute("href",`do-delete-product.php?type=<?=$type?>&id=${this.dataset.id}`);
-      })
+          confirm.classList.remove('d-none');        
+          confirmBtn.setAttribute("href",`do-delete-product.php?type=<?=$type?>&id=${this.dataset.id}`);
+        })
+      }
+        
 
       
     </script>
