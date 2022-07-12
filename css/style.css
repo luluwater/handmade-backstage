@@ -157,9 +157,12 @@ a{
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
 =======
 
 >>>>>>> 66cffef12d5e15e269d4f10aaa09bdc8842839f5
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
 
 .switch{
     height: 0;
@@ -242,7 +245,11 @@ a{
     opacity: 1;
     z-index: 100;
 }
+<<<<<<< HEAD
+=======
+=======
 
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
 .previewImage{
     width: 200px;
     height: 200px;
@@ -258,6 +265,10 @@ a{
     background: url("../img/previewImage.jpg");    
 }
 <<<<<<< HEAD
+>>>>>>> 16adf1d889e6367f693068a704d0185a35dff79c
+
+=======
+<<<<<<< HEAD
 
 =======
 >>>>>>> 66cffef12d5e15e269d4f10aaa09bdc8842839f5
@@ -265,3 +276,4 @@ a{
 .up-down:hover{
     color:var(--main-color);
 }
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7

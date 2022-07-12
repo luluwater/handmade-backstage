@@ -179,9 +179,11 @@
 
 
 
+
 .blogTitleInput{    
     all: unset;
     font-size: 35px;
+    width: 800px;
 }
 
 .blogContent{
@@ -194,4 +196,3 @@
     color: var(--main-color);
     font-size: 50px;
 }   
-

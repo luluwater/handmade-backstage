@@ -5,6 +5,24 @@ require("../../db-connect.php");
 // $sql="SELECT * FROM category WHERE id =$id AND valid=1";
 // $result = $db_host->prepare($sql);
 // $userCount=$result->num_rows;
+$id=$_GET["id"]; //去讓下方a標籤去取德get id 的變數 這樣才可顯示在網址上
+
+$sql="SELECT * FROM category WHERE id=$id AND valid=1";
+
+$result = $db_host->prepare($sql); //這邊是把資料撈出來 回傳物件 
+//所以用result變數把物件接住 
+// $userCount=$result->num_rows;//->取得有多少筆資料
+try {
+    $result->execute();
+    $row = $result ->fetch(PDO::FETCH_ASSOC);
+    
+} catch (PDOException $e) {
+    echo "error: " . $e->getMessage() . "<br/>";
+    $db_host = NULL;
+    exit;
+}
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -109,25 +127,27 @@ require("../../db-connect.php");
        <div class="mt-3 ms-3 container-fluid d-flex">
             <div class="member-card col-5">
                 <p class="title fw-bold">基本資料</p>
+                <?php if($row>0): $result -> rowCount();?>
                 <table class="table table-borderless">
                     <tr>
-                        <th>序號</th>
-                        <td>1</td>
+                        <th class="pt-4">序號</th>
+                        <td><?=$row["id"]?></td>
                     </tr>
                     <tr>
-                        <th>類別</th>
-                        <td>2</td>
+                        <th class="pt-3">類別</th>
+                        <td><?=$row["category_name"]?></td>
                     </tr>
                     <tr>
-                        <th>英文名字</th>
-                        <td>3</td>
+                        <th class="pt-4">英文名字</th>
+                        <td><?=$row["category_en_name"]?></td>
                     </tr>
-    
+            <?php endif; ?>
                 </table>
                 <div class="mx-2">
                 <a href="brand-list.php" 
-                class="return-btn me-2 btn btn-members-list">回到類別管理</a>
-                <a href="brand-edit.php" class="edit-btn btn btn-main-color me-2 btn-members-list"
+                class="return-btn me-2 btn btn-members-list">回到管理分類</a>
+                <a href="brand-edit.php?id=<?=$id?>" 
+                class="edit-btn btn btn-main-color me-2 btn-members-list"
                  >修改</a>
                 </div>
       </div>

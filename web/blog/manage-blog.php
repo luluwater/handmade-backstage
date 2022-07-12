@@ -220,6 +220,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             ?>
                         </td>
                         <td class="text-start td-height article_title"><a style="color:#3F3F3F;" class="" href="edit-page.php?id=<?=$row["id"]?>"><?=$row["title"]?></a></td>
+
                         <td><?=$row["category_name"]?></td>
                         <td><?=$row["state"]?></td>
                         <td><?=$row["comment_amount"]?></td>
@@ -383,6 +384,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             }
         })
 
+
         $(".orderArrow").on("click",function(e){
             const orderArrows = document.querySelectorAll(".orderArrow ");
             const target=e.target.id
@@ -454,7 +456,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         })
         
 
-    
 
     
 })
