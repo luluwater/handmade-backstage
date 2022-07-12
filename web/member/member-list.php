@@ -127,11 +127,16 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
     <!-- css路徑調整 ============================================= -->
-
     <head>
         <link rel="stylesheet" href="../../css/style.css">
         <link rel="stylesheet" href="member-list.css">
     </head>
+    <style>
+        .hover:hover{
+            background: #E2E2E2;
+            color: var(---main-word-color);
+        }
+    </style>
     <!-- ========================================================= -->
 </head>
 
@@ -208,7 +213,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                                 <th class="align-middle text-center">帳號狀態</th>
                                 <td>
                                     <select class="form-select" aria-label="Default select example"
-                                        name="user_state_name" value="<?=$member    ["user_state_name"]?>">
+                                        name="user_state_name" value="<?=$member["user_state_name"]?>">
                                         <option value="1">一般會員</option>
                                         <option value="2">黑名單</option>
                                     </select>
@@ -277,7 +282,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         </thead>
                         <tbody>
                             <?php foreach ($rows as $row): ?>
-                            <tr class="table-body">
+                            <tr class="table-body hover">
                                 <td><?=$row["product_order_id"]?></td>
                                 <td><?=$row["create_time"]?></td>
                                 <td><?=$row["total_amount"]?></td>
@@ -322,7 +327,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         </thead>
                         <tbody>
                             <?php foreach ($courseRows as $row): ?>
-                            <tr class="table-body">
+                            <tr class="table-body hover">
                                 <td><?=$row["id"]?></td>
                                 <td><?=$row["create_time"]?></td>
                                 <td><?=$row["total_amount"]?></td>
@@ -359,18 +364,20 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                     <table class="table text-center align-middle">
                         <thead>
                             <tr class="table-head text-light align-middle">
-                                <th>日期</th>
-                                <th>類別</th>
-                                <th>店家</th>
-                                <th>文章標題</th>
+                                <th class="col-2">日期</th>
+                                <th class="col-2">類別</th>
+                                <th class="col-2">店家</th>
+                                <th class="col-2">文章分類</th>
+                                <th class="col-4">文章標題</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($blogRows as $row): ?>
-                            <tr class="table-body align-items-center">
+                            <tr class="table-body align-items-center hover">
                                 <td><?=$row["create_time"]?></td>
                                 <td><?=$row["category_name"]?></td>
                                 <td><?=$row["name"]?></td>
+                                <th class="col-2">文章分類</th>
                                 <td class="text-start"><?=$row["title"]?></td>
                             </tr>
                             <?php endforeach; ?>
