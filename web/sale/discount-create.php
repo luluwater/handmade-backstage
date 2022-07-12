@@ -1,6 +1,6 @@
 <?php
 
-require("../db-connect.php");
+require("../../db-connect.php");
 session_start();
 
 $sql = "SELECT * FROM discount";

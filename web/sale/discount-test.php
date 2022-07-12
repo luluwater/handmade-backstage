@@ -1,6 +1,6 @@
 <?php
 
-require("../db-connect.php");
+require("../../db-connect.php");
 
 //========== 抓取全部資料 ==========
 $sqlAll = "SELECT * FROM discount WHERE discount.state!=0";

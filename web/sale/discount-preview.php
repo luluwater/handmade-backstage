@@ -7,7 +7,7 @@ if(!isset($_GET["id"])){
 
 $id=$_GET["id"];
 
-require("../db-connect.php");
+require("../../db-connect.php");
 
 $sql = "SELECT * FROM discount WHERE id=:id";
 
