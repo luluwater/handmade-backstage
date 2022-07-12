@@ -296,7 +296,6 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
 
 
 
-                <!-- <p class="col-1 totalPrice pb-3">$1000</p> -->
             </div>
 
             <div class="row mx-5 my-2 pe-5 justify-content-end">
@@ -310,9 +309,8 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
 
         goBack.addEventListener('click', () => {
             document.referrer === '' ?
-            
-            window.location.href = "https://www.google.com":
-          window.history.go(-1);
+            // window.location.assign("product_order_list.php"):
+            window.history.go(-1);
         })
     </script> -->
 

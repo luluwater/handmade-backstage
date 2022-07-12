@@ -9,12 +9,6 @@ if (isset($_GET["page"])) {
 
 
 
-if (!isset($_GET["sBtn"])) {
-    $_GET["sBtn"] = "";
-}
-
-
-
 function orderLink($item, $cur_pageView, $order)
 {
     isset(($_GET["searchType"])) ?  $searchType = $_GET["searchType"] : $searchType = "course_order.id";
@@ -28,19 +22,19 @@ function orderLink($item, $cur_pageView, $order)
             $cur_pageView = $cur_pageView == 10 ? 5 : 10;
             return  "course_order-list.php?&pageView=$cur_pageView&order=$order&keyword=$searchText&searchType=$searchType";
             break;
-        
+
         default:
-            $order=$item;
-              
-          return  "course_order-list.php?pageView=$cur_pageView&order=$order&keyword=$searchText&searchType=$searchType";  
-        break;
+            $order = $item;
+
+            return  "course_order-list.php?pageView=$cur_pageView&order=$order&keyword=$searchText&searchType=$searchType";
+            break;
     }
 }
 isset(($_GET["searchType"])) ?  $searchType = $_GET["searchType"] : $searchType = "course_order.id";
-isset($_GET["keyword"]) ? $searchText = $_GET["keyword"] :$searchText = $_GET["keyword"] = "";
+isset($_GET["keyword"]) ? $searchText = $_GET["keyword"] : $searchText = $_GET["keyword"] = "";
 
 
-    // $urlParams = [];
+// $urlParams = [];
 // parse_str($_SERVER['QUERY_STRING'], $urlParams);
 // print_r($_GET);
 
@@ -72,11 +66,11 @@ switch ($order) {
         $orderType = "id DESC";
 }
 
-if($searchText != "" && $searchType !=""){
+if ($searchText != "" && $searchType != "") {
     $sqlWhere = "WHERE $searchType LIKE'%$searchText%' AND valid=1";
-  }else{
-    $sqlWhere="WHERE valid=1";
-  }
+} else {
+    $sqlWhere = "WHERE valid=1";
+}
 
 
 $sql = $db_host->prepare("SELECT course_order.*,order_staus.name AS order_staus FROM course_order JOIN order_staus ON course_order.order_state_id = order_staus.id 
@@ -139,15 +133,43 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
     <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="css/order-list-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
 
     <style>
         .detailLink {
             padding: 5px 30px;
         }
 
-        .trash {
-            padding: 5px 30px;
+        @keyframes message-move-in {
+            0%{
+                opacity:0;
+                /* transform:translateY(-100%); */
+            }
+            100%{
+                opacity: 1;
+                /* transform: translateY(0); */
+            }
         }
+
+        @keyframes message-move-out{
+            0%{
+                opacity: 1;
+            }
+            100%{
+                opacity: 0;
+            }
+        }
+
+/* 
+        #confirm.move-in{
+            animation: message-move-in 0.6s ease-in-out;
+        }
+        #confirm.move-out{
+            animation: message-move-out 0.6s ease-in-out;
+            animation-fill-mode: forwards;
+        } */
+
     </style>
 </head>
 
@@ -201,7 +223,7 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
                 <?php endif ?>
 
-                <button type="search" class="btn btn-bg-color" name="sBtn" value="s">搜尋</button>
+                <button type="search" class="btn btn-bg-color">搜尋</button>
 
             </form>
         </div>
@@ -216,14 +238,14 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
                         <td> <span class="d-flex justify-content-center align-items-center"> 訂單編號
                                 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act">
-                                    <a href="<?=orderLink("1",$pageView,$order)?>" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>">
+                                    <a href="<?= orderLink("1", $pageView, $order) ?>" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>">
                                         <i class="fa-solid fa-caret-up arrow-color"></i></a>
-                                    <a href="<?=orderLink("2",$pageView,$order)?>" class="<?php if ($order == 2) echo "arrow-active" ?>">
+                                    <a href="<?= orderLink("2", $pageView, $order) ?>" class="<?php if ($order == 2) echo "arrow-active" ?>">
                                         <i class="fa-solid fa-caret-down arrow-color">
                                         </i></a></span></span></td>
 
 
-                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單日期 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn"><a href="<?=orderLink("3",$pageView,$order)?>" class="arrowBtn <?php if ($order == 3) echo "arrow-active" ?>"><i class="fa-solid fa-caret-up arrow-color"></i></a> <a href="<?=orderLink("4",$pageView,$order)?>" class="<?php if ($order == 4) echo "arrow-active" ?>"><i class="fa-solid fa-caret-down arrow-color"></i></a></span></span></td>
+                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單日期 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn"><a href="<?= orderLink("3", $pageView, $order) ?>" class="arrowBtn <?php if ($order == 3) echo "arrow-active" ?>"><i class="fa-solid fa-caret-up arrow-color"></i></a> <a href="<?= orderLink("4", $pageView, $order) ?>" class="<?php if ($order == 4) echo "arrow-active" ?>"><i class="fa-solid fa-caret-down arrow-color"></i></a></span></span></td>
                         <td>訂購人</td>
                         <td>總金額</td>
                         <td>訂單狀態</td>
@@ -234,28 +256,33 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                 <tbody>
                     <?php foreach ($orderPageCount as $row) : ?>
                         <tr class="text-center">
+
                             <td class="col-auto"><a class="detailLink" href="course_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
                             <td class="col-3"><?= $row["create_time"] ?></td>
                             <td class="col-2"><?= $row["name"] ?></td>
                             <td class="col-2">$<?= $row["total_amount"] ?></td>
                             <td class="col-2"><?= $row["order_staus"] ?></td>
-                            <td class="col-1"><a class="trash delete-btn"><i class="fa-solid fa-trash-can trash"></i></a></td>
-                            <!-- 是否確定刪除盒子 -->
-                            <div class="confirm hide" id="confirm">
-                                <div class="popup">
-                                    <div class="close" id="close">X</div>
-                                    <div class="content">
-                                        <h3 class="confirm-h3">是否確定刪除?</h3>
-                                        <div class="text-end">
-                                            <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
-                                            <a href="do_course_order_delete.php?id=<?= $row["id"] ?>" class="btn btn-main-color " id="confirm-btn">確認</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 是否確定刪除盒子 -->
+                            <td class="col-1"><a class="trash delete-btn" data-id=<?=$row["id"]?>><i class="fa-solid fa-trash-can trash"></i></a></td>
+
                         </tr>
                     <?php endforeach; ?>
+
+                    <!-- 是否確定刪除盒子 -->
+                    <div class="confirm hide " id="confirm">
+                        <div class="popup">
+                            <div class="close" id="close">X</div>
+                            <div class="content">
+                                <h3 class="confirm-h3">是否確定刪除?</h3>
+                                <div class="text-end">
+                                    <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
+                                    <a href="" class="btn btn-main-color " id="confirm-btn">確認</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 是否確定刪除盒子 -->
+                    <div class="" id="black-box"></div>
+
 
                 </tbody>
             </table>
@@ -267,19 +294,19 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
                     <li class="page-item">
-                        <a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&<?= $PreviousPage ?>" aria-label="Previous">
+                        <a class="page-link" href="<?= orderLink("nextPage", $pageView, $order) ?>&<?= $PreviousPage ?>" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
 
                     <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                        <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&page=<?= $i ?>"><?= $i ?></a></li>
+                        <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="<?= orderLink("nextPage", $pageView, $order) ?>&page=<?= $i ?>"><?= $i ?></a></li>
                     <?php endfor; ?>
 
 
 
                     <li class="page-item">
-                        <a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&<?= $theNextPage ?>" aria-label="Next">
+                        <a class="page-link" href="<?= orderLink("nextPage", $pageView, $order) ?>&<?= $theNextPage ?>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -316,21 +343,41 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         let close = document.querySelector("#close");
         let confirmBtn = document.querySelector("#confirm-btn");
         let cancelBtn = document.querySelector("#cancelBtn");
+        let blackBox = document.querySelector("#black-box");
 
         for (let i = 0; i < deleteBtn.length; i++) {
-            deleteBtn[i].addEventListener('click', () => {
+            deleteBtn[i].addEventListener('click', function() {
+                let id = this.dataset.id;
                 confirm.classList.remove('hide')
+                blackBox.classList.add('black-box')
+                confirm.classList.add('animate__animated')
+                confirm.classList.add('animate__bounceIn')
+                confirmBtn.href=`do_course_order_delete.php?id=${id}`
             })
         }
 
         close.addEventListener('click', () => {
             confirm.classList.add('hide')
+            confirm.classList.remove('animate__bounceIn')
+            blackBox.classList.remove('black-box')
+
+
         })
         confirmBtn.addEventListener('click', () => {
             confirm.classList.add('hide')
+            blackBox.classList.remove('black-box')
+            confirm.classList.remove('animate__bounceIn')
+
+
+
         })
         cancelBtn.addEventListener('click', () => {
             confirm.classList.add('hide')
+            blackBox.classList.remove('black-box')
+            confirm.classList.remove('animate__bounceIn')
+
+
+            
         })
     </script>
 </body>
