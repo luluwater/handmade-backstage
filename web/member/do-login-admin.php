@@ -39,7 +39,7 @@ try {
             );
             unset($_SESSION["error"]);
 //連線路徑調整===========================================
-        header("location: ../example.php");
+        header("location: members-list.php");
 //======================================================    
         }
     }

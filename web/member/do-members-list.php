@@ -71,20 +71,6 @@ if ($search!="" && $state ==""){
   } else {
     $sqlWhere =""; 
   }
-  
-
-//取得會員狀態
-// $state = isset($_GET['state']) ? $_GET['state']: "全部會員";
-// if ($state!=""){
-//   $state = $_GET["state"];
-//   $sqlWhere="WHERE user.state =$state";
-
-
-// }else{
-//   $state="";
-//   $sqlWhere="";
-// }
-
 
 //全部會員資料 & 搜尋
 $sql = $db_host->prepare("SELECT user.*, user_state_category.name AS user_state_name FROM user

@@ -80,13 +80,6 @@ $PreviousPageProduct = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
 $nextPageProduct = (($page + 1) >$totalPageProduct) ? $totalPageProduct: ($page + 1);
 
-//課程
-////取得每頁看到幾欄
-//$pageViewCourse = (isset($_GET['pageView'])) ? intval($_GET['pageView']):5;
-////每頁開始的id
-//$startViewCourse=($page-1)*$pageViewCourse;
-////頁數開始的筆數
-//$startItemCourse=($page-1)*$pageView+1;
 
 if($endItem>$courseOrder) $endItem=$courseOrder;
 //無條件進位筆數
@@ -96,13 +89,6 @@ $PreviousPageCourse = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
 $nextPageCourse = (($page + 1) >$totalPageCourse) ? $totalPageCourse: ($page + 1);
 
-//部落格
-// //取得每頁看到幾欄
-// $pageViewBlog = (isset($_GET['pageView'])) ? intval($_GET['pageView']):5;
-// //每頁開始的id
-// $startViewBlog=($page-1)*$pageViewBlog;
-// //頁數開始的筆數
-// $startItemViewBlog=($page-1)*$pageViewBlog+1;
 
 if($endItem>$blog) $endItem=$blog;
 //無條件進位筆數

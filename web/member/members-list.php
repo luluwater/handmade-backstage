@@ -41,6 +41,22 @@ require("../../db-connect.php");
         background: #E2E2E2;
         color: var(---main-word-color);
     }
+    .page-item{
+    font-weight: 700;
+    }
+
+    .page-link {
+        color: var(--main-word-color);
+    }
+
+    .page-link:hover {
+        color: var(--main-color);
+    }
+
+    .active>.page-link, .page-link.active {
+        background: #fff;
+        color: var(--main-color);
+    }
 
     </style>
 </head>
@@ -51,31 +67,28 @@ require("../../db-connect.php");
     <?php require("do-members-list.php") ?>
     <!-- ====================================================== -->
     <main>
-        <form action="members-list.php" method="get">
-            <div class="row my-4">
-                <div class="col-6">
-                    <input class="form-control mx-2" name="search" placeholder="請輸入會員帳號">
+        <p class="title">會員管理</p>
+        <div class="d-flex justify-content-between">
+            <form action="members-list.php" method="get">
+                <div class="row my-4">
+                    <div class="col-6">
+                        <input class="form-control mx-2" name="search" placeholder="請輸入會員帳號">
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-bg-color me-2">搜尋</button>
+                        <a class="btn btn-bg-color" href="members-list.php">取消</a>
+                    </div>
                 </div>
-                <div class="col-2">
-                    <button type="submit"  class="btn btn-bg-color">搜尋</button>
-                </div>
-            </div>
-        </form>
-        <!-- 顯示筆數 -->
-        <div class="d-flex justify-content-between ">
-            <h2 class="main-h2 mt-3 ms-3">會員管理</h2>
-            <div class="d-flex justify-content-between align-items-center display-page-box">
+            </form>
+            <div class="d-flex align-items-center display-page-box">
                 <p class="m-0">顯示&nbsp;&nbsp;</p>
                 <form action="" method="get" class="pageForm" class="text-center">
                     <select name="pageView" class="display-page form-select mx-1 " id="pageView">
                         <option value="5" <?php if ($pageView == '5') print 'selected '; ?>> 5 </option>
                         <option value="10" <?php if ($pageView == '10') print 'selected '; ?>> 10 </option>
                     </select>
-                </form>
-                <p class="m-0">&nbsp;&nbsp;筆</p>
-            </div>
-            <!-- 顯示筆數結束 -->
-                </form>
+               </form>
+                <p class="m-0">&nbsp;&nbsp;&nbsp;筆</p>
             </div>
         </div>
         <table class="table">
@@ -100,7 +113,6 @@ require("../../db-connect.php");
                             <option <?php if($state == "") print 'selected';?>>全部會員</option>
                             <option value="1" <?php if ($state == '1') print 'selected ';?>>一般會員</option>
                             <option value="2" <?php if ($state == '2') print 'selected ';?>>黑名單</option>
-                            <!-- <option class="fw-bold">狀態</option>     -->
                         </select>
                     </form>
                     </td>
