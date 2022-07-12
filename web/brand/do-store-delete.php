@@ -1,13 +1,13 @@
 <?php
 require_once("../../db-connect.php");
 
-if (isset($_POST["name"])) {
-    $order = $_POST["name"];
+if (isset($_GET["checkbox"])) {
+    $order = $_GET["checkbox"];
     echo $order;
 }
 
 //更新valid 會變成0 導致選項消失
-$sql = $db_host->prepare("UPDATE category SET valid=0 WHERE  id='$order'");
+$sql = $db_host->prepare("UPDATE store SET valid=0  WHERE  id='$order'");
 
 
 
@@ -22,7 +22,7 @@ try {
     exit;
 }
 
-header("Location:brand-list.php");
+header("Location:store.php");
 
 
 ?>

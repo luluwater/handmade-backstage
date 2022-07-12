@@ -1,23 +1,16 @@
 <?php
 require("../../db-connect.php");
-// // 測試連線
-// try{
-//     $db_host=new PDO("mysql:host={$serverName};dbname={$dbname};charset=utf8",$username,$password);
-//     echo "成功";
-        
-// }catch(PDOException $e){
-//     echo "資料庫連線失敗";
-//     echo "Error: ".$e->getMessage();
-//     exit;
-// }
+// $sqlAll="SELECT *FROM store WHERE valid=1 "
 
-$sql="SELECT * FROM store";
+$sql="SELECT * FROM store WHERE valid=1 ";
+// $sql="SELECT category_name , FROM category JOIN store 
+// ON store.category = category.id LIMIT 6 ";
 $stmt=$db_host->prepare($sql);//類似sql執行
 $stmt->execute(); 
-// $category_count=$result->num_rows;
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// $storeAllCount =count($rows)
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($rows);
+
 
 ?>
 
@@ -102,38 +95,88 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                   筆數
                 </p> -->
                   <!-- <p class="side">共筆資料 </p>  -->
+
+
+                 
             </div>
-           
+           <!-- form 配呵input type="submit name=要輸入的職" -->
+           <form action="do-store-delete.php" method="get">
              <div class=" d-flex justify-content-between my-4">
-                   <a class="title btnClass" href="brand-list.php">管理分類</a>
+                   <a class=" title btnClass" href="brand-list.php">管理分類</a>
                 <div class="delAndAdd ">
-                    <a href="" class=" text-dark m-4"><i class="fa-solid fa-trash m-2"></i>刪除店家</a>
+                  <input class=" -main-color m-4" name="delete" type="submit" value="刪除店家">
                     <a href="" class=" text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增店家</a>
                 </div>     
-            </div>
+              </div>
+          
                <div class="row gy-4">
                    <?php foreach ($rows as $row) : ?>
                       <div class="col-md-4">
                         <div>
+                          <!-- 這邊的input吃到的是資料庫id 渲染顯示的地方 藉由軟刪除讓它顯示不見 -->
+                          <input value="<?=$row["id"] ?>" name="checkbox" 
+                            class="me-4" type="checkbox">
                          <figure class="ratio ratio-4x3 mb-2">
-                            <img class="object-cover" src="imagesTest/store_img
-                            <?= $row["img"] ?>" alt="">
+                             <img class="object-cover" src="imagesTest/store_img
+                             <?= $row["img"] ?>" alt="">
                         </figure>
-                        <div class="text-center"><?= $row["name"] ?></div>
-                           <div class="py-2">
-                             <div class="d-grid">
-                               <button class="btn btn-info btn-cart" data-id="1">編輯</button>
-                             </div>
+                             <div class="text-center"><?= $row["name"] ?></div>
+                             <div class="text-center ">類別<?= $row["category_id"] ?></div>
+                           
+                          <div class=" d-flex  justify-content-center">                       
+                           <a class="text-main-color m-2"
+                            href="<?= $row["FB_url"] ?>">FB</a>
                            </div>
-                         </div>
+
+                           <div class="d-flex  justify-content-center">
+                           <a class="text-main-color m-2" 
+                           href="<?= $row["IG_url"] ?>">IG</a>
+                            </div>
+                            
+                          </div>
                       </div>
                    <?php endforeach; ?>
+                 
                  </div>
-            <div class="footer">
-                <?php require("../mod/pagination.php") ?>
+            </form>
+                 
+            <!-- <div class="footer">
+               <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example ">
+                <ul class="pagination mt-4 px-5">
+                    <li class="page-item">
+                        <a class="page-link"
+                            href="store.php?page=<?=$PreviousPage?>&pageView=
+                            <?=$pageView?>&order=<?=$order?>"
+                            aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <?php for($i=1; $i<=$totalPage;$i++): ?>
+                    <li class="page-item <?php if($page==$i)echo "active"?>">
+                    <a class="page-link"
+                            href="store.php?page=<?=$i?>&pageView=
+                            <?=$pageView?>&order=<?=$order?>"><?=$i?></a>
+                    </li>
+                    <?php endfor; ?>
+                    <li class="page-item">
+                        <a class="page-link"
+                            href="store.php?page=<?=$nextPage?>
+                            &pageView=<?=$pageView?>&order=<?=$order?>"
+                            aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="mt-4 pt-2">第 <?=$startItem?> -
+             <?=$endItem?> 筆 , 共
+             <?=$membersAllCount?> 筆資料</div>
+        </div>
+        </div>
             </div>
           
-         
+          -->
     </main>
  
 </html>

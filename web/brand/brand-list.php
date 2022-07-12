@@ -20,10 +20,13 @@ require("../../db-connect.php");
 $sql = "SELECT * FROM category WHERE valid=1 ";
 $result =$db_host->prepare($sql);
 
+
 try {
     $result->execute();
-    $categories = $result ->fetchAll(PDO::FETCH_ASSOC);
+    $categories = $result ->fetchAll(PDO::FETCH_ASSOC); //取得所有陣列物件並形成多聯是關聯是陣列
  //讀取category資料庫的所有資料語法
+
+
 } catch (PDOException $e) {
     echo "error: " . $e->getMessage() . "<br/>";
     $db_host = NULL;

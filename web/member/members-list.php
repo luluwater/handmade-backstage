@@ -85,7 +85,8 @@ require("../../db-connect.php");
                             </span>
                         </span>
                     </td>
-                    <!-- <td class="col-2">會員編號 <a href=""><i class="fa-solid fa-sort mx-2"></i></a></td> -->
+                    <!-- <td class="col-2">會員編號 <a href="">
+                        <i class="fa-solid fa-sort mx-2"></i></a></td> -->
                     <td class="col-1">帳號</td>
                     <td class="col-1">姓名</td>
                     <td class="col-4">地址</td>
@@ -104,7 +105,8 @@ require("../../db-connect.php");
                     <td><?=$row["phone"]?></td>
                     <td><?=$row["user_state_name"]?></td>
                     <!--路徑調整 ============================================= -->
-                    <td><a class="btn btn-bg-color" href="member-list.php?id=<?=$row["id"]?>">查看</a></td>
+                    <td><a class="btn btn-bg-color" href="member-list.php?id=
+                    <?=$row["id"]?>">查看</a></td>
                     <!-- ===================================================== -->
                 </tr>
                 <?php endforeach; ?>
@@ -115,19 +117,23 @@ require("../../db-connect.php");
                 <ul class="pagination mt-4 px-5">
                     <li class="page-item">
                         <a class="page-link"
-                            href="members-list.php?page=<?=$PreviousPage?>&pageView=<?=$pageView?>&order=<?=$order?>"
+                            href="members-list.php?page=<?=$PreviousPage?>&pageView=
+                            <?=$pageView?>&order=<?=$order?>"
                             aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <?php for($i=1; $i<=$totalPage;$i++): ?>
-                    <li class="page-item <?php if($page==$i)echo "active"?>"><a class="page-link"
-                            href="members-list.php?page=<?=$i?>&pageView=<?=$pageView?>&order=<?=$order?>"><?=$i?></a>
+                    <li class="page-item <?php if($page==$i)echo "active"?>">
+                    <a class="page-link"
+                            href="members-list.php?page=<?=$i?>&pageView=
+                            <?=$pageView?>&order=<?=$order?>"><?=$i?></a>
                     </li>
                     <?php endfor; ?>
                     <li class="page-item">
                         <a class="page-link"
-                            href="members-list.php?page=<?=$nextPage?>&pageView=<?=$pageView?>&order=<?=$order?>"
+                            href="members-list.php?page=<?=$nextPage?>
+                            &pageView=<?=$pageView?>&order=<?=$order?>"
                             aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
