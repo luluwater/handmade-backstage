@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Title</title>
+    <title>第三頁</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,9 +10,14 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="../css/style.css">
+
+
         <link rel="stylesheet" href="../../css/style.css">
    <style>
    </style>
+
   </head>
  <body>
    <?php
@@ -31,7 +36,7 @@
                         alt="圖片預覽" onerror="">
                     </div>
               </div>
-                <div class="my-3  row align-items-center">
+                <!-- <div class="my-3  row align-items-center">
                     <label class="col-1" for="">品牌圖片</label>
                     <div class="col-auto">
                         <input class="d-none upload_image" type="file"
@@ -64,7 +69,7 @@
                         name="product_img1" accept="image/*" required>
                         <img src="" class="previewImage object-cover"
                          alt="圖片預覽" onerror="">
-                    </div>
+                    </div> -->
               </div>
                 </div>
                 <div class="my-3 row align-items-center">
@@ -148,10 +153,13 @@
                      type="submit">儲存</button>                    
                 </div>
             </form>
+
         </div>
     </main>
 
-  
+
+
+
    
  </body>
 </html>

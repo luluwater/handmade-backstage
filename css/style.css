@@ -43,12 +43,20 @@ a{
     font-weight: bolder;
     color: white;
     /* padding: .5rem 1rem; */
-    
 }
 .btn-bg-color{
     background: var(--line-color);
     font-weight: bolder;
     color: white;    
+}
+.btn-line-color{
+    background: var(--line-color);
+    color: white;    
+}
+.btn-line-color:hover{
+    background: var(--bg-color);
+    color: #000;   
+    border: 1px solid #000; 
 }
 .count-bg{
     background: var(--bg-color);
@@ -97,7 +105,6 @@ a{
 .hover:hover{
     background: var(--main-color);
     color:#fff;
- 
 }
 
 .title{
@@ -139,7 +146,7 @@ a{
 .select-category{
     width: 600px;
     height: 35px;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .blog-search-input{
@@ -150,6 +157,89 @@ a{
     height: 16px;
 }
 
+.orderArrow:hover{
+    cursor: pointer;
+    color:#666;
+}
+.switch{
+    height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+.switch-lable{
+    cursor: pointer;
+	width: 80px;
+	height: 40px;
+	background: var(--bg-color);
+	display: block;
+	border-radius: 100px;
+	position: relative;
+    border: 1px solid #222;
+}
+
+.switch-lable::after{
+    content: '';
+	position: absolute;
+	top: 4px;
+	left: 5px;
+	width: 28px;
+	height: 28px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+
+.switch-txt{
+    position: relative;
+    display: block;
+    color: #fff;
+    font-weight: bold;
+    transform: translate(5px,5px);
+}
+
+.switch-txt::before{
+    content: attr(turnOn);
+    color: #222;
+    position: relative;
+    color: #fff;
+    left: 0px;
+   
+}
+.switch-txt::after{
+    content: attr(turnOff);
+    position: relative;
+    color: #222;
+    left: 18px;
+}
+
+.switch:checked + .switch-lable{
+    background: #56C568;
+}
+
+.switch:checked + .switch-lable::after{
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+.editor{
+    height: 250px;
+}
+
+.trHover:hover{
+    background:#eee;
+}
+
+.ajax-loading {
+    transition: all 0.3s;
+    opacity: 0;
+    z-index: -1;    
+}
+
+.ajax-loading.active {
+    opacity: 1;
+    z-index: 100;
+}
 .previewImage{
     width: 200px;
     height: 200px;
@@ -163,4 +253,12 @@ a{
     width: 80px;
     height: 80px;
     background: url("../img/previewImage.jpg");    
+}
+.up-down{
+
+    color: var(--line-color);
+}
+.up-down:hover{
+    color:var(--main-color);
+    cursor: pointer;
 }

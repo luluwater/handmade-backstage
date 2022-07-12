@@ -38,9 +38,8 @@ try {
                 "password"=>$row["password"],
             );
             unset($_SESSION["error"]);
-            //$_SESSION["user"]=$dataUser;
 //連線路徑調整===========================================
-        header("location: ../example.php");
+        header("location: members-list.php");
 //======================================================    
         }
     }

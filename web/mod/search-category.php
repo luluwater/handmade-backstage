@@ -1,13 +1,15 @@
-<?php
-// require("../db-connect.php")
-
-// $sql=
 
 
-
-?>
 <form action="">
     <div class="row  my-4">
+        <div class="col-2">
+            <select class="form-select" aria-label="Default select example">
+                <option value="1" selected>選擇</option>
+                <option value="2">類別</option>
+                <option value="3">品牌</option>
+
+                
+            </select>
         <div class="col-3">
            <ul class="nav nav-pills">
             <li class="nav-item">

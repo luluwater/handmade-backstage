@@ -1,10 +1,14 @@
 <?php
 
-if (!isset($_GET["id"])) {
+$id = $_GET["id"];
+
+
+if (!isset($id)) {
     header("location:course_order-list.php");
 }
 
-$id = $_GET["id"];
+
+
 
 require_once("../../db-connect.php");
 
@@ -41,9 +45,10 @@ if ($couponId!=""){
 
 // *******撈取訂單資料******* //
 
-$sqlOrder = $db_host->prepare("SELECT course_order.*,user.account,order_staus.name AS stausName $sqlJoin FROM course_order 
+$sqlOrder = $db_host->prepare("SELECT course_order.*,user.account,order_staus.name AS stausName,payment.name AS paymentName $sqlJoin FROM course_order 
 JOIN user ON course_order.user_id = user.id 
 JOIN order_staus ON course_order.order_state_id = order_staus.id 
+JOIN payment ON course_order.payment_id = payment.id
 $JoinFrom
 WHERE course_order.id = $id");
 
@@ -52,8 +57,9 @@ WHERE course_order.id = $id");
 
 
 // *******撈取訂單明細******* //
-$sql = $db_host->prepare("SELECT course_order_list.*,course.name AS courseName ,course_img.img_name FROM course_order_list 
+$sql = $db_host->prepare("SELECT course_order_list.*,course.name AS courseName, course.category_id,category.category_en_name ,course_img.img_name FROM course_order_list 
 JOIN course ON course_order_list.course_id = course.id 
+JOIN category ON course.category_id = category.id 
 JOIN course_img ON course.id = course_img.course_id  
 WHERE course_order_list.order_id = $id");
 
@@ -62,11 +68,12 @@ WHERE course_order_list.order_id = $id");
 try {
     $sqlOrder->execute();
     $orderRow = $sqlOrder->fetch(PDO::FETCH_ASSOC);
-    print_r($orderRow);
+    // print_r($orderRow);
 
     $sql->execute();
     $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
     $rowsCount = count($rows);
+    // print_r($rows);
 } catch (PDOException $e) {
     echo "預處理陳述式失敗! <br/>";
     echo "error: " . $e->getMessage() . "<br/>";
@@ -112,7 +119,9 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
         <!-- 顧客資料 -->
         <div class="row mx-5 my-3">
             <p class="col-1 boldWord">訂單編號</p>
-            <p class="col-auto">00<?= $orderRow["id"] ?></p>
+            <p class="col-2"><?= $orderRow["id"] ?></p>
+            <a href="course_order_edit.php?id=<?=$orderRow["id"]?>" class="btn btn-bg-color col-1 editBtn">修改資料</a>
+
         </div>
 
         <div class="row mx-5 mb-3">
@@ -137,7 +146,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
 
         <div class="row mx-5 mb-3">
             <p class="col-1 boldWord">付款方式</p>
-            <p class="col-auto"><?= $orderRow["payment"] ?></p>
+            <p class="col-auto"><?= $orderRow["paymentName"] ?></p>
         </div>
 
         <div class="row mx-5 mb-3">
@@ -180,7 +189,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
                                 <?php continue; ?>
                             <?php else : ?>
                     <tr class="text-center row detail-tr">
-                        <td class="col-1"><img class="coursePic imgObject" src="../../img/course/<?= $row["img_name"] ?>" alt=""></td>
+                        <td class="col-1"><img class="coursePic imgObject" src="../../img/course/course_<?= $row["category_en_name"] ?>_<?= $row["course_id"] ?>/<?= $row["img_name"] ?>" alt=""></td>
                         <td class="col-3"><?= $row["courseName"] ?></td>
                         <td class="col"><?= $row["date"] ?></td>
                         <td class="col"><?= $row["amount"] ?></td>
@@ -223,12 +232,31 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
             </div>
 
             <div class="row mx-5  pe-5 justify-content-end ">
-                <p class="col-1 boldWord totalPrice totalPriceBox pb-3">實付金額</p>
-                <p class="col-1 totalPrice totalPriceBox pb-3">$1000</p>
+                <p class="col-1 boldWord totalPrice pb-2">實付金額</p>
+
+                <?php if (($couponId!= "") && ($orderRow["discount_type_id"] == 1)) :?>
+                    <p class="col-1 totalPrice ">$<?= round($totalPrice * $discountPercent / 10) ?> </p>
+
+                <?php elseif (($couponId!= "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice >= $couponPay)) :?>
+                    <?php $couponPrice = intval($orderRow["coupon_discount"])?>
+                    <p class="col-1 totalPrice">$<?= $totalPrice - $couponPrice ?></p>
+
+                <?php elseif (($couponId!= "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice < $couponPay)) :?>
+                    <p class="col-1 totalPrice">$<?= $totalPrice?></p>
+
+                <?php else :?>
+                    <p class="col-1 totalPrice">$<?= $totalPrice?></p>
+                <?php endif; ?>
+
+
+
+
+
+
             </div>
 
             <div class="row mx-5 my-2 pe-5 justify-content-end">
-                <a href="" class="col-1 btn btn-bg-color mb-5 ">返回列表</a>
+                <a href="course_order-list.php" class="col-1 btn btn-bg-color mb-5 ">返回列表</a>
             </div>
         </div>
     </main>

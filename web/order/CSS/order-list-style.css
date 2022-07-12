@@ -27,7 +27,7 @@
 }
 
 .searchText {
-    width: 30%;
+    width: 40%;
 }
 
 .searchDate {
@@ -35,10 +35,10 @@
 }
 
 .searchState {
-    width: 10%;
+    width: 200px;
 }
 
-.btn-bg-color {
+.btn-bg-color,.btn-cancel-color {
     background: var(--line-color);
     border: 1px solid var(--line-color);
     color: #fff;
@@ -50,6 +50,12 @@
     background: var(--main-color);
     border: 1px solid var(--main-color);
     color: #fff;
+}
+
+.btn-cancel-color:hover{
+    background: #fff;
+    border: 1px solid #000;
+    color: #000;
 }
 
 .hide {
@@ -85,16 +91,29 @@
     color:var(--main-color);
 }
 .table {
-    min-height: 200px;
+    min-height: 50px;
+    max-height: 50px;
+
 }
 .detailLink{
     color: var(--line-color);
     font-size: 18px;
     font-weight: 900;    
+    padding: 5px 30px;
+
 }
 .detailLink:hover{
     color: var(--main-color);
- 
+    
+}
+.trash{
+    color:var(--line-color);
+    cursor: pointer;
+    padding: 5px 30px;
+
+}
+.trash:hover{
+    color:var(--main-color);
 }
 
 
@@ -114,9 +133,58 @@
     color: var(--main-color);
 }
 
-
-
 .active>.page-link, .page-link.active {
     background: #fff;
     color: var(--main-color);
 }
+
+/* 確認刪除視窗 */
+
+.popup{
+    width: 400px;
+    height: 150px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px black;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: 0;
+    right: 0;
+    padding: 15px;
+}
+
+.popup h3{
+    font-size: 28px;
+    margin: 20px auto;
+    font-weight: bold;
+}
+.close{
+    position:absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+        
+}
+.confirm{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+.black-box{
+    position: fixed;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    top: 0;
+    left: 0;
+}
+

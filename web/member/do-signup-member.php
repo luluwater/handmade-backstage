@@ -4,12 +4,6 @@ session_start();
 require("../../db-connect.php");
 //=======================================================
 
-//$rowsMemebr = NULL;
-//if(!isset($_GET["id"])){
-//    echo "您不是從正常程序進入此頁";
-//    exit();
-//}
-
 $newUser =[
     ':account'=>$_POST["account"],
     ':password'=>$password=$_POST["password"],
@@ -21,28 +15,28 @@ $newUser =[
     ':gender'=>$_POST["gender"],
 ];
 
-
 $account=$_POST["account"];
 $email=$_POST["email"];
 $sqlCheck = "SELECT * FROM user WHERE account=? AND email=? ";
 $stmt = $db_host->prepare($sqlCheck);
-try {
-    $stmt->execute([$account, $email]);
-    $memberExist = $stmt->rowCount();
-    if ($memberExist > 0) {
-        $row = $stmt->fetch();
-        $user = [
-            "account" => $row["account"],
-            "email" => $row["email"]
-        ];
-        $_SESSION["user"] = $user;
-//連線路徑調整===========================================
-        header("location: sign-up-member.php");
-//=======================================================
-    }
-} catch (PDOException $e) {
+$stmt->execute([$account, $email]);
+$memberExist = $stmt->rowCount();
+
+if ($memberExist > 0) {
+    $row = $stmt->fetch();
+    $user = [
+        "account" => $row["account"],
+        "email" => $row["email"]
+    ];
+    try {
+    $_SESSION["user"] = $user;
+    header("location: sign-up-member.php");
+    } 
+catch (PDOException $e) {
     echo $e->getMessage();
+    }
 }
+
 if ($memberExist == 0) {
     $now = date("Y-m-d H:i:s");
     $password=md5($password);
@@ -58,6 +52,5 @@ if ($memberExist == 0) {
         $db_host = NULL;
         exit;
     }
-}
-
+}   
 ?>
