@@ -363,7 +363,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                                 <td><?=$row["create_time"]?></td>
                                 <td><?=$row["category_name"]?></td>
                                 <td><?=$row["name"]?></td>
-                                <th class="col-2">文章分類</th>
+                                <th class="col-2"><?=$row["tag"]?></th>
                                 <td class="text-start"><?=$row["title"]?></td>
                             </tr>
                             <?php endforeach; ?>
