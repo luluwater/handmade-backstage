@@ -7,9 +7,7 @@ if (isset($_GET["page"])) {
     $page = 1;
 }
 
-isset(($_GET["searchType"]))?  $searchType = $_GET["searchType"] :$searchType = "course_order.id";
 
-isset($_GET["keyword"])?$searchText = "'%" . $_GET["keyword"] . "%'":$_GET["keyword"] = "";
 
 if (!isset($_GET["sBtn"])) {
     $_GET["sBtn"] = "";
@@ -17,13 +15,37 @@ if (!isset($_GET["sBtn"])) {
 
 
 
+function orderLink($item, $cur_pageView, $order)
+{
+    isset(($_GET["searchType"])) ?  $searchType = $_GET["searchType"] : $searchType = "course_order.id";
+    isset($_GET["keyword"]) ? $searchText = $_GET["keyword"] : $_GET["keyword"] = "";
 
-// $urlParams = [];
+    switch ($item) {
+        case "nextPage":
+            return  "course_order-list.php?&pageView=$cur_pageView&order=$order&keyword=$searchText&searchType=$searchType";
+            break;
+        case "pageView":
+            $cur_pageView = $cur_pageView == 10 ? 5 : 10;
+            return  "course_order-list.php?&pageView=$cur_pageView&order=$order&keyword=$searchText&searchType=$searchType";
+            break;
+        
+        default:
+            $order=$item;
+              
+          return  "course_order-list.php?pageView=$cur_pageView&order=$order&keyword=$searchText&searchType=$searchType";  
+        break;
+    }
+}
+isset(($_GET["searchType"])) ?  $searchType = $_GET["searchType"] : $searchType = "course_order.id";
+isset($_GET["keyword"]) ? $searchText = $_GET["keyword"] :$searchText = $_GET["keyword"] = "";
+
+
+    // $urlParams = [];
 // parse_str($_SERVER['QUERY_STRING'], $urlParams);
 // print_r($_GET);
 
 //取得每頁看到幾欄
-$pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']) : 5;
+$pageView = $_GET['pageView'] ?? 5;
 
 //每頁開始的id
 $start = ($page - 1) * $pageView;
@@ -50,20 +72,25 @@ switch ($order) {
         $orderType = "id DESC";
 }
 
+if($searchText != "" && $searchType !=""){
+    $sqlWhere = "WHERE $searchType LIKE'%$searchText%' AND valid=1";
+  }else{
+    $sqlWhere="WHERE valid=1";
+  }
+
+
+$sql = $db_host->prepare("SELECT course_order.*,order_staus.name AS order_staus FROM course_order JOIN order_staus ON course_order.order_state_id = order_staus.id 
+$sqlWhere ORDER BY $orderType LIMIT $start , $pageView");
+
+
+$sqlAll = $db_host->prepare("SELECT * FROM course_order $sqlWhere");
 
 
 
-if ($_GET['sBtn'] == 's') {
-    $sql = $db_host->prepare("SELECT course_order.*,order_staus.name AS order_staus FROM course_order JOIN order_staus ON course_order.order_state_id = order_staus.id 
-    WHERE $searchType like $searchText AND valid=1 ORDER BY $orderType LIMIT $start , $pageView");
 
-    // print_r($sql);
-} else {
-    $sql = $db_host->prepare("SELECT course_order.*,order_staus.name AS order_staus FROM course_order JOIN order_staus ON course_order.order_state_id = order_staus.id AND valid=1 ORDER BY $orderType LIMIT $start , $pageView");
-}
+// print_r($sql);
 
 
-$sqlAll = $db_host->prepare("SELECT * FROM course_order WHERE valid=1");
 
 
 
@@ -94,7 +121,7 @@ $totalPage = ceil($orderCount / $pageView);
 //上一頁
 $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
-$nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
+$theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
 ?>
 <!doctype html>
@@ -135,10 +162,9 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             <div class="d-flex justify-content-between align-items-center display-page-box">
                 <p class="m-0">顯示</p>
                 <form action="" method="get" class="pageForm" class="text-center">
-                    <select name="pageView" id="" class="display-page form-select mx-1 " onchange="submit();">
+                    <select name="pageView" class="display-page form-select mx-1 " id="pageView">
                         <option value="5" <?php if ($pageView == '5') print 'selected '; ?>>5</option>
                         <option value="10" <?php if ($pageView == '10') print 'selected '; ?>>10</option>
-                        <option value="15" <?php if ($pageView == '15') print 'selected '; ?>>15</option>
 
                     </select>
                 </form>
@@ -168,6 +194,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     <input type="search" class="form-control mx-2 searchText" name="keyword" placeholder="請輸入搜尋關鍵字">
                 <?php elseif ($searchType == 'order_state_id') : ?>
                     <select name="keyword" id="" class="form-select mx-2 searchState">
+                        <option value="">請選擇</option>
                         <option value="<?php if ($searchType == "order_state_id") echo "3" ?>">已付款</option>
                         <option value="<?php if ($searchType == "order_state_id") echo "5" ?>">取消</option>
                     </select>
@@ -184,22 +211,19 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         <!-- 訂單表單開始 -->
         <div class="d-flex justify-content-center">
             <table class="table table-hover mt-5 order-table">
-                <thead class="order-th ">
+                <thead class="order-th">
                     <tr class="text-center order-title">
 
-<<<<<<< HEAD
-                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單編號 
-                            <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act">
-                                <a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=1" class="arrowBtn <?php if($order==1)echo "arrow-active"?>">
-                                <i class="fa-solid fa-caret-up arrow-color"></i></a> 
-                                <a href="course_order-list.php?page=<?=$page?>&pageView=<?=$pageView?>&order=2" class="<?php if($order==2)echo "arrow-active"?>">
-                                <i class="fa-solid fa-caret-down arrow-color">
-                                </i></a></span></span></td>
-=======
-                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單編號 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act"><a href="course_order-list.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=1" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>"><i class="fa-solid fa-caret-up arrow-color"></i></a> <a href="course_order-list.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=2" class="<?php if ($order == 2) echo "arrow-active" ?>"><i class="fa-solid fa-caret-down arrow-color"></i></a></span></span></td>
->>>>>>> e1c026591102140645c3af6eb823c2cbb9458992
+                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單編號
+                                <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act">
+                                    <a href="<?=orderLink("1",$pageView,$order)?>" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>">
+                                        <i class="fa-solid fa-caret-up arrow-color"></i></a>
+                                    <a href="<?=orderLink("2",$pageView,$order)?>" class="<?php if ($order == 2) echo "arrow-active" ?>">
+                                        <i class="fa-solid fa-caret-down arrow-color">
+                                        </i></a></span></span></td>
 
-                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單日期 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn"><a href="course_order-list.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=3" class="arrowBtn <?php if ($order == 3) echo "arrow-active" ?>"><i class="fa-solid fa-caret-up arrow-color"></i></a> <a href="course_order-list.php?page=<?= $page ?>&pageView=<?= $pageView ?>&order=4" class="<?php if ($order == 4) echo "arrow-active" ?>"><i class="fa-solid fa-caret-down arrow-color"></i></a></span></span></td>
+
+                        <td> <span class="d-flex justify-content-center align-items-center"> 訂單日期 <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn"><a href="<?=orderLink("3",$pageView,$order)?>" class="arrowBtn <?php if ($order == 3) echo "arrow-active" ?>"><i class="fa-solid fa-caret-up arrow-color"></i></a> <a href="<?=orderLink("4",$pageView,$order)?>" class="<?php if ($order == 4) echo "arrow-active" ?>"><i class="fa-solid fa-caret-down arrow-color"></i></a></span></span></td>
                         <td>訂購人</td>
                         <td>總金額</td>
                         <td>訂單狀態</td>
@@ -223,8 +247,8 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                                     <div class="content">
                                         <h3 class="confirm-h3">是否確定刪除?</h3>
                                         <div class="text-end">
-                                        <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
-                                        <a href="do_course_order_delete.php?id=<?= $row["id"] ?>" class="btn btn-main-color " id="confirm-btn">確認</a>
+                                            <a href="" class="btn btn-bg-color btn-cancel-color" id="cancelBtn">取消</a>
+                                            <a href="do_course_order_delete.php?id=<?= $row["id"] ?>" class="btn btn-main-color " id="confirm-btn">確認</a>
                                         </div>
                                     </div>
                                 </div>
@@ -243,19 +267,19 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
                     <li class="page-item">
-                        <a class="page-link" href="course_order-list.php?page=<?= $PreviousPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Previous">
+                        <a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&<?= $PreviousPage ?>" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
 
                     <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                        <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="course_order-list.php?page=<?= $i ?>&pageView=<?= $pageView ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                        <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&page=<?= $i ?>"><?= $i ?></a></li>
                     <?php endfor; ?>
 
 
 
                     <li class="page-item">
-                        <a class="page-link" href="course_order-list.php?page=<?= $nextPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Next">
+                        <a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&<?= $theNextPage ?>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -278,6 +302,15 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
     </main>
 
     <script>
+        const pageView = document.querySelector("#pageView");
+        pageView.addEventListener("change", function() {
+            console.log("test")
+            window.location.assign("<?= orderLink("pageView", $pageView, $order) ?>");
+        })
+
+
+
+
         let deleteBtn = document.querySelectorAll(".delete-btn");
         let confirm = document.querySelector("#confirm");
         let close = document.querySelector("#close");
