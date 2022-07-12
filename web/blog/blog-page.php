@@ -1,38 +1,3 @@
-<?php
-require_once("../../db-connect.php");
-
-$current_id=$_GET["id"];
-
-
-
-$stmtBlog=$db_host->prepare("SELECT blog.*,category.category_name, store.* FROM blog 
-JOIN category ON blog.category_id = category.id 
-JOIN store ON blog.store_id = store.id
-WHERE blog.id=$current_id");
-
-$stmtComments=$db_host->prepare("SELECT comment.*, user.* FROM comment 
-JOIN user ON comment.user_id = user.id
-WHERE comment.blog_id=$current_id");
-
-
-
-try {
-    $stmtBlog->execute();
-    $blog = $stmtBlog->fetchAll(PDO::FETCH_ASSOC);
-    $stmtComments->execute();
-    $comments = $stmtComments->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    echo "預處理陳述式執行失敗！ <br/>";
-    echo "Error: " . $e->getMessage() . "<br/>";
-    $db_host = NULL;
-    exit;
-}
-
-
-$db_host = NULL;
-
-?>
 
 <!doctype html>
 <html lang="en">
@@ -42,13 +7,14 @@ $db_host = NULL;
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <link rel="stylesheet" href="./style/blog.css">
   <link rel="stylesheet" href="../../css/style.css">
  
   <!-- Bootstrap CSS v5.2.0-beta1 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-   
+
 </head>
 
 <body>
@@ -67,10 +33,12 @@ $db_host = NULL;
   </header>
 
 
+
   <form action="do-edit-blog.php">
       <div class="container mt-5 text-center" style="">
         <div class="text-center text-center"> 發布於
           <?php
+
                 $date=new DateTime($blog[0]["create_time"]);
                 echo  $date->format('M-d-Y H:i:s');
             ?></div>
@@ -108,6 +76,8 @@ $db_host = NULL;
       <a  href="<?=$blog[0]["FB_url"]?>"><i  class="fs-4 fab fa-facebook-square"></i></a>
       <a  href="<?=$blog[0]["IG_url"]?>"><i class="fs-4 fab fa-instagram-square"></i></a>
     </form>
+
+
 
 
 

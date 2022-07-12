@@ -3,6 +3,7 @@ require_once("../../db-connect.php");
 
 $current_id=$_GET["id"];
 
+
 $stmtBlog=$db_host->prepare("SELECT blog.*,category.category_name, store.* ,blog.id AS BLOG_ID FROM blog 
 JOIN category ON blog.category_id = category.id 
 JOIN store ON blog.store_id = store.id
@@ -17,7 +18,6 @@ try {
     $blog = $stmtBlog->fetchAll(PDO::FETCH_ASSOC);
     $stmtComments->execute();
     $comments = $stmtComments->fetchAll(PDO::FETCH_ASSOC);
-
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
     echo "Error: " . $e->getMessage() . "<br/>";
@@ -58,14 +58,13 @@ $db_host = NULL;
 
 
     <div class="container mt-5 text-center">
+   
         <div class="text-center text-center"> 發布於
             <?php
                 $date=new DateTime($blog[0]["create_time"]);
                 echo  $date->format('M-d-Y H:i:s');
             ?>
         </div>
-
-      
             <input type="text" class="d-none" id="currentId" name="currentId" value="<?=$blog[0]["BLOG_ID"]?>">
             <input type="text" name="blogTitle" id="blogTitle" class="blogTitleInput mt-5"
                 value="<?=$blog[0]["title"]?>">
@@ -86,6 +85,7 @@ $db_host = NULL;
             </div>
             <input id="updateActicle" class="btn btn-success mt-3 btn-lg" name="submit_data" type="submit" value="修改文章">
         </div>
+        <input type="file">
 
         <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
