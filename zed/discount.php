@@ -2,105 +2,114 @@
 
 require("../db-connect.php");
 
-//========== 抓取全部資料 ==========
-$sqlAll = "SELECT * FROM discount WHERE discount.state!=0";
-$resultAll= $db_host->prepare($sqlAll);
-$resultAll->execute();
-$rowsAll = $resultAll->fetchAll(PDO::FETCH_ASSOC);
-$discountAllCount = count($rowsAll);
-
 //========== PAGE ==========
-if(isset($_GET["page"])){
-  $page=$_GET["page"];
-}else{
-  $page=1;
+if (isset($_GET["page"])) {
+    $page = $_GET["page"];
+} else {
+    $page = 1;
 }
+
+
 
 //取得每頁看到幾欄
-$pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']):5;
+$pageView = (isset($_GET['pageView'])) ? intval($_GET['pageView']) : 5;
 
 //每頁開始的id
-$start=($page-1)*$pageView;
+$start = ($page - 1) * $pageView;
 
-//========== sale_state_category 狀態類別資料表 ==========
-$sqlState = "SELECT * FROM sale_state_category" ;
-$resultState= $db_host->prepare($sqlState);
-$resultState->execute();
-$rowsState = $resultState->fetchAll(PDO::FETCH_ASSOC);
-if (isset($_GET["sale_state_category"])){
-  $sale_state_category = $_GET["sale_state_category"];
-  $sqlWhere="AND discount.state = $sale_state_category ";
+function orderLink($item, $cur_pageView, $sale_state_category)
+{
+    isset(($_GET["keyword"])) ?  $keyword = $_GET["keyword"] : $keyword = "";
+    isset($_GET["sale_state_category"]) ? $sale_state_category = $_GET["sale_state_category"] : $_GET["sale_state_category"] = "";
 
-}else{
-  $sale_state_category="";
-  $sqlWhere="";
+    switch ($item) {
+        case "nextPage":
+            return  "discount.php?&pageView=$cur_pageView&keyword=$keyword&sale_state_category=$sale_state_category";
+            break;
+        case "pageView":
+            $cur_pageView = $cur_pageView == 10 ? 5 : 10;
+            return  "discount.php?&pageView=$cur_pageView&keyword=$keyword&sale_state_category=$sale_state_category";
+            break;
+
+        default:
+            $sale_state_category = $item;
+
+            return  "discount.php?&pageView=$cur_pageView&keyword=$keyword&sale_state_category=$sale_state_category";
+            break;
+    }
 }
+
+isset($_GET["keyword"]) ?  $keyword = $_GET["keyword"] : $keyword = "";
+isset($_GET["sale_state_category"]) ? $sale_state_category = $_GET["sale_state_category"] : $sale_state_category = $_GET["sale_state_category"] = "";
+
+
+// 1=接下來 2=進行中 3=已結束
+if ($keyword != "" && $sale_state_category == "") {
+    $sqlWhere = "WHERE discount.name LIKE '%$keyword%'";
+} elseif ($keyword != "" && $sale_state_category == "1") {
+    $sqlWhere = "WHERE discount.state = 1 AND  discount.name LIKE '%$keyword%' ";
+} elseif ($keyword != "" && $sale_state_category == "2") {
+    $sqlWhere = "WHERE discount.state = 2 AND discount.name LIKE '%$keyword%' ";
+} elseif ($keyword != "" && $sale_state_category == "3") {
+    $sqlWhere = "WHERE discount.state = 3 AND discount.name LIKE '%$keyword%' ";
+} elseif ($sale_state_category == "1") {
+    $sqlWhere = "WHERE discount.state = 1";
+} elseif ($sale_state_category == "2") {
+    $sqlWhere = "WHERE discount.state = 2";
+} elseif ($sale_state_category == "3") {
+    $sqlWhere = "WHERE discount.state = 3";
+} else {
+    $sqlWhere = "";
+}
+
 
 //========== discount 主要的資料表 & search ==========
 
-if(isset($_GET["keyword"])){
-  $searchText = "'%" . $_GET["keyword"] . "%'";
-  $sqlSearch = "SELECT discount.name, discount_type_id, product_discount, pay, start_date, end_date,
-  sale_state_category.name AS sale_state_name FROM discount
-  JOIN sale_state_category ON discount.state = sale_state_category.id  
-  WHERE discount.state!=0 $sqlWhere AND discount.name LIKE $searchText ";
-  $keyword=$_GET["keyword"];
-  $result= $db_host->prepare($sqlSearch);
-  $resultSearch= $db_host->prepare($sqlSearch);
-  $resultSearch->execute();
-  $rowsSearch = $resultSearch->fetchAll(PDO::FETCH_ASSOC);
-  $searchCount = count($rowsSearch);
-} else {
-  $sql = "SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
-  JOIN sale_state_category ON discount.state = sale_state_category.id  
-  WHERE discount.state!=0 $sqlWhere ORDER BY end_date DESC LIMIT $start , $pageView";
-  $result= $db_host->prepare($sql);
+$sql = $db_host->prepare("SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
+JOIN sale_state_category ON discount.state = sale_state_category.id  
+$sqlWhere AND discount.state!=0 ORDER BY id  LIMIT $start , $pageView");
+
+$sql->execute();
+$rows = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+$sqlAll = $db_host->prepare("SELECT * FROM discount WHERE discount.state!=0 $sqlWhere");
+$sqlAll->execute();
+$rowsAll = $sqlAll->fetchAll(PDO::FETCH_ASSOC);
+$discountAllCount = count($rowsAll);
 
 
-}
-
-$result->execute();
-$rows = $result->fetchAll(PDO::FETCH_ASSOC);
-$discountCount = count($rows);
-
-
-// $sql = "SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
-// JOIN sale_state_category ON discount.state = sale_state_category.id  
-// WHERE discount.state!=0 $sqlWhere ORDER BY end_date DESC LIMIT $start , $pageView";
-// $result= $db_host->prepare($sql);
-// $result->execute();
-// $rows = $result->fetchAll(PDO::FETCH_ASSOC);
-// $discountCount = count($rows);
 
 //========== Page ==========
 //開始的筆數
-$startItem=($page-1)*$pageView+1;
+$startItem = ($page - 1) * $pageView + 1;
 //結束的筆數
-$endItem=$page*$pageView;
-if($endItem>$discountAllCount)$endItem=$discountAllCount;
+$endItem = $page * $pageView;
+if ($endItem > $discountAllCount) $endItem = $discountAllCount;
 
 //總筆數
-$totalPage=ceil($discountAllCount / $pageView);
+$totalPage = ceil($discountAllCount / $pageView);
 
 //上一頁
 $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
-$nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
+$nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
 //========== Page ==========
 //開始的筆數
-$startItem=($page-1)*$pageView+1;
+$startItem = ($page - 1) * $pageView + 1;
 //結束的筆數
-$endItem=$page*$pageView;
-if($endItem>$discountAllCount)$endItem=$discountAllCount;
+$endItem = $page * $pageView;
+if ($endItem > $discountAllCount) $endItem = $discountAllCount;
 
 //總筆數
-$totalPage=ceil($discountAllCount / $pageView);
+$totalPage = ceil($discountAllCount / $pageView);
 
 //上一頁
 $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
-$nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
+$nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
+
+
 
 ?>
 
@@ -114,27 +123,93 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.2.0-beta1 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-        <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="./css/style-sale.css">
-        <style>
-          tbody td{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/style-sale.css">
+    <style>
+        tbody td {
             vertical-align: middle;
-          }
-          tbody td a{
+        }
+
+        tbody td a {
             color: #D7BAA5;
-          }
-          tbody td a:hover{
+        }
+
+        tbody td a:hover {
             vertical-align: middle;
             color: #D6624F;
-          }
-          .active{
+        }
+
+        .page-item {
+            font-weight: 700;
+        }
+
+        .page-link {
+            color: var(--main-word-color);
+        }
+
+        .page-link:hover {
+            color: var(--main-color);
+        }
+
+        .active>.page-link,
+        .page-link.active {
+            background: #fff;
+            color: var(--main-color);
+        }
+
+        .actived {
             background-color: #D6624F;
-          }
-          
-        
-        </style>
+        }
+
+        tbody>tr:hover {
+            background-color: #eeeeee;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .popup {
+            width: 500px;
+            height: 150px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            left: 0;
+            right: 0;
+            padding: 15px;
+        }
+
+        .popup h3 {
+            font-size: 20px;
+            margin: 20px auto;
+            font-weight: bold;
+        }
+
+        .confirm {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+        }
+
+        .black-box {
+            position: fixed;
+            background: rgba(0, 0, 0, .5);
+            width: 100%;
+            height: 100%;
+            z-index: 4;
+            top: 0;
+            left: 0;
+        }
+    </style>
 </head>
 
 
@@ -146,51 +221,63 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
 
     <main>
 
-<!-- ========== state bar 狀態頁籤 ========== -->
-      <div class="mb-4">
-        <div class="title">一般折扣</div>
-        <div><br></div>
-        <div class="status-bar">
-          <ul class="d-flex list-unstyled justify-content-around align-items-center m-0 h-100 ">
-            <li class="status-button">
-              <a href="discount.php" class="status-a text-center fs-5
-              <?php if($sale_state_category=="") echo "active"; ?>" name="all">全部活動</a>
-            </li>
-            <?php foreach($rowsState as $row): ?>
-            <li class="status-button">
-              <a class="status-a text-center fs-5
+        <!-- ========== state bar 狀態頁籤 ========== -->
+        <div class="mb-4">
+            <div class="title">一般折扣</div>
+            <div><br></div>
+            <div class="status-bar">
+                <ul class="d-flex list-unstyled justify-content-around align-items-center m-0 h-100 ">
+                    <li class="status-button">
+                        <a href="discount.php" class="status-a text-center fs-5
+              <?php if ($sale_state_category == "") echo "actived"; ?>" name="all">全部活動</a>
+                    </li>
+                    <li class="status-button">
+                        <a class="status-a text-center fs-5
               <?php
-              if($sale_state_category==$row["id"]) echo "active";
-              ?>" 
-              href="discount.php?sale_state_category=<?=$row["id"]?>&pageView=<?=$pageView?>"><?=$row["name"]?></a>
-            </li>
-            <?php endforeach; ?>
-          </ul>
-      </div> 
+                if ($sale_state_category == 1) echo "actived";
+                ?>" href="<?= orderLink("1", $pageView, $sale_state_category) ?>">接下來</a>
+                    </li>
+                    <li class="status-button">
+                        <a class="status-a text-center fs-5
+              <?php
+                if ($sale_state_category == 2) echo "actived";
+                ?>" href="<?= orderLink("2", $pageView, $sale_state_category) ?>">進行中</a>
+                    </li>
+                    <li class="status-button">
+                        <a class="status-a text-center fs-5
+              <?php
+                if ($sale_state_category == 3) echo "actived";
+                ?>" href="<?= orderLink("3", $pageView, $sale_state_category) ?>">已結束</a>
+                    </li>
+                </ul>
+            </div>
 
-      </div>
+        </div>
         <div class="container-fluid">
 
-<!-- ========== 每頁顯示幾筆 ========== -->
+            <!-- ========== 每頁顯示幾筆 ========== -->
             <div class="d-flex justify-content-between">
                 <p class="title"></p>
-                
-                <form action="discount.php?" method="GET">
-                  <p>顯示
-                    <select class="count-bg text-center" aria-label="Default select example"  name="pageView" onchange=submit();>
-                      <option value="5" <?php if ($pageView == '5') print 'selected ';?>>5</option>
-                      <option value="10" <?php if ($pageView == '10') print 'selected ';?>>10</option>
-                    </select> 
-                  筆</p>
+
+                <div class="d-flex justify-content-between align-items-center display-page-box">
+                    <p class="m-0">顯示&nbsp;&nbsp;</p>
+                    <form action="" method="get" class="pageForm" class="text-center">
+                        <select name="pageView" class="display-page form-select mx-1 " id="pageView">
+                            <option value="5" <?php if ($pageView == '5') print 'selected '; ?>> 5 </option>
+                            <option value="10" <?php if ($pageView == '10') print 'selected '; ?>> 10 </option>
+                        </select>
+                    </form>
+                    <p class="m-0">&nbsp;&nbsp;筆</p>
+                </div>
                 </form>
-            
+
             </div>
- 
-<!-- ========== 搜尋、新增折扣 ========== -->
+
+            <!-- ========== 搜尋、新增折扣 ========== -->
             <form action="discount.php" method="get">
                 <div class="row my-4">
                     <div class="col-4">
-                    <input class="form-control mx-2 searchText" name="keyword" placeholder="活動名稱">
+                        <input class="form-control mx-2 searchText" name="keyword" placeholder="活動名稱">
                     </div>
                     <div class="col-2">
                         <button type="submit" class="btn btn-bg-color">搜尋</button>
@@ -198,77 +285,132 @@ $nextPage = (($page + 1) >$totalPage) ?$totalPage: ($page + 1);
                 </div>
             </form>
             <div class="text-end my-4">
-              <a href="discount-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
+                <a href="discount-create.php" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增折扣</a>
             </div>
 
-<!-- ========== table ========== -->
+            <!-- ========== table ========== -->
             <table class="table">
-              <thead class="table-head">
-                <tr class="text-center">
-                  <td class="col-3">活動名稱</td>
-                  <td class="col-2">折扣內容</td>
-                  <td class="col-3">活動期間</td>
-                  <td class="col-2">狀態</td>
-                  <td class="col-1">操作</td>
-                </tr>
-              </thead>
-              <tbody>
-              <?php foreach ($rows as $row): ?>
-                  <tr class="text-center">
-                    <td><?=$row["name"]?></td>
-                    <td>
-                      <?php if($row["discount_type_id"]==1):?>
-                        原價 x <?=$row["product_discount"]?>
-                      <?php elseif($row["discount_type_id"]==2):?>
-                        滿 <?=$row["pay"]?> 折 <?=$row["product_discount"]?>
-                    <?php endif ;?>
+                <thead class="table-head">
+                    <tr class="text-center">
+                        <td class="col-3">活動名稱</td>
+                        <td class="col-2">折扣內容</td>
+                        <td class="col-3">活動期間</td>
+                        <td class="col-2">狀態</td>
+                        <td class="col-1">操作</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($rows as $row) : ?>
+                        <tr class="text-center">
+                            <td><?= $row["name"] ?></td>
+                            <td>
+                                <?php if ($row["discount_type_id"] == 1) : ?>
+                                    原價 x <?= $row["product_discount"] ?>
+                                <?php elseif ($row["discount_type_id"] == 2) : ?>
+                                    滿 <?= $row["pay"] ?> 折 <?= $row["product_discount"] ?>
+                                <?php endif; ?>
+                            </td>
+                            <td><?= $row["start_date"] ?> - <?= $row["end_date"] ?></td>
+                            <td><?= $row["sale_state_name"] ?></td>
 
-                    </td>
-                    <td><?=$row["start_date"]?> - <?=$row["end_date"]?></td>
-                    <td><?=$row["sale_state_name"]?></td>
-                    <td>
-                        <a href="discount-edit.php?id=<?=$row["id"]?>" name="edit">編輯</a><br>
-                        <a href="discount-doDelete.php?id=<?=$row["id"]?>" name="delete">刪除</a>
-                    </td>
-                  </tr>
-              <?php endforeach; ?>
-              </tbody>
+                            <!-- ==================== 編輯\刪除 ==================== -->
+                            <td>
+                                <a href="discount-edit.php?id=<?= $row["id"] ?>" name="edit">編輯</a><br>
+                                <a class="delete-btn" data-id=<?= $row["id"] ?>>刪除</a><br>
+                            </td>
+                        </tr>
+                </tbody>
+            <?php endforeach; ?>
+            <!-- 是否確定刪除盒子 -->
+            <div class="confirm hide " id="confirm">
+                <div class="popup">
+                    <div class="content text-center">
+                        <h3 class="confirm-h3">確定要刪除此活動嗎</h3>
+                        <div class="text-center">
+                            <a href="" class="mx-2 btn btn-bg-color btn-cancel-color" id="cancelBtn">我再想想！！！</a>
+                            <a href="" class="mx-2 btn btn-main-color " id="confirm-btn">我要刪除！！！</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 是否確定刪除盒子 -->
+            <div class="" id="black-box"></div>
+
             </table>
+            <!-- ========== 分頁 ========== -->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center mt-5">
+                    <div class="d-flex">
+                        <li class="page-item">
+                            <a class="page-link" href="<?= orderLink("nextPage", $pageView, $sale_state_category) ?>&<?= $PreviousPage ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
 
- <!-- ========== 分頁 ========== -->
-            <div class="d-flex justify-content-center">
-            <?php if (isset($_GET['keyword'])) : ?>  
-            <div class="mt-4 pt-2 d-flex">關鍵字<p class="text-danger fw-bold">&nbsp;<?=$_GET["keyword"]?>&nbsp;</p>的搜尋結果&nbsp;;&nbsp;共 <?=$searchCount?> 筆資料</div>
-            <?php elseif (!isset($_GET['keyword']) && ($sale_state_category=="") ) : ?>  
-              <nav aria-label="Page navigation example ">
-                <ul class="pagination mt-4 px-5">
-                    <!-- 上一頁 -->
-                    <li class="page-item">
-                        <a class="page-link" href="discount.php?page=<?=$PreviousPage?>&pageView=<?=$pageView?>" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
+                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                            <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="<?= orderLink("nextPage", $pageView, $sale_state_category) ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                        <?php endfor; ?>
+
+
+
+                        <li class="page-item">
+                            <a class="page-link" href="<?= orderLink("nextPage", $pageView, $sale_state_category) ?>&<?= $theNextPage ?>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </div>
+
+
+                    <li class="px-5 py-2">
+                        <?php if (!isset($_GET['keyword'])) : ?>
+                        <?php elseif ($_GET['keyword'] = $_GET["keyword"]) : ?>
+                            <div class="mpt-2 d-flex">關鍵字<p class="text-danger fw-bold">&nbsp;<?= $_GET['keyword'] ?>&nbsp;</p>的搜尋結果
+                            <?php else : ?>
+                            <?php endif; ?>
+                            第 <?= $startItem ?> - <?= $endItem ?>&nbsp; 筆 , 共 <?= $discountAllCount ?> 筆資料
                     </li>
-                    <!-- 頁碼 -->
-                    <?php for($i=1; $i<=$totalPage;$i++): ?>
-                    <li class="page-item">
-                      <a class="page-link  <?php if($page==$i)echo "active"?>" href="discount.php?page=<?=$i?>&pageView=<?=$pageView?>"><?=$i?></a>
-                    </li>
-                    <?php endfor; ?>
-                    <!-- 下一頁 -->
-                    <li class="page-item">
-                        <a class="page-link" href="discount.php?page=<?=$nextPage?>&pageView=<?=$pageView?>" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-              </nav>
-              <div class="mt-4 pt-2">第 <?=$startItem?> - <?=$endItem?> 筆 , 共 <?=$discountAllCount?> 筆資料</div>
-              <?php else: ?>
-              
-              <?php endif; ?>
-            </div>   
+                    <!-- 頁碼結束 -->
+        </div>
+        </div>
         </div>
     </main>
 </body>
+<script>
+    const pageView = document.querySelector("#pageView");
+    pageView.addEventListener("change", function() {
+        window.location.assign("<?= orderLink("pageView", $pageView, $sale_state_category) ?>");
+    })
+    let deleteBtn = document.querySelectorAll(".delete-btn");
+    let confirm = document.querySelector("#confirm");
+    let confirmBtn = document.querySelector("#confirm-btn");
+    let cancelBtn = document.querySelector("#cancelBtn");
+    let blackBox = document.querySelector("#black-box");
 
-</html> 
+    for (let i = 0; i < deleteBtn.length; i++) {
+        deleteBtn[i].addEventListener('click', function() {
+            let id = this.dataset.id;
+            confirm.classList.remove('hide')
+            blackBox.classList.add('black-box')
+            confirm.classList.add('animate__animated')
+            confirm.classList.add('animate__bounceIn')
+            confirmBtn.href = `discount-doDelete.php?id=${id}`
+        })
+    }
+
+    confirmBtn.addEventListener('click', () => {
+        confirm.classList.add('hide')
+        blackBox.classList.remove('black-box')
+        confirm.classList.remove('animate__bounceIn')
+
+
+
+    })
+    cancelBtn.addEventListener('click', () => {
+        confirm.classList.add('hide')
+        blackBox.classList.remove('black-box')
+        confirm.classList.remove('animate__bounceIn')
+
+    })
+</script>
+
+</html>
