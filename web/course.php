@@ -239,9 +239,25 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                         <span aria-hidden="true"><</span>
                     </a>
                 </li>
-                  <?php for($i=1;$i<=$totalPage;$i++): ?>
-                <li class="page-item"><a class="page-link <?=$i==$page?"active":""?>" href="<?=orderLink("nextPage",$amount_limit,$orderType,$order,$orderState)?>&page=<?=$i?>"><?=$i?></a></li>
-                  <?php endfor; ?>
+                <?php
+                  $maxPageLimit=$page+5>$totalPage?$totalPage:$page+5;
+                  $minPageLimit=$totalPage>10?10:$totalPage;
+                ?>
+                <?= $page>5?"<li>...</li>":""?>
+                <?php if($page>5): ?>                  
+                  <?php for($i=$page-5;$i<=$maxPageLimit;$i++): ?>
+                  <li class="page-item">
+                    <a class="page-link <?=$i==$page?"active":""?>" href="<?=orderLink("nextPage",$amount_limit,$orderType,$order,$orderState)?>&page=<?=$i?>"><?=$i?></a>
+                  </li>
+                  <?php endfor; ?>                  
+                <?php else: ?>
+                <?php for($i=1;$i<=$minPageLimit;$i++): ?>
+                  <li class="page-item">
+                    <a class="page-link <?=$i==$page?"active":""?>" href="<?=orderLink("nextPage",$amount_limit,$orderType,$order,$orderState)?>&page=<?=$i?>"><?=$i?></a>
+                  </li>
+                <?php endfor; ?>
+                <?php endif ?>
+                <?= $page+5<$totalPage?"...":"" ?>
                     <a class="page-link" href="<?=orderLink("nextPage",$amount_limit,$orderType,$order,$orderState)?>&page=<?=$page+1>$totalPage?$page=$totalPage:$page=$page+1?>" aria-label="Next">
                         <span aria-hidden="true">></span>
                     </a>
