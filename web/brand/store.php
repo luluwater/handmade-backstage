@@ -2,12 +2,9 @@
 require("../../db-connect.php");
 
 $sql = "SELECT store.* ,category.category_name FROM store
-JOIN category ON store.category_id = category.id WHERE store.valid= 1";
+JOIN category ON store.category_id = category.id WHERE store.valid= 1 LIMIT 5";
 
 $result= $db_host->prepare($sql);
-
-
-
 
 try {
    $result->execute();  
@@ -29,7 +26,6 @@ try {
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS v5.2.0-beta1 -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -51,7 +47,6 @@ try {
           /* padding:5px 40px ; */
           color:black;
           border:1px solid var(--bg-color);
-         
       }
       .btnClass {
         margin-top:60px;
@@ -60,7 +55,6 @@ try {
          border:1px solid var( --line-color);
          border-radius:10%;
          font-size:24px;
-
       }
       .count-bg{
         margin-bottom:20px;
@@ -104,9 +98,6 @@ try {
                   筆數
                 </p> -->
                   <!-- <p class="side">共筆資料 </p>  -->
-
-
-                 
             </div>
            <!-- form 配呵input type="submit name=要輸入的職" -->
            <form action="do-store-delete.php" method="get">
