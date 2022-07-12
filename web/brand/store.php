@@ -1,15 +1,23 @@
 <?php
 require("../../db-connect.php");
-// $sqlAll="SELECT *FROM store WHERE valid=1 "
 
-$sql="SELECT * FROM store WHERE valid=1 ";
-// $sql="SELECT category_name , FROM category JOIN store 
-// ON store.category = category.id LIMIT 6 ";
-$stmt=$db_host->prepare($sql);//類似sql執行
-$stmt->execute(); 
+$sql = "SELECT store.* ,category.category_name, store.valid AS storeValid FROM store
+JOIN category ON store.category_id = category.id ";
 
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// var_dump($rows);
+$result= $db_host->prepare($sql);
+
+
+
+
+try {
+   $result->execute();  
+  $rows=$result->fetchALL(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "error: " . $e->getMessage() . "<br/>";
+    $db_host = NULL;
+    exit;
+}
 
 
 ?>
@@ -105,7 +113,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                    <a class=" title btnClass" href="brand-list.php">管理分類</a>
                 <div class="delAndAdd ">
                   <input class=" -main-color m-4" name="delete" type="submit" value="刪除店家">
-                    <a href="" class=" text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增店家</a>
+                    <a href="brand-List-detail.php" class=" text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增店家</a>
                 </div>     
               </div>
           
@@ -117,12 +125,13 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                           <input value="<?=$row["id"] ?>" name="checkbox" 
                             class="me-4" type="checkbox">
                          <figure class="ratio ratio-4x3 mb-2">
-                             <img class="object-cover" src="imagesTest/store_img
-                             <?= $row["img"] ?>" alt="">
+                             <img class="object-cover" src="imagesTest/<?= $row["img"] ?>" alt="">
                         </figure>
                              <div class="text-center"><?= $row["name"] ?></div>
-                             <div class="text-center ">類別<?= $row["category_id"] ?></div>
-                           
+                             
+                             <div class="text-center "><?= $row["category_name"] ?>
+                            </div>
+                    
                           <div class=" d-flex  justify-content-center">                       
                            <a class="text-main-color m-2"
                             href="<?= $row["FB_url"] ?>">FB</a>
