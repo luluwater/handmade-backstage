@@ -1,28 +1,29 @@
 <?php
-if(!isset($_POST["name"])){
-    echo "沒有資料";
-    exit;
-}
 
 require_once("../../db-connect.php");
 
+if (isset($_GET["name"])) {
+    $order = $_GET["name"];
+    echo $order;
+}
+//定義name值 變數= get or post 取德的name值
+$id=$_GET["id"];
+$category_name=$_GET["categoryName"];
+$category_en_name=$_GET["categoryNO1"];
 
-$id=$_POST["id"];
-// $name=$_POST["name"];
-// $phone=$_POST["phone"];
-// $order_state_id=$_POST["order_state_id"];
-// echo $name;
+// echo $id ;
+// exit;
 
 $sql = $db_host->prepare("UPDATE category SET 
-category_name='$category_name',category_en_name='$category_en_name',
+category_name='$category_name',
+category_en_name='$category_en_name'
   WHERE id = '$id'");
 
-// echo $sql;
 
 try {
     $sql->execute();
     echo "修改完成";
-
+   
 
 } catch (PDOException $e) {
     echo "預處理陳述式失敗! <br/>";
@@ -31,5 +32,7 @@ try {
     exit;
 }
 
-header("location: course_order_detail.php?id=".$id); //儲存後返回的頁面
+//更新完回到這頁
+header("location:brand-edit.php?id=$_GET[id]");
+
 ?>

@@ -24,7 +24,7 @@
 
     if($type === "course"){
         $datetime=$_POST["datetime"];
-        $hour=$_POST["hour"];               
+        $hour=$_POST["hour"];
         $stmt=$db_host->prepare("INSERT INTO course (store_id,category_id,create_time,name,intro,amount,price,note,course_date,course_time) VALUES (:store_id, :category_id, :create_time, :name, :intro, :amount, :price, :note, :datetime, :hour)");
         try{    
             $stmt->execute([
@@ -50,7 +50,7 @@
         upFileToDir($type,$categoryName,$course_id);
         upFileTo_db($type,$course_id);
     }else{
-        $stmt=$db_host->prepare("INSERT INTO product (store_id,category_id,create_time,name,intro,amount,price,note) VALUES (:store_id, :category_id, :creat_time, :name, :intro, :amount, :price, :note)");
+        $stmt=$db_host->prepare("INSERT INTO product (store_id,category_id,create_time,name,intro,amount,price,note) VALUES (:store_id, :category_id, :create_time, :name, :intro, :amount, :price, :note)");
 
         try{    
             $stmt->execute([

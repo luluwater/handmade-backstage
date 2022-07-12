@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Title</title>
+    <title>第三頁</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,10 +10,15 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
+<<<<<<< HEAD
+  
+
+=======
 <<<<<<< HEAD:web/brand-List-detail.php
         <link rel="stylesheet" href="../css/style.css">
 
 =======
+>>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
         <link rel="stylesheet" href="../../css/style.css">
    <style>
    </style>

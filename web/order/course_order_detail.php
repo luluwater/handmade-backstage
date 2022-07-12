@@ -45,9 +45,10 @@ if ($couponId!=""){
 
 // *******撈取訂單資料******* //
 
-$sqlOrder = $db_host->prepare("SELECT course_order.*,user.account,order_staus.name AS stausName $sqlJoin FROM course_order 
+$sqlOrder = $db_host->prepare("SELECT course_order.*,user.account,order_staus.name AS stausName,payment.name AS paymentName $sqlJoin FROM course_order 
 JOIN user ON course_order.user_id = user.id 
 JOIN order_staus ON course_order.order_state_id = order_staus.id 
+JOIN payment ON course_order.payment_id = payment.id
 $JoinFrom
 WHERE course_order.id = $id");
 
@@ -118,7 +119,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
         <!-- 顧客資料 -->
         <div class="row mx-5 my-3">
             <p class="col-1 boldWord">訂單編號</p>
-            <p class="col-2">00<?= $orderRow["id"] ?></p>
+            <p class="col-2"><?= $orderRow["id"] ?></p>
             <a href="course_order_edit.php?id=<?=$orderRow["id"]?>" class="btn btn-bg-color col-1 editBtn">修改資料</a>
 
         </div>
@@ -145,7 +146,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
 
         <div class="row mx-5 mb-3">
             <p class="col-1 boldWord">付款方式</p>
-            <p class="col-auto"><?= $orderRow["payment"] ?></p>
+            <p class="col-auto"><?= $orderRow["paymentName"] ?></p>
         </div>
 
         <div class="row mx-5 mb-3">

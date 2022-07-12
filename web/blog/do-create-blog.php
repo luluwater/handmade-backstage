@@ -1,23 +1,23 @@
 <?php
 
 if(isset($_POST["submit_data"])){
-
     require_once("../../db-connect.php");
-
     $title = mysqli_real_escape_string($con, $_POST["blogTitle"]);
     $content = mysqli_real_escape_string($con, $_POST["atricle_content"]);
     $pubilshTime=$_POST["pubilshTime"];
-    $storeName=$_POST["store"];
+    $storeId=$_POST["store"];
     $category=$_POST["category"];
     $state=$_POST["submit_data"];
     $content = str_replace( '&', '&amp;',$content );
+    echo $state;
 
-
-
-
-
+    if(isset($_POST["isPublish"])){
+        
+    }
+    
     if( $state=="發布"){
-        $stmt=$db_host->prepare("INSERT INTO blog(title,content,create_time,category_id,state,valid) VALUES ('$title','$content','$pubilshTime', '$category', '$state',1)");
+        $stmt=$db_host->prepare("INSERT INTO blog(title,content,create_time,category_id, store_id,state,valid) VALUES ('$title','$content','$pubilshTime', '$category', $storeId,'$state',1)");
+
         header('refresh:2; url=manage-blog.php');
         echo "發布成功";
     }
