@@ -6,12 +6,9 @@ if(isset($_POST["inputVal"])){
     $orderType=$_POST["orderType"];
     $start=$_POST["start"];
     $pageView=$_POST["pageView"];
-<<<<<<< HEAD
-    $stmtKeyword=$db_host->prepare("SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 AND blog.title LIKE '%$inputVal%' OR category.category_name LIKE '%$inputVal%' ORDER BY $orderType LIMIT $start,$pageView");
-=======
+
     $stmtKeyword=$db_host->prepare("SELECT blog.*,category.category_name 
     FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 AND blog.title LIKE '%$inputVal%' OR category.category_name LIKE '%$inputVal%' ORDER BY $orderType LIMIT $start,$pageView");
->>>>>>> efc37a07a995910586736d8b5f8b6943bf49bad7
 }else{
     $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 LIMIT $start,$pageView");
 }
