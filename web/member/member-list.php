@@ -269,10 +269,10 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         <tbody>
                             <?php foreach ($rows as $row): ?>
                             <tr class="table-body hover">
-                                <td><?=$row["product_order_id"]?></td>
-                                <td><?=$row["create_time"]?></td>
-                                <td><?=$row["total_amount"]?></td>
-                                <td class="text-start"><?=$row["note"]?></td>
+                                <td class="col-2"><a class="text-info" href="/HANDMADE/web/order/product_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
+                                <td class="col-2"><?=$row["create_time"]?></td>
+                                <td class="col-2"><?=$row["total_amount"]?></td>
+                                <td class="col-6 text-start"><?=$row["note"]?></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -305,16 +305,16 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                     <table class="table text-center align-middle">
                         <thead>
                             <tr class="table-head text-light align-middle">
-                                <th>訂單編號</th>
-                                <th>訂單日期</th>
-                                <th>總金額</th>
-                                <th>備註</th>
+                                <th class="col-2">訂單編號</th>
+                                <th class="col-2">訂單日期</th>
+                                <th class="col-2">總金額</th>
+                                <th class="col-6">備註</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($courseRows as $row): ?>
                             <tr class="table-body hover">
-                                <td><?=$row["id"]?></td>
+                                <td><a class="text-info" href="/HANDMADE/web/order/course_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
                                 <td><?=$row["create_time"]?></td>
                                 <td><?=$row["total_amount"]?></td>
                                 <td class="text-start"><?=$row["note"]?></td>
