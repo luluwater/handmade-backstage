@@ -90,11 +90,8 @@ require("../../db-connect.php");
                         <i class="fa-solid fa-caret-down arrow-color"></i>
                         </a></span></span>
                     </td>
-<<<<<<< HEAD
                     <!-- <td class="col-2">會員編號 <a href="">
                         <i class="fa-solid fa-sort mx-2"></i></a></td> -->
-=======
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
                     <td class="col-1">帳號</td>
                     <td class="col-1">姓名</td>
                     <td class="col-4">地址</td>
@@ -134,7 +131,6 @@ require("../../db-connect.php");
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
                     <li class="page-item">
-<<<<<<< HEAD
                         <a class="page-link"
                             href="members-list.php?page=<?=$PreviousPage?>&pageView=
                             <?=$pageView?>&order=<?=$order?>"
@@ -154,7 +150,6 @@ require("../../db-connect.php");
                             href="members-list.php?page=<?=$nextPage?>
                             &pageView=<?=$pageView?>&order=<?=$order?>"
                             aria-label="Next">
-=======
                         <a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&<?= $PreviousPage ?>" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
@@ -164,7 +159,6 @@ require("../../db-connect.php");
                     <?php endfor; ?>
                     <li class="page-item">
                         <a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&<?= $theNextPage ?>" aria-label="Next">
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
