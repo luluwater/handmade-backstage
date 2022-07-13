@@ -7,7 +7,7 @@
 $type=$_GET["type"];
 
 
-// echo  $type;
+echo  $type;
 require_once("../db-connect.php");
 $stmt=$db_host->prepare("SELECT * FROM category");
 $stmt_store=$db_host->prepare("SELECT store.id,store.name FROM store WHERE store.category_id = 1");
