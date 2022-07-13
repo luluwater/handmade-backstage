@@ -1,6 +1,6 @@
 <?php
 
-require("../db-connect.php");
+require("../../db-connect.php");
 
 //========== PAGE ==========
 if (isset($_GET["page"])) {
@@ -225,7 +225,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
 <body>
   <?php
-  require("./main-menu.html");
+  require("../main-menu.html");
   ?>
 
   <main>

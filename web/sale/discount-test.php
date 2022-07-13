@@ -1,6 +1,6 @@
 <?php
 
-require("../db-connect.php");
+require("../../db-connect.php");
 
 //========== 抓取全部資料 ==========
 $sqlAll = "SELECT * FROM discount WHERE discount.state!=0";
@@ -130,7 +130,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
 <body>
   <?php
-  require("./main-menu.html");
+  require("../main-menu.html");
   ?>
 
   <main>

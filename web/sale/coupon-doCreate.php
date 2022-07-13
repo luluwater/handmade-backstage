@@ -7,7 +7,7 @@ if(!isset($_POST["id"])){
     exit;
 };
 
-require("../db-connect.php");
+require("../../db-connect.php");
 
 $pay=$_POST["discount_type_id"]==1?null:$_POST["pay"];
 $coupon_discount=$_POST["coupon_discount"]?$_POST["coupon_discount"]:$_POST["coupon_discount2"];
