@@ -156,7 +156,7 @@ require("../../db-connect.php");
                         </li>
                     <?php endfor; ?>
                         <li class="page-item">
-                            <a class="page-link" href="<?=orderLink("nextPage",$pageView,$order)?>&<?= $theNextPage ?>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                            <a class="page-link" href="<?=orderLink("nextPage",$pageView, $order) ?>&page=<?= $page + 1 > $totalPage ? $page = $totalPage : $page = $page + 1 ?>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                         </li>
                     <li class="px-5 py-2">
                         第<?= $startItem ?>- <?= $endItem ?>筆,共 <?= $memberCount ?> 筆資料
