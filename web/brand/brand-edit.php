@@ -106,6 +106,20 @@ try {
     color: white;
     padding: .5rem 1rem;
     }
+    #brand_acitve {
+      color: #fff;
+      background: var(--main-color);
+    }
+
+    #brand_acitve a::before {
+      content: "";
+      height: 25px;
+      width: 5px;
+      background: #fff;
+      position: absolute;
+      top: 50%;
+      transform: translate(-300%, -50%);
+    }
 </style>
   </head>
   <body>

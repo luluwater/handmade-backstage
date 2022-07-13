@@ -205,6 +205,21 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
       top: 0;
       left: 0;
     }
+
+    #coupon_active {
+      color: #fff;
+      background: var(--main-color);
+    }
+
+    #coupon_active a::before {
+      content: "";
+      height: 25px;
+      width: 5px;
+      background: #fff;
+      position: absolute;
+      top: 50%;
+      transform: translate(-300%, -50%);
+    }
   </style>
 </head>
 
