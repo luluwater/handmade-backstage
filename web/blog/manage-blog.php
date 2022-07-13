@@ -256,18 +256,18 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
                     <li class="page-item">
-                        <a class="page-link" href="manage-blog.php?page=<?= $PreviousPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Previous">
+                        <a class="page-link" href="manage-blog.php?page=<?= $PreviousPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>&status=<?=$status?>" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                 
                     <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                        <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="manage-blog.php?page=<?= $i ?>&pageView=<?= $pageView ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                        <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="manage-blog.php?page=<?= $i ?>&pageView=<?= $pageView ?>&order=<?= $order ?>&status=<?=$status?>"><?= $i ?></a></li>
                     <?php endfor; ?>
 
                 
                     <li class="page-item">
-                        <a class="page-link" href="manage-blog.php?page=<?= $nextPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>" aria-label="Next">
+                        <a class="page-link" href="manage-blog.php?page=<?= $nextPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>&status=<?=$status?>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -416,10 +416,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         order:order,
                     },
                     success:function(data){
-<<<<<<< HEAD
-=======
                         $("#table").html(data)
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
                 }
             });
         })
@@ -429,10 +426,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         const articlesList=document.querySelector("#articlesList");
         const tbody=document.getElementById('tbody')
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
         for(let i=0;i<deleteBtns.length;i++){
             deleteBtns[i].addEventListener("click",(e)=>{
                 let id = e.target.dataset.id;
@@ -454,11 +447,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     },
                     success:function(data){
                         $("#tbody").html(data)
-<<<<<<< HEAD
-
-=======
                         location.reload()
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
                  }
                 })
             })
@@ -488,10 +477,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         })
         
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
 
     
 })

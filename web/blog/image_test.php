@@ -1,6 +1,7 @@
 <?php
-function imgur_upload($image,$title)
+function imgur_upload($image,$title){
 
+}
 
 
 

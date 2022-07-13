@@ -144,33 +144,11 @@ $db_host = NULL;
         </textarea>
         <!-- ********************************************************** -->
 
-
-    <!-- Preview modal  -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl">
-            <div class="modal-content w-100 ">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">預覽畫面</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="w-75 container modal-dialog">
-                <h2 class="my-4" id="modalTitle"></h2>
-                <h5 id="modalUser">管理員 0001 </h5>
-                <p id="modalDate">
-                <p>
-                  <span id="modalExp" class="badge rounded-pill bg-warning text-dark"></span>
-                  <span id="modalCategory" class="badge rounded-pill bg-secondary"></span>
-                  <span id="modalStore" class="badge rounded-pill bg-success"></span>
-                  <hr>
-                <duv id="modalArticle">
-                  <div id="editor">
-                
         <!-- submit button -->
         <div class="d-flex gap-3 justify-content-end">
           <a href="manage-blog.php" class="btn btn-bg-color mt-3 btn-lg ">返回</a>
           <input class="btn btn-main-color mt-3 btn-lg" id="publish" name="submit_data" type="submit" value="發布">
         </div>
-
 
           <!-- Preview modal  -->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -209,23 +187,12 @@ $db_host = NULL;
       </div>
     </div>
 
-<<<<<<< HEAD
-              
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
-        <!-- submit button -->
-        <div class="d-flex gap-3 justify-content-end">
-          <a href="manage-blog.php" class="btn btn-bg-color mt-3 btn-lg ">返回</a>
-          <input class="btn btn-main-color mt-3 btn-lg" id="save" name="submit_data" type="submit" value="發布">
-        </div>
-      </form>
-=======
   </form>
 
 
 
 
     
->>>>>>> a91023d1164716daa64e8ab27c8d21aa8019b575
 
   </main>
 
@@ -239,13 +206,7 @@ $db_host = NULL;
   </script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-
-
-  <script>  
-
   <script>
-
   CKEDITOR.ClassicEditor.create(document.getElementById("atricle_editor"), {
     toolbar: {
       items: [
@@ -498,19 +459,11 @@ $db_host = NULL;
     modalTitle.innerText = blogTitleInput.value
     modalExp.innerText = articleCategory.value
     modalCategory.innerText = categoryInput.children[categoryInput.value - 1].innerText
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
-    modalStore.innerText = storeInput.children[storeInput.value -1 ].innerText
-=======
 
 
     modalStore.innerText = storeInput.value
 
 
->>>>>>> a91023d1164716daa64e8ab27c8d21aa8019b575
     modalArticle.innerText = article.innerText
 
     modalDate.innerText = publishTimeInput.value
@@ -534,24 +487,9 @@ $db_host = NULL;
         for (let result of response.stores) {
           html = document.createElement("option");
           html.textContent = result.name;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-          html.setAttribute("name", result.id );
-          html.setAttribute("value", result.id );
-          store.prepend(html);
-
-=======
-          html.setAttribute("name", result.id );
-          html.setAttribute("value", result.id );
-          store.prepend(html);
-         
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
-=======
           html.setAttribute("name", result.id, );
           html.setAttribute("value", result.id, );
           store.prepend(html);
->>>>>>> a91023d1164716daa64e8ab27c8d21aa8019b575
         }
       }).fail(function(jqXHR, textStatus) {
         console.log("Request failed: " + textStatus);
@@ -559,10 +497,6 @@ $db_host = NULL;
   })
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
   </script>
 </body>
 
