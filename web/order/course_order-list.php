@@ -153,6 +153,15 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             background: var(--main-color);
             color: #fff;
         }
+        #c-order_active a::before {
+            content: "";
+            height: 25px;
+            width: 5px;
+            background: #fff;
+            position: absolute;
+            top: 50%;
+            transform: translate(-300%, -50%);
+        }
     </style>
 </head>
 

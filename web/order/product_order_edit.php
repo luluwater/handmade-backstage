@@ -128,10 +128,22 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
             padding-left: 0;
         }
 
-        #p-order_active{
+        #p-order_active {
             background: var(--main-color);
             color: #fff;
         }
+
+        #p-order_active a::before {
+            content: "";
+            height: 25px;
+            width: 5px;
+            background: #fff;
+            position: absolute;
+            top: 50%;
+            transform: translate(-300%, -50%);
+        }
+
+
     </style>
 
 </head>
@@ -168,11 +180,11 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
                         <p class="col-auto"><input name="name" type="text" class="form-control" value="<?= $orderRow["name"] ?>" required></p>
                     </div>
 
-                    
-                <div class="row mx-5 mb-1">
-                    <p class="col-2 boldWord">連絡電話</p>
-                    <p class="col-auto"><input name="phone" type="tel" class="form-control" value="<?= $orderRow["phone"] ?>" required></p>
-                </div>
+
+                    <div class="row mx-5 mb-1">
+                        <p class="col-2 boldWord">連絡電話</p>
+                        <p class="col-auto"><input name="phone" type="tel" class="form-control" value="<?= $orderRow["phone"] ?>" required></p>
+                    </div>
 
                     <div class="row mx-5 mb-3 align-items-center">
                         <p class="col-2 boldWord">收件地址</p>
@@ -286,11 +298,11 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
             </table>
         </div>
 
-        <?php if ($couponId!="") :?>
+        <?php if ($couponId != "") : ?>
             <div class="ps-5 ms-5 boldWord">
-                使用折價券：  <?=$orderRow["couponName"]?>
+                使用折價券： <?= $orderRow["couponName"] ?>
             </div>
-        <?php endif;?>
+        <?php endif; ?>
         <div class="text-end boldWord ">
             <div class="row mx-5 pe-5 mt-2 justify-content-end">
                 <p class="col-2 boldWord ">訂單總金額</p>
