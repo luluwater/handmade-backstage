@@ -111,9 +111,8 @@ a{
     transform: translate(-300%,-50%);
     transition: .3s;
 }
-.hover:hover a::before{
-    height: 25px;
-    
+.hover:hover .nav-link::before{
+    height: 25px;    
 }
 
 .title{
