@@ -122,6 +122,17 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
             background: #E2E2E2;
             color: var(---main-word-color);
         }
+        .detailLink{
+        color: var(--line-color);
+        font-size: 18px;
+        font-weight: 900;    
+        padding: 5px 30px;
+
+        }
+        .detailLink:hover{
+            color: var(--main-color);
+            
+        }
     </style>
     <!-- ========================================================= -->
 </head>
@@ -269,9 +280,9 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         <tbody>
                             <?php foreach ($rows as $row): ?>
                             <tr class="table-body hover">
-                                <td class="col-2"><a class="text-info" href="/HANDMADE/web/order/product_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
+                                <td class="col-2"><a class="detailLink" href="/HANDMADE/web/order/product_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
                                 <td class="col-2"><?=$row["create_time"]?></td>
-                                <td class="col-2"><?=$row["total_amount"]?></td>
+                                <td class="col-2">NT$&nbsp;<?=$row["total_amount"]?></td>
                                 <td class="col-6 text-start"><?=$row["note"]?></td>
                             </tr>
                             <?php endforeach; ?>
@@ -314,9 +325,9 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         <tbody>
                             <?php foreach ($courseRows as $row): ?>
                             <tr class="table-body hover">
-                                <td><a class="text-info" href="/HANDMADE/web/order/course_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
+                                <td><a class="detailLink" href="/HANDMADE/web/order/course_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
                                 <td><?=$row["create_time"]?></td>
-                                <td><?=$row["total_amount"]?></td>
+                                <td>NT$&nbsp;<?=$row["total_amount"]?></td>
                                 <td class="text-start"><?=$row["note"]?></td>
                             </tr>
                             <?php endforeach; ?>
@@ -364,7 +375,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                                 <td><?=$row["category_name"]?></td>
                                 <td><?=$row["name"]?></td>
                                 <th class="col-2"><?=$row["tag"]?></th>
-                                <td class="text-start"><?=$row["title"]?></td>
+                                <td class="text-start detailLink"><?=$row["title"]?></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>

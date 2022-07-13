@@ -21,7 +21,6 @@ WHERE course_order.id = $id");
 try {
     $sqlCoupon->execute();
     $couponIsset = $sqlCoupon->fetch(PDO::FETCH_ASSOC);
-   
 } catch (PDOException $e) {
     echo "error: " . $e->getMessage() . "<br/>";
     $db_host = NULL;
@@ -31,11 +30,10 @@ try {
 // *******擁有的話 資料連接coupon資料庫******* //
 
 $couponId = $couponIsset["coupon_id"];
-if ($couponId!=""){
-    $sqlJoin = ",coupon.discount_type_id,coupon.coupon_discount,coupon.pay";
+if ($couponId != "") {
+    $sqlJoin = ",coupon.discount_type_id,coupon.coupon_discount,coupon.pay,coupon.name AS couponName";
     $JoinFrom = "JOIN coupon ON course_order.coupon_id = coupon.id";
-    
-}else{
+} else {
     $sqlJoin = "";
     $JoinFrom = "";
 }
@@ -120,7 +118,7 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
         <div class="row mx-5 my-3">
             <p class="col-1 boldWord">訂單編號</p>
             <p class="col-2"><?= $orderRow["id"] ?></p>
-            <a href="course_order_edit.php?id=<?=$orderRow["id"]?>" class="btn btn-bg-color col-1 editBtn">修改資料</a>
+            <a href="course_order_edit.php?id=<?= $orderRow["id"] ?>" class="btn btn-bg-color col-1 editBtn">修改資料</a>
 
         </div>
 
@@ -169,8 +167,8 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
 
         <div class="d-flex justify-content-center">
             <table class="table table-hover mt-5 table-w">
-                <thead class="order-th ">
-                    <tr class="text-center order-title row">
+                <thead>
+                    <tr class="text-center order-title row order-th">
                         <td class="col-1"></td>
                         <td class="col-3 boldWord">課程名稱</td>
                         <td class="col boldWord">預約日期</td>
@@ -179,36 +177,39 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
                         <td class="col boldWord">小計</td>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="row justify-content-center">
 
-                        <?php $orderId = "" ?>
-                        <?php $thePrice = intval("") ?>
-                        <?php $totalPrice = intval("") ?>
-                        <?php foreach ($rows as $row) : ?>
-                            <?php if ($orderId == $row["id"]) : ?>
-                                <?php continue; ?>
-                            <?php else : ?>
-                    <tr class="text-center row detail-tr">
-                        <td class="col-1"><img class="coursePic imgObject" src="../../img/course/course_<?= $row["category_en_name"] ?>_<?= $row["course_id"] ?>/<?= $row["img_name"] ?>" alt=""></td>
-                        <td class="col-3"><?= $row["courseName"] ?></td>
-                        <td class="col"><?= $row["date"] ?></td>
-                        <td class="col"><?= $row["amount"] ?></td>
-                        <td class="col">$<?= $row["price"] ?></td>
-                        <td class="col">$<?= $row["amount"] * $row["price"] ?></td>
-                    </tr>
+                    <?php $orderId = "" ?>
+                    <?php $thePrice = intval("") ?>
+                    <?php $totalPrice = intval("") ?>
+                    <?php foreach ($rows as $row) : ?>
+                        <?php if ($orderId == $row["id"]) : ?>
+                            <?php continue; ?>
+                        <?php else : ?>
+                            <tr class="text-center row detail-tr">
+                                <td class="col-1"><img class="coursePic imgObject" src="../../img/course/course_<?= $row["category_en_name"] ?>_<?= $row["course_id"] ?>/<?= $row["img_name"] ?>" alt=""></td>
+                                <td class="col-3"><?= $row["courseName"] ?></td>
+                                <td class="col"><?= $row["date"] ?></td>
+                                <td class="col"><?= $row["amount"] ?></td>
+                                <td class="col">$<?= $row["price"] ?></td>
+                                <td class="col">$<?= $row["amount"] * $row["price"] ?></td>
+                            </tr>
 
-                        <?php $orderId = $row["id"] ?>
-                        <?php $thePrice = intval($row["amount"] * $row["price"])?>
-                        <?php $totalPrice += $thePrice ?>
+
+                            <?php $orderId = $row["id"] ?>
+                            <?php $thePrice = intval($row["amount"] * $row["price"]) ?>
+                            <?php $totalPrice += $thePrice ?>
                         <?php endif; ?>
-                        <?php endforeach ?>
-                        
-
-                    
-
+                    <?php endforeach ?>
                 </tbody>
             </table>
         </div>
+        <?php if ($couponId != "") : ?>
+            <div class="ps-5 ms-5 boldWord">
+                使用折價券： <?= $orderRow["couponName"] ?>
+            </div>
+        <?php endif; ?>
+
         <div class="text-end boldWord ">
             <div class="row mx-5 pe-5 mt-2 justify-content-end">
                 <p class="col-2 boldWord ">訂單總金額</p>
@@ -218,48 +219,58 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
             <div class="row mx-5  pe-5 justify-content-end">
                 <p class="col-2 boldWord ">優惠券折扣</p>
 
-                <?php if (($couponId!= "") && ($orderRow["discount_type_id"] == 1)) :?>
-                    <?php $discountPercent = floatval($orderRow["coupon_discount"]*10)?>
-                    <p class="col-1"><?= $discountPercent?> 折</p>
-                <?php elseif (($couponId!= "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice >= $couponPay)) :?>
-                    <p class="col-1">$<?= $orderRow["coupon_discount"]?></p>
-                <?php elseif (($couponId!= "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice < $couponPay)) :?>
-                <p class="col-1">$0</p>
-                <?php else :?>
+                <?php if (($couponId != "") && ($orderRow["discount_type_id"] == 1)) : ?>
+                    <?php $discountPercent = floatval($orderRow["coupon_discount"] * 10) ?>
+                    <p class="col-1"><?= $discountPercent ?> 折</p>
+                <?php elseif (($couponId != "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice >= $couponPay)) : ?>
+                    <p class="col-1">$<?= $orderRow["coupon_discount"] ?></p>
+                <?php elseif (($couponId != "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice < $couponPay)) : ?>
+                    <p class="col-1">$0</p>
+                <?php else : ?>
                     <p class="col-1">$0</p>
                 <?php endif; ?>
-                
+
             </div>
 
             <div class="row mx-5  pe-5 justify-content-end ">
                 <p class="col-1 boldWord totalPrice pb-2">實付金額</p>
 
-                <?php if (($couponId!= "") && ($orderRow["discount_type_id"] == 1)) :?>
+                <?php if (($couponId != "") && ($orderRow["discount_type_id"] == 1)) : ?>
                     <p class="col-1 totalPrice ">$<?= round($totalPrice * $discountPercent / 10) ?> </p>
 
-                <?php elseif (($couponId!= "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice >= $couponPay)) :?>
-                    <?php $couponPrice = intval($orderRow["coupon_discount"])?>
+                <?php elseif (($couponId != "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice >= $couponPay)) : ?>
+                    <?php $couponPrice = intval($orderRow["coupon_discount"]) ?>
                     <p class="col-1 totalPrice">$<?= $totalPrice - $couponPrice ?></p>
 
-                <?php elseif (($couponId!= "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice < $couponPay)) :?>
-                    <p class="col-1 totalPrice">$<?= $totalPrice?></p>
+                <?php elseif (($couponId != "") && ($orderRow["discount_type_id"] == 2) && ($totalPrice < $couponPay)) : ?>
+                    <p class="col-1 totalPrice">$<?= $totalPrice ?></p>
 
-                <?php else :?>
-                    <p class="col-1 totalPrice">$<?= $totalPrice?></p>
+                <?php else : ?>
+                    <p class="col-1 totalPrice">$<?= $totalPrice ?></p>
                 <?php endif; ?>
-
-
-
-
-
 
             </div>
 
             <div class="row mx-5 my-2 pe-5 justify-content-end">
-                <a href="course_order-list.php" class="col-1 btn btn-bg-color mb-5 ">返回列表</a>
+                <a class="col-1 btn btn-bg-color mb-5" id="back" data-id="<?=$id?>">返回列表</a>
             </div>
         </div>
     </main>
+    <script type="text/javascript">
+        
+        let backBtn = document.querySelector("#back");
+
+        backBtn.addEventListener('click', function(){
+            let id = this.dataset.id;
+            console.log(id);
+            if (document.referrer == `http://localhost/HANDMADE/web/order/course_order_edit.php?id=${id}`){
+            history.go(-3)
+            }else{
+            history.go(-1)
+            }   
+        })
+
+    </script>
 
 </body>
 

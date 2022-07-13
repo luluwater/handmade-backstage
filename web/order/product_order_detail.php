@@ -32,7 +32,7 @@ try {
 
 $couponId = $couponIsset["coupon_id"];
 if ($couponId != "") {
-    $sqlJoin = ",coupon.discount_type_id,coupon.coupon_discount,coupon.pay";
+    $sqlJoin = ",coupon.discount_type_id,coupon.coupon_discount,coupon.pay,coupon.name AS couponName";
     $JoinFrom = "JOIN coupon ON product_order.coupon_id = coupon.id";
 } else {
     $sqlJoin = "";
@@ -117,7 +117,8 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
             padding-left: 12px;
             padding-right: 25px;
         }
-        .note{
+
+        .note {
             padding-left: 12px;
         }
     </style>
@@ -185,9 +186,9 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
 
 
                 <div class="row mx-5 mb-3">
-                <p class="col-2 boldWord">付款狀態</p>
+                    <p class="col-2 boldWord">付款狀態</p>
                     <p class="col-4"><?= $orderRow["payment_state"] ?></p>
-                    
+
                     <p class="col-2 boldWord">訂單狀態</p>
                     <p class="col-4"><?= $orderRow["orderName"] ?></p>
 
@@ -209,13 +210,13 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
         <!-- 顧客資料結束 -->
 
 
-    
+
         <!-- 顧客購買項目 -->
 
         <div class="d-flex justify-content-center">
             <table class="table table-hover mt-5 table-w">
-                <thead class="order-th ">
-                    <tr class="text-center order-title row">
+                <thead>
+                    <tr class="text-center order-title row order-th">
                         <td class="col-1"></td>
                         <td class="col-3 boldWord">商品名稱</td>
                         <td class="col boldWord">數量</td>
@@ -252,6 +253,11 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
                 </tbody>
             </table>
         </div>
+        <?php if ($couponId != "") : ?>
+            <div class="ps-5 ms-5 boldWord">
+                使用折價券： <?= $orderRow["couponName"] ?>
+            </div>
+        <?php endif; ?>
         <div class="text-end boldWord ">
             <div class="row mx-5 pe-5 mt-2 justify-content-end">
                 <p class="col-2 boldWord ">訂單總金額</p>
@@ -299,20 +305,25 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
             </div>
 
             <div class="row mx-5 my-2 pe-5 justify-content-end">
-                <a href="product_order-list.php" id="goBack"  class="col-1 btn btn-bg-color mb-5 ">返回列表</a>
+                <a id="back" class="col-1 btn btn-bg-color mb-5" id="back" data-id="<?= $id ?>" >返回列表</a>
             </div>
         </div>
     </main>
 
-    <!-- <script>
-        let goBack = document.querySelector("#goBack");
+    <script type="text/javascript">
 
-        goBack.addEventListener('click', () => {
-            document.referrer === '' ?
-            // window.location.assign("product_order_list.php"):
-            window.history.go(-1);
+        let backBtn = document.querySelector("#back");
+
+        backBtn.addEventListener('click', function() {
+            let id = this.dataset.id;
+            console.log(id);
+            if (document.referrer == `http://localhost/HANDMADE/web/order/product_order_edit.php?id=${id}`) {
+                history.go(-3)
+            } else {
+                history.go(-1)
+            }
         })
-    </script> -->
+    </script>
 
 </body>
 
