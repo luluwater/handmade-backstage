@@ -128,7 +128,12 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="./order/css/order-list-style.css">
-
+    <style>
+      .hover.active{
+        color:#fff;
+        background: var(--main-color);
+      }
+    </style>
 </head>
 
 <body>
@@ -315,7 +320,8 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
           confirmBtn.setAttribute("href",`do-delete-product.php?type=<?=$type?>&id=${this.dataset.id}`);
         })
       }
-        
+      const course=document.querySelector("#course");
+      
 
       
     </script>
