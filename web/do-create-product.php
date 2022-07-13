@@ -23,7 +23,10 @@
     require_once("../api/upload-image.php");
 
     if($type === "course"){
-        $datetime=$_POST["datetime"];
+        // $datetime=$_POST["datetime"];
+        $date=$_POST["date"];
+        $time=$_POST["time"];
+        $datetime=$date." ".$time;
         $hour=$_POST["hour"];
         $stmt=$db_host->prepare("INSERT INTO 
         course (store_id,category_id,create_time,name,intro,amount,price,note,course_date,course_time)

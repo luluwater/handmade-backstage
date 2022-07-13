@@ -6,7 +6,7 @@
 // $type=$_GET["type"];
 $type=$_GET["type"];
 
-echo  $type;
+// echo  $type;
 require_once("../db-connect.php");
 $stmt=$db_host->prepare("SELECT * FROM category");
 $stmt_store=$db_host->prepare("SELECT store.id,store.name FROM store WHERE store.category_id = 1");
@@ -36,7 +36,8 @@ $db_host = NULL;
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"  integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
-  </head>
+    
+</head>
   <body>
     <?php
     require("./main-menu.html");
@@ -91,7 +92,7 @@ $db_host = NULL;
                     </div>
                     <div class="col-5 d-flex gy-3  align-items-center">
                         <label class="col-2 me-2" for="type">商品類型</label>
-                        <select id="type" class="form-select col" aria-label="Default select example" name="type">
+                        <select id="type" class="form-select col" aria-label="Default select example" name="type" disabled>
                         <option value="course" <?=$type=="course"?"selected":""?>>體驗課程</option>
                         <option value="product"<?=$type=="product"?"selected":""?>>實體商品</option>                    
                         </select>
@@ -101,11 +102,16 @@ $db_host = NULL;
                 <div id="course" class="<?=$type=="product"?"d-none":""?>">
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="datetime">課程日程</label>
-                        <input class="col form-control" type="datetime-local" name="datetime">
+                        <div class="col-2 p-0">
+                        <input id="date" class="form-control" type="date" name="date">                        
+                        </div>
+                        <div class="col-1">
+                        <input id="timepicker" class="form-control timepicker" type="text" name="time" placeholder="時間" <?=$type=="course"?"required":""?>>             
+                        </div>
                     </div>
                     <div class="my-3 row align-items-center">
-                        <label class="col-1" for="hour">課程時常</label>
-                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常">
+                        <label class="col-1" for="hour">課程時長</label>
+                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時長，以小時為單位 ex:2.5">
                     </div>
                 </div>
                 <div class="my-3 row align-items-center">
@@ -120,8 +126,12 @@ $db_host = NULL;
         </div>
     </main>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.css" integrity="sha512-GgUcFJ5lgRdt/8m5A0d0qEnsoi8cDoF0d6q+RirBPtL423Qsj5cI9OxQ5hWvPi5jjvTLM/YhaaFuIeWCLi6lyQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.min.js" integrity="sha512-WHnaxy6FscGMvbIB5EgmjW71v5BCQyz5kQTcZ5iMxann3HczLlBHH5PQk7030XmmK5siar66qzY+EJxKHZTPEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <script>
+    
         const previewImages=document.querySelectorAll(".previewImage");
         const upload_images=document.querySelectorAll(".upload_image");
         const cancel_img=document.querySelectorAll(".cancel-img");
@@ -201,7 +211,22 @@ $db_host = NULL;
         backBtn.addEventListener("click",function(){
             history.back();
         })
-
+        const date=document.querySelector("#date");
+        let currentDate=new Date();
+        let year=currentDate.getFullYear();
+        let month=currentDate.getMonth()+1<10?"0"+(currentDate.getMonth()+1):currentDate.getMonth()+1;
+        let day=currentDate.getDate()+1<10?"0"+(currentDate.getDate()+1):currentDate.getDate()+1;
+        let curDate=`${year}-${month}-${day}`
+        // date.setAttribute("min","2022-07-14T08:00");
+        date.value =curDate;
+        $(function () {
+            $(".timepicker").timepicker ({ 
+                'scrollDefault' : 'now' ,
+                'disableTextInput' : true,
+                'timeFormat': 'H:i'
+            })
+            
+        });
     </script>
   </body>
 </html>
