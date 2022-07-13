@@ -38,9 +38,11 @@ try{
     $db_host = NULL;
     exit;
 }
-$datetime=explode(" ",($row["course_date"]??""));
-$date=$datetime[0];
-$time=$datetime[1];
+if($type=="course"){
+    $datetime=explode(" ",($row["course_date"]??""));
+    $date=$datetime[0];
+    $time=$datetime[1];
+}
 $db_host = NULL;
 ?>
 <!doctype html>
@@ -80,7 +82,7 @@ $db_host = NULL;
                     <div class="col-auto position-relative p-0 mx-2">
                         <input class="img-state" type="hidden" name="change<?=$i?>" value="unchange">
                         <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*">
-                        <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
+                        <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='/HANDMADE/img/previewImage.jpg'">
                         <i class="fa-solid fa-xmark text-light position-absolute top-0 end-0 translate-end p-1 cancel-img d-none"></i>
                     </div>
                     <?php endfor; ?>
@@ -133,7 +135,7 @@ $db_host = NULL;
                 <div id="course" class="<?=$type=="course"?"":"d-none"?>">
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="datetime">課程日程</label>
-                        <div class="col-2">
+                        <div class="col-2 p-0">
                         <input id="date" class="form-control" type="date" name="date" value=<?=$date?>>                        
                         </div>
                         <div class="col-1">
@@ -141,8 +143,8 @@ $db_host = NULL;
                         </div>
                     </div>
                     <div class="my-3 row align-items-center">
-                        <label class="col-1" for="hour">課程時常</label>
-                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常" value="<?= $row["course_time"]??"" ?>" <?=$type=="course"?"required":""?>>
+                        <label class="col-1" for="hour">課程時長</label>
+                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時長" value="<?= $row["course_time"]??"" ?>" <?=$type=="course"?"required":""?>>
                     </div>
                 </div>
                 <div class="my-3 row align-items-center">
@@ -251,7 +253,8 @@ $db_host = NULL;
         $(function () {
             $(".timepicker").timepicker ({ 
                 'scrollDefault' : 'now' ,
-                'disableTextInput' : true
+                'disableTextInput' : true,
+                'timeFormat': 'H:i'
             })
             
         });

@@ -105,7 +105,7 @@ $time=substr($time,0,5);
       <div id="course">
         <div class="my-3 row align-items-center">
           <label class="col-1" for="datetime">課程日程</label>
-          <div class="col-2">
+          <div class="col-2 p-0">
           <input id="date" class="form-control" type="date" name="date" value=<?=$date?> readonly>
           </div>
           <div class="col-1">
@@ -113,7 +113,7 @@ $time=substr($time,0,5);
           </div>
         </div>
         <div class="my-3 row align-items-center">
-          <label class="col-1" for="hour">課程時常</label>
+          <label class="col-1" for="hour">課程時長</label>
           <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常" required
             readonly value="<?= $row["course_time"] ?>">
         </div>

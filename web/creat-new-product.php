@@ -6,7 +6,7 @@
 // $type=$_GET["type"];
 $type=$_GET["type"];
 
-echo  $type;
+// echo  $type;
 require_once("../db-connect.php");
 $stmt=$db_host->prepare("SELECT * FROM category");
 $stmt_store=$db_host->prepare("SELECT store.id,store.name FROM store WHERE store.category_id = 1");
@@ -92,7 +92,7 @@ $db_host = NULL;
                     </div>
                     <div class="col-5 d-flex gy-3  align-items-center">
                         <label class="col-2 me-2" for="type">商品類型</label>
-                        <select id="type" class="form-select col" aria-label="Default select example" name="type">
+                        <select id="type" class="form-select col" aria-label="Default select example" name="type" disabled>
                         <option value="course" <?=$type=="course"?"selected":""?>>體驗課程</option>
                         <option value="product"<?=$type=="product"?"selected":""?>>實體商品</option>                    
                         </select>
@@ -102,7 +102,7 @@ $db_host = NULL;
                 <div id="course" class="<?=$type=="product"?"d-none":""?>">
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="datetime">課程日程</label>
-                        <div class="col-2">
+                        <div class="col-2 p-0">
                         <input id="date" class="form-control" type="date" name="date">                        
                         </div>
                         <div class="col-1">
@@ -110,8 +110,8 @@ $db_host = NULL;
                         </div>
                     </div>
                     <div class="my-3 row align-items-center">
-                        <label class="col-1" for="hour">課程時常</label>
-                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常，以小時為單位 ex:2.5">
+                        <label class="col-1" for="hour">課程時長</label>
+                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時長，以小時為單位 ex:2.5">
                     </div>
                 </div>
                 <div class="my-3 row align-items-center">
@@ -222,7 +222,8 @@ $db_host = NULL;
         $(function () {
             $(".timepicker").timepicker ({ 
                 'scrollDefault' : 'now' ,
-                'disableTextInput' : true
+                'disableTextInput' : true,
+                'timeFormat': 'H:i'
             })
             
         });
