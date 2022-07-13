@@ -70,7 +70,7 @@ session_start();
             <div class="mb-3 row">
                 <label for="" class="col-2 col-form-label text-center">帳號</label>
                 <div class="col-10">
-                    <input type="text" class="form-control" name="account" placeholder="Hello World">
+                    <input type="text" class="form-control" name="account" placeholder="Hello World" required>
                 </div>
                 <?php if(isset($_SESSION["user"]["account"])):?>
                 <div class="text-danger fw-bold text-end"><?=$_SESSION["user"]["account"]?>帳號已註冊</div>
@@ -79,19 +79,19 @@ session_start();
             <div class="mb-3 row">
                 <label for="" class="col-2 col-form-label text-center">姓名</label>
                 <div class="col-10">
-                    <input type="text" class="form-control" name="name">
+                    <input type="text" class="form-control" name="name" required>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="" class="col-2 col-form-label text-center">密碼</label>
                 <div class="col-10">
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control" name="password" required>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="" class="col-2 col-form-label text-center">確認</label>
                 <div class="col-10">
-                    <input type="password" class="form-control" name="repassword" placeholder="請再次輸入密碼">
+                    <input type="password" class="form-control" name="repassword" placeholder="請再次輸入密碼" required>
                 </div>
             </div>
             <div class="mb-3 row">
@@ -106,19 +106,19 @@ session_start();
             <div class="mb-3 row">
                 <label for="" class="col-2 col-form-label text-center">生日</label>
                 <div class="col-10">
-                    <input type="date" class="form-control" name="birthday">
+                    <input type="date" class="form-control" name="birthday" required>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="" class="col-2 col-form-label text-center">地址</label>
                 <div class="col-10">
-                    <input type="text" class="form-control" name="address">
+                    <input type="text" class="form-control" name="address" required>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label class="col-2 col-form-label text-center">信箱</label>
                 <div class="col-10">
-                    <input type="text" class="form-control" name="email">
+                    <input type="text" class="form-control" name="email" required>
                 </div>
             </div>
             <?php if(isset($_SESSION["user"]["email"])):?>
@@ -127,7 +127,7 @@ session_start();
             <div class="mb-3 row">
                 <label class="col-2 col-form-label text-center">電話</label>
                 <div class="col-10">
-                    <input type="number" class="form-control" name="phone">
+                    <input type="number" class="form-control" name="phone" required>
                 </div>
             </div>
             <?php unset($_SESSION["user"]); ?>
