@@ -7,32 +7,32 @@ if(!isset($_POST["id"])){
 require("../../db-connect.php");
 //=======================================================
 
-$id=$_POST["id"];
+// $id=$_POST["id"];
 
-$input = [
-    ':id' => $_POST["id"],
-    ':state' => $_POST["user_state_name"],
-    ':name' => $_POST["name"],
-    ':gender' => $_POST["gender"],
-    ':email' => $_POST["email"],
-    ':address' => $_POST["address"],
-    ':phone' => $_POST["phone"]
-];
+// $input = [
+//     ':id' => $_POST["id"],
+//     ':state' => $_POST["user_state_name"],
+//     ':name' => $_POST["name"],
+//     ':gender' => $_POST["gender"],
+//     ':email' => $_POST["email"],
+//     ':address' => $_POST["address"],
+//     ':phone' => $_POST["phone"]
+// ];
 
-$sql = $db_host->prepare("UPDATE user SET name = :name, email= :email, phone = :phone, address = :address, gender = :gender, state = :state WHERE id=:id");
-try { 
-    $sql->execute($input); 
-    echo "資料修改完成";
+// $sql = $db_host->prepare("UPDATE user SET name = :name, email= :email, phone = :phone, address = :address, gender = :gender, state = :state WHERE id=:id");
+// try { 
+//     $sql->execute($input); 
+//     echo "資料修改完成";
 
-} catch (PDOException $e) {
-    echo "預處理陳述式執行失敗！ <br/>";
-    echo "Error: " . $e->getMessage() . "<br/>";
-    $db_host = NULL;
-    exit;
-}
+// } catch (PDOException $e) {
+//     echo "預處理陳述式執行失敗！ <br/>";
+//     echo "Error: " . $e->getMessage() . "<br/>";
+//     $db_host = NULL;
+//     exit;
+// }
 
 //路徑調整 ============================================= 
-header("location: member-list.php?id=$_POST[id]");
+// header("location: member-list.php?id=$_POST[id]");
 //====================================================== 
 
 
@@ -71,7 +71,7 @@ catch (PDOException $e) {
     }
 }
 
-//註冊
+//更新
 if ($memberExist == 0) {
     $sql = $db_host->prepare("UPDATE user SET name = :name, email= :email, phone = :phone, address = :address, gender = :gender, state = :state WHERE id=:id");
     try { 

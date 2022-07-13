@@ -39,7 +39,6 @@ $sqlCourseOrder = "SELECT course_order .*,
 course_order.id AS course_order_id FROM course_order
 JOIN user ON course_order.user_id = user.id
 WHERE course_order.user_id = '$id'";
-
 $resultCourseOrder = $db_host->prepare($sqlCourseOrder);
 $resultCourseOrder->execute();
 $courseRows = $resultCourseOrder ->fetchAll(PDO::FETCH_ASSOC);
@@ -71,6 +70,7 @@ $startItem=($page-1)*$pageView+1;
 //頁數結束的筆數
 $endItem=$page*$pageView;
 
+//沒用到的頁碼區域
 //商品
 if($endItem>$productOrder) $endItem=$productOrder;
 //無條件進位筆數
@@ -239,7 +239,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         <div class="button d-flex justify-content-center">
                             <a href="member-list.php?id=<?=$member["id"]?>"
                                 class="cancel-btn btn btn-main-color me-3 mb-5">取消</a>
-                            <button class="save-btn btn btn-main-color mb-5 me-5" type="submit">儲存</button>
+                            <button class="save-btn btn btn-main-color mb-5 me-3" type="submit">儲存</button>
                         </div>
                     </form>
                     <?php endif; ?>
@@ -406,12 +406,12 @@ let memberCard = document.querySelector(".member-card");
 let pageLink = document.querySelector(".page-item");
 let memberDetailsList = document.querySelector(".member-details-list");
 
+//member-delete
 let deleteBtn = document.querySelector(".delete-btn");
 let deleteMemberCard = document.querySelector(".delete-member-card");
 let cancelDeleteMemberBtn = document.querySelector(".cancel-delete-member-btn");
 let DeleteMemberBtn = document.querySelector(".delete-member-btn");
 let disappear = document.querySelector(".disappear");
-
 
 editBtn.onclick = function() {
     bgMask.style.display = "block";
@@ -437,7 +437,6 @@ deleteBtn.onclick = function() {
     DeleteMemberBtn.style.display = "block";
 
 }
-
 
 saveBtn.onclick = function() {
     bgMask.style.display = "none";
