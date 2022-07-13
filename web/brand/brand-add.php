@@ -53,7 +53,6 @@
                     >
                 </div>
                  <div class="d-flex justify-content-center">
-                
                 <a class="btn  btn-main-color" href="brand-list.php">返回</a>
                 <button type="submit" class="btn ms-2  btn btn-main-color">送出</button>
                 </div>

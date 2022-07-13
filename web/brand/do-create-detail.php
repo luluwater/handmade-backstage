@@ -4,6 +4,7 @@ require("../../db-connect.php");
         echo "沒有帶資料";
         exit;
     }
+    
     $store_img=$_POST["store_img"];
     $store_name=$_POST["store_name"];
     $intro=$_POST["intro"];
@@ -23,3 +24,10 @@ require("../../db-connect.php");
     $stmtCategoryName->execute([$category]);
     $row=$stmtCategoryName->fetch();   
     $categoryName=$row["category_en_name"]; 
+
+
+
+
+
+
+    ?>
