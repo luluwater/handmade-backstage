@@ -57,9 +57,9 @@ switch ($status) {
 }
 
 if($status=="all"){
-    $sql="SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1 ORDER BY $orderType LIMIT $start,$pageView";
+    $sql="SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE blog.valid=1 ORDER BY $orderType LIMIT $start,$pageView";
 }else{
-    $sql="SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1 AND state='$statusType' ORDER BY $orderType LIMIT $start,$pageView";
+    $sql="SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE blog.valid=1 AND state='$statusType' ORDER BY $orderType LIMIT $start,$pageView";
 }
 
 $stmt=$db_host->prepare($sql);
@@ -258,12 +258,9 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                
                     <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                         <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="manage-blog.php?page=<?= $i ?>&pageView=<?= $pageView ?>&order=<?= $order ?>&status=<?=$status?>"><?= $i ?></a></li>
                     <?php endfor; ?>
-
-                
                     <li class="page-item">
                         <a class="page-link" href="manage-blog.php?page=<?= $nextPage ?>&pageView=<?= $pageView ?>&order=<?= $order ?>&status=<?=$status?>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
@@ -271,16 +268,10 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     </li>
                 </div>
             </ul>
-
         </nav>
-
-
-
     </main>
 <script>
 
-
-  
     /**
      * 傳送 data set 的 id 來判斷要進入哪個葉面
      */
