@@ -67,7 +67,7 @@ if ($keyword != "" && $sale_state_category == "") {
 
 $sql = $db_host->prepare("SELECT discount.*, sale_state_category.name AS sale_state_name FROM discount
 JOIN sale_state_category ON discount.state = sale_state_category.id  
-WHERE discount.state!=0 $sqlWhere ORDER BY id  LIMIT $start , $pageView");
+WHERE discount.state!=0 $sqlWhere ORDER BY end_date DESC   LIMIT $start , $pageView");
 
 $sql->execute();
 $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -331,12 +331,11 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                                 <span aria-hidden="true">&laquo;</a>
                         </li>
 
-                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                            <li class="page-item <?php if ($page == $i) echo "active" ?>">
-                                <a class="page-link" href="discount.php?page=<?= $i ?>&pageView=
-                            <?= $pageView ?>&sale_state_category=<?= $sale_state_category ?>"><?= $i ?></a>
-                            </li>
-                        <?php endfor; ?>
+                        <?php for($i=1; $i<=$totalPage;$i++): ?>
+                        <li class="page-item <?php if($page==$i)echo "active"?>">
+                        <a class="page-link" href="discount.php?page=<?=$i?>&pageView=<?=$pageView?>&sale_state_category=<?=$sale_state_category?>"><?=$i?></a>
+                        </li>
+                    <?php endfor; ?>
 
 
 

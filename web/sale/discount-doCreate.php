@@ -68,7 +68,7 @@ try {
 }
 $id = $db_host->lastInsertId();
 
-header("location: discount-preview.php?id=$_POST[id]");
+header("location: discount.php");
 
 }
 ?>
