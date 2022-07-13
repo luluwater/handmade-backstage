@@ -22,12 +22,12 @@ $db_host = NULL;
 
 ?>
 
-
-<div id="test" style="text-align:start">
-        <div id="editor"  name="content">
+<div id="editor" class="d-flex flex-column text-start"  name="content">
             <?php
             echo $content;
         ?>
     </div>
-    <button class="btn btn-bg-color text-center"><a style="all:unset" href="manage-blog.php" >回編輯列表</a></button>
+    <div class="d-flex jsutify-center">
+    <button class=" btn btn-bg-color text-center my-5 btn-lg"><a style="all:unset" href="manage-blog.php" >回管理列表</a></button>
+    </div>
 </div>

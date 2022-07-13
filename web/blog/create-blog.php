@@ -115,7 +115,7 @@ $db_host = NULL;
             <div>相關店家</div>
             <select name="store" class="w-50 rounded" id="store">
               <?php foreach($stores as $store): ?>
-              <option name="<?=$store["name"]?>" value="<?=$store["id"]?>"><?=$store["name"]?></option>
+              <option name="<?=$store["name"]?>" value="<?=$store["name"]?>"><?=$store["name"]?></option>
               <?php endforeach; ?>
             </select>
           </div>
@@ -130,7 +130,6 @@ $db_host = NULL;
 
         <!-- ****************************BLOG!!****************************** -->
         <textarea id="atricle_editor" name="atricle_content">
-            
         </textarea>
         <!-- ********************************************************** -->
 
@@ -140,7 +139,7 @@ $db_host = NULL;
           <input class="btn btn-main-color mt-3 btn-lg" id="publish" name="submit_data" type="submit" value="發布">
         </div>
 
-          <!-- Preview modal  -->
+      <!-- Preview modal  -->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
           <div class="modal-content w-100 ">
@@ -158,7 +157,6 @@ $db_host = NULL;
                 <span id="modalStore" class="badge rounded-pill bg-success"></span>
                 <hr>
               <article id="modalArticle">
-             
               </article>
             </div>
             <div class="modal-footer">
@@ -169,13 +167,7 @@ $db_host = NULL;
         </div>
       </div>
     </div>
-
   </form>
-
-
-
-
-    
 
   </main>
 
@@ -410,14 +402,6 @@ $db_host = NULL;
   });
 
 
-  // CKEDITOR.replace('atricle_editor',{
-  //     height:300,
-  //     filebrowserBrowserUrl:"create-blog.php",
-  //     filebrowserUploadUrl:"upload.php",
-  //     filebrowserUploadMethod: "form"
-  // });
-
-
   // Get value
   const blogTitleInput = document.getElementById("blogTitle")
   const publishTimeInput = document.getElementById("publishTime")
@@ -443,7 +427,8 @@ $db_host = NULL;
     modalExp.innerText = articleCategory.value
     modalCategory.innerText = categoryInput.children[categoryInput.value - 1].innerText
     modalStore.innerText = storeInput.value
-    modalArticle.innerText = article.innerText
+    // modalArticle.innerText = article.innerText
+    console.log(article)
 
     modalDate.innerText = publishTimeInput.value
   })

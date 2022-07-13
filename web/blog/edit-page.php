@@ -57,6 +57,9 @@ $db_host = NULL;
     border: 1px solid var(--main-color);
     color: #fff;
 }
+svg{
+    display:none;
+}
 </style>
 
 <body>
@@ -70,16 +73,17 @@ $db_host = NULL;
         </div>
     </header>
 
-    <div class="container mt-5 text-center">
+    <div class="container mt-5 text-center  w-50">
    
-        <div class="text-center text-center"> 發布於
+        <div class=" text-start"> 發布於
             <?php
                 $date=new DateTime($blog[0]["create_time"]);
                 echo  $date->format('M-d-Y H:i:s');
             ?>
         </div>
             <input type="text" class="d-none" id="currentId" name="currentId" value="<?=$blog[0]["BLOG_ID"]?>">
-            <input type="text" name="blogTitle" id="blogTitle" class="blogTitleInput mt-5"
+            <h1 class="text-center my-4"><?=$blog[0]["title"]?></h1>
+            <input type="hidden" name="blogTitle" id="blogTitle" class="blogTitleInput mt-5"
                 value="<?=$blog[0]["title"]?>">
             <h3 class="text-center my-4"></h3>
             <h5 id="user">by 黑色小花貓</h5>
@@ -97,7 +101,9 @@ $db_host = NULL;
                     ?>
             </div>
             <!-- <a name="submit_data" class="btn mt-3 btn-bg-color btn-lg" href="blog-page.php?id=<?=$blog[0]["BLOG_ID"]?>">修改完成</a> -->
-            <input id="updateActicle" class="btn btn-bg-color mt-3 btn-lg my-5" name="submit_data" type="submit" value="修改完成">
+            <div class="d-flex justify-content-end">
+                 <input id="updateActicle" class="btn btn-bg-color mt-3 btn-lg my-5" name="submit_data" type="submit" value="修改完成">
+            </div>
         </div>
 
         <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
