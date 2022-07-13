@@ -148,6 +148,10 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         .searchState {
             width: 200px;
         }
+        #p-order_active{
+            background: var(--main-color);
+            color: #fff;
+        }
         
     </style>
 </head>
