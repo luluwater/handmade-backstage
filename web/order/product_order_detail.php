@@ -121,6 +121,11 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
         .note {
             padding-left: 12px;
         }
+
+        #p-order_active{
+            background: var(--main-color);
+            color: #fff;
+        }
     </style>
 
 </head>
