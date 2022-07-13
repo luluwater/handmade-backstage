@@ -175,11 +175,11 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
               <a href="creat-new-product.php?type=<?=$type?>" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增課程</a>
               
             </div>
-            <table class="table align-items-center">
+            <table class="table table-hover align-items-center">
               <thead class="table-head">
                 <tr class="text-center">
                   <td class="col-1">
-                    <input type="checkbox" id="select-all" class="form-check-input" autocomplete="off">
+                    <input type="checkbox" id="select-all" class="form-check-input up-down" autocomplete="off">
                   </td>
                   <td class="col-1">課程編號                     
                     <a href="<?=orderLink("id",$amount_limit,$orderType,$order,$orderState)?>">
@@ -211,7 +211,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                 <?php foreach($rows as $row): ?>                              
                   <tr class="text-center">
                     <td>
-                      <input type="checkbox" class="check-select form-check-input" name="checked[]" value="<?=$row["id"]?>" autocomplete="off">
+                      <input type="checkbox" class="check-select form-check-input up-down" name="checked[]" value="<?=$row["id"]?>" autocomplete="off">
                     </td>
                     <td><?=$row["id"]?></td>
                     <td class="text-start ">                      

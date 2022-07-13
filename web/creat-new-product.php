@@ -101,11 +101,11 @@ $db_host = NULL;
                 <div id="course" class="<?=$type=="product"?"d-none":""?>">
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="datetime">課程日程</label>
-                        <input class="col form-control" type="datetime-local" name="datetime">
+                        <input id="datetime" class="col form-control" type="datetime-local" name="datetime">                        
                     </div>
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="hour">課程時常</label>
-                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常">
+                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常，以小時為單位 ex:2.5">
                     </div>
                 </div>
                 <div class="my-3 row align-items-center">
@@ -201,6 +201,14 @@ $db_host = NULL;
         backBtn.addEventListener("click",function(){
             history.back();
         })
+        const dateTime=document.querySelector("#datetime");
+        let date=new Date();
+        let year=date.getFullYear();
+        let month=date.getMonth()+1<10?"0"+(date.getMonth()+1):date.getMonth()+1;
+        let day=date.getDate()+1<10?"0"+(date.getDate()+1):date.getDate()+1;
+        let curDate=`${year}-${month}-${day}T10:00`
+        // dateTime.setAttribute("min","2022-07-14T08:00");
+        dateTime.value =curDate;
 
     </script>
   </body>
