@@ -1,7 +1,7 @@
 <?php
 require_once("../db-connect.php");
 
-if(isset($_POST["inputVal"])){
+if(($_POST["inputVal"])!=''){
     $inputVal=$_POST["inputVal"];
     $orderType=$_POST["orderType"];
     $start=$_POST["start"];
@@ -9,13 +9,9 @@ if(isset($_POST["inputVal"])){
 
     $stmtKeyword=$db_host->prepare("SELECT blog.*,category.category_name 
     FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 AND blog.title LIKE '%$inputVal%' OR category.category_name LIKE '%$inputVal%' ORDER BY $orderType LIMIT $start,$pageView");
-<<<<<<< HEAD
 
-=======
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
 }else{
-    echo $inputVal;
-    $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 LIMIT $start,$pageView");
+    $stmtKeyword=$db_host->prepare("SELECT * FROM blog JOIN category ON blog.category_id=category.id WHERE blog.valid=1 LIMIT 0,5");
 }
 
 try {
@@ -47,7 +43,7 @@ try {
                     echo $date->format('Y-m-d');
                     ?>
                 </td>
-                <td class="text-start td-height article_title"><a style="color:#3F3F3F;" class="" href="edit-page.php?id=<?=$row["id"]?>"><?=$row["title"]?></a></td>
+                <td class="text-start td-height article_title"><a style="color:#3F3F3F;" class="" href="blog-page.php?id=<?=$row["id"]?>"><?=$row["title"]?></a></td>
                 <td><?=$row["category_name"]?></td>
                 <td><?=$row["state"]?></td>
                 <td><?=$row["comment_amount"]?></td>

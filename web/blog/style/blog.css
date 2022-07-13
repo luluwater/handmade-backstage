@@ -38,19 +38,7 @@
     width: 10%;
 }
 
-.btn-bg-color,.btn-cancel-color {
-    background: var(--line-color);
-    border: 1px solid var(--line-color);
-    color: #fff;
-    font-weight: 700;
-}
 
-
-.btn-bg-color:hover {
-    background: var(--main-color);
-    border: 1px solid var(--main-color);
-    color: #fff;
-}
 
 .btn-cancel-color:hover{
     background: #fff;

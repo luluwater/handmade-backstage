@@ -1,18 +1,15 @@
 <?php
 
-
 require_once("../../db-connect.php");
 
-$id=$_GET["id"];
-$PreviousPage=$_GET["page"];
-$pageView=$_GET["pageView"];
-$order=$_GET["order"];
+$id=$_POST["commentId"];
 
+echo $id;
 
-$sql = $db_host->prepare("UPDATE course_order SET valid=0 WHERE id='$id'");
+$stmtComments=$db_host->prepare("UPDATE comment SET valid=0 WHERE id='$id'");
 
 try {
-    $sql->execute();
+    $stmtComments->execute();
     echo "刪除! <br/>";
     
 } catch (PDOException $e) {
@@ -23,6 +20,8 @@ try {
 }
 
 header('Location:'. $_SERVER['HTTP_REFERER']);
+
+
 
 
 ?>

@@ -7,7 +7,7 @@ $content = mysqli_real_escape_string($con, $_POST["atricle_content"]);
 $pubilshTime=$_POST["pubilshTime"];
 $storeId=$_POST["store"];
 $category=$_POST["category"];
-echo $storeId;
+$tag=$_POST["articleCategory"];
 
 
 $content = str_replace( '&', '&amp;',$content );
@@ -22,31 +22,9 @@ if(isset($_POST["submit_data"])){
     $state=$_POST["submit_data"];
 }
 
-<<<<<<< HEAD
-    if(isset($_POST["isPublish"])){
-        
-    }
-    
-    if( $state=="發布"){
-        $stmt=$db_host->prepare("INSERT INTO blog(title,content,create_time,category_id, store_id,state,valid) VALUES ('$title','$content','$pubilshTime', '$category', $storeId,'$state',1)");
-<<<<<<< HEAD
-=======
-
->>>>>>> e7980d3697239070bb18aab6e3091609800c4f96
-        header('refresh:2; url=manage-blog.php');
-        echo "發布成功";
-    }
-    else{
-        header("Location:create-blog.php?未發表");
-        exit();
-    }
-}else{
-    header("Location:create-blog.php?invalidRequset");
-=======
-$stmt=$db_host->prepare("INSERT INTO blog(title,content,create_time,category_id, store_id,state,valid) VALUES ('$title','$content','$pubilshTime', '$category', '$storeId','$state',1)");
+$stmt=$db_host->prepare("INSERT INTO blog(title,content,create_time,category_id, store_id,state,valid,tag) VALUES ('$title','$content','$pubilshTime', '$category', '$storeId','$state',1,'$tag')");
 
 // header('refresh:2; url=manage-blog.php');
->>>>>>> a91023d1164716daa64e8ab27c8d21aa8019b575
 
 try {
     $stmt->execute();
