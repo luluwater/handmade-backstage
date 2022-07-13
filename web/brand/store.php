@@ -73,9 +73,9 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../../css/style.css">
-    <style>
+  <style>
       .title{
-        color:var(--main-color);
+        color:var(--line-color);
         font-size:36px;
         margin-bottom:24px;
       }
@@ -89,15 +89,21 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
           /* padding:5px 40px ; */
           color:black;
           border:1px solid var(--bg-color);
-         
+      
       }
+        .button1 {
+          background: white;
+          border:0;
+          color:var(--main-color);
+        }
       .btnClass {
         margin-top:60px;
         color:white;
-        background: var( --line-color);
+        background: var( --main-color);
          border:1px solid var( --line-color);
          border-radius:10%;
          font-size:24px;
+         padding:5px;
 
       }
       .count-bg{
@@ -122,24 +128,24 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         object-fit:cover;
       }
       
-.page-item{
-    font-weight: 700;
-}
+     .page-item{
+       font-weight: 700;
+      }
 
-.page-link {
-    color: var(--main-word-color);
-}
+     .page-link {
+       color: var(--main-word-color);
+      }
 
-.page-link:hover {
-    color: var(--main-color);
-}
+      .page-link:hover {
+       color: var(--main-color);
+      }
 
-.active>.page-link, .page-link.active {
-    background: #fff;
-    color: var(--main-color);
-}
+      .active>.page-link, .page-link.active {
+       background: #fff;
+       color: var(--main-color);
+       }
 
-    </style>
+  </style>
   </head>
   <body>
      <?php
@@ -167,10 +173,10 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
            <!-- form 配呵input type="submit name=要輸入的職" -->
            <form action="do-store-delete.php" method="get">
         
-             <div class=" d-flex justify-content-between my-4">
+             <div class=" d-flex justify-content-between ">
                     <a class=" d-flex align-content-center mb-4 btnClass" href="brand-list.php">管理分類</a>
                 <div class="delAndAdd mt-3 ">
-                  <input class=" -main-color m-4" name="delete" type="submit" value="刪除店家">
+                  <input class=" button1  m-4" name="delete" type="submit" value="刪除店家">
                     <a href="brand-List-detail.php" class=" text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增店家</a>
                 </div>     
               </div>
@@ -191,15 +197,11 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             </div>
                     
                           <div class=" d-flex  justify-content-center">                       
-                           <a class="text-main-color m-2"
-                            href="<?= $row["FB_url"] ?>">FB</a>
+                           <a class="mt-3 btn btn-bg-color" 
+                           href="store-detail.php?id=<?=$row["id"]?>">詳細資料</a>
                            </div>
 
-                           <div class="d-flex  justify-content-center">
-                           <a class="text-main-color m-2" 
-                           href="<?= $row["IG_url"] ?>">IG</a>
-                            </div>
-                            
+                      
                           </div>
                       </div>
                    <?php endforeach; ?>  

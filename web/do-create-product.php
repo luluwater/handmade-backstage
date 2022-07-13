@@ -25,7 +25,9 @@
     if($type === "course"){
         $datetime=$_POST["datetime"];
         $hour=$_POST["hour"];
-        $stmt=$db_host->prepare("INSERT INTO course (store_id,category_id,create_time,name,intro,amount,price,note,course_date,course_time) VALUES (:store_id, :category_id, :create_time, :name, :intro, :amount, :price, :note, :datetime, :hour)");
+        $stmt=$db_host->prepare("INSERT INTO 
+        course (store_id,category_id,create_time,name,intro,amount,price,note,course_date,course_time)
+         VALUES (:store_id, :category_id, :create_time, :name, :intro, :amount, :price, :note, :datetime, :hour)");
         try{    
             $stmt->execute([
                 ":store_id"=>$store,

@@ -5,17 +5,6 @@
 //     exit;
 // }
 require("../../db-connect.php");
-//=======================================================
-// 測試連線
-// try{
-//     $db_host=new PDO("mysql:host={$serverName};dbname={$dbname};charset=utf8",$username,$password);
-//     echo "成功";
-        
-// }catch(PDOException $e){
-//     echo "資料庫連線失敗";
-//     echo "Error: ".$e->getMessage();
-//     exit;
-// }
 
 $sql = "SELECT * FROM category WHERE valid=1 ";
 $result =$db_host->prepare($sql);
@@ -55,7 +44,13 @@ try {
         --main-word-color: #3F3F3F;
         --header-hieght: 100px;
     }
- 
+   
+     .title {
+       font-size: 36px;
+       color: var(--line-color);
+       margin-bottom:20px;
+     }
+
     </style>
   </head>
   <body>
@@ -103,7 +98,7 @@ try {
      <input class="btn btn-main-color" type="submit" name="submit" value="刪除">
      
       <div class="d-flex justify-content-center">
-         <a class="button btn btn-main-color" href="brand-add.php">新增</a>
+         <a class="btn btn-main-color" href="brand-add.php">新增</a>
       </div>
       <!-- <input class="button btn btn-main-color" type="submit" name="submit" value="新增" href="brand-add.php"> -->
           

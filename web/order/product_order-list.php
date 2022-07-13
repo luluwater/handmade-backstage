@@ -111,7 +111,7 @@ $totalPage = ceil($orderCount / $pageView);
 //上一頁
 $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
-$nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
+$theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
 ?>
 
@@ -130,6 +130,8 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
     <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="css/order-list-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        
 
     <style>
         .detailLink {
@@ -267,6 +269,8 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                         </div>
                     </div>
                     <!-- 是否確定刪除盒子 -->
+                    <div class="" id="black-box"></div>
+
 
                 </tbody>
             </table>
@@ -278,7 +282,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
                     <li class="page-item">
-                        <a class="page-link" href="<?= orderLink("nextPage", $pageView, $order) ?>&<?= $PreviousPage ?>" aria-label="Previous">
+                        <a class="page-link" href="<?= orderLink("nextPage", $pageView, $order) ?>&page=<?= $PreviousPage ?>" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -290,7 +294,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
 
                     <li class="page-item">
-                        <a class="page-link" href="<?= orderLink("nextPage", $pageView, $order) ?>&<?= $theNextPage ?>" aria-label="Next">
+                        <a class="page-link" href="<?= orderLink("nextPage", $pageView, $order) ?>&page=<?= $theNextPage ?>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -325,23 +329,34 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         let close = document.querySelector("#close");
         let confirmBtn = document.querySelector("#confirm-btn");
         let cancelBtn = document.querySelector("#cancelBtn");
+        let blackBox = document.querySelector("#black-box");
+
 
         for (let i = 0; i < deleteBtn.length; i++) {
             deleteBtn[i].addEventListener('click', function() {
                 let id = this.dataset.id;
                 confirm.classList.remove('hide')
+                blackBox.classList.add('black-box')
+                confirm.classList.add('animate__animated')
+                confirm.classList.add('animate__bounceIn')
                 confirmBtn.href=`do_product_order_delete.php?id=${id}`
             })
         }
 
         close.addEventListener('click', () => {
             confirm.classList.add('hide')
+            confirm.classList.remove('animate__bounceIn')
+            blackBox.classList.remove('black-box')
         })
         confirmBtn.addEventListener('click', () => {
             confirm.classList.add('hide')
+            blackBox.classList.remove('black-box')
+            confirm.classList.remove('animate__bounceIn')
         })
         cancelBtn.addEventListener('click', () => {
             confirm.classList.add('hide')
+            blackBox.classList.remove('black-box')
+            confirm.classList.remove('animate__bounceIn')
         })
     </script>
 </body>
