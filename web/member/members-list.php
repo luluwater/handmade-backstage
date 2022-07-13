@@ -40,7 +40,7 @@ require("../../db-connect.php");
     .table-head {
         background-color: var(--line-color);
     }
-    .hover:hover{
+    .table-hover:hover{
         background: #E2E2E2;
         color: var(---main-word-color);
     }
@@ -129,7 +129,7 @@ require("../../db-connect.php");
             </thead>
             <tbody>
                 <?php foreach ( $memberPageCount as $row): ?>
-                <tr class="text-center align-middle hover">
+                <tr class="text-center align-middle table-hover">
                     <td><?=$row["id"]?></td>
                     <td><?=$row["account"]?></td>
                     <td><?=$row["name"]?></td>
