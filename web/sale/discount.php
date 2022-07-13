@@ -94,21 +94,6 @@ $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
 $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
-//========== Page ==========
-//開始的筆數
-$startItem = ($page - 1) * $pageView + 1;
-//結束的筆數
-$endItem = $page * $pageView;
-if ($endItem > $discountAllCount) $endItem = $discountAllCount;
-
-//總筆數
-$totalPage = ceil($discountAllCount / $pageView);
-
-//上一頁
-$PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
-//下一頁
-$nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
-
 
 
 ?>
@@ -342,19 +327,21 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                 <ul class="pagination justify-content-center mt-5">
                     <div class="d-flex">
                         <li class="page-item">
-                            <a class="page-link" href="<?= orderLink("nextPage", $pageView, $sale_state_category) ?>&<?= $PreviousPage ?>" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
+                            <a class="page-link" href="<?= orderLink("nextPage", $pageView, $sale_state_category) ?>&page=<?= $page - 1 < 1 ? $page = 1 : $page - 1 ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</a>
                         </li>
 
                         <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                            <li class="page-item <?php if ($page == $i) echo "active" ?>"><a class="page-link" href="<?= orderLink("nextPage", $pageView, $sale_state_category) ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                            <li class="page-item <?php if ($page == $i) echo "active" ?>">
+                                <a class="page-link" href="discount.php?page=<?= $i ?>&pageView=
+                            <?= $pageView ?>&sale_state_category=<?= $sale_state_category ?>"><?= $i ?></a>
+                            </li>
                         <?php endfor; ?>
 
 
 
                         <li class="page-item">
-                            <a class="page-link" href="<?= orderLink("nextPage", $pageView, $sale_state_category) ?>&<?= $theNextPage ?>" aria-label="Next">
+                            <a class="page-link" href="<?= orderLink("nextPage", $pageView, $sale_state_category) ?>&page=<?= $page + 1 > $totalPage ? $page = $totalPage : $page = $page + 1 ?>" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
