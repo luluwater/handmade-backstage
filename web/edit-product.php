@@ -38,6 +38,11 @@ try{
     $db_host = NULL;
     exit;
 }
+if($type=="course"){
+    $datetime=explode(" ",($row["course_date"]??""));
+    $date=$datetime[0];
+    $time=$datetime[1];
+}
 $db_host = NULL;
 ?>
 <!doctype html>
@@ -77,7 +82,7 @@ $db_host = NULL;
                     <div class="col-auto position-relative p-0 mx-2">
                         <input class="img-state" type="hidden" name="change<?=$i?>" value="unchange">
                         <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*">
-                        <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg';">
+                        <img src="" class="previewImage object-cover" alt="圖片預覽" onerror="this.src='/HANDMADE/img/previewImage.jpg'">
                         <i class="fa-solid fa-xmark text-light position-absolute top-0 end-0 translate-end p-1 cancel-img d-none"></i>
                     </div>
                     <?php endfor; ?>
@@ -130,11 +135,16 @@ $db_host = NULL;
                 <div id="course" class="<?=$type=="course"?"":"d-none"?>">
                     <div class="my-3 row align-items-center">
                         <label class="col-1" for="datetime">課程日程</label>
-                        <input class="col form-control" type="datetime-local" name="datetime" value="<?= $row["course_date"]??""?>" <?=$type=="course"?"required":""?>>
+                        <div class="col-2 p-0">
+                        <input id="date" class="form-control" type="date" name="date" value=<?=$date?>>                        
+                        </div>
+                        <div class="col-1">
+                        <input id="timepicker" class="form-control timepicker" type="text" name="time" placeholder="時間" value="<?=$time?>" <?=$type=="course"?"required":""?>>
+                        </div>
                     </div>
                     <div class="my-3 row align-items-center">
-                        <label class="col-1" for="hour">課程時常</label>
-                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時常" value="<?= $row["course_time"]??"" ?>" <?=$type=="course"?"required":""?>>
+                        <label class="col-1" for="hour">課程時長</label>
+                        <input class="col form-control" type="number" step="0.5" min="0" name="hour" placeholder="請輸入課程時長" value="<?= $row["course_time"]??"" ?>" <?=$type=="course"?"required":""?>>
                     </div>
                 </div>
                 <div class="my-3 row align-items-center">
@@ -149,8 +159,9 @@ $db_host = NULL;
         </div>
     </main>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.css" integrity="sha512-GgUcFJ5lgRdt/8m5A0d0qEnsoi8cDoF0d6q+RirBPtL423Qsj5cI9OxQ5hWvPi5jjvTLM/YhaaFuIeWCLi6lyQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.min.js" integrity="sha512-WHnaxy6FscGMvbIB5EgmjW71v5BCQyz5kQTcZ5iMxann3HczLlBHH5PQk7030XmmK5siar66qzY+EJxKHZTPEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
     <script>
         const previewImages=document.querySelectorAll(".previewImage");
         const upload_images=document.querySelectorAll(".upload_image");
@@ -231,7 +242,22 @@ $db_host = NULL;
         backBtn.addEventListener("click",function(){
             history.back();
         })
-        
+        // const date=document.querySelector("#date");
+        // let currentDate=new Date();
+        // let year=currentDate.getFullYear();
+        // let month=currentDate.getMonth()+1<10?"0"+(currentDate.getMonth()+1):currentDate.getMonth()+1;
+        // let day=currentDate.getDate()+1<10?"0"+(currentDate.getDate()+1):currentDate.getDate()+1;
+        // let curDate=`${year}-${month}-${day}`
+        // // date.setAttribute("min","2022-07-14T08:00");
+        // date.value =curDate;
+        $(function () {
+            $(".timepicker").timepicker ({ 
+                'scrollDefault' : 'now' ,
+                'disableTextInput' : true,
+                'timeFormat': 'H:i'
+            })
+            
+        });
 
     </script>
   </body>

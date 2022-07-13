@@ -71,8 +71,8 @@
     padding: .5rem 1rem;
 }
 
-.hover:hover{
-    background: #E2E2E2;
+.table-hover:hover{
+    background: #f8f7f7;
     color: var(---main-word-color);
 }
 

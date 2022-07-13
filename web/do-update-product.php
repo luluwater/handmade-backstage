@@ -29,7 +29,9 @@
     require_once("../api/upload-image.php");
 
     if($type === "course"){
-        $datetime=$_POST["datetime"];
+        $date=$_POST["date"];
+        $time=$_POST["time"];
+        $datetime=$date." ".$time;
         $hour=$_POST["hour"];
         $stmt=$db_host->prepare("UPDATE  course
         SET store_id=:store_id, category_id=:category_id, create_time=:create_time, name=:name, intro=:intro, amount=:amount, price=:price, note=:note, course_date=:datetime, course_time=:hour
