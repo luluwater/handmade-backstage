@@ -159,7 +159,7 @@ require("../../db-connect.php");
                             <a class="page-link" href="<?=orderLink("nextPage",$pageView, $order) ?>&page=<?= $page + 1 > $totalPage ? $page = $totalPage : $page = $page + 1 ?>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                         </li>
                     <li class="px-5 py-2">
-                        第<?= $startItem ?>- <?= $endItem ?>筆,共 <?= $memberCount ?> 筆資料
+                        第<?= $startItem ?>- <?= $endItem ?>筆 , 共 <?= $memberCount ?> 筆資料
                     </li>
                 </ul>
             </nav>
