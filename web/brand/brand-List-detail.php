@@ -7,11 +7,7 @@ require_once("../../db-connect.php");
 // $id=$_POST["id"];
 
 
-
-// $sqlMerge="SELECT store.*, category.category_name , mrt.MRT_station , mrt.station_name 
-// FROM store JOIN mrt ON store.MRT_id=mrt.id JOIN category ON store.category_id=category.id
-// WHERE store.id=$id AND store.valid=1";
-$sql="SELECT * FROM  category";
+$sql="SELECT * FROM  category  ";
 $stmt=$db_host->prepare($sql);
 
 $sqlMrt="SELECT DISTINCT MRT_station, station_name  FROM mrt";
@@ -24,10 +20,10 @@ $mrt=$db_host->prepare($sqlMrt);
 try{    
     $stmt->execute();
     $mrt->execute();
-    // $mrt2->execute();
+    
     $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
     $mrts=$mrt->fetchAll(PDO::FETCH_ASSOC);
-    // $mrts2=$mrt2->fetchAll(PDO::FETCH_ASSOC);
+
 
    
 }catch (PDOException $e){
@@ -77,7 +73,7 @@ $db_host = NULL;
     ?>
     <main>
         <div class="container-fluid">
-            <form action="do-create-store.php" method="post" enctype="multipart/form-data">
+            <form action="do-create-detail.php" method="post" enctype="multipart/form-data">
                     <div class="d-flex my-3">
                         <label class="col-1  me-1 " for="store_img">品牌Logo</label>
                             <div class="col-auto">
