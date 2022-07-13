@@ -116,23 +116,6 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
         <link rel="stylesheet" href="../../css/style.css">
         <link rel="stylesheet" href="member-list.css">
     </head>
-    <style>
-        .hover:hover{
-            background: #E2E2E2;
-            color: var(---main-word-color);
-        }
-        .detailLink{
-        color: var(--line-color);
-        font-size: 18px;
-        font-weight: 900;    
-        padding: 5px 30px;
-
-        }
-        .detailLink:hover{
-            color: var(--main-color);
-            
-        }
-    </style>
 </head>
 
 <body>
@@ -212,8 +195,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                             <tr>
                                 <th class="align-middle text-center">帳號狀態</th>
                                 <td>
-                                    <select class="form-select" aria-label="Default select example"
-                                        name="user_state_name" value="<?=$member["user_state_name"]?>">
+                                    <select class="form-select" aria-label="Default select example" name="user_state_name" value="<?=$member["user_state_name"]?>">
                                         <option value="1">一般會員</option>
                                         <option value="2">黑名單</option>
                                     </select>
@@ -325,7 +307,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         <tbody>
                             <?php foreach ($courseRows as $row): ?>
                             <tr class="table-body table-hover">
-                                <td><a class="detailLink" href="/HANDMADE/web/order/course_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
+                                <td><a class="detailLink table-hover" href="/HANDMADE/web/order/course_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
                                 <td><?=$row["create_time"]?></td>
                                 <td>NT$&nbsp;<?=$row["total_amount"]?></td>
                                 <td class="text-start"><?=$row["note"]?></td>
