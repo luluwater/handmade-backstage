@@ -114,7 +114,7 @@ $discountCount=$result->rowCount();
                             name="end_date"></li>   
                         <li>
                         <select class="form-select my-3" aria-label="Default select example" style="width: 337px;" name="state">
-                        <option  value="1" selected>接下來</option>
+                        <option  value="1" select>接下來</option>
                         <option  value="2">進行中</option>
                         <option  value="3">已結束</option>
                         </select>
