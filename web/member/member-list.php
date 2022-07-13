@@ -33,21 +33,23 @@ $resultProductOrder->execute();
 $rows = $resultProductOrder ->fetchAll(PDO::FETCH_ASSOC);
 $productOrder = count($rows);
 
+
 //課程訂單
 $sqlCourseOrder = "SELECT course_order .*,
 course_order.id AS course_order_id FROM course_order
 JOIN user ON course_order.user_id = user.id
 WHERE course_order.user_id = '$id'";
+
 $resultCourseOrder = $db_host->prepare($sqlCourseOrder);
 $resultCourseOrder->execute();
 $courseRows = $resultCourseOrder ->fetchAll(PDO::FETCH_ASSOC);
 $courseOrder = count($courseRows);
 
 //部落格
-$sqlBlog = "SELECT blog .*, category.category_name, store.name FROM blog
+$sqlBlog = "SELECT blog .*, category.category_name, store.name,blog.id FROM blog
 JOIN category ON blog.category_id = category.id
 JOIN store ON blog.store_id = store.id
-WHERE blog.user_id = '$id'";
+WHERE blog.id = '$id'";
 $resultBlog = $db_host->prepare($sqlBlog);
 $resultBlog->execute();
 $blogRows = $resultBlog ->fetchAll(PDO::FETCH_ASSOC);
@@ -369,7 +371,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                                 <td><?=$row["category_name"]?></td>
                                 <td><?=$row["name"]?></td>
                                 <th class="col-2"><?=$row["tag"]?></th>
-                                <td><a class="detailLink text-start" href="/HANDMADE/web/blog/manage-blog.php?id=<?= $row["id"] ?>"><?=$row["title"]?></a></td>
+                                <td><a class="detailLink text-start" href="/HANDMADE/web/blog/blog-page.php?id=<?= $row["id"] ?>"><?=$row["title"]?></a></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
