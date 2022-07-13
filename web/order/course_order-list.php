@@ -133,34 +133,35 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
     <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="css/order-list-style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <style>
         .detailLink {
             padding: 5px 30px;
         }
 
-        @keyframes message-move-in {
-            0%{
-                opacity:0;
-                /* transform:translateY(-100%); */
-            }
-            100%{
-                opacity: 1;
-                /* transform: translateY(0); */
-            }
+        .order-1 {
+            background-color: #e65947;
+            color: #fff;
         }
 
-        @keyframes message-move-out{
-            0%{
-                opacity: 1;
-            }
-            100%{
-                opacity: 0;
-            }
+        .order-1.nav-link {
+            color: #fff;
         }
 
+        #c-order_active {
+            background: var(--main-color);
+            color: #fff;
+        }
+        #c-order_active a::before {
+            content: "";
+            height: 25px;
+            width: 5px;
+            background: #fff;
+            position: absolute;
+            top: 50%;
+            transform: translate(-300%, -50%);
+        }
     </style>
 </head>
 
@@ -253,7 +254,7 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             <td class="col-2"><?= $row["name"] ?></td>
                             <td class="col-2">$<?= $row["total_amount"] ?></td>
                             <td class="col-2"><?= $row["order_staus"] ?></td>
-                            <td class="col-1"><a class="trash delete-btn" data-id=<?=$row["id"]?>><i class="fa-solid fa-trash-can trash"></i></a></td>
+                            <td class="col-1"><a class="trash delete-btn" data-id=<?= $row["id"] ?>><i class="fa-solid fa-trash-can trash"></i></a></td>
 
                         </tr>
                     <?php endforeach; ?>
@@ -343,7 +344,7 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                 blackBox.classList.add('black-box')
                 confirm.classList.add('animate__animated')
                 confirm.classList.add('animate__bounceIn')
-                confirmBtn.href=`do_course_order_delete.php?id=${id}`
+                confirmBtn.href = `do_course_order_delete.php?id=${id}`
             })
         }
 
@@ -368,7 +369,7 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             confirm.classList.remove('animate__bounceIn')
 
 
-            
+
         })
     </script>
 </body>

@@ -6,7 +6,11 @@
 // $type=$_GET["type"];
 $type=$_GET["type"];
 
+<<<<<<< HEAD
+
+=======
 // echo  $type;
+>>>>>>> bf1fddbbbad77acfc000ea3947f1b55d8acada6a
 require_once("../db-connect.php");
 $stmt=$db_host->prepare("SELECT * FROM category");
 $stmt_store=$db_host->prepare("SELECT store.id,store.name FROM store WHERE store.category_id = 1");

@@ -33,6 +33,6 @@ try {
 }
 
 //更新完回到這頁
-header("location:brand-edit.php?id=$_GET[id]");
+header("location:brand-detail.php?id=$_GET[id]");
 
 ?>

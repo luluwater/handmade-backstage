@@ -32,7 +32,7 @@ try {
     exit;
 }
 
-header("Location:brand-add.php");
+header("Location:brand-list.php");
 
 
 ?>

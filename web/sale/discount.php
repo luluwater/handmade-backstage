@@ -194,6 +194,21 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             top: 0;
             left: 0;
         }
+
+        #discount_active {
+            color: #fff;
+            background: var(--main-color);
+        }
+
+        #discount_active a::before {
+            content: "";
+            height: 25px;
+            width: 5px;
+            background: #fff;
+            position: absolute;
+            top: 50%;
+            transform: translate(-300%, -50%);
+        }
     </style>
 </head>
 
@@ -331,11 +346,11 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                                 <span aria-hidden="true">&laquo;</a>
                         </li>
 
-                        <?php for($i=1; $i<=$totalPage;$i++): ?>
-                        <li class="page-item <?php if($page==$i)echo "active"?>">
-                        <a class="page-link" href="discount.php?page=<?=$i?>&pageView=<?=$pageView?>&sale_state_category=<?=$sale_state_category?>"><?=$i?></a>
-                        </li>
-                    <?php endfor; ?>
+                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                            <li class="page-item <?php if ($page == $i) echo "active" ?>">
+                                <a class="page-link" href="discount.php?page=<?= $i ?>&pageView=<?= $pageView ?>&sale_state_category=<?= $sale_state_category ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
 
 
 

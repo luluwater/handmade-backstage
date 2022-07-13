@@ -65,6 +65,20 @@ $discountCount=$result->rowCount();
             .OFFSTYLE{
                 padding-top: 1.5px;
             }
+            #discount_active {
+            color: #fff;
+            background: var(--main-color);
+        }
+
+        #discount_active a::before {
+            content: "";
+            height: 25px;
+            width: 5px;
+            background: #fff;
+            position: absolute;
+            top: 50%;
+            transform: translate(-300%, -50%);
+        }
         </style>
   </head>
   <body>

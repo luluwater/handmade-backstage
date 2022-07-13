@@ -106,6 +106,19 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
         .table-w {
             width: 90%;
         }
+        #c-order_active {
+            background: var(--main-color);
+            color: #fff;
+        }
+        #c-order_active a::before {
+            content: "";
+            height: 25px;
+            width: 5px;
+            background: #fff;
+            position: absolute;
+            top: 50%;
+            transform: translate(-300%, -50%);
+        }
     </style>
 
 </head>

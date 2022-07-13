@@ -33,7 +33,7 @@ try {
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../../css/style.css">
-     <style>
+<style>
         :root {
         --bg-color: #eee6de;
         --main-color: #e65947;
@@ -42,41 +42,41 @@ try {
         --header-hieght: 100px;
     }
     
-.title {
+    .title {
     font-size: 36px;
     color: var(--line-color);
     margin-bottom:20px;
-}
+    }
 
-.table-head {
+    .table-head {
     background-color: var(--line-color);
-}
+    }
 
-.blogs {
+    .blogs {
     margin-top: 100px;
-}
+    }
 
-.btn-members-list {
+    .btn-members-list {
     margin-top: 60px;
     background: var(--main-color);
     font-weight: bolder;
     color: white;
     padding: .5rem 1rem;
-}
+   }
 
-.cancel-btn-line-color {
+    .cancel-btn-line-color {
     background: var(--line-color);
-}
+   }
 
-.save-btn-main-color {
+    .save-btn-main-color {
     background: var(--main-color);
-}
+    }
 
-.table {
+    .table {
     min-height: 200px;
-}
+    }
 
-.bg-mask {
+   .bg-mask {
     display: none;
     opacity: 0.5;
     background: var(--main-word-color);
@@ -84,9 +84,9 @@ try {
     height: 100%;
     position: absolute;
     z-index: 1;
-}
+    }
 
-.edit-member-card {
+   .edit-member-card {
     z-index: 2;
     position: absolute;
     top: 50%;
@@ -95,18 +95,32 @@ try {
     font-weight: bolder;
     display: none;
     min-width: 600px;
-}
-.tabs {
+    }
+   .tabs {
     display: block;
-}
+   }
 
-.btn-main-color {
+    .btn-main-color {
     background: var(--main-color);
     font-weight: bolder;
     color: white;
     padding: .5rem 1rem;
-}
-    </style>
+    }
+    #brand_acitve {
+      color: #fff;
+      background: var(--main-color);
+    }
+
+    #brand_acitve a::before {
+      content: "";
+      height: 25px;
+      width: 5px;
+      background: #fff;
+      position: absolute;
+      top: 50%;
+      transform: translate(-300%, -50%);
+    }
+</style>
   </head>
   <body>
     <?php
