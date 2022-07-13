@@ -75,7 +75,16 @@
     background: #f8f7f7;
     color: var(---main-word-color);
 }
+.detailLink{
+    color: var(--line-color);
+    font-size: 18px;
+    font-weight: 900;    
+    padding: 5px 30px;
 
+}
+.detailLink:hover{
+    color: var(--main-color);
+}
 .delete-member-card {
     z-index: 2;
     position: absolute;
@@ -85,4 +94,17 @@
     font-weight: bolder;
     display: none;
     min-width: 300px;
+}
+#member_active {
+    color: #fff;
+    background: var(--main-color);
+}
+#member_active a::before {
+    content: "";
+    height: 25px;
+    width: 5px;
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    transform: translate(-300%, -50%);
 }

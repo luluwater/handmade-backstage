@@ -68,6 +68,7 @@ require("../../db-connect.php");
 
         #member_active {
             color: #fff;
+            background: var(--main-color);
         }
 
         #member_active a::before {
