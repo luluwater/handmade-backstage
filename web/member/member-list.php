@@ -283,7 +283,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         </thead>
                         <tbody>
                             <?php foreach ($rows as $row): ?>
-                            <tr class="table-body hover">
+                            <tr class="table-body table-hover">
                                 <td class="col-2"><a class="detailLink" href="/HANDMADE/web/order/product_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
                                 <td class="col-2"><?=$row["create_time"]?></td>
                                 <td class="col-2">NT$&nbsp;<?=$row["total_amount"]?></td>
@@ -324,7 +324,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         </thead>
                         <tbody>
                             <?php foreach ($courseRows as $row): ?>
-                            <tr class="table-body hover">
+                            <tr class="table-body table-hover">
                                 <td><a class="detailLink" href="/HANDMADE/web/order/course_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
                                 <td><?=$row["create_time"]?></td>
                                 <td>NT$&nbsp;<?=$row["total_amount"]?></td>
@@ -366,7 +366,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         </thead>
                         <tbody>
                             <?php foreach ($blogRows as $row): ?>
-                            <tr class="table-body align-items-center hover">
+                            <tr class="table-body align-items-center table-hover">
                                 <td><?=$row["create_time"]?></td>
                                 <td><?=$row["category_name"]?></td>
                                 <td><?=$row["name"]?></td>

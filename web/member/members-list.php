@@ -41,7 +41,7 @@ require("../../db-connect.php");
         background-color: var(--line-color);
     }
     .table-hover:hover{
-        background: #E2E2E2;
+        background: #f8f7f7;
         color: var(---main-word-color);
     }
     .page-item{

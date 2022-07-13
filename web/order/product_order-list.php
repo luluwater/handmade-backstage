@@ -9,6 +9,10 @@ if (isset($_GET["page"])) {
 
 
 
+isset(($_GET["searchType"])) ?  $searchType = $_GET["searchType"] : $searchType = "product_order.id";
+isset($_GET["keyword"]) ? $searchText = $_GET["keyword"] : $searchText = $_GET["keyword"] = "";
+
+
 function orderLink($item, $cur_pageView, $order)
 {
     isset(($_GET["searchType"])) ?  $searchType = $_GET["searchType"] : $searchType = "product_order.id";
@@ -30,8 +34,7 @@ function orderLink($item, $cur_pageView, $order)
             break;
     }
 }
-isset(($_GET["searchType"])) ?  $searchType = $_GET["searchType"] : $searchType = "product_order.id";
-isset($_GET["keyword"]) ? $searchText = $_GET["keyword"] : $searchText = $_GET["keyword"] = "";
+
 
 
 //取得每頁看到幾欄
@@ -194,25 +197,25 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                     <input type="search" class="form-control mx-2 searchText" name="keyword" placeholder="請輸入搜尋關鍵字">
                 <?php elseif ($searchType == 'delivery_id') : ?>
                     <select name="keyword" id="" class="col-5 form-select mx-2 searchState">
-                        <option value="" <?php if ($searchText == '') print 'selected'; ?>>請選擇</option>
-                        <option value="<?php if ($searchType == "delivery_id") echo "1" ?>" <?php if ($searchText == "1") print 'selected' ?>>黑貓宅急便</option>
-                        <option value="<?php if ($searchType == "delivery_id") echo "2" ?>" <?php if ($searchText == "2") print 'selected' ?>>7-11取貨付款</option>
-                        <option value="<?php if ($searchType == "delivery_id") echo "3" ?>" <?php if ($searchText == "3") print 'selected' ?>>7-11取貨不付款</option>
+                        <option value="">請選擇</option>
+                        <option value="<?php if ($searchType == "delivery_id") echo "1" ?>">黑貓宅急便</option>
+                        <option value="<?php if ($searchType == "delivery_id") echo "2" ?>" >7-11取貨付款</option>
+                        <option value="<?php if ($searchType == "delivery_id") echo "3" ?>">7-11取貨不付款</option>
                     </select>
                 <?php elseif ($searchType == 'payment_state_id') : ?>
                     <select name="keyword" id="" class="form-select mx-2 searchState">
                         <option value="">請選擇</option>
-                        <option value="<?php if ($searchType == "payment_state_id") echo "1" ?>" <?php if ($searchText == "1") print 'selected' ?>>已付款</option>
-                        <option value="<?php if ($searchType == "payment_state_id") echo "2" ?> <?php if ($searchText == "1") print 'selected' ?>">未付款</option>
-                        <option value="<?php if ($searchType == "payment_state_id") echo "3" ?> <?php if ($searchText == "1") print 'selected' ?>">已退款</option>
+                        <option value="<?php if ($searchType == "payment_state_id") echo "1" ?>">已付款</option>
+                        <option value="<?php if ($searchType == "payment_state_id") echo "2" ?>">未付款</option>
+                        <option value="<?php if ($searchType == "payment_state_id") echo "3" ?>">已退款</option>
                     </select>
                 <?php elseif ($searchType == 'order_state_id') : ?>
                     <select name="keyword" id="" class="form-select mx-2 searchState">
                         <option value="">請選擇</option>
-                        <option value="<?php if ($searchType == "order_state_id") echo "1" ?> <?php if ($searchText == "1") print 'selected' ?>">未出貨</option>
-                        <option value="<?php if ($searchType == "order_state_id") echo "2" ?>" <?php if ($searchText == "1") print 'selected' ?>>已出貨</option>
-                        <option value="<?php if ($searchType == "order_state_id") echo "4" ?>" <?php if ($searchText == "4") print 'selected' ?>>完成</option>
-                        <option value="<?php if ($searchType == "order_state_id") echo "5" ?>"<?php if ($searchText == "5") print 'selected' ?>>取消</option>
+                        <option value="<?php if ($searchType == "order_state_id") echo "1" ?>">未出貨</option>
+                        <option value="<?php if ($searchType == "order_state_id") echo "2" ?>" >已出貨</option>
+                        <option value="<?php if ($searchType == "order_state_id") echo "4" ?>" >完成</option>
+                        <option value="<?php if ($searchType == "order_state_id") echo "5" ?>">取消</option>
                     </select>
                 <?php endif ?>
 
@@ -247,7 +250,7 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             <td class="col-2"><a class="detailLink" href="product_order_detail.php?id=<?= $row["id"] ?>"><?= $row["id"] ?></a></td>
                             <td class="col-2"><?= $row["create_time"] ?></td>
                             <td class="col-2"><?= $row["name"] ?></td>
-                            <td class="col-2">$<?= $row["total_amount"] ?></td>
+                            <td class="col-1">$<?= $row["total_amount"] ?></td>
                             <td class="col-2"><?= $row["delivery_name"] ?></td>
                             <td class="col-1"><?= $row["payment_name"] ?></td>
                             <td class="col-1"><?= $row["order_staus"] ?></td>
