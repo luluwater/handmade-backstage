@@ -93,9 +93,27 @@ a{
     padding: .5rem;
     font-size: 20px;
 }
-.hover:hover{
+.hover{
+    position: relative;
+    transition: .01s;
+}
+.hover:hover{  
     background: var(--main-color);
-    color:#fff;
+    color:#fff;    
+}
+.hover a::before{
+    content: "";
+    height: 0px;
+    width: 5px;
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    transform: translate(-300%,-50%);
+    transition: .3s;
+}
+.hover:hover a::before{
+    height: 25px;
+    
 }
 
 .title{
