@@ -45,12 +45,13 @@ $db_host = NULL;
     <main>
         <div class="container-fluid">
             <form action="do-create-product.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="type" value="<?=$type?>">
                 <div class="my-3 row align-items-center">
                     <label class="col-1" for="">圖片</label>
                     <?php for($i=1;$i<=4;$i++): ?>   
                         <div class="col-auto position-relative p-0 mx-2"> 
                             <input class="img-state" type="hidden" name="change<?=$i?>" value="unchange"> 
-                            <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*">
+                            <input class="d-none upload_image" type="file" name="product_img<?=$i?>" accept="image/*" <?=$i==1?"required":""?>>
                             <img src="../img/<?=$type?>/<?=$type?>_<?= $row["category_en_name"].'_'.$id.'/'.$rows_Img[$i-1]["img_name"] ?>"
                             class="previewImage object-cover" alt="圖片預覽" onerror="this.src='../img/previewImage.jpg'">
                             <i class="fa-solid fa-xmark text-light position-absolute top-0 end-0 translate-end p-1 cancel-img d-none"></i>

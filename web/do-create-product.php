@@ -92,6 +92,6 @@
 
 
     $db_host = NULL;
-
+    // echo $type;
     header("location: view-$type.php?$type=$id");
 ?>

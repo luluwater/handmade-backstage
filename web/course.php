@@ -131,7 +131,18 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
     <style>
       .hover.active{
         color:#fff;
+        content: "";
         background: var(--main-color);
+      }
+      .active>.nav-link::before{
+        content: "";
+        height: 25px;
+        width: 5px;
+        background: #fff;
+        position: absolute;
+        top: 50%;
+        transform: translate(-300%,-50%);
+        transition: .3s;
       }
     </style>
 </head>
@@ -320,7 +331,15 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
           confirmBtn.setAttribute("href",`do-delete-product.php?type=<?=$type?>&id=${this.dataset.id}`);
         })
       }
-      const course=document.querySelector("#course");
+      const typecategory= "<?=$type?>";
+      console.log(typecategory);
+      if(typecategory=="course"){
+        const course=document.querySelector("#course");
+        course.classList.add("active");
+      }else if(typecategory=="product"){
+        const product=document.querySelector("#product");
+        product.classList.add("active");
+      }
       
 
       

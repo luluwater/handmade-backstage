@@ -110,7 +110,7 @@ a{
     background: var(--main-color);
     color:#fff;    
 }
-.hover a::before{
+.hover .nav-link::before{
     content: "";
     height: 0px;
     width: 5px;
