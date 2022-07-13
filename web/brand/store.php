@@ -4,7 +4,7 @@ require("../../db-connect.php");
 //三源運算子 跟if else很像
 $page=isset($_GET["page"]) ?$_GET["page"]:1;
 $order = isset($_GET["order"]) ? $_GET["order"] : 1;
-$perPage=5; //這邊我預設每個page分頁只會有5個店家
+$perPage=6; //這邊我預設每個page分頁只會有5個店家
 $start = ($page-1)*$perPage; 
 
 // echo $start; //start 這個變數設成 點選分頁會-1 *現在顯示第幾個分頁 
@@ -14,8 +14,8 @@ store.valid= 1 LIMIT $start, $perPage"; //start設為第一個
 $result= $db_host->prepare($sql);
 $pageUserCount=$result->fetchALL(PDO::FETCH_ASSOC);
 // var_dump($result);
-$sqlStores="SELECT store.* FROM store";
 
+$sqlStores="SELECT store.* FROM store";
 $sqlAll= $db_host->prepare($sqlStores);
 
 
@@ -47,6 +47,7 @@ $startItem = ($page - 1) * $perPage + 1;
 $endItem = $page * $perPage;
 if ($endItem > $storeCount) $endItem = $storeCount;
 $totalPage = ceil($storeCount / $perPage);
+//ceil() 函數向上捨入為最接近的整數
 $PreviousPage = (($page - 1) < 1) ? 1 : ($page - 1);
 $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
@@ -96,6 +97,9 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
           border:0;
           color:var(--main-color);
         }
+          .button1:active{
+           color:blue;
+        }
       .btnClass {
         margin-top:60px;
         color:white;
@@ -139,7 +143,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
       .page-link:hover {
        color: var(--main-color);
       }
-
+    
       .active>.page-link, .page-link.active {
        background: #fff;
        color: var(--main-color);
@@ -151,9 +155,9 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
      <?php
     require("../main-menu.html");
     ?>
-     <main>
+     <main >
            <!-- form 配呵input type="submit name=要輸入的職" -->
-           <form action="do-store-delete.php" method="get">
+           <form  action="do-store-delete.php" method="get">
             <p class="title">品牌管理</p>  
               <div class=" d-flex justify-content-between ">
                     <a class=" d-flex align-content-center 
@@ -171,8 +175,9 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                            渲染顯示的地方 藉由軟刪除讓它顯示不見 -->
                             <input value="<?=$row["id"] ?>" name="checkbox" 
                              class="me-4 mb-3" type="checkbox">
-                         <figure class="ratio ratio-4x3 mb-2">
-                             <img class=" border border-secondary object-cover" src="imagesTest/<?= $row["img"] ?>" alt="">
+                         <figure class="ratio ratio-4x3 mb-2 ">
+                             <img class=" border border-secondary object-cover" 
+                             src="imagesTest/<?= $row["img"] ?>" alt="">
                          </figure>
                              <div class="text-center"><?= $row["name"] ?>
                             </div>
