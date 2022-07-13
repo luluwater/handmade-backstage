@@ -88,7 +88,7 @@ if(isset($_SESSION["account"])){
         </div>
         <!-- 路徑調整 ============================================= -->
         <form action="do-login-admin.php" method="post">
-            <!-- ================================================= -->
+        <!-- ================================================= -->
             <div class="mb-5">
                 <label class="mb-1" for="">管理者帳號</label>
                 <input type="text" class="form-control" name="account">
@@ -97,9 +97,9 @@ if(isset($_SESSION["account"])){
                 <label class="mb-1" for="">密碼</label>
                 <input type="password" class="form-control" name="password">
             </div>
-            <?php if(isset($_SESSION["error"])): ?>
+        <?php if(isset($_SESSION["error"])): ?>
             <div class="text-danger fw-bold text-center align-middle"><?=$_SESSION["error"]["message"]?></div>
-            <?php endif; ?>
+        <?php endif; ?>
             <div>
                 <div class="d-flex justify-content-center">
                     <a class="button btn btn-main-color" href="login-admin.php">取消</a>

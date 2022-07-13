@@ -75,3 +75,14 @@
     background: #E2E2E2;
     color: var(---main-word-color);
 }
+
+.delete-member-card {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bolder;
+    display: none;
+    min-width: 300px;
+}

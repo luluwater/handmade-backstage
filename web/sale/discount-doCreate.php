@@ -7,7 +7,7 @@ if(!isset($_POST["id"])){
 };
 
 
-require("../db-connect.php");
+require("../../db-connect.php");
 
 $pay=$_POST["discount_type_id"]==1?null:$_POST["pay"];
 $product_discount=$_POST["product_discount"]?$_POST["product_discount"]:$_POST["product_discount2"];
@@ -68,7 +68,7 @@ try {
 }
 $id = $db_host->lastInsertId();
 
-header("location: discount-preview.php?id=$_POST[id]");
+header("location: discount.php");
 
 }
 ?>

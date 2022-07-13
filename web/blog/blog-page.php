@@ -62,6 +62,7 @@ $db_host = NULL;
 svg{
   display:none;
 }
+
 </style>
 
 <body>

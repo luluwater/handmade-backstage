@@ -9,7 +9,7 @@ if (!isset($_SESSION["cart"])) {
 require_once("../../db-connect.php");
 $user_id = 10;
 $now = date('Y-m-d H:i:s');
-$order_state_id = 1;
+$order_state_id = 3;
 $valid = 1;
 $name = $_POST["name"];
 $phone = $_POST["phone"];

@@ -5,7 +5,7 @@ if(!isset($_GET["id"])){
     exit;
 }
 
-require("../db-connect.php");
+require("../../db-connect.php");
 
 $sql = "UPDATE coupon SET state=:state WHERE id=:id";
 $stmt = $db_host->prepare($sql);

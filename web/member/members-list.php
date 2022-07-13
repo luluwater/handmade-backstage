@@ -37,6 +37,9 @@ require("../../db-connect.php");
     .table {
         min-height: 200px;
     }
+    .table-head {
+        background-color: var(--line-color);
+    }
     .hover:hover{
         background: #E2E2E2;
         color: var(---main-word-color);
@@ -92,16 +95,19 @@ require("../../db-connect.php");
             </div>
         </div>
         <table class="table">
-            <thead class="table-head">
+            <thead class="table-head text-light">
                 <tr class="text-center align-middle fw-bold">
                     <td>
                         <span class="d-flex justify-content-center align-items-center">編號
-                        <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act">
-                        <a href="<?=orderLink("1",$pageView,$order)?>" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>">
-                        <i class="fa-solid fa-caret-up arrow-color"></i></a>
-                        <a href="<?=orderLink("2",$pageView,$order)?>" class="<?php if ($order == 2) echo "arrow-active" ?>">
-                        <i class="fa-solid fa-caret-down arrow-color"></i>
-                        </a></span></span>
+                            <span class="d-inline-flex flex-column justify-content-center p-0 ps-3 arrowBtn arrow-act">
+                                <a href="<?=orderLink("1",$pageView,$order)?>" class="arrowBtn <?php if ($order == 1) echo "arrow-active" ?>">
+                                    <i class="fa-solid fa-caret-up arrow-color"></i>
+                                </a>
+                                <a href="<?=orderLink("2",$pageView,$order)?>" class="<?php if ($order == 2) echo "arrow-active" ?>">
+                                    <i class="fa-solid fa-caret-down arrow-color"></i>
+                                </a>
+                            </span>
+                        </span>
                     </td>
                     <!-- <td class="col-2">會員編號 <a href="">
                         <i class="fa-solid fa-sort mx-2"></i></a></td> -->
@@ -131,8 +137,7 @@ require("../../db-connect.php");
                     <td><?=$row["phone"]?></td>
                     <td><?=$row["user_state_name"]?></td>
                     <!--路徑調整 ============================================= -->
-                    <td><a class="btn btn-bg-color" href="member-list.php?id=
-                    <?=$row["id"]?>">查看</a></td>
+                    <td><a class="btn btn-bg-color" href="member-list.php?id=<?=$row["id"]?>">查看</a></td>
                     <!-- ===================================================== -->
                 </tr>
                 <?php endforeach; ?>
@@ -140,27 +145,23 @@ require("../../db-connect.php");
         </table>
         <!-- 頁碼開始 -->
             <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center mt-5">
-                <div class="d-flex">
-                    <li class="page-item">
-                        <a class="page-link"
-                            href="members-list.php?page=<?=$PreviousPage?>&pageView=
-                            <?=$pageView?>&order=<?=$order?>"
-                            aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
+                <ul class="pagination justify-content-center mt-5">
+                    <div class="d-flex">
+                        <li class="page-item">
+                            <a class="page-link" href="members-list.php?page=<?=$PreviousPage?>&pageView=<?=$pageView?>&order=<?=$order?>" aria-label="Previous"><span  aria-hidden="true">&laquo;</span></a>
+                        </li>
                     <?php for($i=1; $i<=$totalPage;$i++): ?>
-                    <li class="page-item <?php if($page==$i)echo "active"?>">
-                    <a class="page-link"
-                            href="members-list.php?page=<?=$i?>&pageView=
-                            <?=$pageView?>&order=<?=$order?>"><?=$i?></a>
-                    </li>
+                        <li class="page-item <?php if($page==$i)echo "active"?>">
+                        <a class="page-link" href="members-list.php?page=<?=$i?>&pageView=<?=$pageView?>&order=<?=$order?>"><?=$i?></a>
+                        </li>
                     <?php endfor; ?>
-                <li class="px-5 py-2">
-                    第<?= $startItem ?>- <?= $endItem ?>筆,共 <?= $memberCount ?> 筆資料
-                </li>
-            </ul>
+                        <li class="page-item">
+                            <a class="page-link" href="<?=orderLink("nextPage",$pageView, $order) ?>&page=<?= $page + 1 > $totalPage ? $page = $totalPage : $page = $page + 1 ?>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                        </li>
+                    <li class="px-5 py-2">
+                        第<?= $startItem ?>- <?= $endItem ?>筆 , 共 <?= $memberCount ?> 筆資料
+                    </li>
+                </ul>
             </nav>
         <!-- 頁碼結束 -->
         </div>

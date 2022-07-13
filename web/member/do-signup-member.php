@@ -15,6 +15,7 @@ $newUser =[
     ':gender'=>$_POST["gender"],
 ];
 
+//驗證是否已註冊
 $account=$_POST["account"];
 $email=$_POST["email"];
 $sqlCheck = "SELECT * FROM user WHERE account=? AND email=? ";
@@ -37,6 +38,7 @@ catch (PDOException $e) {
     }
 }
 
+//註冊
 if ($memberExist == 0) {
     $now = date("Y-m-d H:i:s");
     $password=md5($password);
