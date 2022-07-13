@@ -21,6 +21,14 @@
 .table{
     min-height: 200px;
 }
+.order-th {
+    font-size: 18px;
+    background: var(--line-color);
+    color: #fff;
+    line-height: 40px;
+}
+
+
 .boldWord{
     font-weight: 700;
     font-size: 18px;
@@ -47,8 +55,8 @@
 }
 .detail-tr td{
     line-height: 100px;
-
 }
+
 
 .totalPrice{
     color: var(--main-color);
@@ -63,4 +71,6 @@
 .customer-left,.customer-right{
     width: 500px;
 }
+
+
 

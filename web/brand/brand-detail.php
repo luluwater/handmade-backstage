@@ -37,49 +37,51 @@ try {
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../../css/style.css">
-   <style>
+<style>
     :root {
     --bg-color: #eee6de;
     --main-color: #e65947;
     --line-color: #ddb9a2;
     --main-word-color: #3F3F3F;
     --header-hieght: 100px;
-}
+    }
 
-.title {
-    font-size: 26px;
-    color: var(--main-word-color);
-}
-
-.table-head {
+    .title {
+    font-size: 36px;
+    color: var(--line-color);
+    }
+    .table{
+    font-size:16px;
+    }
+     .table-head {
     background-color: var(--line-color);
-}
+    }
 
-.blogs {
-    margin-top: 100px;
-}
+     .blogs {
+      margin-top: 100px;
+    }
 
-.btn-members-list {
+     .btn-members-list {
     margin-top: 60px;
     background: var(--main-color);
     font-weight: bolder;
     color: white;
     padding: .5rem 1rem;
-}
+    }
 
-.cancel-btn-line-color {
+    .cancel-btn-line-color {
     background: var(--line-color);
-}
+    }
 
-.save-btn-main-color {
+       .save-btn-main-color {
     background: var(--main-color);
-}
+      }
 
-.table {
-    min-height: 200px;
-}
+      .table {
+            min-height: 200px;
+      }
 
-.bg-mask {
+        .bg-mask {
     display: none;
     opacity: 0.5;
     background: var(--main-word-color);
@@ -87,9 +89,9 @@ try {
     height: 100%;
     position: absolute;
     z-index: 1;
-}
+     }
 
-.edit-member-card {
+     .edit-member-card {
     z-index: 2;
     position: absolute;
     top: 50%;
@@ -98,18 +100,17 @@ try {
     font-weight: bolder;
     display: none;
     min-width: 600px;
-}
-.tabs {
-    display: block;
-}
+       }
+       .tabs {
+       }
 
-.btn-main-color {
-    background: var(--main-color);
+         .btn-main-color {
+     background: var(--main-color);
     font-weight: bolder;
     color: white;
     padding: .5rem 1rem;
-}
-   </style> 
+         }
+</style> 
     </head>
 
   <body>
@@ -117,13 +118,7 @@ try {
     require("../main-menu.html");
     ?>
     <main>
-             <!-- 這邊的超連結會回去users.php製作的表格中  -->
-        </div>
         <div class="container">
-        <div class="py-2">
-   
-             <!-- 這邊的超連結會回去users.php製作的表格中  -->
-        </div>
        <div class="mt-3 ms-3 container-fluid d-flex">
             <div class="member-card col-5">
                 <p class="title fw-bold">基本資料</p>
@@ -150,7 +145,8 @@ try {
                 class="edit-btn btn btn-main-color me-2 btn-members-list"
                  >修改</a>
                 </div>
-      </div>
+          </div>
+          
    </main>
      </body>
 </html>

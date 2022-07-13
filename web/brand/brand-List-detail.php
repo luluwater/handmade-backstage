@@ -85,7 +85,7 @@
                     style="resize:none" placeholder="請輸入商品介紹" 
                     required></textarea>                   
                 </div>
-                <div class="my-3 row align-items-center">
+                <div class="my-3 row justify-content-center">
                     <label class="col-1 " for="type">商品類型</label>
                         <select id="type" class="form-select col"
                          aria-label="Default select example" name="type">
@@ -99,7 +99,7 @@
                 </div>
                 <div class="my-3 row justify-content-between">
                     <div class="col-5 d-flex align-items-center">
-                        <label class="col-2 me-2" for="category">捷運站點</label>
+                        <label class="col-2 me-2" for="category">捷運線</label>
                         <select  id="store" class="form-select col"
                          aria-label="Default select example" 
                          name="store">
@@ -109,7 +109,7 @@
                         </select>
                     </div>
                     <div class="col-5 d-flex pe-0  align-items-center">
-                        <label class="col-2 me-2" for="store">捷運線</label>
+                        <label class="col-2 me-2" for="store">捷運站</label>
                         <select  id="store" class="form-select col"
                          aria-label="Default select example" name="store">
                           <option value="1">1</option>

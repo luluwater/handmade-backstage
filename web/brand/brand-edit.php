@@ -43,8 +43,9 @@ try {
     }
     
 .title {
-    font-size: 26px;
-    color: var(--main-word-color);
+    font-size: 36px;
+    color: var(--line-color);
+    margin-bottom:20px;
 }
 
 .table-head {
