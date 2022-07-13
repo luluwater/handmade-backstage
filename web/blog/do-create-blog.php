@@ -7,7 +7,7 @@ $content = mysqli_real_escape_string($con, $_POST["atricle_content"]);
 $pubilshTime=$_POST["pubilshTime"];
 $storeId=$_POST["store"];
 $category=$_POST["category"];
-echo $storeId;
+$tag=$_POST["articleCategory"];
 
 
 $content = str_replace( '&', '&amp;',$content );
@@ -22,9 +22,9 @@ if(isset($_POST["submit_data"])){
     $state=$_POST["submit_data"];
 }
 
-$stmt=$db_host->prepare("INSERT INTO blog(title,content,create_time,category_id, store_id,state,valid) VALUES ('$title','$content','$pubilshTime', '$category', '$storeId','$state',1)");
+$stmt=$db_host->prepare("INSERT INTO blog(title,content,create_time,category_id, store_id,state,valid,tag) VALUES ('$title','$content','$pubilshTime', '$category', '$storeId','$state',1,'$tag')");
 
-header('refresh:2; url=manage-blog.php');
+// header('refresh:2; url=manage-blog.php');
 
 try {
     $stmt->execute();

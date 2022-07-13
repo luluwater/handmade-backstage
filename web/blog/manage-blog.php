@@ -225,8 +225,6 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             </thead>
 
             <tbody id="tbody">
-
-
                     <?php foreach( $blogStmt as $row) :?>
                     <tr class="trHover border-bottom" class="articlesList" id="articlesList" data-id=<?=$row["id"]?>>
                         <td class="text-start pb-2">
@@ -235,7 +233,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
                             echo $date->format('Y-m-d');
                             ?>
                         </td>
-                        <td class="text-start td-height article_title"><a style="color:#3F3F3F;" class="" href="edit-page.php?id=<?=$row["id"]?>"><?=$row["title"]?></a></td>
+                        <td class="text-start td-height article_title"><a style="color:#3F3F3F;"  href="blog-page.php?id=<?=$row["id"]?>"><?=$row["title"]?></a></td>
 
                         <td><?=$row["category_name"]?></td>
                         <td><?=$row["state"]?></td>

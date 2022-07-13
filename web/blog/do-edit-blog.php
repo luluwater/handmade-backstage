@@ -18,10 +18,10 @@ try {
     $db_host = NULL;
     exit;
 }
-
 $db_host = NULL;
- 
+
 ?>
+
 
 <div id="test" style="text-align:start">
         <div id="editor"  name="content">
@@ -29,6 +29,5 @@ $db_host = NULL;
             echo $content;
         ?>
     </div>
-    <button class="btn btn-success text-center"><a style="all:unset" href="manage-blog.php" >回編輯列表</a></button>
-
+    <button class="btn btn-bg-color text-center"><a style="all:unset" href="manage-blog.php" >回編輯列表</a></button>
 </div>
