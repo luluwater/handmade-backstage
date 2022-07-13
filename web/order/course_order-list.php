@@ -161,15 +161,6 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             }
         }
 
-/* 
-        #confirm.move-in{
-            animation: message-move-in 0.6s ease-in-out;
-        }
-        #confirm.move-out{
-            animation: message-move-out 0.6s ease-in-out;
-            animation-fill-mode: forwards;
-        } */
-
     </style>
 </head>
 
@@ -294,7 +285,7 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
             <ul class="pagination justify-content-center mt-5">
                 <div class="d-flex">
                     <li class="page-item">
-                        <a class="page-link" href="<?= orderLink("nextPage", $pageView, $order) ?>&<?= $PreviousPage ?>" aria-label="Previous">
+                        <a class="page-link" href="<?= orderLink("nextPage", $pageView, $order) ?>&page=<?= $PreviousPage ?>" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -306,7 +297,7 @@ $theNextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
 
                     <li class="page-item">
-                        <a class="page-link" href="<?= orderLink("nextPage", $pageView, $order) ?>&<?= $theNextPage ?>" aria-label="Next">
+                        <a class="page-link" href="<?= orderLink("nextPage", $pageView, $order) ?>&page=<?= $theNextPage ?>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

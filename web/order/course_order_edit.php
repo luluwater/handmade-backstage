@@ -32,7 +32,7 @@ try {
 
 $couponId = $couponIsset["coupon_id"];
 if ($couponId!=""){
-    $sqlJoin = ",coupon.discount_type_id,coupon.coupon_discount,coupon.pay";
+    $sqlJoin = ",coupon.discount_type_id,coupon.coupon_discount,coupon.pay,coupon.name AS couponName";
     $JoinFrom = "JOIN coupon ON course_order.coupon_id = coupon.id";
     
 }else{
@@ -139,14 +139,14 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
         <div class="row mx-5 mb-3 align-items-center">
             <p class="col-1 boldWord ">收件人</p>
             <p class="col-auto">
-            <input name="name" type="text" class="form-control" value="<?= $orderRow["name"] ?>">
+            <input name="name" type="text" class="form-control" value="<?= $orderRow["name"] ?>" required>
         </p>
         </div>
 
         <div class="row mx-5 mb-3 align-items-center">
             <p class="col-1 boldWord">連絡電話</p>
             <p class="col-auto">
-            <input name="phone" type="text" class="form-control" value="<?= $orderRow["phone"] ?>">
+            <input name="phone" type="text" class="form-control" value="<?= $orderRow["phone"] ?>" required>
             </p>
         </div>
 
@@ -180,8 +180,8 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
 
         <div class="d-flex justify-content-center">
             <table class="table table-hover mt-5 table-w">
-                <thead class="order-th ">
-                    <tr class="text-center order-title row">
+                <thead>
+                    <tr class="text-center order-title row order-th">
                         <td class="col-1"></td>
                         <td class="col-3 boldWord">課程名稱</td>
                         <td class="col boldWord">預約日期</td>
@@ -214,12 +214,16 @@ $couponId != "" ? $couponPay = intval($orderRow["pay"]) : "";
                         <?php endif; ?>
                         <?php endforeach ?>
                         
-
-                    
-
                 </tbody>
             </table>
         </div>
+
+        <?php if ($couponId!="") :?>
+            <div class="ps-5 ms-5 boldWord">
+                使用折價券：  <?=$orderRow["couponName"]?>
+            </div>
+        <?php endif;?>
+
         <div class="text-end boldWord ">
             <div class="row mx-5 pe-5 mt-2 justify-content-end">
                 <p class="col-2 boldWord ">訂單總金額</p>
