@@ -8,7 +8,13 @@ require("../../db-connect.php");
 // $userCount=$result->num_rows;
 $id=$_GET["id"]; //去讓下方a標籤去取德get id 的變數 這樣才可顯示在網址上
 
-$sql="SELECT * FROM store WHERE id=$id AND valid=1";
+//選擇所有資料庫store所有的欄位，
+//mrt只拿mrt.MRT_station,mrt.station_name 
+//store 跟 mrt JOIN 再一起 on這邊是讓id=兩邊資料庫的id
+//WHERE 就是指定條件 AND就是 或 
+$sql="SELECT store.*,mrt.MRT_station,mrt.station_name 
+FROM store JOIN mrt on store.MRT_id=mrt.id 
+WHERE store.id=$id AND valid=1";
 
 $result = $db_host->prepare($sql); //這邊是把資料撈出來 回傳物件 
 //所以用result變數把物件接住 
@@ -36,7 +42,7 @@ try {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"  integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
      <link rel="stylesheet" href="../../css/style.css">
   </head>
-<style>
+ <style>
         :root {
     --bg-color: #eee6de;
     --main-color: #e65947;
@@ -51,35 +57,38 @@ try {
     th ,td{
         font-weight: bold;
     }
-.table-head {
+    .try{
+        color:blue;
+    }
+    .table-head {
     background-color: var(--line-color);
-}
+    }
 
-.blogs {
+     .blogs {
     margin-top: 100px;
-}
+    }
 
-.btn-members-list {
-    margin-top: 60px;
+    .btn-members-list {
+       margin-top: 60px;
     background: var(--main-color);
     font-weight: bolder;
     color: white;
     padding: .5rem 1rem;
-}
+   } 
 
-.cancel-btn-line-color {
+    .cancel-btn-line-color {
     background: var(--line-color);
-}
+    }
 
-.save-btn-main-color {
-    background: var(--main-color);
-}
+    .save-btn-main-color {
+     background: var(--main-color);
+    }
+    
+    .table {
+      min-height: 200px;
+    }
 
-.table {
-    min-height: 200px;
-}
-
-.bg-mask {
+   .bg-mask {
     display: none;
     opacity: 0.5;
     background: var(--main-word-color);
@@ -87,30 +96,22 @@ try {
     height: 100%;
     position: absolute;
     z-index: 1;
-}
+    }
 
-.edit-member-card {
-    z-index: 2;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: bolder;
-    display: none;
-    min-width: 600px;
-}
-.tabs {
+    .edit-member-card {
+    }
+    .tabs {
     display: block;
-}
+    }
 
-.btn-main-color {
+    .btn-main-color {
     background: var(--main-color);
     font-weight: bolder;
     color: white;
     padding: .5rem 1rem;
-}
-  </style>
-  <body>
+    }
+ </style>
+<body>
       <?php
     require("../main-menu.html");
     ?>
@@ -129,6 +130,14 @@ try {
                      <tr>
                         <th class="col-2" >店家名稱</th>
                         <td><?=$row["name"]?></td>
+                    </tr>
+                    <tr>
+                        <th class="col-2" >捷運站</th>
+                        <td><?=$row["MRT_station"]?></td>
+                    </tr>
+                     <tr>
+                        <th class="col-2" >捷運線</th>
+                        <td><?=$row["station_name"]?></td>
                     </tr>
                      <tr>
                         <th class="col-2">自介</th>
@@ -151,12 +160,20 @@ try {
                         <td><?=$row["opening_hour"]?></td>
                     </tr>
                     <tr>
+                       
                         <th class="col-2">FB</th>
-                        <td><a href=""></a><?=$row["FB_url"]?></td>
+                       
+                        <td><a class="try"href="<?=$row["FB_url"]?>">
+                        <?=$row["FB_url"]?></a></td>
+                     
                     </tr>
                     <tr>
                         <th class="col-2">IG</th>
-                        <td><?=$row["IG_url"]?></td>
+                        <!-- a標籤裡面再包一次就可以顯示網頁網址
+                         因為主要style.css有把a隱藏所以要在下class樣式顯示出來
+                         -->
+                        <td><a class="try" href="<?=$row["IG_url"]?>">
+                        <?=$row["IG_url"]?></a></td>
                     </tr>
                     </div>
             <?php endif; ?>

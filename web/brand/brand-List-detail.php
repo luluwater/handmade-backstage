@@ -1,3 +1,23 @@
+<?php 
+// $type=$_GET["type"];
+require_once("../../db-connect.php");
+
+// $stmt=$db_host->prepare("SELECT * FROM category");
+// $stmt_store=$db_host->prepare("SELECT store.id,store.name FROM store WHERE store.category_id = 1");
+
+// try{    
+//     $stmt->execute();
+//     $stmt_store->execute();
+//     $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+//     $rows_store=$stmt_store->fetchAll(PDO::FETCH_ASSOC);
+// }catch (PDOException $e){
+//     echo "預處理陳述式執行失敗！ <br/>";
+//     echo "Error: " . $e->getMessage() . "<br/>";
+//     $db_host = NULL;
+//     exit;
+// }
+// $db_host = NULL;
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -33,43 +53,10 @@
                         <input class="d-none upload_image" type="file" 
                         name="product_img1" accept="image/*" required>
                         <img src="" class="previewImage object-cover" 
-                        alt="圖片預覽" onerror="">
+                        alt="" onerror="">
                     </div>
               </div>
-                <!-- <div class="my-3  row align-items-center">
-                    <label class="col-1" for="">品牌圖片</label>
-                    <div class="col-auto">
-                        <input class="d-none upload_image" type="file"
-                         name="product_img1" accept="image/*" required>
-                        <img src="" class="previewImage object-cover"
-                         alt="圖片預覽"onerror="">
-                    </div>
-                    <div class="col-auto">
-                        <input class="d-none upload_image" type="file"
-                         name="product_img2" accept="image/*">
-                        <img src="" class="previewImage object-cover"
-                         alt="圖片預覽" onerror="">
-                    </div>
-                    <div class="col-auto">
-                        <input class="d-none upload_image" type="file" 
-                        name="product_img3" accept="image/*">
-                        <img src="" class="previewImage object-cover" 
-                        alt="圖片預覽" onerror="">
-                    </div>
-                    <div class="col-auto ">
-                        <input class="d-none upload_image" type="file" 
-                        name="product_img4" accept="image/*">
-                        <img src="" class="previewImage object-cover"
-                         alt="圖片預覽" onerror="">
-                    </div>
-                    <div class="d-flex mt-3">
-                 <label class="col-1" for="">形象bn</label>
-                    <div class="col-auto">
-                        <input class="d-none upload_image" type="file" 
-                        name="product_img1" accept="image/*" required>
-                        <img src="" class="previewImage object-cover"
-                         alt="圖片預覽" onerror="">
-                    </div> -->
+            
               </div>
                 </div>
                 <div class="my-3 row align-items-center">

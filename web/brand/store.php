@@ -73,11 +73,11 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../../css/style.css">
-  <style>
-      .title{
+<style>
+       .title{
         color:var(--line-color);
         font-size:36px;
-        margin-bottom:24px;
+       margin-bottom:-24px;
       }
       .delAndAdd{
         padding-top:24px;
@@ -147,81 +147,62 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
 
   </style>
   </head>
-  <body>
+<body>
      <?php
     require("../main-menu.html");
     ?>
      <main>
-             <div class="container-fluid">
-            <div class="d-flex justify-content-between mb-3">
-                <p class="title">品牌管理</p>  
-                <!-- <p>顯示 
-                  <select class="count-bg text-center" aria-label="Default select example">
-                    <option value="1" selected>6</option>
-                    <option value="2">12</option>
-                    <option value="3">18</option>
-                    <option value="4">24</option>
-                    <option value="5">30</option>
-                  </select> 
-                  筆數
-                </p> -->
-                  <!-- <p class="side">共筆資料 </p>  -->
-
-
-                 
-            </div>
            <!-- form 配呵input type="submit name=要輸入的職" -->
            <form action="do-store-delete.php" method="get">
-        
-             <div class=" d-flex justify-content-between ">
-                    <a class=" d-flex align-content-center mb-4 btnClass" href="brand-list.php">管理分類</a>
-                <div class="delAndAdd mt-3 ">
-                  <input class=" button1  m-4" name="delete" type="submit" value="刪除店家">
+            <p class="title">品牌管理</p>  
+              <div class=" d-flex justify-content-between ">
+                    <a class=" d-flex align-content-center 
+                    mb-4 btnClass" href="brand-list.php">管理分類</a>
+                 <div class="delAndAdd mt-4 ">
+                    <input class=" button1  m-4" name="delete" type="submit" value="刪除店家">
                     <a href="brand-List-detail.php" class=" text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增店家</a>
                 </div>     
               </div>
-          
                <div class="row gy-4">
                    <?php foreach ($rows as $row) : ?>
                       <div class="col-md-4">
                         <div>
-                          <!-- 這邊的input吃到的是資料庫id 渲染顯示的地方 藉由軟刪除讓它顯示不見 -->
-                          <input value="<?=$row["id"] ?>" name="checkbox" 
-                            class="me-4 mb-3" type="checkbox">
+                          <!-- 這邊的input吃到的是資料庫id
+                           渲染顯示的地方 藉由軟刪除讓它顯示不見 -->
+                            <input value="<?=$row["id"] ?>" name="checkbox" 
+                             class="me-4 mb-3" type="checkbox">
                          <figure class="ratio ratio-4x3 mb-2">
                              <img class=" border border-secondary object-cover" src="imagesTest/<?= $row["img"] ?>" alt="">
-                        </figure>
-                             <div class="text-center"><?= $row["name"] ?></div>
+                         </figure>
+                             <div class="text-center"><?= $row["name"] ?>
+                            </div>
                              
                              <div class="text-center ">類型:&nbsp<?= $row["category_name"] ?>
                             </div>
                     
-                          <div class=" d-flex  justify-content-center">                       
-                           <a class="mt-3 btn btn-bg-color" 
-                           href="store-detail.php?id=<?=$row["id"]?>">詳細資料</a>
-                           </div>
-
-                      
+                            <div class=" d-flex  justify-content-center">                       
+                              <a class="mt-3 btn btn-bg-color" 
+                              href="store-detail.php?id=<?=$row["id"]?>">詳細資料</a>
+                            </div>
                           </div>
                       </div>
                    <?php endforeach; ?>  
                  </div>
             </form>
-       <div class="py-2 d-flex justify-content-center">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
-          <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-            <li class="page-item
-          <?php if ($page == $i) echo "active"; ?>
-          ">
-          <a name="" class="page-link" href="store.php?page=
-          <?= $i ?>"><?= $i ?></a></li>
-          <?php endfor; ?>
-          <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
-        </ul>
-      </nav>
-    </div>
-    </main>
- 
+              <div class="py-2 d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                          <li class="page-item
+                         <?php if ($page == $i) echo "active"; ?>
+                         ">
+                        <a name="" class="page-link" href="store.php?page=
+                        <?= $i ?>"><?= $i ?></a></li>
+                     <?php endfor; ?>
+                       <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+                    </ul>
+                 </nav>
+              </div>
+         </main>
 </html>
