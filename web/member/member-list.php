@@ -2,6 +2,7 @@
 //連線路徑調調整===========================================
 require("../../db-connect.php");
 //=======================================================
+session_start();
 
 if (!isset($_GET["id"])) {
     header("location:members-list.php");
@@ -13,8 +14,6 @@ $id=$_GET["id"];
 $sql = "SELECT user.*, user_state_category.name AS user_state_name FROM user
 JOIN user_state_category ON user.state = user_state_category.id WHERE user.id = '$id'";
 $result= $db_host->prepare($sql);
-// print_r ($row);
-
 try {
     $result->execute();
     $member = $result ->fetch(PDO::FETCH_ASSOC);
@@ -33,7 +32,6 @@ $resultProductOrder = $db_host->prepare($sqlProductOrder);
 $resultProductOrder->execute();
 $rows = $resultProductOrder ->fetchAll(PDO::FETCH_ASSOC);
 $productOrder = count($rows);
-
 
 //課程訂單
 $sqlCourseOrder = "SELECT course_order .*,
@@ -80,7 +78,7 @@ $PreviousPageProduct = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
 $nextPageProduct = (($page + 1) >$totalPageProduct) ? $totalPageProduct: ($page + 1);
 
-
+//課程
 if($endItem>$courseOrder) $endItem=$courseOrder;
 //無條件進位筆數
 $totalPageCourse = ceil( $courseOrder / $pageView ); 
@@ -89,7 +87,7 @@ $PreviousPageCourse = (($page - 1) < 1) ? 1 : ($page - 1);
 //下一頁
 $nextPageCourse = (($page + 1) >$totalPageCourse) ? $totalPageCourse: ($page + 1);
 
-
+//部落格
 if($endItem>$blog) $endItem=$blog;
 //無條件進位筆數
 $totalPageBlog = ceil( $blog / $pageView ); 
@@ -112,7 +110,6 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c927f90642.js" crossorigin="anonymous"></script>
-    <!-- css路徑調整 ============================================= -->
     <head>
         <link rel="stylesheet" href="../../css/style.css">
         <link rel="stylesheet" href="member-list.css">
@@ -134,7 +131,6 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
             
         }
     </style>
-    <!-- ========================================================= -->
 </head>
 
 <body>
@@ -171,6 +167,9 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         <td><?=$member["gender"]?></td>
                     </tr>
                     <tr>
+                    <!-- <?php if(isset($_SESSION["user"]["email"])):?>
+                        <div class="text-danger fw-bold text-end"><?=$_SESSION["user"]["email"]?>信箱已註冊過嚕 > < </div>
+                    <?php endif; ?> -->
                         <th>信箱</th>
                         <td><?=$member["email"]?></td>
                     </tr>
@@ -187,9 +186,11 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                     <!-- 路徑調整 ============================================= -->
                     <a href="members-list.php" class="return-btn me-2 btn btn-members-list">回到會員列表</a>
                     <!-- ====================================================== -->
+                    <button class="delete-btn btn btn-main-color me-2 btn-members-list" type="submit">刪除會員</button>
                     <button class="edit-btn btn btn-main-color me-2 btn-members-list" type="submit">修改</button>
                 </div>
             </div>
+            <!-- 修改會員表單 -->
             <div class="bg-mask"></div>
             <div class="edit-member-card">
                 <div class="card d-flex p-2">
@@ -251,7 +252,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                                 </td>
                             </tr>
                         </table>
-                        <div class="button d-flex justify-content-end">
+                        <div class="button d-flex justify-content-center">
                             <a href="member-list.php?id=<?=$member["id"]?>"
                                 class="cancel-btn btn btn-main-color me-3 mb-5">取消</a>
                             <button class="save-btn btn btn-main-color mb-5 me-5" type="submit">儲存</button>
@@ -260,11 +261,12 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                     <?php endif; ?>
                 </div>
             </div>
+            <!-- 會員訂單與部落格 -->
             <div class="container member-details-list">
                 <div class="tabs mb-3 d-flex justify-content-center">
-                    <button class="button-detail btn btn-main-color me-2" style="active" type="submit">商品訂單</button>
-                    <button class="button-detail btn btn-main-color me-2" type="submit">課程訂單</button>
-                    <button class="button-detail btn btn-main-color me-2" type="submit">部落格</button>
+                    <button class="button-detail btn btn-main-color me-3" style="active" type="submit">商品訂單</button>
+                    <button class="button-detail btn btn-main-color me-3" type="submit">課程訂單</button>
+                    <button class="button-detail btn btn-main-color me-3" type="submit">部落格</button>
                 </div>
                 <!-- 商品訂單 -->
                 <div class="content">
@@ -293,18 +295,14 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         <nav aria-label="Page navigation example">
                             <ul class="pagination mt-4 px-5">
                                 <li class="page-item">
-                                    <a class="page-link" href="" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
+                                    <a class="page-link" href="" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                                 </li>
                                 <?php for($i=1; $i<=$totalPageProduct;$i++): ?>
                                 <li class="page-item <?php if($page==$i)?>"><a class="page-link" href=""><?=$i?></a>
                                 </li>
                                 <?php endfor; ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
+                                    <a class="page-link" href="" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                                 </li>
                             </ul>
                         </nav>
@@ -338,18 +336,14 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         <nav aria-label="Page navigation example">
                             <ul class="pagination mt-4 px-5">
                                 <li class="page-item">
-                                    <a class="page-link" href="" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
+                                    <a class="page-link" href="" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                                 </li>
                                 <?php for($i=1; $i<=$totalPageCourse;$i++): ?>
                                 <li class="page-item <?php if($page==$i)?>"><a class="page-link" href=""><?=$i?></a>
                                 </li>
                                 <?php endfor; ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
+                                    <a class="page-link" href="" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                                 </li>
                             </ul>
                         </nav>
@@ -385,18 +379,14 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                         <nav aria-label="Page navigation example d-flex">
                             <ul class="pagination mt-4 px-5">
                                 <li class="page-item">
-                                    <a class="page-link" href="" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
+                                    <a class="page-link" href="" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                                 </li>
                                 <?php for($i=1; $i<=$totalPageBlog;$i++): ?>
                                 <li class="page-item <?php if($page==$i)?>"><a class="page-link" href=""><?=$i?></a>
                                 </li>
                                 <?php endfor; ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
+                                    <a class="page-link" href="" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                                 </li>
                             </ul>
                         </nav>
@@ -404,6 +394,19 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- 刪除會員 -->
+        <div class="delete-member-card">
+            <div class="card d-flex p-2">
+                <p class="title fw-bold text-center mt-3 mb-5">&nbsp;&nbsp;確定要刪除會員&nbsp;<?=$member["name"]?>&nbsp;的帳號？&nbsp;&nbsp;</p>
+                <form action="" method="get">
+                    <div class="button d-flex justify-content-center">
+                        <a href="member-list.php?id=<?=$member["id"]?>" class="cancel-delete-member-btn btn btn-main-color me-3 mb-5">取消</a>
+                        <a href="do-delete-member.php?id=<?=$member["id"]?>" class="cancel-delete-member-btn btn btn-main-color me-3 mb-5">刪除</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </main>
 </body>
 <script>
@@ -419,6 +422,13 @@ let memberCard = document.querySelector(".member-card");
 let pageLink = document.querySelector(".page-item");
 let memberDetailsList = document.querySelector(".member-details-list");
 
+let deleteBtn = document.querySelector(".delete-btn");
+let deleteMemberCard = document.querySelector(".delete-member-card");
+let cancelDeleteMemberBtn = document.querySelector(".cancel-delete-member-btn");
+let DeleteMemberBtn = document.querySelector(".delete-member-btn");
+let disappear = document.querySelector(".disappear");
+
+
 editBtn.onclick = function() {
     bgMask.style.display = "block";
     saveBtn.style.display = "block";
@@ -429,7 +439,22 @@ editBtn.onclick = function() {
     //memberDetailsCard.style.display = "none";
     memberDetailsList.style.display = "none";
     pageLink.style.remove("active");
+
+    deleteMemberCard.style.display = "none";
+    cancelDeleteMemberBtn.style.display = "none";
+    DeleteMemberBtn.style.display = "none";
+
 }
+
+deleteBtn.onclick = function() {
+    bgMask.style.display = "block";
+    deleteMemberCard.style.display = "block";
+    cancelDeleteMemberBtn.style.display = "block";
+    DeleteMemberBtn.style.display = "block";
+
+}
+
+
 saveBtn.onclick = function() {
     bgMask.style.display = "none";
     saveBtn.style.display = "none";
@@ -437,6 +462,10 @@ saveBtn.onclick = function() {
     editMemberCard.style.display = "none";
     memberDetailsList.style.display = "none";
     pageLink.style.remove("active");
+
+    deleteMemberCard.style.display = "none";
+    cancelDeleteMemberBtn.style.display = "none";
+    DeleteMemberBtn.style.display = "none";
 }
 
 //member-details

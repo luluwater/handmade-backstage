@@ -11,8 +11,8 @@ if(isset($_GET["page"])){
 
 function orderLink($item, $cur_pageView, $order)
 {
-    isset(($_GET["search"])) ?  $search = $_GET["search"] : $search = "";
-    isset($_GET["state"]) ? $state = $_GET["state"] : $_GET["state"] = "";
+  isset(($_GET["search"])) ?  $search = $_GET["search"] : $search = "";
+  isset($_GET["state"]) ? $state = $_GET["state"] : $_GET["state"] = "";
 
     switch ($item) {
         case "nextPage":
@@ -52,22 +52,18 @@ switch($order){
   default:
     $orderType = "id ASC";
 }
+
 // 1=一般會員 & 2=黑名單
-if ($search!="" && $state ==""){
+if ($search!="" && $state ==""){ //搜尋帳號關鍵字
     $sqlWhere="WHERE user.account LIKE '%$search%'";
-    echo "search";
-  }elseif($search!="" && $state ==""){
+  }elseif($search!="" && $state =="1"){ //搜尋帳號關鍵字 -> 一般會員
     $sqlWhere="WHERE user.state = 1 AND  user.account LIKE '%$search%' ";
-    echo "search",1;
-  }elseif ($search!="" && $state =="2"){
+  }elseif ($search!="" && $state =="2"){ //搜尋帳號關鍵字 -> 黑名單
     $sqlWhere="WHERE user.state = 2 AND user.account LIKE '%$search%' ";
-    echo "search",2;
-  }elseif ($state=="1"){
+  }elseif ($state=="1"){ //篩選 -> 一般會員
     $sqlWhere="WHERE user.state = 1";
-    echo 1;
-  }elseif ($state=="2"){
+  }elseif ($state=="2"){ //篩選 -> 黑名單
     $sqlWhere="WHERE user.state = 2";
-    echo 2;
   } else {
     $sqlWhere =""; 
   }
@@ -77,7 +73,6 @@ $sql = $db_host->prepare("SELECT user.*, user_state_category.name AS user_state_
 JOIN user_state_category ON user.state = user_state_category.id 
 $sqlWhere
 ORDER BY $orderType LIMIT $start, $pageView");
-// echo $sql ;
 
 $sql->execute();
 $memberPageCount = $sql->fetchAll(PDO::FETCH_ASSOC);
