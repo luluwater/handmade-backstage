@@ -336,24 +336,24 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                 </div>
                 <!-- 部落格 -->
                 <div class="content" style="display: none">
-                    <table class="table text-center align-middle">
+                    <table class="table align-middle">
                         <thead>
-                            <tr class="table-head text-light align-middle">
+                            <tr class="table-head text-light align-middle text-center">
                                 <th class="col-2">日期</th>
-                                <th class="col-2">類別</th>
-                                <th class="col-2">店家</th>
-                                <th class="col-2">文章分類</th>
-                                <th class="col-4">文章標題</th>
+                                <th class="col-1">類別</th>
+                                <th class="col-1">店家</th>
+                                <th class="col-2">分類</th>
+                                <th class="col-6">文章標題</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($blogRows as $row): ?>
-                            <tr class="table-body align-items-center table-hover">
-                                <td><?=$row["create_time"]?></td>
+                            <tr class="table-body align-items-center table-hover text-center">
+                                <td ><?=$row["create_time"]?></td>
                                 <td><?=$row["category_name"]?></td>
                                 <td><?=$row["name"]?></td>
-                                <th class="col-2"><?=$row["tag"]?></th>
-                                <td><a class="detailLink text-start" href="/HANDMADE/web/blog/blog-page.php?id=<?= $row["id"] ?>"><?=$row["title"]?></a></td>
+                                <th><?=$row["tag"]?></th>
+                                <td><a class="detailLink" href="/HANDMADE/web/blog/blog-page.php?id=<?=$row["id"] ?>"><?=$row["title"]?></a></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
