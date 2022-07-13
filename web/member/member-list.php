@@ -369,7 +369,7 @@ $nextPageBlog = (($page + 1) >$totalPageBlog) ? $totalPageBlog: ($page + 1);
                                 <td><?=$row["category_name"]?></td>
                                 <td><?=$row["name"]?></td>
                                 <th class="col-2"><?=$row["tag"]?></th>
-                                <td class="text-start detailLink"><?=$row["title"]?></td>
+                                <td><a class="detailLink text-start" href="/HANDMADE/web/blog/manage-blog.php?id=<?= $row["id"] ?>"><?=$row["title"]?></a></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>

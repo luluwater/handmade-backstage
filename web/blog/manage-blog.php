@@ -57,9 +57,9 @@ switch ($status) {
 }
 
 if($status=="all"){
-    $sql="SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1 ORDER BY $orderType LIMIT $start,$pageView";
+    $sql="SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE blog.valid=1 ORDER BY $orderType LIMIT $start,$pageView";
 }else{
-    $sql="SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE valid=1 AND state='$statusType' ORDER BY $orderType LIMIT $start,$pageView";
+    $sql="SELECT blog.*,category.category_name FROM blog JOIN category ON blog.category_id = category.id WHERE blog.valid=1 AND state='$statusType' ORDER BY $orderType LIMIT $start,$pageView";
 }
 
 $stmt=$db_host->prepare($sql);
