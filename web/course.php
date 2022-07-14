@@ -51,6 +51,7 @@ $order=$_GET["order"]??"ASC";
 $searchText=$_GET["searchText"]??"";
 $searchType=$_GET["searchType"]??"";
 // echo $orderType;
+$typeName=$type=="course"?"課程":"商品";
 
 $secendOrder="$orderType $order";
 $start=($page-1)*$amount_limit;
@@ -117,7 +118,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
 <html lang="tw-zh">
 
 <head>
-    <title>課程管理-手手</title>
+    <title><?=$typeName?>管理-手手</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -154,7 +155,7 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
     <main>
         <div class="container-fluid">
             <div class="d-flex justify-content-between">
-                <p class="title">課程管理</p>
+                <p class="title"><?=$typeName?>管理</p>
                 <form action="course.php?" method="get">
                 <p>顯示 
                   <select id="amount-limit" class="count-bg text-center" name="amount-limit" >
@@ -169,8 +170,8 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
             <div class="row  my-4">
                 <div class="col-2">
                     <select class="form-select" name="searchType" aria-label="Default select example">
-                        <option value="<?=$type?>.id" selected>課程編號</option>
-                        <option value="name">課程名稱</option>
+                        <option value="<?=$type?>.id" selected><?=$typeName?>編號</option>
+                        <option value="name"><?=$typeName?>名稱</option>
                         <option value="category_name">類別</option> 
                     </select>
                 </div>
@@ -186,9 +187,9 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
             <form action="do-discontinued-state.php" method="post">
               <input type="hidden" name="type" value="<?=$_GET["type"]?>">
             <div class="text-end my-4">
-              <button type="submit" class="m-2 border-0 bg-transparent up-down" name="上架"><i class="fa-solid fa-up-long m-2"></i>上架課程</button>
-              <button type="submit" class="m-2 border-0 bg-transparent up-down" name="下架"><i class="fa-solid fa-down-long m-2"></i>下架課程</button>
-              <a href="creat-new-product.php?type=<?=$type?>" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增課程</a>
+              <button type="submit" class="m-2 border-0 bg-transparent up-down" name="上架"><i class="fa-solid fa-up-long m-2"></i>上架<?=$typeName?></button>
+              <button type="submit" class="m-2 border-0 bg-transparent up-down" name="下架"><i class="fa-solid fa-down-long m-2"></i>下架<?=$typeName?></button>
+              <a href="creat-new-product.php?type=<?=$type?>" class="text-main-color m-2"><i class="fa-solid fa-square-plus m-2"></i>新增<?=$typeName?></a>
               
             </div>
             <table class="table table-hover align-items-center">
@@ -197,15 +198,15 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
                   <td class="col-1">
                     <input type="checkbox" id="select-all" class="form-check-input up-down" autocomplete="off">
                   </td>
-                  <td class="col-1">課程編號                     
+                  <td class="col-1"><?=$typeName?>編號                     
                     <a href="<?=orderLink("id",$amount_limit,$orderType,$order,$orderState)?>">
                     <i class="fa-solid fa-sort mx-2 text-dark"></i>
                   </a>
                   </td>
-                  <td class="col-3">課程名稱</td>
+                  <td class="col-3"><?=$typeName?>名稱</td>
                   <td class="col-1">上線人數</td>
                   <td class="col-1">金額</td>
-                  <td class="col-1">售出堂數
+                  <td class="col-1">售出數量
                     <a href="<?=orderLink("sold_amount",$amount_limit,$orderType,$order,$orderState)?>">
                     <i class="fa-solid fa-sort mx-2 text-dark"></i>
                   </a>
