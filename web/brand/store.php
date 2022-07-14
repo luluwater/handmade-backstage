@@ -26,7 +26,6 @@ try {
    $rows=$result->fetchALL(PDO::FETCH_ASSOC);
    $storeCount=count($stores);
 
-
 } catch (PDOException $e) {
     echo "error: " . $e->getMessage() . "<br/>";
     $db_host = NULL;

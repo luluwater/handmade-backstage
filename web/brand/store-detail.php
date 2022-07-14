@@ -23,8 +23,8 @@ $id=$_GET["id"]; //去讓下方a標籤去取德get id 的變數 這樣才可顯�
     //   LEFT JOIN gz ON man.man_id=gz.man_id   
     //   LEFT JOIN xb ON gz.sex_id=xb.sex_id  
 
-$sql="SELECT store.*, category.category_name , mrt.MRT_station , mrt.station_name 
-FROM store JOIN mrt ON store.MRT_id=mrt.id JOIN category ON store.category_id=category.id
+$sql="SELECT store.*, category.category_name 
+FROM store JOIN category ON store.category_id=category.id
 WHERE store.id=$id AND store.valid=1"; //這邊把AND valid=1拿掉才顯示得出來因為給的名稱不明確 可以不用LEFT可加可不加
 //不知道是store or category 還是 mrt的 所以給他明確指定為store.valid
 
@@ -36,6 +36,7 @@ $result = $db_host->prepare($sql); //這邊是把資料撈出來 回傳物件
 try {
     $result->execute();
     $row = $result ->fetch(PDO::FETCH_ASSOC);
+
     
 } catch (PDOException $e) {
     echo "error: " . $e->getMessage() . "<br/>";
@@ -165,11 +166,7 @@ try {
                     </tr>
                     <tr>
                         <th class="col-2" >捷運站</th>
-                        <td><?=$row["MRT_station"]?></td>
-                    </tr>
-                     <tr>
-                        <th class="col-2" >捷運線</th>
-                        <td><?=$row["station_name"]?></td>
+                        <td><?=$row["mrt_station"]?></td>
                     </tr>
                      <tr>
                         <th class="col-2">自介</th>
