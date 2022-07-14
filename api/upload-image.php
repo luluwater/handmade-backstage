@@ -29,7 +29,34 @@ function upFileToDir($typeName,$categoryName,$product_id){
     }    
     
 }
-
+   function uploadFileStore(){
+       $route='./imagesTest';
+    if(checkDir($route)){
+        echo "存在";
+        // echo $_FILES["store_img"]["name"];
+    }else{
+        mkdir($route,0777,true);
+    }
+    if($_FILES["store_img"]["error"]==0){
+            if(move_uploaded_file($_FILES["store_img"]["tmp_name"],"$route/".$_FILES["store_img"]["name"])){
+                $fileName=$_FILES["store_img"]["name"];
+                $now=date('y-m-d H:i:s');
+                echo "success <br>";
+            }else{
+                echo "fail move file<br>";
+            }
+    }    
+   }
+   function upStore_db($id){
+    require("../../db-connect.php");
+        $fileName=$_FILES["store_img"]["name"];
+        $stmtImg=$db_host->prepare("UPDATE store SET store.img='$fileName' WHERE store.id='$id'");
+        if($_FILES["store_img"]["error"]==0){
+            $stmtImg->execute([
+            ":img_name"=>$fileName                        
+            ]);
+        }
+   }
 
 function upFileTo_db($typeName,$type_id){  
     require("../db-connect.php"); 
@@ -66,16 +93,13 @@ function upFileTo_db($typeName,$type_id){
             }
             break;
         case "store":
-            $stmtImg=$db_host->prepare("INSERT INTO store_img(img_name,store_id) VALUES (:img_name, :store_id)");
-            for($i=1;$i<=4;$i++){
-                $fileName=$_FILES["product_img".$i]["name"];
-                if($_FILES["product_img".$i]["error"]==0){
+            $stmtImg=$db_host->prepare("INSERT INTO store(img_name) VALUES (:img_name)");
+             $fileName=$_FILES["store_img"]["name"];
+                if($_FILES["store_img"]["error"]==0){
                     $stmtImg->execute([
-                        ":img_name"=>$fileName,
-                        ":store_id"=>$type_id
+                        ":img_name"=>$fileName                        
                     ]);
                 }
-            }
             break;
         case "blog":
             $stmtImg=$db_host->prepare("INSERT INTO blog_img(img_name,blog_id) VALUES (:img_name, :blog_id)");
