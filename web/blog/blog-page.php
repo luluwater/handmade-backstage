@@ -18,6 +18,8 @@ try {
     $blog = $stmtBlog->fetchAll(PDO::FETCH_ASSOC);
     $stmtComments->execute();
     $comments = $stmtComments->fetchAll(PDO::FETCH_ASSOC);
+    $commentsCount = count($comments);
+ 
 } catch (PDOException $e) {
     echo "預處理陳述式執行失敗！ <br/>";
     echo "Error: " . $e->getMessage() . "<br/>";
@@ -52,25 +54,27 @@ $db_host = NULL;
     font-weight: 700;
 }
 
-
 .btn-bg-color:hover {
     background: var(--main-color);
     border: 1px solid var(--main-color);
     color: #fff;
 }
 
-svg{
-  display:none;
+svg {
+    display: none;
 }
 
+.banComment {
+    color: #ccc;
+}
 </style>
 
 <body>
-    <header class="header ">
+    <header class="header">
         <div class="d-flex align-items-center justify-content-around">
             <div class="d-flex gap-5 align-items-center">
                 <h3 class="m-0 text-main-color">HANDMADE |</h3>
-                <a href="" class="logo"><img class="object-cover" src="../../img/HANDMADE - LOGO-03.png" alt=""></a>
+                <a href="manage-blog.php" class="logo"><img class="object-cover" src="../../img/HANDMADE - LOGO-03.png" alt=""></a>
             </div>
         </div>
     </header>
@@ -98,76 +102,114 @@ svg{
 
         <div id="editor" class="my-5" name="content">
             <?php
-                    $newString=$blog[0]["content"];
-                    echo $newString;
-                    ?>
+                $newString=$blog[0]["content"];
+                echo $newString;
+                ?>
         </div>
+
 
         <input type="hidden" name="blogId" value="<?=$blog[0]["id"]?>">
 
 
         <div class="">
-            <form action="create-comment.php">
-                <h5>寫下您的想法</h5>
-                <hr>
-                <div class="d-flex justify-content-center my-5 flex-column gap-4">
-                    <textarea name="commentContent" id="commentContent" cols="140" rows="10">
-
-              </textarea>
-                    <div class="d-flex justify-content-end">
-                    <input type="submit" value="分享留言" name="submitComment" class="btn-bg-color btn btn-lg">
-                    </div>
-                </div>
-            </form>
-        </div>
-   
-
-    <h3> 留言列表</h3>
-    <hr>
-    <div id="commentsList">
-        <?php foreach( $comments as $comment) :?>
-        <div class="d-flex my-5 justify-content-center">
-            <div class="card w-100">
-                <div class="card-header">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>留言</div>
-                        <i class="fas fa-times-circle trash-btn" data-id="<?=$comment["COMMENT_ID"]?>"></i>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title "><?=$comment["content"] ?></h5>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <sapn class="card-title ">
-                            <?php
-                        $commentTime=new DateTime($comment["create_time"]);
-                        echo  $commentTime->format('M-d-Y');
-                    ?> </sapn>
-                        <span class="card-text fw-bolder">- <?=$comment["name"]?></span>
-                    </div>
+            <!-- <form action="do-create-comment.php"> -->
+            <h5>寫下您的想法</h5>
+            <hr>
+            <div class="d-flex justify-content-center my-5 flex-column gap-4">
+                <textarea name="commentContent" id="commentContent" cols="140" rows="10"></textarea>
+                <div class="d-flex justify-content-end">
+                    <!-- <input type="submit" id="commentPublish" value="分享留言" name="submitComment" class="btn-bg-color btn btn-lg"> -->
+                    <button class="btn-bg-color btn btn-lg" id="commentPublish">分享留言</button>
                 </div>
             </div>
+            <!-- </form> -->
+
+
+
+
+
+
         </div>
-        <?php endforeach; ?>
-    </div>
 
-    </div>
-
+        <div class="d-flex justify-content-between align-items-center">
+        <h3> 留言列表</h3>
+        <div> 共 
+          <?= $commentsCount?> 筆留言
+        </div>
+      </div>
+        <hr>
+       
+        <ul id="commentsList" style=" display:none" class="my-5 border-bottom">
+            <?php foreach( $comments as $comment) :?>
+            <li class="d-flex my-5 justify-content-center commentLi lockList" >
+                <div class="card w-100">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>留言</div>
+                            <i class="fas fa-lock lock lockIcon" data-id="<?=$comment["COMMENT_ID"]?>"></i>
+                            <i class="fas fa-lock-open unlock d-none lockIcon "
+                                data-id="<?=$comment["COMMENT_ID"]?>"></i>
+                            <i class="fas fa-times-circle trash-btn" data-id="<?=$comment["COMMENT_ID"]?>"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title "><?=$comment["content"] ?></h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <sapn class="card-title ">
+                                <?php
+                                  $commentTime=new DateTime($comment["create_time"]);
+                                  echo  $commentTime->format('M-d-Y');
+                              ?> </sapn>
+                            <span class="card-text fw-bolder">- <?=$comment["name"]?></span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+        <div class="text-center my-5 flip" style="cursor: pointer">
+             <i id="show"  style="font-size:40px" class="fas fa-angle-double-down"></i>
+             <i id="hidden"  style="font-size:40px" class="fas fa-angle-double-up"></i>
+        </div>
 
 
     <script src="https://kit.fontawesome.com/1e7f62b9cc.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
         integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/balloon/ckeditor.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
 </body>
 
 
 <script>
 const deleteBtns = document.querySelectorAll(".trash-btn");
 const commentsList = document.getElementById('commentsList');
+
+for (let i = 0; i < deleteBtns.length; i++) {
+    deleteBtns[i].addEventListener("click", (e) => {
+        const id = e.target.dataset.id
+        console.log(id)
+        $.ajax({
+            method: "POST",
+            url: "do-delete-comment.php",
+            data: {
+                commentId: id,
+            },
+            beforeSend: function() {
+                $("#spinner").removeClass('d-none');
+            },
+            success: function(data) {
+                // $("#commentsList").html(data)
+                location.reload()
+            }
+        })
+    })
+}
+
+// const deleteBtns = document.querySelectorAll(".trash-btn");
+// const commentsList = document.getElementById('commentsList');
 
 for (let i = 0; i < deleteBtns.length; i++) {
     deleteBtns[i].addEventListener("click", (e) => {
@@ -184,14 +226,65 @@ for (let i = 0; i < deleteBtns.length; i++) {
             success: function(data) {
                 // $("#commentsList").html(data)
                 location.reload()
-                window.scrollTo(0, 0);
-              
             }
         })
     })
 }
 
+// const commentLi = document.querySelectorAll('.commentLi');
+const lockIcon = document.querySelectorAll(".lock")
+const unlockIcon = document.querySelectorAll(".unlock")
 
+
+/**
+ * 拿到所有的
+ * 
+ * 
+ * 
+ */
+// $(function() {
+
+//    const a =  $(".commentLi").children();
+  
+//   console.log(a[0])  
+
+
+// })
+
+
+
+// for(let i = 0;i<commentLi.length;i++){
+//   commentLi[i].addEventListener("click",(e)=>{
+//     const id = e.target.dataset.id
+//     if(!e.target.classList.contains('lockIcon')) {
+//       return
+//     } 
+
+//     if(!commentLi[i].classList.contains("banCommen")){
+//       commentLi[i].classList.add("banComment")
+//       lockIcon[i].classList.add("d-none")
+//       unlockIcon[i].classList.remove("d-none")
+//     }else{
+
+//       commentLi[i].classList.remove("banComment")
+//       lockIcon[i].classList.remove("d-none")
+//       unlockIcon[i].classList.add("d-none")
+
+//     }
+
+
+//   })
+
+
+// }
+
+const a = commentsList.children
+
+$(function(){
+  $(".flip").click(()=>{
+    $("#commentsList").slideToggle('slow'); 
+  });
+});
 
 </script>
 

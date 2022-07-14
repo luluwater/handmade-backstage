@@ -2,7 +2,37 @@
 // $type=$_GET["type"];
 require_once("../../db-connect.php");
 
+// $hi=$_POST["type"];
+// echo $hi;
+// $id=$_POST["id"];
 
+
+$sql="SELECT * FROM  category  ";
+$stmt=$db_host->prepare($sql);
+
+$sqlMrt="SELECT DISTINCT MRT_station, station_name  FROM mrt";
+$mrt=$db_host->prepare($sqlMrt);
+
+// $sqlMrt2="SELECT * FROM mrt";
+// $mrt2=$db_host->prepare($sqlMrt2);
+
+
+try{    
+    $stmt->execute();
+    $mrt->execute();
+    
+    $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    $mrts=$mrt->fetchAll(PDO::FETCH_ASSOC);
+
+
+   
+}catch (PDOException $e){
+    echo "預處理陳述式執行失敗！ <br/>";
+    echo "Error: " . $e->getMessage() . "<br/>";
+    $db_host = NULL;
+    exit;
+}
+$db_host = NULL;
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,91 +73,85 @@ require_once("../../db-connect.php");
     ?>
     <main>
         <div class="container-fluid">
-            <form action="do-create-store.php" method="post" enctype="multipart/form-data">
-                <div class="d-flex my-3">
-                    <label class="col-1  me-1 " for="store_img">品牌Logo</label>
-                    <div class="col-auto">
-                        <input class="d-none upload_image" type="file" name="store_img" accept="image/*" required>
-                        <img src="" class="object-cover" alt="" onerror="">
-                    </div>
-                </div>
+            <form action="do-create-detail.php" method="post" enctype="multipart/form-data">
+                    <div class="d-flex my-3">
+                        <label class="col-1  me-1 " for="store_img">品牌Logo</label>
+                            <div class="col-auto">
+                                <input class="d-none upload_image" type="file" name="store_img" accept="image/*" required>
+                                 <img src="../img/<?=$type?>/<?=$type?>_<?= $row["category_en_name"].'_'.$id.'/'.$rows_Img[$i-1]["img_name"] ?>"
+                                 class="previewImage object-cover" alt="" onerror="" src="">
+                            </div>
+                         </div>
 
-        </div>
-        </div>
-        <div class="my-3 row align-items-center">
-            <label class="col-1" for="store_name">品牌名稱</label>
-            <input class="col form-control" type="text" name="store_name" placeholder="請輸入商品名稱" required>
-        </div>
-        <div class="my-3 row align-items-center">
-            <label class="col-1" for="intro">品牌簡介</label>
-            <textarea class="form-control col" name="intro" cols="30" rows="10" style="resize:none" placeholder="請輸入商品介紹" required></textarea>
-        </div>
-        <div class="my-3 row justify-content-center">
-            <label class="col-1 " for="category">商品類型</label>
-            <select id="category" class="form-select col" aria-label="Default select example" name="category">
-                <option value="category">金工</option>
-                <option value="category">陶藝</option>
-                <option value="category">花藝</option>
-                <option value="category">皮革</option>
-                <option value="category">烘焙</option>
-                <option value="category">簇絨</option>
-            </select>
-        </div>
-        <div class="my-3 row justify-content-between">
-            <div class="col-5 d-flex align-items-center">
-                <label class="col-2 me-2" for="MRT_station">捷運線</label>
-                <select id="MRT_station" class="form-select col" aria-label="Default select example" name="MRT_station">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-            </div>
-            <div class="col-5 d-flex pe-0  align-items-center">
-                <label class="col-2 me-2" for="station_line">
-                    捷運站</label>
-                <select id="station_line" class="form-select col" aria-label="Default select example" name="station_line">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-            </div>
-        </div>
-        <div class="my-3 row align-items-center">
-            <label class="col-1" for="route">交通方式</label>
-            <textarea class="form-control col" name="route" cols="30" rows="10" style="resize:none" placeholder="請輸入商品介紹" required></textarea>
-        </div>
-        <div class="my-3 row align-items-center">
-            <label class="col-1" for="phone">電話</label>
-            <input class="col form-control" name="phone" type="text" name="datetime">
-        </div>
-        <div class="my-3 row align-items-center">
-            <label class="col-1" for="opening_hour">營業時間</label>
-            <input class="col form-control" name="opening_hour" type="text">
-        </div>
-        <div class="my-3 row align-items-center">
-            <label class="col-1" for="IG_url">Instagram</label>
-            <input class="col form-control" name="IG_url" type="text">
-        </div>
-        <div class="my-3 row align-items-center">
-            <label class="col-1" for="FB_url">Facebook</label>
-            <input class="col 
-                        form-control" type="text" name="FB_url" required>
-        </div>
-        </div>
+                        </div>
+                        </div>
+                        <div class="my-3 row align-items-center">
+                            <label class="col-1" for="store_name">品牌名稱</label>
+                            <input class="col form-control" type="text" name="store_name" placeholder="請輸入商品名稱" required>
+                        </div>
+                        <div class="my-3 row align-items-center">
+                            <label class="col-1" for="intro">品牌簡介</label>
+                            <textarea class="form-control col" name="intro" cols="30" rows="10" style="resize:none" placeholder="請輸入商品介紹" required></textarea>
+                        </div>
+                        <div class="my-3 row justify-content-center">
+                            <label class="col-1 " for="category">商品類型</label>
+                            <select id="category" class="form-select col" aria-label="Default select example" name="category">
+                                <?php foreach($rows as $row): ?> 
+                                <!-- <option value="<?=$row["id"] ?><?=$row["category_name"]?>"></option> -->
+                                <option value="<?=$row["id"] ?>"><?=$row["category_name"] ?></option>
+                                <?php endforeach; ?>
+                               
+                            </select>
+                        </div>
+                        <div class="my-3 row justify-content-between">
+                            <div class="col-5 d-flex align-items-center">
+                                <label class="col-2 me-2" for="MRT_station">捷運線</label>
+                                <select id="MRT_station" class="form-select col" aria-label="Default select example" name="MRT_station">
+                                    <?php foreach($mrts as $mrt): ?> 
+                                    <option value="<?=$mrt["id"] ?>"><?=$mrt["MRT_station"]?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-5 d-flex pe-0  align-items-center">
+                                <label class="col-2 me-2" for="station_line">
+                                    捷運站</label>
+                                <select id="station_line" class="form-select col" aria-label="Default select example" name="station_line">
+                                    <?php foreach($mrts as $mrt): ?> 
+                                    <option value="<?=$mrt["id"] ?>">
+                                    <?=$mrt["station_name"]?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="my-3 row align-items-center">
+                            <label class="col-1" for="route">交通方式</label>
+                            <textarea class="form-control col" name="route" cols="30" rows="10" style="resize:none" placeholder="請輸入商品介紹" required></textarea>
+                        </div>
+                        <div class="my-3 row align-items-center">
+                            <label class="col-1" for="phone">電話</label>
+                            <input class="col form-control" name="phone" type="text" name="datetime">
+                        </div>
+                        <div class="my-3 row align-items-center">
+                            <label class="col-1" for="opening_hour">營業時間</label>
+                            <input class="col form-control" name="opening_hour" type="text">
+                        </div>
+                        <div class="my-3 row align-items-center">
+                            <label class="col-1" for="IG_url">Instagram</label>
+                            <input class="col form-control" name="IG_url" type="text">
+                        </div>
+                        <div class="my-3 row align-items-center">
+                            <label class="col-1" for="FB_url">Facebook</label>
+                            <input class="col 
+                            form-control" type="text" name="FB_url" required>
+                        </div>
+                        </div>
 
-        <div class="my-5 d-flex justify-content-end">
-            <a href="store.php" class="ms-3 btn btn-bg-color">返回</a>
-            <button class="ms-3 btn btn-main-color" type="submit">儲存</button>
-        </div>
-        </form>
-
+                        <div class="my-5 d-flex justify-content-end">
+                            <a href="store.php" class="ms-3 btn btn-bg-color">返回</a>
+                            <button class="ms-3 btn btn-main-color" type="submit">儲存</button>
+                        </div>
+            </form>
         </div>
     </main>
-
-
-
-
-
-</body>
-
+  </body>
 </html>

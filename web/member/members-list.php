@@ -70,6 +70,7 @@ require("../../db-connect.php");
             color: #fff;
             background: var(--main-color);
         }
+
         #member_active a::before {
             content: "";
             height: 25px;
@@ -101,6 +102,7 @@ require("../../db-connect.php");
                     </div>
                 </div>
             </form>
+            <!-- 顯示筆數 -->
             <div class="d-flex align-items-center display-page-box">
                 <p class="m-0">顯示&nbsp;&nbsp;</p>
                 <form action="" method="get" class="pageForm" class="text-center">
@@ -112,6 +114,7 @@ require("../../db-connect.php");
                 <p class="m-0">&nbsp;&nbsp;&nbsp;筆</p>
             </div>
         </div>
+        <!-- 會員列表開始 -->
         <table class="table">
             <thead class="table-head text-light">
                 <tr class="text-center align-middle fw-bold">

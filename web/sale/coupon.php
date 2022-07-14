@@ -220,6 +220,10 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
       top: 50%;
       transform: translate(-300%, -50%);
     }
+
+    .table1 td{
+      height: 100px;
+    }
   </style>
 </head>
 
@@ -308,7 +312,7 @@ $nextPage = (($page + 1) > $totalPage) ? $totalPage : ($page + 1);
           </thead>
           <tbody>
             <?php foreach ($rows as $row) : ?>
-              <tr class="text-center">
+              <tr class="text-center table1">
                 <td><?= $row["discount_code"] ?></td>
                 <td><?= $row["name"] ?></td>
                 <td>

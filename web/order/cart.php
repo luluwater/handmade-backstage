@@ -112,9 +112,13 @@ try {
             <div class="row mx-5 mb-3">
                 <p class="col-1 boldWord">使用折價券</p>
                 <p class="col-3">
-                    <select name="coupon_id" id="" class="form-select searchState">
-                        <option selected value="<?= $rows["userCoupon"] ?>"><?= $rows["couponName"] ?></option>
+                    <select name="coupon"  class="form-select searchState" id="useCoupon" >
+                        <option selected value="">請選擇</option>
+                        <option value="<?=$rows["coupon_discount"] ?>" data-id=<?= $rows["userCoupon"] ?> ><?= $rows["couponName"] ?></option>
                     </select>
+                </p>
+                <p class="col-4">
+                    <a onclick="getCoupon()" class="btn btn-main-color">使用</a>
                 </p>
 
             </div>
@@ -164,62 +168,69 @@ try {
                     </tr>
 
                 <?php endforeach; ?>
-
-
-
-
             </table>
-            <p class="text-end">總計:<span><?= $total ?></span></p>
+            <p class="text-end">總計:<span>$ <?= $total ?></span></p>
             <p class="text-end">折價券優惠:
 
                 <?php if ($rows["discount_type_id"] == 1) : ?>
-                    <?php $discountPercent = floatval($rows["coupon_discount"] * 10) ?>
-                    <span class="col-1"><?= $discountPercent ?> 折</span>
-                <?php elseif ($rows["discount_type_id"] == 2) : ?>
-                    <span class="col-1">$<?= $rows["coupon_discount"] ?></span>
-                <?php elseif ($rows["discount_type_id"] == 2) : ?>
-                    <span class="col-1">$0</span>
-                <?php else : ?>
-                    <span class="col-1">$0</span>
+                    <span class="col-1" id="coupon_discount">0</span>
+    
+                    <!-- <span class="col-1">$0</span> -->
                 <?php endif; ?>
-
 
             <p class="text-end">實付金額:
 
-                <?php if ($rows["discount_type_id"] == 1) : ?>
-                    <span class="col-1 totalPrice ">$<?= round($total * $discountPercent / 10) ?> </span>
-                    <?php $total_amount = round($total * $discountPercent / 10) ?>
-                <?php elseif ($rows["discount_type_id"] == 2) : ?>
-                    <?php $couponPrice = intval($orderRow["coupon_discount"]) ?>
-                    <span class="col-1 totalPrice">$<?= $total - $couponPrice ?></span>
-                    <?php $total_amount = $total - $couponPrice ?>
-                <?php elseif ($rows["discount_type_id"] == 2) : ?>
-                    <span class="col-1 totalPrice">$<?= $total ?></span>
-                    <?php $total_amount = $total ?>
-                <?php else : ?>
-                    <span class="col-1 totalPrice">$<?= $total ?></span>
-                    <?php $total_amount = $total ?>
-                <?php endif; ?>
-
-
-
-
-
+                    <span class="col-1 totalPrice" id="after">$<?= $total?></span>
             </p>
 
-            <input name="total_amount" type="hidden" value="<?= $total_amount ?>">
+            <input name="total_amount" type="hidden" id="total_amount" value="">
+            <input name="coupon_id" type="hidden"  value="22">
+
 
             <div class="py-2 text-end">
                 <button type="submit" class="btn btn-main-color ">結帳</button>
             </div>
     </div>
-
-
-
-
     </form>
 
+<script>
 
+
+    function getCoupon(){
+        let useCoupon = document.querySelector("#useCoupon").value;
+        const coupon_discount =document.getElementById("coupon_discount")
+        const after= document.getElementById('after')
+        const total_amount = document.getElementById('total_amount')
+
+        console.log(coupon_discount)
+        console.log(after)
+
+        if(useCoupon===""){
+            coupon_discount.innerText="0"
+            after.innerText=<?=$total?>
+
+        }else{
+            coupon_discount.innerText=`${useCoupon *10} 折`;
+            after.innerText=Math.round(<?=$total?>*useCoupon)
+            total_amount.value=Math.round(<?=$total?>*useCoupon)
+        }
+
+
+        console.log(useCoupon);
+
+
+    }
+
+
+        // useCoupon.addEventListener('change', () => {
+        //     let id = this.dataset.id;
+        //     console.log(id);
+
+        // })
+
+
+
+</script>
 
 
 

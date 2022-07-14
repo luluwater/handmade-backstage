@@ -87,10 +87,10 @@ svg{
                 value="<?=$blog[0]["title"]?>">
             <h3 class="text-center my-4"></h3>
             <h5 id="user">by 黑色小花貓</h5>
-            <div class="text-center my-4">
-                <span class="badge bg-secondary"><?=$blog[0]["tag"]?></span>
-                <span class="badge bg-secondary"><?=$blog[0]["category_name"]?></span>
-                <span class="badge bg-secondary"><?=$blog[0]["name"]?></span>
+            <div class="text-center my-4 d-flex justify-content-center gap-3">
+                <span class="badge py-2 fs-6 px-3 bg-secondary"><?=$blog[0]["tag"]?></span>
+                <span class="badge py-2 fs-6 px-3 bg-danger"><?=$blog[0]["category_name"]?></span>
+                <span class="badge py-2 fs-6 px-3 bg-dark"><?=$blog[0]["name"]?></span>
             </div>
             <hr>
         <div id="insert" class="d-flex flex-column">

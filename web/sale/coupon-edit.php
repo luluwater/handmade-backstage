@@ -157,7 +157,7 @@ $discountCount = $result->rowCount();
                         </div>
                     </ul>
                     <div class="text-end me-5 button">
-                        <a href="discount.php" class="btn btn-cancel mx-2">取消</a>
+                        <a href="coupon.php" class="btn btn-cancel mx-2">取消</a>
                         <button class="btn btn-red mx-2" type="submit">儲存</button>
                     </div>
                 </form>

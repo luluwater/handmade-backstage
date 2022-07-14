@@ -12,9 +12,23 @@ $id=$_GET["id"]; //去讓下方a標籤去取德get id 的變數 這樣才可顯�
 //mrt只拿mrt.MRT_station,mrt.station_name 
 //store 跟 mrt JOIN 再一起 on這邊是讓id=兩邊資料庫的id
 //WHERE 就是指定條件 AND就是 或 
-$sql="SELECT store.*,mrt.MRT_station,mrt.station_name 
-FROM store JOIN mrt on store.MRT_id=mrt.id 
-WHERE store.id=$id AND valid=1";
+// $sql="SELECT store.* , mrt.MRT_station , mrt.station_name 
+// FROM store JOIN mrt ON store.MRT_id=mrt.id 
+// WHERE store.id=$id AND store.valid=1";
+
+//JOHN 多個欄位表格
+// SELECT man.man_id,man.man_name,xb.sex_name,zw_name,gz.money  
+    // FROM man   
+    //   LEFT JOIN zw ON man.zw_id=zw.zw_id   
+    //   LEFT JOIN gz ON man.man_id=gz.man_id   
+    //   LEFT JOIN xb ON gz.sex_id=xb.sex_id  
+
+$sql="SELECT store.*, category.category_name , mrt.MRT_station , mrt.station_name 
+FROM store JOIN mrt ON store.MRT_id=mrt.id JOIN category ON store.category_id=category.id
+WHERE store.id=$id AND store.valid=1"; //這邊把AND valid=1拿掉才顯示得出來因為給的名稱不明確 可以不用LEFT可加可不加
+//不知道是store or category 還是 mrt的 所以給他明確指定為store.valid
+
+// $sqlContain= "SELECT category  FROM category  "
 
 $result = $db_host->prepare($sql); //這邊是把資料撈出來 回傳物件 
 //所以用result變數把物件接住 
@@ -140,6 +154,10 @@ try {
                     <tr>
                         <th class="col-2" >序號</th>
                         <td ><?=$row["id"]?></td>
+                    </tr>
+                    <tr>
+                        <th class="col-2" >類別</th>
+                        <td><?=$row["category_name"]?></td>
                     </tr>
                      <tr>
                         <th class="col-2" >店家名稱</th>
