@@ -335,10 +335,10 @@ $rows=$stmt->fetchALL(PDO::FETCH_ASSOC);
       const typecategory= "<?=$type?>";
       console.log(typecategory);
       if(typecategory=="course"){
-        const course=document.querySelector("#course");
+        const course=document.querySelector("#course_active");
         course.classList.add("active");
       }else if(typecategory=="product"){
-        const product=document.querySelector("#product");
+        const product=document.querySelector("#product_active");
         product.classList.add("active");
       }
       
